@@ -6,6 +6,7 @@ module.exports = {
   // doubleQuote: true,
   // 문자열은 singleQuote로 ("" -> '')
   singleQuote: true,
+  jsxSingleQuote: true,
   //코드 마지막에 세미콜론이 있게 formatting
   semi: true,
   // 들여쓰기 너비는 2칸
@@ -26,5 +27,5 @@ module.exports = {
   // 예를 들어, 'always'로 설정하면 '//' 다음에 공백이 필요합니다.
   // 'never'로 설정하면 '//' 다음에 공백이 오면 에러가 발생합니다.
   // commentLineExceptions: ['always'],
-  annotationSpacing: 'always',
+  // annotationSpacing: 'always',
 };
