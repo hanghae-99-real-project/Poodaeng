@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from '../pages/Home';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<MainPage />} />
-        <Route element={<FullBackground />}>
+        <Route path="/" element={<Home />} />
+        {/* <Route element={<FullBackground />}>
           <Route path="/signup" element={<SignUpPage />} />
           <Route element={<Layout />}>
             <Route path="/signin" element={<SignInPage />} />
