@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Tabbar from './Tabbar';
-import Header from './Header';
+import Header from './Headers';
 
 function Alertcomponent() {
   const [backColor, setBackColor] = useState(false);
