@@ -1,9 +1,16 @@
-import React from "react";
-import { KakaoMyPoint } from "./Kakaomypoint";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { KakaoMyPoint } from './Kakaomypoint';
 
 function Maincomponent() {
   const DetailMapHandler = () => {
     console.log(1);
+  };
+
+  const navigate = useNavigate();
+
+  const AlertNavigateHander = () => {
+    navigate('/alert');
   };
 
   return (
@@ -15,6 +22,7 @@ function Maincomponent() {
           alt='PooDaeng.png'
         />
         <img
+          onClick={AlertNavigateHander}
           className='mr-[22px] mt-[63px] mb-[21px]'
           src='Alert.png'
           alt='Alert.png'
