@@ -3,7 +3,7 @@ import Maincomponent from '../components/Maincomponent';
 
 function Home() {
   return (
-    <div>
+    <div className='w-screen'>
       <Maincomponent />
       {/* <Tabbar /> */}
     </div>

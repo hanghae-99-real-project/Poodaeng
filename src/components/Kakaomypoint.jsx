@@ -53,5 +53,5 @@ export function KakaoMyPoint() {
     }
   }, []);
 
-  return <div id='map' style={{ width: '330px', height: '155px' }} />;
+  return <div id='map' className='w-[330px] h-[155px] .svg:w-[150px]' />;
 }
