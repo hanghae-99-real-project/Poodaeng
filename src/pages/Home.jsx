@@ -5,7 +5,6 @@ function Home() {
   return (
     <div className='w-screen'>
       <Maincomponent />
-      {/* <Tabbar /> */}
     </div>
   );
 }

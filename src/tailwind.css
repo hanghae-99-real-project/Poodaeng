@@ -16,6 +16,6 @@
   }
 
   .container {
-    @apply flex flex-col w-full h-full border rounded-[15px];
+    @apply flex flex-col w-[375px] h-[812px] border rounded-[15px];
   }
 }

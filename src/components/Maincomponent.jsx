@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { KakaoMyPoint } from './Kakaomypoint';
+import Tabbar from './Tabbar';
 
 function Maincomponent() {
   const DetailMapHandler = () => {
@@ -18,12 +19,12 @@ function Maincomponent() {
     <div className='container'>
       <div className='flex justify-between '>
         <img
-          className='ml-[25px] mt-[63px] mb-[21px]'
+          className='ml-[25px] mt-[20px] mb-[21px]'
           src='Logo.png'
           alt='PooDaeng.png'
         />
         <img
-          className='mr-[22px] mt-[63px] mb-[21px]'
+          className='mr-[22px] mt-[20px] mb-[21px]'
           src='Alert.png'
           alt='Alert.png'
           onClick={AlertNavigateHander}
@@ -63,6 +64,7 @@ function Maincomponent() {
           board card3
         </div>
       </div>
+      <Tabbar />
     </div>
   );
 }
