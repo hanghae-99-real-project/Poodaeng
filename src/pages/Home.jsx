@@ -1,12 +1,11 @@
-import React from "react";
-import Maincomponent from "../components/Maincomponent";
-import Tabbar from "../components/Tabbar";
+import React from 'react';
+import Maincomponent from '../components/Maincomponent';
 
 function Home() {
   return (
     <div>
       <Maincomponent />
-      <Tabbar />
+      {/* <Tabbar /> */}
     </div>
   );
 }
