@@ -4,18 +4,18 @@
 
 @layer components {
   .clickableTextStyle {
-    @apply font-bold text-[#583f72] ml-3  hover:text-textPurple transition-colors duration-200 cursor-pointer;
+    @apply font-bold text-[#583f72] ml-3 hover:text-textPurple transition-colors duration-200 cursor-pointer;
   }
 
   .testCenter {
     @apply flex justify-center;
   }
-  /* nested 문법 */
-  /* .flexCenter {
-      @apply testCenter items-center;
-  } */
 
   .flexCenter {
     @apply flex justify-center items-center;
+  }
+
+  .container {
+    @apply flex flex-col w-[375px] h-[812px] border rounded-[15px] m-5;
   }
 }
