@@ -1,10 +1,10 @@
-import React from "react";
-import Maincomponent from "../components/Maincomponent";
-import Tabbar from "../components/Tabbar";
+import React from 'react';
+import Maincomponent from '../components/Maincomponent';
+import Tabbar from '../components/Tabbar';
 
 function Home() {
   return (
-    <div>
+    <div className='w-screen'>
       <Maincomponent />
       <Tabbar />
     </div>

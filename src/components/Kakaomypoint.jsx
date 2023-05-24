@@ -1,13 +1,13 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable import/prefer-default-export */
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const { kakao } = window;
 
 export function KakaoMyPoint() {
   useEffect(() => {
-    const mapContainer = document.getElementById("map");
+    const mapContainer = document.getElementById('map');
     const mapOption = {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3,
@@ -26,7 +26,7 @@ export function KakaoMyPoint() {
       });
     } else {
       const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-      const message = "geolocation을 사용할수 없어요..";
+      const message = 'geolocation을 사용할수 없어요..';
       displayMarker(locPosition, message);
     }
 
@@ -49,5 +49,5 @@ export function KakaoMyPoint() {
     }
   }, []);
 
-  return <div id='map' style={{ width: "330px", height: "155px" }} />;
+  return <div id='map' className='w-[330px] h-[155px] .svg:w-[150px]' />;
 }
