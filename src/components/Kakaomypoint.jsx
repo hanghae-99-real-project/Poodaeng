@@ -24,7 +24,7 @@ export function KakaoMyPoint() {
         const lon = position.coords.longitude;
         const arr = { lat, lon };
         const locPosition = new kakao.maps.LatLng(arr.lat, arr.lon);
-        const message = '<div style="padding:5px;">여기에 계신가요?!</div>';
+        const message = '<div style="padding:5px;">내 위치</div>';
         displayMarker(locPosition, message);
       });
     } else {

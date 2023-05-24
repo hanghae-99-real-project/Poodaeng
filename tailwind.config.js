@@ -15,6 +15,10 @@ module.exports = {
           100: '#FF8A3D',
           200: '#9da832',
         },
+        toggleColor: {
+          white: '#FFFFFF',
+          black: '#D9D9D9',
+        }
       },
     },
   },

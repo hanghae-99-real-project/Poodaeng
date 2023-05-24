@@ -64,7 +64,7 @@ function Maincomponent() {
           board card3
         </div>
       </div>
-      <Tabbar />
+      <Tabbar number='700' />
     </div>
   );
 }

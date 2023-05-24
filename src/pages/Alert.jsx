@@ -1,12 +1,10 @@
 import React from 'react';
-import Tabbar from '../components/Tabbar';
-import Header from '../components/Header';
+import Alertcomponent from '../components/Alertcomponent';
 
 function Alert() {
   return (
     <div>
-      <Header>ㅁㄴㅇㄹ</Header>
-      <Tabbar />
+      <Alertcomponent />
     </div>
   );
 }
