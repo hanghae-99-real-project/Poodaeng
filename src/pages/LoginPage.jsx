@@ -1,23 +1,23 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import Loading from '../components/Loading';
+import LoginAgree from '../components/LoginAgree';
+import LoginSocial from '../components/LoginSocial';
 
 function LoginPage() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  // const [isLoading, setIsLoading] = useState(true);
+  const [redirectPage, setRedirectPage] = useState({
+    agree: false,
+    next: false,
+    social: false,
+  });
+  const isLoading = false;
 
-  const SubmitHandler = () => {
-    console.log('submitting');
-    navigate('/');
-  };
   return (
-    <div>
-      <label htmlFor='username'>
-        Username:
-        <input type='text' id='username' />
-      </label>
-      <button type='button' onClick={SubmitHandler}>
-        테스트 버튼
-      </button>
-      <image className='w-3 h-3' onClick={SubmitHandler} />
+    <div className='flex flex-col  items-center'>
+      {isLoading ? <Loading /> : null}
+      {!redirectPage.next && <LoginAgree setRedirectPage={setRedirectPage} />}
+      {redirectPage.social && <LoginSocial setRedirectPage={setRedirectPage} />}
     </div>
   );
 }

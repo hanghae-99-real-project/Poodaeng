@@ -15,7 +15,38 @@
     @apply flex justify-center items-center;
   }
 
-  .container {
-    @apply flex flex-col w-full h-full border rounded-[15px];
+  .canvas {
+    @apply overflow-hidden flex flex-col justify-center items-center relative w-[375px] h-[812px]  bg-[#FFFFFF];
   }
+
+  .container {
+    @apply flex flex-col w-[375px] h-[812px] border rounded-[15px] overflow-hidden;
+  }
+
+  .logo-div {
+    @apply w-[201px] h-[37px] bg-contain bg-no-repeat;
+  }
+
+  .character-box {
+    @apply w-[121px] h-[115px] object-cover z-10 border rounded-md;
+  }
+
+  .large-button {
+    @apply w-[330px] h-[50px] rounded-md text-base font-bold;
+  }
+
+  .back-button {
+    @apply absolute top-16 left-4 text-lg;
+  }
+}
+
+body,
+html {
+  /* width: 375px;
+  height: 812px; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  overflow: hidden;
+  background-color: green;
 }
