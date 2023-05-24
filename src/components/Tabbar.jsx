@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 function Tabbar() {
   return (
-    <div className='absolute border left-[20px] top-[745px] bg-[#FFFFFF] rounded-b-[15px]'>
+    <div className='absolute border top-[745px] bg-[#FFFFFF] rounded-b-[15px]'>
       <div className='flex justify-evenly items-center w-[374px] h-[86px] shadow-xs'>
         <img
           src=''

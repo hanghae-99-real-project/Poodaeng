@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { KakaoMyPoint } from './Kakaomypoint';
@@ -22,10 +23,10 @@ function Maincomponent() {
           alt='PooDaeng.png'
         />
         <img
-          onClick={AlertNavigateHander}
           className='mr-[22px] mt-[63px] mb-[21px]'
           src='Alert.png'
           alt='Alert.png'
+          onClick={AlertNavigateHander}
         />
       </div>
       <div className='flex justify-center items-center w-[375px] h-[179px] border'>
@@ -39,7 +40,10 @@ function Maincomponent() {
           지금 내 주변에 있는 푸박스의 위치를 확인하세요.
         </div>
         <div className='w-[330px] h-[155px] border ml-[22px]'>
-          <KakaoMyPoint onClick={DetailMapHandler} />
+          <KakaoMyPoint
+            className='w-[330px] h-[155px]'
+            onClick={DetailMapHandler}
+          />
           <div className='relative bottom-8 left-20 z-10'>button</div>
         </div>
         <div className='border mt-[39px]' />
