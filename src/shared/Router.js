@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
 import Layout from './Layout';
 import Alert from '../pages/Alert';
+import Events from '../pages/Events';
 
 function Router() {
   return (
@@ -11,6 +12,7 @@ function Router() {
         <Route element={<Layout/>}>
           <Route path="/" element={<Home />} />
           <Route path="/alert" element={<Alert />} />
+          <Route path="/events" element={<Events />} />
         </Route>
       </Routes>
     </BrowserRouter>

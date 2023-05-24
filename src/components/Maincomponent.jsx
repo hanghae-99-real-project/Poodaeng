@@ -19,19 +19,21 @@ function Maincomponent() {
     <div className='container'>
       <div className='flex justify-between '>
         <img
-          className='ml-[25px] mt-[20px] mb-[21px]'
-          src='Logo.png'
+          className='ml-[20px] mt-[22px] mb-[18px] object-contain'
+          src='./PooDaeng.png'
           alt='PooDaeng.png'
         />
         <img
-          className='mr-[22px] mt-[20px] mb-[21px]'
-          src='Alert.png'
+          className='mr-[22px] mt-[20px] mb-[21px] object-contain cursor-pointer'
+          src='./Group 120.png'
           alt='Alert.png'
           onClick={AlertNavigateHander}
         />
       </div>
-      <div className='flex justify-center items-center w-[373px] h-[179px] border-t border-b'>
-        <div className=''>eventBox</div>
+      <div className='flex justify-center items-center w-[373px] h-[179px] border-t border-b cursor-pointer'>
+        <div className='' role='none' onClick={() => navigate('/events')}>
+          eventBox
+        </div>
       </div>
       <div>
         <div className='ml-[23px] mt-[21px] font-[700] text-[20px] '>
@@ -45,7 +47,17 @@ function Maincomponent() {
             className='w-[330px] h-[155px]'
             onClick={DetailMapHandler}
           />
-          <div className='relative bottom-8 left-20 z-10'>button</div>
+          <img
+            src='./Ellipse 35.png'
+            alt='button'
+            className='relative bottom-8 left-[17rem] z-10 cursor-pointer'
+            onClick={() => navigate('/map')}
+          />
+          <img
+            src='./Vector 56.png'
+            alt='button'
+            className='relative bottom-14 left-[17.9rem] z-20'
+          />
         </div>
         <div className='border mt-[39px]' />
       </div>
