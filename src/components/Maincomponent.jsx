@@ -30,7 +30,7 @@ function Maincomponent() {
           onClick={AlertNavigateHander}
         />
       </div>
-      <div className='flex justify-center items-center w-[375px] h-[179px] border'>
+      <div className='flex justify-center items-center w-[373px] h-[179px] border-t border-b'>
         <div className=''>eventBox</div>
       </div>
       <div>
