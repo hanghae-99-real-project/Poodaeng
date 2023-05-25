@@ -5,7 +5,7 @@ function Tabbar() {
   const navigate = useNavigate();
   return (
     <div className='fixed bottom-5 border bg-[#FFFFFF]  z-20'>
-      <div className='flex justify-evenly items-center w-[372px] h-[65px] shadow-sm'>
+      <div className='flex justify-evenly items-center w-[373px] h-[65px] shadow-sm'>
         <img
           src=''
           alt='icon1.png'

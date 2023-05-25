@@ -42,7 +42,7 @@ function Maincomponent() {
           <div className='ml-[23px] mt-[4px] font-[500] text-[11px] text-[#808080]'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
-          <div className='w-[330px] h-[155px] border ml-[22px]'>
+          <div className='w-[330px] h-[155px] border ml-[32px]'>
             <KakaoMyPoint className='w-[330px] h-[155px]' />
             <img
               src='./Ellipse 35.png'
