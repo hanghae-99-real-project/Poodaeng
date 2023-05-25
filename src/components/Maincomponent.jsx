@@ -13,7 +13,7 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='flex flex-row justify-between border w-[375px]'>
+      <div className='flex flex-row justify-between border w-[375px] mt-[30px]'>
         <img
           className='ml-[20px] mt-[20px] mb-[8px] object-contain'
           src='./PooDaeng.png'
@@ -27,7 +27,7 @@ function Maincomponent() {
         />
       </div>
       {/* 여기 밑에 height 크기를 지정해줘야 overflow를 인식할 수도 있음. */}
-      <div className='max-h-[600px] overflow-y-auto'>
+      <div className='max-h-[600px]'>
         <div
           className='flex justify-center items-center w-[373px] h-[150px] border-t border-b cursor-pointer'
           role='none'
