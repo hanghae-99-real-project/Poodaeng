@@ -26,7 +26,6 @@ function Maincomponent() {
           onClick={AlertNavigateHander}
         />
       </div>
-      {/* 여기 밑에 height 크기를 지정해줘야 overflow를 인식할 수도 있음. */}
       <div className='max-h-[600px]'>
         <div
           className='flex justify-center items-center w-[373px] h-[150px] ml-[14px] border-t border-b cursor-pointer'
