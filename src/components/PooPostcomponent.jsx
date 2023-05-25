@@ -2,7 +2,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Headers from './Headers';
-import Tabbar from './Tabbar';
 import FileUploader from './FileUploader';
 
 function PooPostcomponent() {
@@ -33,11 +32,10 @@ function PooPostcomponent() {
       <div className='ml-[23px] mt-[31px]'>
         <div className='font-[600] text-[15px]'>푸박스 특이사항 설명</div>
         <textarea
-          className='border-none font-[400] text-[15px] pb-[8px] mt-[13px] w-[330px] h-auto resize-none;'
+          className='border-none font-[400] text-[15px] pb-[8px] mt-[13px] w-[330px] h-[200px] resize-none'
           placeholder='특이사항 입력'
         />
       </div>
-      <Tabbar />
     </div>
   );
 }

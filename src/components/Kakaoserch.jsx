@@ -79,16 +79,7 @@ function Kakaoserch() {
 
   return (
     <div className='container'>
-      <Headers>
-        <img
-          className='absolute left-5 scale-[-1] mt-1 cursor-pointer'
-          src='Vector 56.png'
-          alt='<'
-          onClick={HomeNavigateHandler}
-          role='none'
-        />
-        <div className='font-[700]'>푸박스 찾기</div>
-      </Headers>
+      <Headers>푸박스 찾기</Headers>
       <div id='map2' style={{ width: '100%', height: '100%' }} />
       <Tabbar />
     </div>
