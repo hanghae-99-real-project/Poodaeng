@@ -11,7 +11,9 @@ function Alertcomponent() {
 
   return (
     <div className='container'>
-      <Header>알림</Header>
+      <Header text icon>
+        알림
+      </Header>
       <div
         className={`flex border ml-[10px] mt-[10px] mr-[10px] p-[19px] rounded-[6px] 
         ${backColor ? 'bg-[#FFFFFF]' : 'bg-[#D9D9D9]'}`}

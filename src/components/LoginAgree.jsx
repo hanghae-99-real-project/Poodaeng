@@ -2,6 +2,7 @@ import React from 'react';
 // import { useNavigate } from 'react-router-dom';
 import Logo from './common/Logo';
 import Loading from './Loading';
+import Buttons from './common/Buttons';
 
 function LoginAgree({ setRedirectPage }) {
   // const navigate = useNavigate();
@@ -40,20 +41,22 @@ function LoginAgree({ setRedirectPage }) {
             문구위치 정보 관련 문구위치
           </div>
           <div className='flex flex-col justify-center items-center gap-2'>
-            <button
-              className='large-button bg-[#449AFF] text-[#fff]'
+            <Buttons
               type='button'
+              bgColor='#449AFF'
+              textColor='#fff'
               onClick={withAgree}
             >
               동의하고 시작하기
-            </button>
-            <button
-              className='large-button bg-[#CBCBCB] text-[#fff]'
+            </Buttons>
+            <Buttons
               type='button'
+              bgColor='#CBCBCB'
+              textColor='#fff'
               onClick={withoutAgree}
             >
               위치 정보없이 시작하기
-            </button>
+            </Buttons>
           </div>
         </>
       )}

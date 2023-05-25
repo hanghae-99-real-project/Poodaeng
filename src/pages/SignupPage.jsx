@@ -2,6 +2,7 @@ import React from 'react';
 // import { IoIosArrowBack } from 'react-icons/io';
 // import { useNavigate } from 'react-router-dom';
 import Headers from '../components/Headers';
+import Buttons from '../components/common/Buttons';
 
 function SignupPage() {
   // const navigate = useNavigate();
@@ -20,7 +21,7 @@ function SignupPage() {
             <input
               type='email'
               placeholder='이메일'
-              className='w-80 font-bold text-xl placeholder: text-[#DBDBDB
+              className='w-80 pb-2 font-bold text-xl border-b border-[#DBDBDB] placeholder: text-[#DBDBDB
               ] '
             />
             <button
@@ -30,11 +31,31 @@ function SignupPage() {
               인증하기
             </button>
           </div>
-          <input type='text' placeholder='닉네임' />
-          <input type='password' placeholder='비밀번호' />
-          <input type='password' placeholder='비밀번호 확인' />
+          <input
+            type='text'
+            placeholder='닉네임'
+            className='w-80 pb-2 font-bold text-xl border-b border-[#DBDBDB] placeholder: text-[#DBDBDB
+              ] '
+          />
+          <input
+            type='password'
+            placeholder='비밀번호'
+            className='w-80 pb-2 font-bold text-xl border-b border-[#DBDBDB] placeholder: text-[#DBDBDB
+              ] '
+          />
+          <input
+            type='password'
+            placeholder='비밀번호 확인'
+            className='w-80 pb-2 font-bold text-xl border-b border-[#DBDBDB] placeholder: text-[#DBDBDB
+              ] '
+          />
         </div>
-        <button type='submit'>회원가입</button>
+        <Buttons type='submit' bgColor='#C2C2C2' textColor='#fff'>
+          다음
+        </Buttons>
+        {/* <button type='submit' className='large-button bg-[#C2C2C2] text-[#fff]'>
+          다음
+        </button> */}
       </form>
 
       {/* <button type='button' onClick={() => navigate('/login')}>

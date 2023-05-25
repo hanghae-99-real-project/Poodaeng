@@ -1,4 +1,5 @@
 import React from "react"
+import Buttons from "../components/common/Buttons";
 // import { useNavigate } from 'react-router-dom';
 
 function SocialKakao(){
@@ -14,7 +15,8 @@ function SocialKakao(){
   //     window.location.href = kakaoURLz
   // }
   return (
-      <button type='button' className='large-button bg-[#F9EB00]' onClick={handleLogin}>카카오톡으로 시작하기</button>
+      <Buttons type='button' bgColor='#F9EB00' onClick={handleLogin}>카카오톡으로 시작하기</Buttons>
+      // <button type='button' className='large-button bg-[#F9EB00]' onClick={handleLogin}>카카오톡으로 시작하기</button>
   )
 }
 export default SocialKakao;
