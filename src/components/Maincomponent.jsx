@@ -12,7 +12,7 @@ function Maincomponent() {
   };
 
   return (
-    <>
+    <div className='container'>
       <div className='flex justify-between '>
         <img
           className='ml-[20px] mt-[20px] mb-[8px] object-contain'
@@ -72,7 +72,7 @@ function Maincomponent() {
         </div>
       </div>
       <Tabbar number='700' />
-    </>
+    </div>
   );
 }
 
