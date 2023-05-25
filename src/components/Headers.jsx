@@ -2,21 +2,22 @@ import React from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 
-function Headers({ children, text, icon }) {
+function Headers({ children, text, icon, destination }) {
   const navigate = useNavigate();
   return (
     <>
       {icon && (
-        <IoIosArrowBack onClick={() => navigate('/')} className='back-button' />
+        <IoIosArrowBack
+          onClick={() => navigate(`/${destination}`)}
+          className='back-button'
+        />
       )}
       <div
-        className={`flex justify-center mt-[20px] mb-[20px] ${
+        className={` flex justify-center my-[52px] font-bold ${
           text && 'text-xl'
         }`}
       >
-        <div className='relative w-full bg-[#FFFFFF] z-20 border-b shadow-sm mt-[29px]'>
-          {children}
-        </div>
+        {children}
       </div>
     </>
   );
