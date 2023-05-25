@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function Tabbar() {
   const navigate = useNavigate();
   return (
-    <div className='absolute top-[743px] border bg-[#FFFFFF] rounded-b-[15px] z-20'>
+    <div className='fixed bottom-8 border bg-[#FFFFFF]  z-20'>
       <div className='flex justify-evenly items-center w-[372px] h-[65px] shadow-sm'>
         <img
           src=''

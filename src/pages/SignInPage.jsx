@@ -70,6 +70,14 @@ function SignInPage() {
             비밀번호 찾기
           </button>
         </div>
+        <div>
+          <button
+            type='button'
+            className='w-20 text-sm font-bold border-b border-[#CACACA]'
+          >
+            이메일 회원가입
+          </button>
+        </div>
       </div>
     </>
   );
