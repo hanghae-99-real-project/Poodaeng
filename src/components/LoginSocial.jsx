@@ -13,7 +13,7 @@ function LoginSocial() {
     navigate('/signin');
   };
   return (
-    <div className='flex flex-col items-center gap-3'>
+    <div className='flex flex-col justify-center items-center gap-3'>
       <div className='flex flex-col items-center mb-[51px]'>
         <Logo st='w-[169px] h-[31px] bg-contain bg-no-repeat mb-2' />
         <div className='mb-5 text-base font-medium '>

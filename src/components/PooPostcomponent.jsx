@@ -1,13 +1,24 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Headers from './Headers';
 import FileUploader from './FileUploader';
 import Buttons from './common/Buttons';
 
 function PooPostcomponent() {
+  const navigate = useNavigate();
   return (
     <div className='container'>
-      <Headers>푸박스 등록</Headers>
+      <Headers text>
+        <img
+          className='absolute left-5 scale-[-1] mt-1 cursor-pointer'
+          src='Vector 56.png'
+          alt='<'
+          onClick={() => navigate('/')}
+          role='none'
+        />
+        <div className='font-[700]'>푸박스 등록</div>
+      </Headers>
       <div className='ml-[23px] mt-[31px]'>
         <div className='font-[600] text-[15px]'>푸박스 위치</div>
         <input

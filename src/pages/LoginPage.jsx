@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Loading from '../components/Loading';
+// import Loading from '../components/Loading';
 import LoginAgree from '../components/LoginAgree';
 import LoginSocial from '../components/LoginSocial';
 
@@ -11,11 +11,11 @@ function LoginPage() {
     next: false,
     social: false,
   });
-  const isLoading = false;
+  // const isLoading = false;
 
   return (
-    <div className='flex flex-col  items-center'>
-      {isLoading ? <Loading /> : null}
+    <div className='flex flex-col h-[812px] justify-center  items-center'>
+      {/* {isLoading ? <Loading /> : null} */}
       {!redirectPage.next && <LoginAgree setRedirectPage={setRedirectPage} />}
       {redirectPage.social && <LoginSocial setRedirectPage={setRedirectPage} />}
     </div>
