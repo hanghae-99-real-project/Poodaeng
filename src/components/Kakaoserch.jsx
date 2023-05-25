@@ -79,7 +79,9 @@ function Kakaoserch() {
 
   return (
     <div className='container'>
-      <Headers text>푸박스 찾기</Headers>
+      <Headers text icon destination=''>
+        푸박스 찾기
+      </Headers>
       <div id='map2' style={{ width: '100%', height: '100%' }} />
       <Tabbar />
     </div>
