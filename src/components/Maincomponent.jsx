@@ -13,7 +13,7 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='flex flex-row justify-between border w-[375px] mt-[30px]'>
+      <div className='flex flex-row justify-between w-[375px] mt-[30px]'>
         <img
           className='ml-[20px] mt-[20px] mb-[8px] object-contain'
           src='./PooDaeng.png'
@@ -29,7 +29,7 @@ function Maincomponent() {
       {/* 여기 밑에 height 크기를 지정해줘야 overflow를 인식할 수도 있음. */}
       <div className='max-h-[600px]'>
         <div
-          className='flex justify-center items-center w-[373px] h-[150px] border-t border-b cursor-pointer'
+          className='flex justify-center items-center w-[373px] h-[150px] ml-[14px] border-t border-b cursor-pointer'
           role='none'
           onClick={() => navigate('/events')}
         >
@@ -56,9 +56,9 @@ function Maincomponent() {
               className='relative bottom-14 left-[17.9rem] z-20'
             />
           </div>
-          <div className='border mt-[39px]' />
+          <div className='border mt-[15px]' />
         </div>
-        <div className='mt-[25px] ml-[30px] font-[700]'>내 주변 실종신고</div>
+        <div className='mt-[10px] ml-[30px] font-[700]'>내 주변 실종신고</div>
         <div className='ml-[30px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
