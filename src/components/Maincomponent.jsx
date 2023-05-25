@@ -13,7 +13,7 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='flex justify-between '>
+      <div className='flex flex-row justify-between border w-[375px]'>
         <img
           className='ml-[20px] mt-[20px] mb-[8px] object-contain'
           src='./PooDaeng.png'
@@ -62,7 +62,7 @@ function Maincomponent() {
         <div className='ml-[23px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='flex gap-[10px] w-[370px] h-32 overflow-x-auto'>
+        <div className='flex gap-[10px] w-[370px] h-32 overflow-x-auto ml-[23px]'>
           <div className=' border w-[102px] h-[102px] rounded-xl'>
             board card1
           </div>

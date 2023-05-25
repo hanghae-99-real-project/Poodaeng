@@ -2,7 +2,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Headers from './Headers';
-import Tabbar from './Tabbar';
 import FileUploader from './FileUploader';
 
 function PooPostcomponent() {
@@ -37,7 +36,6 @@ function PooPostcomponent() {
           placeholder='특이사항 입력'
         />
       </div>
-      <Tabbar />
     </div>
   );
 }
