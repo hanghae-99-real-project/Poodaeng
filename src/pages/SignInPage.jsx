@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../components/common/Logo';
 
 function SignInPage() {
   const [isError, setIsError] = useState(true);
   // const isError = true;
+  const navigate = useNavigate();
   const onClose = () => {
     setIsError(false);
   };
+  const onSubmitHandler = e => {
+    e.preventDefault();
+    console.log('onSubmitHandler');
+  };
+  const moveToSignUp = () => {
+    navigate('/signup');
+  };
+
   return (
     <>
       <IoIosArrowBack className='back-button' />
@@ -36,14 +46,17 @@ function SignInPage() {
           </button>
         </div>
       </div>
-      <div className='flex flex-col items-center mb-7'>
+      <div className='flex flex-col h-full justify-center items-center mb-7'>
         <div className='flex flex-col items-center mb-[78px] '>
           <Logo st='w-[169px] h-[31px] bg-contain bg-no-repeat mb-2' />
           <div className='text-base font-medium '>
             반려견 배변 처리 위치 정보
           </div>
         </div>
-        <form className='flex flex-col items-center mb-4'>
+        <form
+          className='flex flex-col items-center mb-4'
+          onSubmit={onSubmitHandler}
+        >
           <div className='flex flex-col items-center gap-6 mb-8'>
             <input
               className='w-[240px] text-base font-bold border-b border-[#CACACA]'
@@ -61,7 +74,7 @@ function SignInPage() {
             로그인
           </button>
         </form>
-        <div className='flex flex-row  justify-center gap-2'>
+        <div className='flex flex-row  justify-center gap-2 mb-11'>
           <button type='button' className='text-[#959595]'>
             아이디 찾기
           </button>
@@ -70,10 +83,11 @@ function SignInPage() {
             비밀번호 찾기
           </button>
         </div>
-        <div>
+        <div className='w-full flex justify-center items-center'>
           <button
             type='button'
-            className='w-20 text-sm font-bold border-b border-[#CACACA]'
+            className=' px-2 text-sm font-bold border-b border-[#CACACA]'
+            onClick={moveToSignUp}
           >
             이메일 회원가입
           </button>

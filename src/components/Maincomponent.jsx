@@ -27,7 +27,7 @@ function Maincomponent() {
         />
       </div>
       {/* 여기 밑에 height 크기를 지정해줘야 overflow를 인식할 수도 있음. */}
-      <div className='max-h-[600px] overflow-y-auto'>
+      <div className='max-h-[600px]'>
         <div
           className='flex justify-center items-center w-[373px] h-[179px] border-t border-b cursor-pointer'
           role='none'
@@ -80,7 +80,7 @@ function Maincomponent() {
           </div>
         </div>
       </div>
-      <Tabbar number='700' />
+      <Tabbar />
     </>
   );
 }
