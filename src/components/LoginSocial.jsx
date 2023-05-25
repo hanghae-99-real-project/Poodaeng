@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './common/Logo';
 import KakaoLogin from '../utils/KakaoLogin';
-import Buttons from './common/Buttons';
+// import Buttons from './common/Buttons';
 
 function LoginSocial() {
   const navigate = useNavigate();
@@ -24,12 +24,12 @@ function LoginSocial() {
       </div>
       <div className='flex flex-col gap-4'>
         <KakaoLogin />
-        {/* <button type='button' className='large-button bg-[#F9EB00]'>
-          카카오톡으로 시작하기
-        </button> */}
-        <Buttons type='button' textColor='#fff' bgColor='#000000'>
+        <button type='button' className='large-button bg-[#000000] text-[#fff]'>
           구글 계정으로 시작하기
-        </Buttons>
+        </button>
+        {/* <Buttons type='button' textColor='#fff' bgColor='#000000'>
+          구글 계정으로 시작하기
+        </Buttons> */}
       </div>
       <div className='flex flex-row  justify-center gap-2'>
         <button type='button' className='text-[#959595]' onClick={normalSignUp}>

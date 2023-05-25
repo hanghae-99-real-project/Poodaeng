@@ -8,10 +8,12 @@ import Map from '../pages/Map';
 import PooPost from '../pages/PooPost';
 import LoginPage from '../pages/LoginPage';
 import SignInPage from '../pages/SignInPage';
-import SignupPage from '../pages/SignupPage';
+import SignUpPage from '../pages/SignUpPage';
 import AuthCheck from '../pages/AuthCheck';
 import DaengFinder from '../pages/DaengFinder';
-
+import SignUpCompletePage from '../pages/SignUpCompletePage';
+// import TokenCheck from '../utils/TokenCheck';
+/* Token 체크를 작성 업로드, 삭제, 수정 시에만 토큰을 보내서 확인하도록 구성하자. */
 function Router() {
   console.log("렌더링 발생하였습니다.")
   return (
@@ -26,7 +28,8 @@ function Router() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/auth' element={<AuthCheck />}/>
           <Route path='/signin' element={<SignInPage />}/>
-          <Route path='/signup' element={<SignupPage />}/>
+          <Route path='/signup' element={<SignUpPage />}/>
+          <Route path='/signupcomplete' element={<SignUpCompletePage />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
         </Route>
       </Routes>

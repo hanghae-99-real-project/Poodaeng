@@ -49,14 +49,21 @@ function LoginAgree({ setRedirectPage }) {
             >
               동의하고 시작하기
             </Buttons>
-            <Buttons
+            {/* <Buttons
               type='button'
               bgColor='#CBCBCB'
               textColor='#fff'
               onClick={withoutAgree}
             >
               위치 정보없이 시작하기
-            </Buttons>
+            </Buttons> */}
+            <button
+              type='button'
+              className='large-button bg-[#CBCBCB] text-[#fff]'
+              onClick={withoutAgree}
+            >
+              위치 정보없이 시작하기
+            </button>
           </div>
         </>
       )}
