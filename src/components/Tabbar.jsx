@@ -1,9 +1,11 @@
-import React from "react";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Tabbar() {
+  const navigate = useNavigate();
   return (
-    <div className='absolute border left-[20px] top-[745px] bg-[#FFFFFF] rounded-b-[15px]'>
-      <div className='flex justify-evenly items-center w-[374px] h-[86px] shadow-xs'>
+    <div className='absolute top-[743px] border bg-[#FFFFFF] rounded-b-[15px] z-20'>
+      <div className='flex justify-evenly items-center w-[372px] h-[65px] shadow-sm'>
         <img
           src=''
           alt='icon1.png'
@@ -17,9 +19,11 @@ function Tabbar() {
         />
 
         <img
-          src=''
+          src='Group 176.png'
           alt='icon3.png'
           className='border w-[45px] h-[41px] rounded-[8px]'
+          onClick={() => navigate('./poopost')}
+          role='none'
         />
 
         <img

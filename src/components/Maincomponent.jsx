@@ -1,26 +1,36 @@
-import React from "react";
-import { KakaoMyPoint } from "./Kakaomypoint";
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { KakaoMyPoint } from './Kakaomypoint';
+import Tabbar from './Tabbar';
 
 function Maincomponent() {
-  const DetailMapHandler = () => {
-    console.log(1);
+  const navigate = useNavigate();
+
+  const AlertNavigateHander = () => {
+    navigate('/alert');
   };
 
   return (
     <div className='container'>
       <div className='flex justify-between '>
         <img
-          className='ml-[25px] mt-[63px] mb-[21px]'
-          src='Logo.png'
+          className='ml-[20px] mt-[20px] mb-[8px] object-contain'
+          src='./PooDaeng.png'
           alt='PooDaeng.png'
         />
         <img
-          className='mr-[22px] mt-[63px] mb-[21px]'
-          src='Alert.png'
+          className='mr-[22px] mt-[20px] mb-[20px] object-contain cursor-pointer'
+          src='./Group 120.png'
           alt='Alert.png'
+          onClick={AlertNavigateHander}
         />
       </div>
-      <div className='flex justify-center items-center w-[375px] h-[179px] border'>
+      <div
+        className='flex justify-center items-center w-[373px] h-[179px] border-t border-b cursor-pointer'
+        role='none'
+        onClick={() => navigate('/events')}
+      >
         <div className=''>eventBox</div>
       </div>
       <div>
@@ -31,8 +41,18 @@ function Maincomponent() {
           지금 내 주변에 있는 푸박스의 위치를 확인하세요.
         </div>
         <div className='w-[330px] h-[155px] border ml-[22px]'>
-          <KakaoMyPoint onClick={DetailMapHandler} />
-          <div className='relative bottom-8 left-20 z-10'>button</div>
+          <KakaoMyPoint className='w-[330px] h-[155px]' />
+          <img
+            src='./Ellipse 35.png'
+            alt='button'
+            className='relative bottom-8 left-[17rem] z-10 cursor-pointer'
+            onClick={() => navigate('/map')}
+          />
+          <img
+            src='./Vector 56.png'
+            alt='button'
+            className='relative bottom-14 left-[17.9rem] z-20'
+          />
         </div>
         <div className='border mt-[39px]' />
       </div>
@@ -51,6 +71,7 @@ function Maincomponent() {
           board card3
         </div>
       </div>
+      <Tabbar number='700' />
     </div>
   );
 }
