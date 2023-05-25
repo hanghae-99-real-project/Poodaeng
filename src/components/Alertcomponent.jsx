@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Tabbar from './Tabbar';
 import Header from './Headers';
 
 function Alertcomponent() {
   const [backColor, setBackColor] = useState(false);
-
-  const navigate = useNavigate();
 
   const onClickHandler = () => {
     setBackColor(true);
@@ -14,16 +11,7 @@ function Alertcomponent() {
 
   return (
     <div className='container'>
-      <Header>
-        <img
-          className='absolute left-5 cursor-pointer mt-1 scale-[-1]'
-          src='./Vector 56.png'
-          alt='<'
-          onClick={() => navigate(-1)}
-          role='none'
-        />
-        <div className='font-[700]'>알림</div>
-      </Header>
+      <Header>알림</Header>
       <div
         className={`flex border ml-[10px] mt-[10px] mr-[10px] p-[19px] rounded-[6px] 
         ${backColor ? 'bg-[#FFFFFF]' : 'bg-[#D9D9D9]'}`}

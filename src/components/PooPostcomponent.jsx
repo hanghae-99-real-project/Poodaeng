@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Headers from './Headers';
 import FileUploader from './FileUploader';
+import Buttons from './common/Buttons';
 
 function PooPostcomponent() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function PooPostcomponent() {
           className='border-none font-[400] text-[15px] pb-[8px] mt-[13px] w-[330px] h-[200px] resize-none'
           placeholder='특이사항 입력'
         />
+        <Buttons className='ml-[23px]'>등록하기</Buttons>
       </div>
     </div>
   );

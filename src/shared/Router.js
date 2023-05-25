@@ -10,6 +10,7 @@ import LoginPage from '../pages/LoginPage';
 import SignInPage from '../pages/SignInPage';
 import SignupPage from '../pages/SignupPage';
 import AuthCheck from '../pages/AuthCheck';
+import DaengFinder from '../pages/DaengFinder';
 
 function Router() {
   console.log("렌더링 발생하였습니다.")
@@ -26,6 +27,7 @@ function Router() {
           <Route path='/auth' element={<AuthCheck />}/>
           <Route path='/signin' element={<SignInPage />}/>
           <Route path='/signup' element={<SignupPage />}/>
+          <Route path='/daengfinder' element={<DaengFinder />}/>
         </Route>
       </Routes>
     </BrowserRouter>

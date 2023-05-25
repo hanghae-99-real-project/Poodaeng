@@ -20,7 +20,7 @@ function Tabbar() {
 
         <img
           src='Group 176.png'
-          alt='icon3.png'
+          alt='PooPost'
           className='border w-[45px] h-[41px] rounded-[8px]'
           onClick={() => navigate('./poopost')}
           role='none'
@@ -28,8 +28,10 @@ function Tabbar() {
 
         <img
           src=''
-          alt='icon4.png'
+          alt='DaengFinder'
           className='border w-[45px] h-[41px] rounded-[8px]'
+          onClick={() => navigate('./daengfinder')}
+          role='none'
         />
 
         <img
