@@ -5,6 +5,7 @@ import Layout from './Layout';
 import Alert from '../pages/Alert';
 import Events from '../pages/Events';
 import Map from '../pages/Map';
+import PooPost from '../pages/PooPost';
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
           <Route path="/alert" element={<Alert />} />
           <Route path="/events" element={<Events />} />
           <Route path="/map" element={<Map />} />
+          <Route path="/poopost" element={<PooPost />} />
         </Route>
       </Routes>
     </BrowserRouter>

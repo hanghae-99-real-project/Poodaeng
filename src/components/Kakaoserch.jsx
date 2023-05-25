@@ -87,7 +87,7 @@ function Kakaoserch() {
           onClick={HomeNavigateHandler}
           role='none'
         />
-        <div className='font-[700]'>Foo Finder</div>
+        <div className='font-[700]'>푸박스 찾기</div>
       </Headers>
       <div id='map2' style={{ width: '100%', height: '100%' }} />
       <Tabbar />
