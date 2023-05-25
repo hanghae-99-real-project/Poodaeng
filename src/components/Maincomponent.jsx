@@ -29,7 +29,7 @@ function Maincomponent() {
       {/* 여기 밑에 height 크기를 지정해줘야 overflow를 인식할 수도 있음. */}
       <div className='max-h-[600px] overflow-y-auto'>
         <div
-          className='flex justify-center items-center w-[373px] h-[179px] border-t border-b cursor-pointer'
+          className='flex justify-center items-center w-[373px] h-[150px] border-t border-b cursor-pointer'
           role='none'
           onClick={() => navigate('/events')}
         >
@@ -62,7 +62,7 @@ function Maincomponent() {
         <div className='ml-[23px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='w-[370px] h-32 overflow-x-auto'>
+        <div className='flex gap-[10px] w-[370px] h-32 overflow-x-auto'>
           <div className=' border w-[102px] h-[102px] rounded-xl'>
             board card1
           </div>
@@ -71,12 +71,6 @@ function Maincomponent() {
           </div>
           <div className=' border w-[102px] h-[102px] rounded-xl'>
             board card3
-          </div>
-          <div className=' border w-[102px] h-[102px] rounded-xl'>
-            board card4
-          </div>
-          <div className=' border w-[102px] h-[102px] rounded-xl'>
-            board card5
           </div>
         </div>
       </div>
