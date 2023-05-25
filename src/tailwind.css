@@ -16,7 +16,7 @@
   }
 
   .canvas {
-    @apply overflow-hidden flex flex-col justify-center items-center relative w-[375px] h-[852px]  bg-[#FFFFFF];
+    @apply overflow-hidden flex flex-col justify-center items-center relative w-[375px] h-[902px]  bg-[#FFFFFF];
   }
 
   .container {
