@@ -36,13 +36,13 @@ function Maincomponent() {
           <div className=''>eventBox</div>
         </div>
         <div>
-          <div className='ml-[23px] mt-[21px] font-[700] text-[20px] '>
+          <div className='ml-[30px] mt-[10px] font-[700] text-[20px] '>
             내주변푸박스찾기
           </div>
-          <div className='ml-[23px] mt-[4px] font-[500] text-[11px] text-[#808080]'>
+          <div className='ml-[30px] mt-[4px] font-[500] text-[11px] text-[#808080]'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
-          <div className='w-[330px] h-[155px] border ml-[32px]'>
+          <div className='w-[330px] h-[155px] border ml-[30px]'>
             <KakaoMyPoint className='w-[330px] h-[155px]' />
             <img
               src='./Ellipse 35.png'
@@ -58,11 +58,11 @@ function Maincomponent() {
           </div>
           <div className='border mt-[39px]' />
         </div>
-        <div className='mt-[25px] ml-[23px] font-[700]'>내 주변 실종신고</div>
-        <div className='ml-[23px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
+        <div className='mt-[25px] ml-[30px] font-[700]'>내 주변 실종신고</div>
+        <div className='ml-[30px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='flex gap-[10px] w-[370px] h-32 overflow-x-auto ml-[23px]'>
+        <div className='flex gap-[10px] w-[370px] h-32 overflow-x-auto ml-[30px]'>
           <div className=' border w-[102px] h-[102px] rounded-xl'>
             board card1
           </div>
