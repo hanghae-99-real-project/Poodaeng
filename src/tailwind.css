@@ -16,7 +16,8 @@
   }
 
   .canvas {
-    @apply overflow-hidden flex flex-col items-center relative w-[375px] h-[812px]  bg-[#FFFFFF];
+    /* @apply overflow-hidden flex flex-col items-center relative w-[375px] h-[812px]  bg-[#FFFFFF]; */
+    @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF];
   }
 
   .container {
@@ -36,7 +37,7 @@
   }
 
   .back-button {
-    @apply absolute top-16 left-4 text-lg;
+    @apply absolute top-14 left-4 text-lg;
   }
 }
 
