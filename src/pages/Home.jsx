@@ -3,7 +3,7 @@ import Maincomponent from '../components/Maincomponent';
 
 function Home() {
   return (
-    <div className='w-screen'>
+    <div>
       <Maincomponent />
     </div>
   );

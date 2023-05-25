@@ -9,6 +9,7 @@ module.exports = {
     // },
     /** @테마설정 */
     extend: {
+     
       colors: {
         mainColor: {
           /* 100, 200 같은 것은 단위를 내가 더 잘게 쪼갠 것 */
