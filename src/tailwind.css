@@ -17,11 +17,8 @@
 
   .canvas {
     /* @apply overflow-hidden flex flex-col items-center relative w-[375px] h-[812px]  bg-[#FFFFFF]; */
-    @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF];
-  }
-
-  .container {
-    @apply flex flex-col w-[375px] h-[812px] border rounded-[15px] overflow-hidden;
+    /* @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF]; */
+    @apply overflow-hidden flex items-center flex-col relative w-full h-full min-w-[375px] min-h-[812px] bg-[#FFFFFF];
   }
 
   .logo-div {
