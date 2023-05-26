@@ -13,14 +13,14 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='flex flex-row justify-between w-[375px] mt-[30px]'>
+      <div className='flex flex-row justify-between w-[375px]'>
         <img
-          className='ml-[20px] mt-[20px] mb-[8px] object-contain'
+          className='ml-[20px] mb-[8px] object-contain'
           src='./PooDaeng.png'
           alt='PooDaeng.png'
         />
         <img
-          className='mr-[22px] mt-[20px] mb-[20px] object-contain cursor-pointer'
+          className='mr-[22px] mb-[20px] object-contain cursor-pointer'
           src='./Group 120.png'
           alt='Alert.png'
           onClick={AlertNavigateHander}

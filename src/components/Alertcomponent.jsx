@@ -10,8 +10,8 @@ function Alertcomponent() {
   };
 
   return (
-    <div className='container'>
-      <Header text icon>
+    <div className='h-[812px]'>
+      <Header text icon destination=''>
         알림
       </Header>
       <div

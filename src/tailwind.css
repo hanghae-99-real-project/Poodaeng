@@ -18,7 +18,7 @@
   .canvas {
     /* @apply overflow-hidden flex flex-col items-center relative w-[375px] h-[812px]  bg-[#FFFFFF]; */
     /* @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF]; */
-    @apply overflow-hidden flex items-center flex-col relative w-full h-full min-w-[375px] min-h-[812px] bg-[#FFFFFF];
+    @apply overflow-hidden flex flex-col items-center relative pt-[61px] w-full h-full min-w-[375px] min-h-[812px] bg-[#FFFFFF];
   }
 
   .logo-div {
@@ -34,7 +34,8 @@
   }
 
   .back-button {
-    @apply absolute top-14 left-4 text-lg;
+    /* @apply absolute top-1/2 left-4 transform translate-y-1/2 text-lg; */
+    @apply absolute top-1/2 left-4 transform translate-y-1/2 text-lg;
   }
 }
 
