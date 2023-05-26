@@ -15,11 +15,11 @@ function KakaoMyPoint() {
     const map = new kakao.maps.Map(mapContainer.current, mapOption);
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.watchPosition(position => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         const locPosition = new kakao.maps.LatLng(lat, lon);
-        const message = '<div style="padding:5px;">여기에 계신가요?!</div>';
+        const message = '<div style="padding:5px;">내 위치</div>';
         displayMarker(map, locPosition, message);
       });
     } else {

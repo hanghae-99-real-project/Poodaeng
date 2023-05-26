@@ -1,15 +1,19 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-inner-declarations */
 /* eslint-disable no-undef */
 /* eslint-disable consistent-return */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
-import React, { useEffect } from 'react';
-import Tabbar from './Tabbar';
+import React, { useEffect, useRef } from 'react';
 import Headers from './Headers';
 
 function Kakaoserch() {
+  const mapContainer = useRef(null);
+
   useEffect(() => {
+    const { kakao } = window;
+
     const script = document.createElement('script');
     script.src =
       '//dapi.kakao.com/v2/maps/sdk.js?appkey=239411147ef0f32c5e49b15677045e5c';
@@ -21,61 +25,92 @@ function Kakaoserch() {
         initializeMap();
       });
     };
-  }, []);
 
-  function initializeMap() {
-    const mapContainer = document.getElementById('map2');
-
-    if (mapContainer) {
+    function initializeMap() {
       const mapOption = {
-        center: new kakao.maps.LatLng(37.5652352, 127.0284288), // 지도의 중심좌표
-        level: 3, // 지도의 확대 레벨
+        center: new kakao.maps.LatLng(37.5652352, 127.0284288),
+        level: 3,
       };
 
-      const map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+      const map = new kakao.maps.Map(mapContainer.current, mapOption);
 
-      // 버튼을 클릭하면 아래 배열의 좌표들이 모두 보이게 지도 범위를 재설정합니다
       const points = [
         new kakao.maps.LatLng(37.5621152, 127.0271188),
         new kakao.maps.LatLng(37.5652252, 127.0282288),
         new kakao.maps.LatLng(37.5663352, 127.0293388),
       ];
 
-      // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
       const bounds = new kakao.maps.LatLngBounds();
 
       let i;
       let marker;
       for (i = 0; i < points.length; i++) {
-        // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
         marker = new kakao.maps.Marker({ position: points[i] });
         marker.setMap(map);
-
-        // LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(points[i]);
       }
 
       function setBounds() {
-        // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
-        // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
         map.setBounds(bounds);
       }
 
       setBounds();
-    } else {
-      console.error('데이터를 찾지 못했습니다.');
-      // 'map' 요소를 찾지 못했을 때의 처리
-      // ...
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const locPosition = new kakao.maps.LatLng(lat, lon);
+          const message = '<div style="padding:5px;">내 위치</div>';
+          displayMarker(map, locPosition, message);
+        });
+      } else {
+        const locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+        const message = 'geolocation을 사용할 수 없어요..';
+        displayMarker(map, locPosition, message);
+      }
     }
-  }
+
+    function displayMarker(map, locPosition, message) {
+      const imageSrc = 'Group 47.png';
+      const imageSize = new kakao.maps.Size(32, 69);
+      const imageOption = { offset: new kakao.maps.Point(15, 50) };
+
+      const markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption,
+      );
+
+      const marker = new kakao.maps.Marker({
+        map,
+        position: locPosition,
+        image: markerImage,
+      });
+
+      const iwContent = message;
+      const iwRemoveable = true;
+
+      const infowindow = new kakao.maps.InfoWindow({
+        content: iwContent,
+        removable: iwRemoveable,
+      });
+
+      infowindow.open(map, marker);
+      map.setCenter(locPosition);
+    }
+  }, []);
 
   return (
     <>
       <Headers text icon destination=''>
         푸박스 찾기
       </Headers>
-      <div id='map2' style={{ width: '100%', height: '100%' }} />
-      <Tabbar />
+      <div
+        id='map2'
+        ref={mapContainer}
+        style={{ width: '100%', height: '100%' }}
+      />
     </>
   );
 }
