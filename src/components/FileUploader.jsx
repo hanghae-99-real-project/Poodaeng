@@ -22,11 +22,11 @@ function FileUploader() {
   };
 
   return (
-    <div className='w-[200px] h-[200px]'>
+    <div className='w-[150px] h-[150px]'>
       {!image ? (
         <>
           <label className='signup-profileImg-label' htmlFor='profileImg'>
-            <div className='absolute flex items-center justify-center border w-[200px] h-[200px] bg-[#D9D9D9] rounded-[10px]'>
+            <div className='absolute flex items-center justify-center border w-[150px] h-[150px] bg-[#D9D9D9] rounded-[10px]'>
               +
             </div>
           </label>
@@ -43,7 +43,7 @@ function FileUploader() {
           {image && (
             <img
               role='none'
-              className='w-[200px] h-[200px] object-cover'
+              className='w-[150px] h-[150px] object-cover'
               src={image}
               alt='Thumbnail'
               onClick={deleteImage}

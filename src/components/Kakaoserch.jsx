@@ -5,18 +5,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Tabbar from './Tabbar';
 import Headers from './Headers';
 
 function Kakaoserch() {
-  const navigate = useNavigate();
-
-  const HomeNavigateHandler = () => {
-    navigate('/');
-    window.location.reload();
-  };
-
   useEffect(() => {
     const script = document.createElement('script');
     script.src =
