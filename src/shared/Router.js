@@ -8,7 +8,7 @@ import Map from '../pages/Map';
 import PooPost from '../pages/PooPost';
 import LoginPage from '../pages/LoginPage';
 import SignInPage from '../pages/SignInPage';
-import SignUpPage from '../pages/SignUpPage';
+import SignUpPage from '../pages/SignupPage';
 import AuthCheck from '../pages/AuthCheck';
 import DaengFinder from '../pages/DaengFinder';
 import CompletePage from '../pages/CompletePage';

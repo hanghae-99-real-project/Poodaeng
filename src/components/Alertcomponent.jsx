@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Tabbar from './Tabbar';
-import Header from './Headers';
+import Headers from './Headers';
 
 function Alertcomponent() {
   const [backColor, setBackColor] = useState(false);
@@ -11,9 +11,9 @@ function Alertcomponent() {
 
   return (
     <div className='h-[812px]'>
-      <Header text icon destination=''>
+      <Headers text icon destination=''>
         알림
-      </Header>
+      </Headers>
       <div
         className={`flex border ml-[10px] mt-[10px] mr-[10px] p-[19px] rounded-[6px] 
         ${backColor ? 'bg-[#FFFFFF]' : 'bg-[#D9D9D9]'}`}
