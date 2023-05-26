@@ -11,7 +11,7 @@ import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignUpPage';
 import AuthCheck from '../pages/AuthCheck';
 import DaengFinder from '../pages/DaengFinder';
-import SignUpCompletePage from '../pages/SignUpCompletePage';
+import CompletePage from '../pages/CompletePage';
 // import TokenCheck from '../utils/TokenCheck';
 /* Token 체크를 작성 업로드, 삭제, 수정 시에만 토큰을 보내서 확인하도록 구성하자. */
 function Router() {
@@ -29,7 +29,7 @@ function Router() {
           <Route path='/auth' element={<AuthCheck />}/>
           <Route path='/signin' element={<SignInPage />}/>
           <Route path='/signup' element={<SignUpPage />}/>
-          <Route path='/signupcomplete' element={<SignUpCompletePage />}/>
+          <Route path='/signupcomplete' element={<CompletePage />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
         </Route>
       </Routes>

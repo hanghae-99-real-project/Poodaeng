@@ -11,6 +11,15 @@ function Eventcomponent() {
       <div className='flex justify-center m-auto'>
         진행중인 이벤트가 없습니다
       </div>
+      <div className='flex justify-center m-auto'>
+        진행중인 이벤트가 없습니다
+      </div>
+      <div className='flex justify-center m-auto'>
+        진행중인 이벤트가 없습니다
+      </div>
+      <div className='flex justify-center m-auto'>
+        진행중인 이벤트가 없습니다
+      </div>
       <Tabbar />
     </>
   );
