@@ -5,7 +5,7 @@ import { BsCheckLg } from 'react-icons/bs';
 import Headers from '../components/Headers';
 import Buttons from '../components/common/Buttons';
 
-function SignupPage() {
+function SignUpPage() {
   const navigate = useNavigate();
   const moveToWelcome = () => {
     navigate('/signupcomplete');
@@ -90,4 +90,4 @@ function SignupPage() {
   );
 }
 
-export default SignupPage;
+export default SignUpPage;

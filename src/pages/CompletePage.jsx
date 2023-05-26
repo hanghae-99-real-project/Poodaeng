@@ -1,7 +1,7 @@
 import React from 'react';
 import Buttons from '../components/common/Buttons';
 
-function SignUpCompletePage() {
+function CompletePage() {
   return (
     <div className='flex flex-col items-center h-full pt-44'>
       <div className='flex flex-col items-center '>
@@ -28,4 +28,4 @@ function SignUpCompletePage() {
   );
 }
 
-export default SignUpCompletePage;
+export default CompletePage;
