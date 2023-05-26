@@ -36,7 +36,7 @@ function Maincomponent() {
         </div>
         <div>
           <div className='ml-[30px] mt-[10px] font-[700] text-[20px] '>
-            내주변푸박스찾기
+            내 주변 푸박스 찾기
           </div>
           <div className='ml-[30px] mt-[4px] font-[500] text-[11px] text-[#808080]'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
