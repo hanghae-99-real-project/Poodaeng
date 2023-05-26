@@ -1,13 +1,13 @@
-import {
-  BrowserView,
-  MobileView,
-  // isBrowser,
-  // isMobile,
-} from 'react-device-detect';
+// import {
+//   BrowserView,
+//   MobileView,
+//   isBrowser,
+//   isMobile,
+// } from 'react-device-detect';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Router from './shared/Router';
-import Something from './Something';
+// import Something from './Something';
 
 const queryClient = new QueryClient();
 
@@ -17,14 +17,17 @@ function App() {
       {/* {isMobile && <MobilePage />}
       {isBrowser && <BrowserPage />} */}
       {/* {isMobile ? <MobilePage /> : <BrowserPage />} */}
-      <MobileView>
+      <QueryClientProvider client={queryClient}>
+        <Router />
+      </QueryClientProvider>
+      {/* <MobileView>
         <QueryClientProvider client={queryClient}>
           <Router />
         </QueryClientProvider>
       </MobileView>
       <BrowserView>
         <Something />
-      </BrowserView>
+      </BrowserView> */}
     </>
   );
 }
