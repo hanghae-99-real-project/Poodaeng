@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function Headers({ children, text, icon, destination }) {
   const navigate = useNavigate();
   return (
-    <>
+    <div className='border'>
       {icon && (
         <IoIosArrowBack
           onClick={() => navigate(`/${destination}`)}
@@ -13,13 +13,13 @@ function Headers({ children, text, icon, destination }) {
         />
       )}
       <div
-        className={` flex justify-center my-[52px] font-bold ${
+        className={` flex justify-center my-[20px] font-bold ${
           text && 'text-xl'
         }`}
       >
         {children}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -18,7 +18,7 @@
   .canvas {
     /* @apply overflow-hidden flex flex-col items-center relative w-[375px] h-[812px]  bg-[#FFFFFF]; */
     /* @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF]; */
-    @apply overflow-hidden flex items-center flex-col relative w-full h-full min-w-[375px] min-h-[812px] bg-[#FFFFFF];
+    @apply overflow-hidden flex items-center justify-between flex-col relative w-full h-full min-w-[375px] min-h-[812px] bg-[#FFFFFF];
   }
 
   .logo-div {

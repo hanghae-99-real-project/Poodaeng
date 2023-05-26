@@ -11,7 +11,7 @@ function Alertcomponent() {
 
   return (
     <div className='container'>
-      <Header text icon>
+      <Header text icon destination=''>
         알림
       </Header>
       <div
