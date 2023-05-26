@@ -1,11 +1,11 @@
-import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import {
   BrowserView,
   MobileView,
   // isBrowser,
   // isMobile,
 } from 'react-device-detect';
+import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import Router from './shared/Router';
 import Something from './Something';
 
