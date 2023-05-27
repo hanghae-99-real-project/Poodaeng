@@ -4,10 +4,11 @@ import Buttons from "../components/common/Buttons";
 
 function SocialKakao(){
   // const Rest_api_key='REST API KEY' //REST API KEY
-  const RestApiKey = process.env.REACT_APP_REST_API_KEY; // REST API KEY
-  const redirectUri = 'http://localhost:3000/auth'; // Redirect URI
+  // const redirectUri = 'http://localhost:3000/auth'; // Redirect URI
+  const restApiKey = process.env.REACT_APP_KAKAO_REST_API_KEY; // REST API KEY
+  const redirectUri = process.env.REACT_APP_KAKAO_REDIRECT_URI // Redirect URI
   // oauth 요청 URL
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${RestApiKey}&redirect_uri=${redirectUri}&response_type=code`;
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`;
   const handleLogin = () => {
     window.location.href = kakaoURL;
   };

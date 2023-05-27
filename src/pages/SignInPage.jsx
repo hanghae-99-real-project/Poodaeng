@@ -21,7 +21,7 @@ function SignInPage() {
 
   return (
     <>
-      <IoIosArrowBack className='back-button' />
+      <IoIosArrowBack className='absolute left-4 top-16' />
       <div className={`fixed z-30 inset-0 ${isError ? '' : 'hidden'}`}>
         <div
           role='none'
@@ -46,7 +46,7 @@ function SignInPage() {
           </button>
         </div>
       </div>
-      <div className='flex flex-col h-full justify-center items-center mb-7'>
+      <div className='flex flex-col h-full justify-center items-center mb-7 translate-x-1/2 translate-y-1/2'>
         <div className='flex flex-col items-center mb-[78px] '>
           <Logo st='w-[169px] h-[31px] bg-contain bg-no-repeat mb-2' />
           <div className='text-base font-medium '>

@@ -73,7 +73,7 @@ function Maincomponent() {
           </div>
         </div>
       </div>
-      <Tabbar number='700' />
+      <Tabbar />
     </>
   );
 }
