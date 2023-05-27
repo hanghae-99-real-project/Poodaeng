@@ -33,7 +33,9 @@ function Mypagecomponent() {
             <div className='border mb-5' />
           </div>
           <div className='ml-5 h-96'>
-            <div className='large-button text-lg '>내가 작성한 글 보기</div>
+            <div className='large-button text-lg cursor-pointer hover:bg-mainColor-100'>
+              내가 작성한 글 보기
+            </div>
             <div className='large-button text-lg '>북마크</div>
             <div className='large-button text-lg '>프로필 설정하기</div>
             <div className='large-button text-lg '>이용 안내</div>

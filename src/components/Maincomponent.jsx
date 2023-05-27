@@ -72,8 +72,8 @@ function Maincomponent() {
           </div>
         </div>
       </div>
-      <div className='mt-[55px]'>
-        <Tabbar number='700' />
+      <div className='mt-14'>
+        <Tabbar />
       </div>
     </>
   );
