@@ -1,27 +1,41 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Logo from './common/Logo';
 import Loading from './Loading';
 import Buttons from './common/Buttons';
 
-function LoginAgree({ setRedirectPage }) {
-  // const navigate = useNavigate();
+// function LoginAgree({ setRedirectPage }) {
+function LoginAgree() {
+  const navigate = useNavigate();
   const withAgree = () => {
-    setRedirectPage({
-      agree: true,
-      next: true,
-      social: true,
-    });
-    /* 소켓 on 로직 */
+    localStorage.setItem('agreed', true);
+    navigate('/loginsocial');
+    // navigate('/loginsocial', {
+    //   state: {
+    //     withAgree: true,
+    //   },
+    // });
   };
   const withoutAgree = () => {
-    setRedirectPage({
-      agree: false,
-      next: true,
-      social: true,
-    });
-    /* 소켓 off 로직 */
+    localStorage.setItem('agreed', false);
+    navigate('/loginsocial');
   };
+  // const withAgree = () => {
+  //   setRedirectPage({
+  //     agree: true,
+  //     next: true,
+  //     social: true,
+  //   });
+  //   /* 소켓 on 로직 */
+  // };
+  // const withoutAgree = () => {
+  //   setRedirectPage({
+  //     agree: false,
+  //     next: true,
+  //     social: true,
+  //   });
+  //   /* 소켓 off 로직 */
+  // };
   const isLoading = false;
 
   return (
