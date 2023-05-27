@@ -41,7 +41,7 @@ function LoginSocial() {
         <div className='flex flex-row  justify-center gap-2'>
           <button
             type='button'
-            className='text-[#959595]'
+            className='text-[#959595] cursor-pointer'
             onClick={normalSignUp}
           >
             이메일 회원가입
@@ -49,7 +49,7 @@ function LoginSocial() {
           <p className='text-[#959595]'>|</p>
           <button
             type='button'
-            className='text-[#959595]'
+            className='text-[#959595] cursor-pointer'
             onClick={normalSignIn}
           >
             이메일 로그인

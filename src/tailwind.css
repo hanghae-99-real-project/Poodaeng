@@ -34,12 +34,16 @@
   }
 
   .large-button {
-    @apply w-[330px] h-[50px] rounded-md text-base font-bold;
+    @apply w-[330px] h-[50px] rounded-md text-base font-bold cursor-pointer;
   }
 
   .back-button {
-    @apply absolute top-1/2 left-4 transform translate-y-1/2 text-lg;
+    @apply absolute top-1/2 left-4 transform translate-y-1/2 text-lg cursor-pointer;
     /* @apply absolute top-1/2 left-4 transform translate-y-1/2 text-lg; */
+  }
+
+  .error-msg {
+    @apply absolute -bottom-4 left-0 font-semibold  text-[10px] text-[#FF4444];
   }
 }
 
@@ -164,3 +168,7 @@ body::-webkit-scrollbar {
   background-color: #fe5665;
   border-radius: 5px;
 } */
+
+input {
+  outline: none;
+}

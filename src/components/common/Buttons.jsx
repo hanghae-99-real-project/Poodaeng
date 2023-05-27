@@ -2,12 +2,6 @@ import React from 'react';
 
 function Buttons({ children, type, bgColor, textColor, onClick }) {
   return (
-    // <button
-    //   className='large-button bg-[#449AFF] text-[#fff]'
-    //   type={type === 'button' ? 'button' : 'submit'}
-    // >
-    //   {children}
-    // </button>
     <button
       className={`large-button ${bgColor && `bg-[${bgColor}]`} ${
         textColor && `text-[${textColor}]`
@@ -17,6 +11,12 @@ function Buttons({ children, type, bgColor, textColor, onClick }) {
     >
       {children}
     </button>
+    // <button
+    //   className='large-button bg-[#449AFF] text-[#fff]'
+    //   type={type === 'button' ? 'button' : 'submit'}
+    // >
+    //   {children}
+    // </button>
   );
 }
 
