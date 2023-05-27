@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Headers from './Headers';
 import Tabbar from './Tabbar';
 import MypageUnknown from './MypageUnknown';
@@ -6,8 +7,8 @@ import MypageUnknown from './MypageUnknown';
 function Mypagecomponent() {
   // const tokens = Cookies.get('tokens');
   // const istoken = true;
-  const istoken = false;
-
+  const istoken = true;
+  const navigate = useNavigate();
   return (
     <div>
       {istoken ? (
@@ -33,12 +34,27 @@ function Mypagecomponent() {
             <div className='border mb-5' />
           </div>
           <div className='ml-5 h-96'>
-            <div className='large-button text-lg cursor-pointer hover:bg-mainColor-100'>
+            <div
+              className='large-button flex items-center text-lg cursor-pointer'
+              onClick={() => navigate('/mypost')}
+            >
               내가 작성한 글 보기
             </div>
-            <div className='large-button text-lg '>북마크</div>
-            <div className='large-button text-lg '>프로필 설정하기</div>
-            <div className='large-button text-lg '>이용 안내</div>
+            <div
+              className='large-button flex items-center text-lg cursor-pointer'
+              onClick={() => navigate('/mybookmark')}
+            >
+              북마크
+            </div>
+            <div
+              className='large-button flex items-center text-lg cursor-pointer'
+              onClick={() => navigate('/profileedit')}
+            >
+              프로필 설정하기
+            </div>
+            <div className='large-button flex items-center text-lg cursor-pointer'>
+              이용 안내
+            </div>
           </div>
           <div className='mt-0.5'>
             <Tabbar />

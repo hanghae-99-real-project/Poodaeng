@@ -59,7 +59,7 @@ function PooPostcomponent() {
     if (!uploadedFile) {
       console.log('이미지를 추가해주세요');
     }
-    if (!latlng) {
+    if (!latlng.La || !latlng.Ma || !latlng) {
       console.log('위치를 추가해주세요');
     }
     if (latlng && uploadedFile && content) {

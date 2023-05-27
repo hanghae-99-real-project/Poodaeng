@@ -72,8 +72,10 @@ function Maincomponent() {
           </div>
         </div>
       </div>
-      <div className='mt-14'>
-        <Tabbar />
+      <div className=''>
+        <div className='mt-14'>
+          <Tabbar />
+        </div>
       </div>
     </>
   );
