@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { KakaoMyPoint } from './Kakaomypoint';
 import Tabbar from './Tabbar';
+import Kakaoserch from './Kakaoserch';
 
 function Maincomponent() {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ function Maincomponent() {
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
           <div className='w-[330px] h-[155px] border ml-[30px]'>
-            <KakaoMyPoint className='w-[330px] h-[155px]' />
+            <Kakaoserch />
             <img
               src='./Ellipse 35.png'
               alt='button'
@@ -73,7 +73,9 @@ function Maincomponent() {
           </div>
         </div>
       </div>
-      <Tabbar />
+      <div className='mt-14'>
+        <Tabbar />
+      </div>
     </>
   );
 }
