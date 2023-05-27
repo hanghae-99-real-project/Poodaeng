@@ -8,21 +8,25 @@ function Tabbar() {
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
         <img
           src=''
-          alt='icon1.png'
+          alt='Home'
           className='border w-[45px] h-[41px] rounded-[8px]'
+          onClick={() => navigate('/')}
+          role='none'
         />
 
         <img
           src=''
-          alt='icon2.png'
+          alt='Map'
           className='border w-[45px] h-[41px] rounded-[8px]'
+          onClick={() => navigate('/map')}
+          role='none'
         />
 
         <img
           src='Group 176.png'
           alt='PooPost'
           className='border w-[45px] h-[41px] rounded-[8px]'
-          onClick={() => navigate('./poopost')}
+          onClick={() => navigate('/poopost')}
           role='none'
         />
 
@@ -30,14 +34,16 @@ function Tabbar() {
           src=''
           alt='DaengFinder'
           className='border w-[45px] h-[41px] rounded-[8px]'
-          onClick={() => navigate('./daengfinder')}
+          onClick={() => navigate('/daengfinder')}
           role='none'
         />
 
         <img
           src=''
-          alt='icon5.png'
+          alt='MyPage.png'
           className='border w-[45px] h-[41px] rounded-[8px]'
+          onClick={() => navigate('/mypage')}
+          role='none'
         />
       </div>
     </div>

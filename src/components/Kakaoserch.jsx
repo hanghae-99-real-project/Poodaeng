@@ -15,8 +15,7 @@ function Kakaoserch() {
     const { kakao } = window;
 
     const script = document.createElement('script');
-    script.src =
-      '//dapi.kakao.com/v2/maps/sdk.js?appkey=239411147ef0f32c5e49b15677045e5c';
+    script.src = process.env.REACT_APP_KAKAO_KEY;
     script.async = true;
     document.head.appendChild(script);
 
@@ -29,7 +28,6 @@ function Kakaoserch() {
     function initializeMap() {
       const mapOption = {
         center: new kakao.maps.LatLng(37.5652352, 127.0284288),
-        level: 3,
       };
 
       const map = new kakao.maps.Map(mapContainer.current, mapOption);
@@ -52,6 +50,9 @@ function Kakaoserch() {
 
       function setBounds() {
         map.setBounds(bounds);
+        const center = map.getCenter();
+        map.setLevel(3);
+        map.setCenter(center);
       }
 
       setBounds();
@@ -73,8 +74,8 @@ function Kakaoserch() {
 
     function displayMarker(map, locPosition, message) {
       const imageSrc = 'Group 47.png';
-      const imageSize = new kakao.maps.Size(32, 69);
-      const imageOption = { offset: new kakao.maps.Point(15, 50) };
+      const imageSize = new kakao.maps.Size(16, 32);
+      const imageOption = { offset: new kakao.maps.Point(7, 25) };
 
       const markerImage = new kakao.maps.MarkerImage(
         imageSrc,
@@ -102,16 +103,11 @@ function Kakaoserch() {
   }, []);
 
   return (
-    <>
-      <Headers text icon destination=''>
-        푸박스 찾기
-      </Headers>
-      <div
-        id='map2'
-        ref={mapContainer}
-        style={{ width: '100%', height: '100%' }}
-      />
-    </>
+    <div
+      id='map2'
+      ref={mapContainer}
+      style={{ width: '100%', height: '100%' }}
+    />
   );
 }
 
