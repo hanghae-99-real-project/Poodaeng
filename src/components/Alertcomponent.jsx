@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Tabbar from './Tabbar';
 import Headers from './Headers';
 
 function Alertcomponent() {
@@ -31,8 +30,6 @@ function Alertcomponent() {
           <div className='font-[400] text-[10px] text-[#787878]'>date</div>
         </div>
       </div>
-
-      <Tabbar top='30px' />
     </div>
   );
 }

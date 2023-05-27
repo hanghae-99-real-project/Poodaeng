@@ -34,26 +34,25 @@ function Maincomponent() {
         >
           <div className=''>eventBox</div>
         </div>
-        <div>
+        <div className='relative'>
           <div className='ml-[30px] mt-[10px] font-[700] text-[20px] '>
             내 주변 푸박스 찾기
           </div>
           <div className='ml-[30px] mt-[4px] font-[500] text-[11px] text-[#808080]'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
-          <div className='w-[330px] h-[155px] border ml-[30px]'>
+          <div className='relative w-[330px] h-[155px] border ml-[30px]'>
             <Kakaoserch />
-            <img
-              src='./Ellipse 35.png'
-              alt='button'
-              className='relative bottom-8 left-[17rem] z-10 cursor-pointer'
+            <div
+              className='relative z-50 bg-[#4a3c7b] w-7 h-7 rounded-full bottom-10 left-72'
               onClick={() => navigate('/map')}
-            />
-            <img
-              src='./Vector 56.png'
-              alt='button'
-              className='relative bottom-14 left-[17.9rem] z-20'
-            />
+            >
+              <img
+                src='./Vector 56.png'
+                alt='button'
+                className='absolute z-30 top-[50%] left-[53%] -translate-x-1/2 -translate-y-1/2 '
+              />
+            </div>
           </div>
           <div className='border mt-[15px]' />
         </div>

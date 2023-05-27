@@ -15,8 +15,7 @@ function Kakaoserch() {
     const { kakao } = window;
 
     const script = document.createElement('script');
-    script.src =
-      '//dapi.kakao.com/v2/maps/sdk.js?appkey=239411147ef0f32c5e49b15677045e5c';
+    script.src = process.env.REACT_APP_KAKAO_KEY;
     script.async = true;
     document.head.appendChild(script);
 
