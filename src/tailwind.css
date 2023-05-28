@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
+:root {
   --vh: 100%;
-} */
+}
 
 @layer components {
   .clickableTextStyle {
@@ -46,6 +46,18 @@
     @apply absolute -bottom-4 left-0 font-semibold  text-[10px] text-[#FF4444];
   }
 }
+/* footer 가 있다면 */
+/* height: calc(var(--vh, 1vh) * 100 + [footer의 높이]);
+
+// 예: footer 높이가 66px인 경우
+height: calc(var(--vh, 1vh) * 100 + 66px); */
+
+/* <Container>
+  <ContentContainer>
+  	어쩌구 내용
+  </ContentContainer>
+  <Footer/>
+</Container> */
 
 body,
 html {

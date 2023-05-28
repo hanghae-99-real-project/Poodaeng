@@ -15,7 +15,7 @@ function Loading() {
       />
       <img
         className='pb-28 z-20 animate-bounce motion '
-        src={`${process.env.PUBLIC_URL}/images/DogShit.svg`}
+        src={`${process.env.PUBLIC_URL}/images/DogPoo.svg`}
         alt='photoThumb'
       />
       <img

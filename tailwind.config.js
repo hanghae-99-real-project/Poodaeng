@@ -2,6 +2,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  //  // calc를 사용할 수 있게 만들어준다.
+  mode:"jit",
   theme: {
     /* 그냥 theme 밑에 쓰는 것은 기존 단위를 덮어쓰기도 하고 초기화 시킴. */
     // screens:{
