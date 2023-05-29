@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { findLocation } from '../utils/kakaoMapError';
+import KakaoMap from '../kakao/KakaoMap';
 
 function LogoutTest() {
   const location = useLocation();
@@ -31,11 +33,20 @@ function LogoutTest() {
     <div>
       <button
         type='button'
-        className='large-button bg-mainColor text-white cursor-pointer'
+        className='hidden large-button bg-mainColor text-white cursor-pointer'
         onClick={kakaoLogoutHandler}
       >
         Logout
       </button>
+      <button
+        className='hidden'
+        type='button'
+        id='myLocation'
+        onClick={findLocation}
+      >
+        위치 파악
+      </button>
+      <KakaoMap />
     </div>
   );
 }

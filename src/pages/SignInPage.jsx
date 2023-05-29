@@ -10,17 +10,27 @@ import 'react-toastify/dist/ReactToastify.css';
 import { signIn } from '../api/sendCode';
 import Logo from '../components/common/Logo';
 import useInput from '../hooks/useInput';
+import useCurrentLocation from '../hooks/useCurrentLocation';
 // import { errorMsg } from '../data/inputs';
 
 /* alt shift O = import 정렬 */
 function SignInPage() {
   const [isError, setIsError] = useState(true);
   const [message, setMessage] = useState(false);
+  /* toast 중복되도 상관없나? */
+  // const [geoError, setGeoError] = useState(false);
+
+  const geoLocationOptions = {
+    enableHighAccuracy: true,
+    timeout: 1000 * 60 * 1 /* === 1 minute */,
+    maximumAge: 1000 * 3600 * 24 /* === 24 hour */,
+  };
   // eslint-disable-next-line no-unused-vars
   const [inputs, onChangeInputs, onClearInputs, onValidator] = useInput({
     phoneNumber: '',
     password: '',
   });
+
   // const isError = true;
   const navigate = useNavigate();
   const onClose = () => {
@@ -42,19 +52,34 @@ function SignInPage() {
       onClearInputs();
       navigate('/');
     },
-    onError: () => {
+    onError: error => {
+      console.log(error);
+      setIsError(true);
       toast.error('로그인 실패', {
         position: toast.POSITION.TOP_CENTER,
         toastId: 'empty-comment-toast',
       });
-      setIsError(true);
     },
   });
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    console.log('onSubmitHandler');
+    console.log('onSubmitHandler activated');
     // onClearInputs();
+    const { location: currentLocation, error: currentError } =
+      useCurrentLocation(geoLocationOptions);
+    const { latitude, longitude } = currentLocation;
+
+    if (currentError) {
+      // setGeoError(true);
+      setMessage(true);
+      toast.error(currentError, {
+        position: toast.POSITION.TOP_CENTER,
+        toastId: 'empty-comment-toast',
+      });
+      return;
+    }
+
     if (!onValidator('phoneNumber') || !onValidator('password')) {
       setMessage(true);
       toast.error(`유효하지 않은 전화번호 혹은 비밀번호!`, {
@@ -67,6 +92,8 @@ function SignInPage() {
     mutation.mutate({
       phoneNumber: inputs.phoneNumber,
       password: inputs.password,
+      userLatitude: latitude,
+      userLongitude: longitude,
     });
   };
 

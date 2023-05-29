@@ -8,7 +8,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sendCodeNumber, signUp, validateCodeNumber } from '../api/sendCode';
 import Headers from '../components/Headers';
-import Buttons from '../components/common/Buttons';
 import { inputContents, errorMsg } from '../data/inputs';
 import useInput from '../hooks/useInput';
 import { SET_TIMER } from '../redux/modules/timerSlice';
@@ -116,7 +115,6 @@ function SignUpPage() {
     },
   });
   const codeSendHandler = () => {
-    /* 이거 inputs.code 이벤트 타입 숫자로 오려나? */
     codeMutation.mutate({
       code: inputs.code,
       phoneNumber: inputs.phoneNumber,
@@ -140,6 +138,18 @@ function SignUpPage() {
     },
   });
 
+  const closeModal = () => {
+    const event = {
+      target: {
+        name: 'phoneNumber',
+        value: '',
+      },
+    };
+    setCheckTimeMode(false);
+    setGetAuthMode(false);
+    onChangeInputs(event);
+  };
+
   const registerHandler = e => {
     e.preventDefault();
     if (!isAuthNumber) {
@@ -158,7 +168,9 @@ function SignUpPage() {
       console.log('비밀번호가 일치하지 않습니다.');
       return;
     }
-    const agreeCheck = localStorage.getItem('agreed');
+    // eslint-disable-next-line no-unneeded-ternary
+    const agreeCheck = localStorage.getItem('agreed') === 'true' ? true : false;
+    console.log('position Boolean인지 확인 >>>', typeof agreeCheck);
     const result = {
       phoneNumber: inputs.phoneNumber,
       password: inputs.password,
@@ -168,8 +180,6 @@ function SignUpPage() {
     mutation.mutate(result);
   };
 
-  console.log('렌더링 되었습니다.');
-
   return (
     <div>
       <div className={`fixed z-30 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
@@ -177,7 +187,7 @@ function SignUpPage() {
         <div
           role='none'
           className='absolute inset-0 bg-black opacity-30 '
-          onClick={() => setGetAuthMode(false)}
+          onClick={closeModal}
         />
         <div className='fixed flex flex-col items-center bg-white rounded-lg shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-fit px-5 py-10 '>
           <div className='text-xs'>입력하신 번호로 인증번호를 보냈어요</div>
@@ -285,9 +295,18 @@ function SignUpPage() {
           })}
         </div>
         <div className='absolute bottom-[52px]'>
-          <Buttons type='submit' bgColor='#C2C2C2' textColor='#fff'>
+          <button
+            disabled={!isAuthNumber}
+            type='submit'
+            className={`large-button cursor-pointer ${
+              isAuthNumber ? 'bg-mainColor' : 'bg-[#C2C2C2]'
+            } text-white `}
+          >
             다음
-          </Buttons>
+          </button>
+          {/* <Buttons type='submit' bgColor='#C2C2C2' textColor='#fff'>
+            다음
+          </Buttons> */}
         </div>
       </form>
     </div>
