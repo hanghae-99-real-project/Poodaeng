@@ -5,7 +5,7 @@ const timerSlice = createSlice({
   name: 'timer',
   initialState: {
     verification :{
-      expireAt: null,
+      expireAt: 0,
     }
   },
   reducers: {
@@ -18,7 +18,7 @@ const timerSlice = createSlice({
       // state.expireTime = new Date().getTime()
     },
     RESET_TIMER: state => {
-      state.verification.expireAt = null
+      state.verification.expireAt = 0
       // state.accessToken = null;
       // state.expireTime = null;
     },

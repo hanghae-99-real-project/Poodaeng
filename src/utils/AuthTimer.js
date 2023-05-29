@@ -10,11 +10,17 @@ function AuthTimer() {
     if(time > 0){
       Counter = setInterval(()=>{
         const timeGap = Math.floor((new Date(expireAt).getTime() - new Date().getTime()) / 1000);
+        console.log("timeGap type check >>>" , timeGap)
         setTime(timeGap);
       }, 1000)
-    } 
+    } else {
+      console.log('timeout')
+      clearInterval(Counter);
+      setTime('시간초과')
+    }
     return () => clearInterval(Counter)
-  }, [expireAt, time]);
+  }, [time, expireAt]);
+  // }, [expireAt, time, useSelector]);
  
   const timeFormat = (t) => {
     const m = Math.floor(t / 60).toString()
@@ -24,10 +30,10 @@ function AuthTimer() {
     }
     return `${m}:${s}`
   }
-
+  
   return (
-    <p className='text-sm text-[#FF4444]'>
-      {timeFormat(time)}
+    <p className={`w-max ${time==='시간초과'? 'text-xs' : 'text-sm'} text-[#FF4444]`}>
+      {time==='시간초과'? '시간초과' : timeFormat(time)}
     </p>
   )
 }
