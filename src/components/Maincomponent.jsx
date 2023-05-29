@@ -16,12 +16,12 @@ function Maincomponent() {
       <div className='flex flex-row justify-between w-[375px]'>
         <img
           className='ml-[20px] mb-[8px] object-contain'
-          src='./PooDaeng.png'
+          src='./images/Logo.png'
           alt='PooDaeng.png'
         />
         <img
           className='mr-[22px] mb-[20px] object-contain cursor-pointer'
-          src='./Group 120.png'
+          src='./images//Group 120.png'
           alt='Alert.png'
           onClick={AlertNavigateHander}
         />
@@ -32,7 +32,13 @@ function Maincomponent() {
           role='none'
           onClick={() => navigate('/events')}
         >
-          <div className=''>eventBox</div>
+          <div className=''>
+            <img
+              className='w-[373px] h-[150px] object-cover'
+              src='./images/Event.png'
+              alt='eventbanner'
+            />
+          </div>
         </div>
         <div className='relative'>
           <div className='ml-[30px] mt-[10px] font-[700] text-[20px] '>
@@ -48,7 +54,7 @@ function Maincomponent() {
               onClick={() => navigate('/map')}
             >
               <img
-                src='./Vector 56.png'
+                src='./images/Vector 56.png'
                 alt='button'
                 className='absolute z-30 top-[50%] left-[53%] -translate-x-1/2 -translate-y-1/2 '
               />
