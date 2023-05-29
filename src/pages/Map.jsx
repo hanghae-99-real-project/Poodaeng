@@ -6,7 +6,11 @@ import Tabbar from '../components/Tabbar';
 
 function Map() {
   const location = useLocation();
-  const { homeState, mapState, pooState } = location.state;
+  const {
+    homeState = true,
+    mapState = false,
+    pooState = false,
+  } = location.state;
   console.log('Map Page >>>', homeState, mapState, pooState); // false true false
   return (
     <>

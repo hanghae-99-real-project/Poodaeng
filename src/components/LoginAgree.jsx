@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './common/Logo';
-import Loading from './Loading';
+import Loading from './common/Loading';
 import Buttons from './common/Buttons';
 
 // function LoginAgree({ setRedirectPage }) {

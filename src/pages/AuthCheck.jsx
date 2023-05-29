@@ -8,10 +8,9 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import qs from 'qs';
-// import jwtDecode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import Loading from '../components/common/Loading';
 // import Loading from '../components/Loading';
-// import axios from 'axios';
 
 function AuthCheck() {
   const location = useLocation();
@@ -58,35 +57,35 @@ function AuthCheck() {
 
     try {
       // response = await axios
-      // await axios
-      //   .post('https://kauth.kakao.com/oauth/token', payload)
-      //   .then(res => {
-      //     console.log('response >>>', res);
-      //     console.log('response.data >>>', res.data);
-      //     if (res.status === 200) {
-      //       console.log('jwtDecode result >>>', jwtDecode(res.data.id_token));
-      //       const { sub } = jwtDecode(res.data.id_token);
-      //       localStorage.setItem('kakaoUserId', sub);
-      //       navigate('/test', {
-      //         state: {
-      //           token: res.data.access_token,
-      //           userId: sub,
-      //         },
-      //       });
-      //     }
-      //   });
-
       await axios
-        // .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/kakao/signin`, {
-        .post(`http://localhost:3000/api/auth/kakao/signin`, {
-          headers: {
-            payload,
-          },
-        })
+        .post('https://kauth.kakao.com/oauth/token', payload)
         .then(res => {
           console.log('response >>>', res);
           console.log('response.data >>>', res.data);
+          if (res.status === 200) {
+            console.log('jwtDecode result >>>', jwtDecode(res.data.id_token));
+            const { sub } = jwtDecode(res.data.id_token);
+            localStorage.setItem('kakaoUserId', sub);
+            navigate('/test', {
+              state: {
+                token: res.data.access_token,
+                userId: sub,
+              },
+            });
+          }
         });
+
+      // await axios
+      //   // .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/kakao/signin`, {
+      //   .post(`http://localhost:3000/api/auth/kakao/signin`, {
+      //     headers: {
+      //       payload,
+      //     },
+      //   })
+      //   .then(res => {
+      //     console.log('response >>>', res);
+      //     console.log('response.data >>>', res.data);
+      //   });
 
       // console.log('response >>>', response);
 
