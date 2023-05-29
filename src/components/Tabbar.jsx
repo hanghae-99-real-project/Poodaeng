@@ -1,5 +1,8 @@
+/* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { ReactComponent as PooBox } from '../assets/images/Poobox.svg';
+// '../../assets/images/poobox.svg';
 
 function Tabbar({ homeState = true, mapState = false, pooState = false }) {
   const navigate = useNavigate();
@@ -19,6 +22,14 @@ function Tabbar({ homeState = true, mapState = false, pooState = false }) {
     console.log('home', isHome);
     console.log('map', isMap);
     console.log('poobox', isPoobox);
+    navigate('/', {
+      state: {
+        /** @check_point */
+        homeState: true, // true
+        mapState: false, // true
+        pooState: false, // false
+      },
+    });
   };
 
   const MapIconHandler = async () => {
@@ -93,7 +104,16 @@ function Tabbar({ homeState = true, mapState = false, pooState = false }) {
             role='none'
           />
         )}
-        {isPoobox ? (
+        {/* <img
+          src={`${process.env.PUBLIC_URL}/images/Poobox.svg`}
+          alt='photoThumb'
+          className='border w-[45px] h-[41px] rounded-[8px]'
+        /> */}
+        <PooBox
+          className='fill-[#AEAEAE] hover:fill-mainColor w-12 h-12 mt-1'
+          onClick={PooPostIconHandler}
+        />
+        {/* {isPoobox ? (
           <img
             src='./images/PooboxOn.png'
             alt='PooPost'
@@ -109,7 +129,7 @@ function Tabbar({ homeState = true, mapState = false, pooState = false }) {
             onClick={PooPostIconHandler}
             role='none'
           />
-        )}
+        )} */}
 
         <img
           src=''
