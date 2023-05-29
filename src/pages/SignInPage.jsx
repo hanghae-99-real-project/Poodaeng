@@ -1,20 +1,102 @@
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
-import { IoIosArrowBack } from 'react-icons/io';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { signIn } from '../api/sendCode';
 import Logo from '../components/common/Logo';
+import useInput from '../hooks/useInput';
+import useCurrentLocation from '../hooks/useCurrentLocation';
+// import { errorMsg } from '../data/inputs';
 
+/* alt shift O = import 정렬 */
 function SignInPage() {
   const [isError, setIsError] = useState(true);
+  const [message, setMessage] = useState(false);
+  /* toast 중복되도 상관없나? */
+  // const [geoError, setGeoError] = useState(false);
+
+  const geoLocationOptions = {
+    enableHighAccuracy: true,
+    timeout: 1000 * 60 * 1 /* === 1 minute */,
+    maximumAge: 1000 * 3600 * 24 /* === 24 hour */,
+  };
+  // eslint-disable-next-line no-unused-vars
+  const [inputs, onChangeInputs, onClearInputs, onValidator] = useInput({
+    phoneNumber: '',
+    password: '',
+  });
+
   // const isError = true;
   const navigate = useNavigate();
   const onClose = () => {
     setIsError(false);
   };
+
+  const mutation = useMutation(signIn, {
+    onSuccess: data => {
+      console.log('login 성공 시 data >>>', data);
+      const token = data.headers.authorization.split(' ')[1];
+      const decodedToken = jwtDecode(token);
+      // console.log("디코드 정보:", decodedToken);
+      // eslint-disable-next-line no-unused-vars
+      const { sub, exp, auth, username, userId } = decodedToken;
+      const expireDate = new Date(exp * 1000); // 날짜단위로 변환해서 넣기.
+      Cookies.set('authentication', token, {
+        expires: expireDate,
+      });
+      onClearInputs();
+      navigate('/');
+    },
+    onError: error => {
+      console.log(error);
+      setIsError(true);
+      toast.error('로그인 실패', {
+        position: toast.POSITION.TOP_CENTER,
+        toastId: 'empty-comment-toast',
+      });
+    },
+  });
+
   const onSubmitHandler = e => {
     e.preventDefault();
-    console.log('onSubmitHandler');
+    console.log('onSubmitHandler activated');
+    // onClearInputs();
+    const { location: currentLocation, error: currentError } =
+      useCurrentLocation(geoLocationOptions);
+    const { latitude, longitude } = currentLocation;
+
+    if (currentError) {
+      // setGeoError(true);
+      setMessage(true);
+      toast.error(currentError, {
+        position: toast.POSITION.TOP_CENTER,
+        toastId: 'empty-comment-toast',
+      });
+      return;
+    }
+
+    if (!onValidator('phoneNumber') || !onValidator('password')) {
+      setMessage(true);
+      toast.error(`유효하지 않은 전화번호 혹은 비밀번호!`, {
+        position: toast.POSITION.TOP_CENTER,
+        // toastId: 'sign-up-error-toast',
+        toastId: 'empty-comment-toast',
+      });
+      return;
+    }
+    mutation.mutate({
+      phoneNumber: inputs.phoneNumber,
+      password: inputs.password,
+      userLatitude: latitude,
+      userLongitude: longitude,
+    });
   };
+
   const moveToSignUp = () => {
     navigate('/signup');
   };
@@ -25,6 +107,7 @@ function SignInPage() {
         className='absolute left-4 top-16 cursor-pointer'
         onClick={() => navigate('/loginsocial')}
       />
+      {message && <ToastContainer />}
       <div className={`fixed z-30 inset-0 ${isError ? '' : 'hidden'}`}>
         <div
           role='none'
@@ -61,14 +144,32 @@ function SignInPage() {
           onSubmit={onSubmitHandler}
         >
           <div className='flex flex-col items-center gap-6 mb-8'>
-            <input
-              className='w-[240px] text-base font-bold border-b border-[#CACACA]'
-              placeholder='이메일'
-            />
-            <input
-              className='w-[240px] text-base font-bold border-b border-[#CACACA]'
-              placeholder='비밀번호'
-            />
+            <div className='relative flex flex-col'>
+              <input
+                type='number'
+                name='phoneNumber'
+                value={inputs.phoneNumber}
+                onChange={onChangeInputs}
+                className='w-60 text-base font-bold border-b border-[#CACACA]'
+                placeholder='휴대폰 번호'
+              />
+              {/* {!onValidator('phoneNumber') && (
+                <span className='error-msg'>{errorMsg[0]}</span>
+              )} */}
+            </div>
+            <div className='relative flex flex-col'>
+              <input
+                type='password'
+                name='password'
+                value={inputs.password}
+                onChange={onChangeInputs}
+                className='w-60 text-base font-bold border-b border-[#CACACA]'
+                placeholder='비밀번호'
+              />
+              {/* {!onValidator('password') && (
+                <span className='error-msg'>{errorMsg[2]}</span>
+              )} */}
+            </div>
           </div>
           <button
             className='w-[240px] h-12 bg-[#449AFF] text-[#FFFFFF] text-base font-bold rounded-md'

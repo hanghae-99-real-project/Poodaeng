@@ -21,10 +21,12 @@ const useInput = (initialValue) => {
         let result;
         // const nickName = ''
         // const code = ''
+        const nicknameRegex = /^[a-zA-Z0-9]{6,}/gi;
         const phoneNumber = /^\d{10,11}$/
         const emailRegex = /^[a-z0-9_+.-]+@[a-z0-9-]+\.[a-z0-9]{2,4}$/;
-        const passwordRegex =
-            /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,15}$/;
+        // const passwordRegex =
+        //     /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
         if (input === "email") {
           result= emailRegex.test(target.userId);
         } else if (input === "password") {
@@ -34,7 +36,8 @@ const useInput = (initialValue) => {
         } else if (input === "passwordConfirm"){
           result = target.password === target.passwordConfirm;
         } else if (input === 'nickname') {
-          result = target.nickname.trim().length > 0;
+          // result = target.nickname.trim().length > 0;
+          result = nicknameRegex.test(target.nickname) > 0;
         } else if (input === 'code') {
           result = target.code.trim().length > 0;
         }
