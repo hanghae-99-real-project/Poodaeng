@@ -73,7 +73,7 @@ function Kakaoserch() {
     }
 
     function displayMarker(map, locPosition, message) {
-      const imageSrc = 'Group 47.png';
+      const imageSrc = './images/Group 47.png';
       const imageSize = new kakao.maps.Size(16, 32);
       const imageOption = { offset: new kakao.maps.Point(7, 25) };
 

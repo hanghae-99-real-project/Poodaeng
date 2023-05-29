@@ -23,7 +23,7 @@ function Alertcomponent() {
         >
           <img
             className='flex bg-cover w-[43px] h-[43px] border rounded-full mr-[10px] '
-            src='./KakaoTalk_20230130_153856319.jpg'
+            src='https://img2.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202008/17/newsen/20200817160051331jsfk.jpg'
             alt='pt'
           />
           <div>
