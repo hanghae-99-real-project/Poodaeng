@@ -11,6 +11,7 @@ function PooPostcomponent() {
   const [latlng, setLatlng] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [content, setContent] = useState('');
+  const [errormsg, setErrormsg] = useState('');
 
   const queryClient = useQueryClient();
   const mutation = useMutation(addPooBox, {
@@ -25,23 +26,29 @@ function PooPostcomponent() {
   // 파일값
   const handleFileUpload = file => {
     setUploadedFile(file);
-    console.log(uploadedFile);
   };
 
   // 좌표값
   const handleMapClick = newLatlng => {
     setLatlng(newLatlng);
   };
-  console.log('poolating', latlng);
 
   // 특이사항 값
   const handleContentChange = e => {
     setContent(e.target.value);
-    console.log(content);
   };
 
   // post formdata
   const pooBoxSubmitHandler = () => {
+    if (!latlng || !latlng.La || !latlng.Ma) {
+      setErrormsg('지도에서 위치를 선택해주세요');
+      return;
+    }
+    if (!uploadedFile) {
+      setErrormsg('이미지를 추가해주세요');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file', uploadedFile);
     formData.append(
@@ -56,18 +63,8 @@ function PooPostcomponent() {
       'pooLongitude',
       new Blob([JSON.stringify(latlng.Ma)], { type: 'application/json' }),
     );
-    if (!uploadedFile) {
-      console.log('이미지를 추가해주세요');
-    }
-    if (!latlng.La || !latlng.Ma || !latlng) {
-      console.log('위치를 추가해주세요');
-    }
-    if (latlng && uploadedFile && content) {
-      mutation.mutate(formData);
 
-      // form 조회
-      // for (let [key, value] of formData.entries()) { console.log(`${key}:`, value); }
-    }
+    mutation.mutate(formData);
   };
 
   return (
@@ -100,6 +97,9 @@ function PooPostcomponent() {
         >
           등록하기
         </Buttons>
+        <div className='flex justify-center text-sm text-[#FF4444]'>
+          {errormsg}
+        </div>
       </div>
     </div>
   );

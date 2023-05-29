@@ -62,7 +62,6 @@ function Tabbar({ homeState = true, mapState = false, pooState = false }) {
 
   const PooPostIconHandler = () => {
     navigate('/poopost');
-    // setIsPoobox(true);
     console.log('home', isHome);
     console.log('map', isMap);
     console.log('poobox', isPoobox);
