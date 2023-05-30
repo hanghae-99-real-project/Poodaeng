@@ -1,16 +1,19 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { ReactComponent as PooBox } from '../assets/images/Poobox.svg';
 // '../../assets/images/poobox.svg';
 
-function Tabbar({ homeState = true, mapState = false, pooState = false }) {
+function Tabbar() {
   const navigate = useNavigate();
-  const [isHome] = useState(homeState);
-  const [isMap] = useState(mapState);
-  const [isPoobox] = useState(pooState);
+  const [isHome] = useState();
+  const [isMap] = useState();
   // const [isDaengFinder, setIsDaengFinder] = useState(false);
   // const [isProfile, setIsProfile] = useState(false);
+
+  const auth = useSelector(store => store.auth);
 
   const location = useLocation(); // 현재 페이지로 넘어왔을 때 넘어온 값을 뽑아줌. 검색 키워드 : react-router-dom V6 useLocation, navigate, Outlet
   const { state } = location;
@@ -18,54 +21,29 @@ function Tabbar({ homeState = true, mapState = false, pooState = false }) {
 
   const HomeIconHandler = () => {
     navigate('/');
-    // setIsHome(true);
-    console.log('home', isHome);
-    console.log('map', isMap);
-    console.log('poobox', isPoobox);
-    navigate('/', {
-      state: {
-        /** @check_point */
-        homeState: true, // true
-        mapState: false, // true
-        pooState: false, // false
-      },
-    });
   };
 
   const MapIconHandler = async () => {
-    // setIsHome(homeState);
-    // setIsMap(mapState); // false -> true
-    // setIsPoobox(pooState);
-    console.log('넘어가기 전의 state');
-    console.log('home', isHome); // true
-    console.log('map', isMap); // false
-    console.log('poobox', isPoobox); // false
-    // 중요한 건 navigate로 넘어갔을 때 tabbar가 가장 상위에서 안쪽 컨텐츠를 감싸고 있는게 아니라면  state는 초기화 된다.
-    // 가장 좋은 구조는 아래와 같은 구조가 되어야 한다! 이렇게 해야 Footer가 초기화 되지 않고(Header랑 Footer를 공통으로 가짐) 이전 state를 기억하게 된다.
-    // 결국 Outlet은 Header와 Footer를 제외한 페이지를 넘어갈 때마다 달라지는 안쪽 중간의 컨텐츠들을 의미한다.
-    // <canvas>
-    //   <Header />
-    //     <Outlet />
-    //   <Footer />
-    // </canvas>
-    navigate('/map', {
-      state: {
-        /** @check_point */
-        homeState: false, // true
-        mapState: true, // true
-        pooState: false, // false
-      },
-    });
-
-    /* functional state update 함수형 업데이트 => 이전 state를 기억(stale closure를 방지) */
+    navigate('/map');
   };
+  // 중요한 건 navigate로 넘어갔을 때 tabbar가 가장 상위에서 안쪽 컨텐츠를 감싸고 있는게 아니라면  state는 초기화 된다.
+  // 가장 좋은 구조는 아래와 같은 구조가 되어야 한다! 이렇게 해야 Footer가 초기화 되지 않고(Header랑 Footer를 공통으로 가짐) 이전 state를 기억하게 된다.
+  // 결국 Outlet은 Header와 Footer를 제외한 페이지를 넘어갈 때마다 달라지는 안쪽 중간의 컨텐츠들을 의미한다.
+  // <canvas>
+  //   <Header />
+  //     <Outlet />
+  //   <Footer />
+  // </canvas>
+
+  /* functional state update 함수형 업데이트 => 이전 state를 기억(stale closure를 방지) */
 
   const PooPostIconHandler = () => {
+    if (!auth.accessToken) {
+      return navigate('/login');
+    }
     navigate('/poopost');
-    console.log('home', isHome);
-    console.log('map', isMap);
-    console.log('poobox', isPoobox);
   };
+
   return (
     <div className='absolute left-0 bottom-0 border bg-[#FFFFFF] z-20'>
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
