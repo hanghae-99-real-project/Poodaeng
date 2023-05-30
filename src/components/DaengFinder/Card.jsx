@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Card({ isDetail }) {
+  const navigate = useNavigate();
   return (
     <div
       className={`flex ${
@@ -8,6 +10,7 @@ function Card({ isDetail }) {
           ? 'flex-row gap-3 py-3 border-b border-[#ECECEC]'
           : 'flex-col gap-2'
       }  `}
+      onClick={() => navigate('/daengfindDetail')}
     >
       <div
         className={`${

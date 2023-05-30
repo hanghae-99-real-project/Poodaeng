@@ -18,6 +18,8 @@ import LoginSocial from '../components/LoginSocial';
 import MyPost from '../pages/MyPost';
 import MyBookMark from '../pages/MyBookMark';
 import ProfileEdit from '../pages/ProfileEdit';
+import ScrollLayout from './ScrollLayout';
+import DaengFinderDetail from '../pages/DaengFinderDetail';
 
 // import TokenCheck from '../utils/TokenCheck';
 /* Token 체크를 작성 업로드, 삭제, 수정 시에만 토큰을 보내서 확인하도록 구성하자. */
@@ -44,6 +46,9 @@ function Router() {
           <Route path='/mybookmark' element={<MyBookMark />}/>
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
+        </Route>
+        <Route element={<ScrollLayout />}>
+          <Route  path='/daengfindDetail' element={<DaengFinderDetail/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
