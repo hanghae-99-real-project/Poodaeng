@@ -10,9 +10,13 @@ function KakaoMap() {
     timeout: 1000 * 60 * 1 /* === 1 minute */,
     maximumAge: 1000 * 3600 * 24 /* === 24 hour */,
   };
+  // const { latitude = 33.450701, longitude = 126.570667 } = useCurrentLocation(geoLocationOptions);
   const { location, error } = useCurrentLocation(geoLocationOptions);
-  const { latitude = 33.450701, longitude = 126.570667 } = location;
-  console.log(latitude, longitude);
+  console.log('location >>> ', location);
+  console.log('error >>> ', error);
+  // const [getCurrentLocation] = useCurrentLocation(geoLocationOptions);
+  // const { location, error } = getCurrentLocation();
+  // console.log(location, error);
   useEffect(() => {
     if (error) {
       setMessage(true);

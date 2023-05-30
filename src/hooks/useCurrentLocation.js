@@ -45,7 +45,11 @@ function useCurrentLocation(options = {}){
     }
     geolocation.getCurrentPosition(handleSuccess, handleError, options);
     // eslint-disable-next-line consistent-return
-    return {location, error}
+    // return {location, error}
+    // getCurrentLocation()
+    
+    // eslint-disable-next-line consistent-return
+    // return {location, error}
   }
   
 
@@ -60,7 +64,12 @@ function useCurrentLocation(options = {}){
   // }, [options]);  
 
 
-  return [getCurrentLocation]
+  // return [getCurrentLocation]
+  // getCurrentLocation()
+  useEffect(() => {
+    getCurrentLocation()
+  },[])
+  return {location, error}
 }
 
 export default useCurrentLocation
