@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useMutation } from 'react-query';
@@ -13,18 +13,20 @@ import useInput from '../hooks/useInput';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 // import { errorMsg } from '../data/inputs';
 
+const geoLocationOptions = {
+  enableHighAccuracy: true,
+  timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
+  maximumAge: 1000 * 3600 * 24, // 24 hour
+};
+
 /* alt shift O = import 정렬 */
 function SignInPage() {
-  const [isError, setIsError] = useState(true);
-  const [message, setMessage] = useState(false);
+  const [isError, setIsError] = useState(false);
   /* toast 중복되도 상관없나? */
+  const [message, setMessage] = useState(false);
   // const [geoError, setGeoError] = useState(false);
+  const [getCurrentLocation] = useCurrentLocation(geoLocationOptions);
 
-  const geoLocationOptions = {
-    enableHighAccuracy: true,
-    timeout: 1000 * 60 * 1 /* === 1 minute */,
-    maximumAge: 1000 * 3600 * 24 /* === 24 hour */,
-  };
   // eslint-disable-next-line no-unused-vars
   const [inputs, onChangeInputs, onClearInputs, onValidator] = useInput({
     phoneNumber: '',
@@ -52,13 +54,9 @@ function SignInPage() {
       onClearInputs();
       navigate('/');
     },
-    onError: error => {
-      console.log(error);
-      setIsError(true);
-      toast.error('로그인 실패', {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: 'empty-comment-toast',
-      });
+    onError: err => {
+      console.log(err);
+      /* 콘솔 확인해서 토스트 띄워야 함. */
     },
   });
 
@@ -66,14 +64,9 @@ function SignInPage() {
     e.preventDefault();
     console.log('onSubmitHandler activated');
     // onClearInputs();
-    const { location: currentLocation, error: currentError } =
-      useCurrentLocation(geoLocationOptions);
-    const { latitude, longitude } = currentLocation;
-
-    if (currentError) {
-      // setGeoError(true);
-      setMessage(true);
-      toast.error(currentError, {
+    const { location, error } = getCurrentLocation();
+    if (error) {
+      toast.error(error, {
         position: toast.POSITION.TOP_CENTER,
         toastId: 'empty-comment-toast',
       });
@@ -89,17 +82,26 @@ function SignInPage() {
       });
       return;
     }
+    console.log('latitude >>>', location.latitude);
+    console.log('longitude >>>', location.longitude);
+    const agreeCheck = localStorage.getItem('agreed') === 'true';
     mutation.mutate({
       phoneNumber: inputs.phoneNumber,
       password: inputs.password,
-      userLatitude: latitude,
-      userLongitude: longitude,
+      position: agreeCheck,
+      userLatitude: location.latitude,
+      userLongitude: location.longitude,
     });
   };
 
   const moveToSignUp = () => {
     navigate('/signup');
   };
+
+  useEffect(() => {
+    /* 맨 처음 null 갱신, 갱신 안해놓으면 batch update때문에 null가져옴 */
+    getCurrentLocation();
+  }, []);
 
   return (
     <>

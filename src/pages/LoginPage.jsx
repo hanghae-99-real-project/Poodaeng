@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import Loading from '../components/Loading';
 import LoginAgree from '../components/LoginAgree';
 // import LoginSocial from '../components/LoginSocial';
-import Loading from '../components/Loading';
+import Loading from '../components/common/Loading';
 
 function LoginPage() {
   // const navigate = useNavigate();

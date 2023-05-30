@@ -168,8 +168,7 @@ function SignUpPage() {
       console.log('비밀번호가 일치하지 않습니다.');
       return;
     }
-    // eslint-disable-next-line no-unneeded-ternary
-    const agreeCheck = localStorage.getItem('agreed') === 'true' ? true : false;
+    const agreeCheck = localStorage.getItem('agreed') === 'true';
     console.log('position Boolean인지 확인 >>>', typeof agreeCheck);
     const result = {
       phoneNumber: inputs.phoneNumber,

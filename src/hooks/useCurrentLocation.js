@@ -1,11 +1,13 @@
+// eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from 'react'
 
-const useCurrentLocation = (options = {}) => {
+function useCurrentLocation(options = {}){
   const [location, setLocation] = useState();
   const [error, setError] = useState();
 
   const handleSuccess = (props) => {
     const {latitude, longitude} = props.coords;
+    console.log(latitude, longitude)
 
     setLocation({
       latitude,
@@ -34,19 +36,31 @@ const useCurrentLocation = (options = {}) => {
     // setError(err.message)
     setError(errorResult)
   }
-
-  useEffect( () => {
-    const {geolocation} = navigator;
+  
+  const getCurrentLocation = () => {
+    const { geolocation } = navigator;
     if(!geolocation) {
       setError("GeoLocation is not supported.")
       return;
     }
     geolocation.getCurrentPosition(handleSuccess, handleError, options);
+    // eslint-disable-next-line consistent-return
+    return {location, error}
+  }
+  
 
-  }, [options]);  
+  // useEffect( () => {
+  //   const { geolocation } = navigator;
+  //   if(!geolocation) {
+  //     setError("GeoLocation is not supported.")
+  //     return;
+  //   }
+  //   geolocation.getCurrentPosition(handleSuccess, handleError, options);
+
+  // }, [options]);  
 
 
-  return {location, error};
+  return [getCurrentLocation]
 }
 
 export default useCurrentLocation
