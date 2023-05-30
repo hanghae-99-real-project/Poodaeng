@@ -22,10 +22,11 @@ function Card({ isDetail }) {
       <div className={`flex flex-col justify-center gap-2 `}>
         <div className='flex flex-col gap-1'>
           <h1 className='font-bold text-sm truncate'>
-            방금 말티즈를 발견했어요
+            방금 말티즈를 발견했어요. 너무 무서웠어요.
           </h1>
           {isDetail ? (
-            <p className=' text-xs w-56  whitespace-normal line-clamp-3'>
+            // whitespace-normal 이랑 whitespace-nowrap이랑 똑같다
+            <p className=' text-xs w-56   line-clamp-3'>
               강아지가 저를 물었어요. 저도 그래서 강아지를 물었어요. 강아지가
               저를 물었어요. 저도 그래서 강아지를 물었어요. 강아지가 저를
               물었어요. 저도 그래서 강아지를 물었어요. 강아지가 저를 물었어요.
