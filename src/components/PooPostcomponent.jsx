@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { useSelector } from 'react-redux';
 import Headers from './Headers';
 import FileUploader from './FileUploader';
 import Buttons from './common/Buttons';
@@ -11,6 +12,8 @@ function PooPostcomponent() {
   const [latlng, setLatlng] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [content, setContent] = useState('');
+  const [errormsg, setErrormsg] = useState('');
+  const { accessToken } = useSelector(store => store.auth);
 
   const queryClient = useQueryClient();
   const mutation = useMutation(addPooBox, {
@@ -25,53 +28,73 @@ function PooPostcomponent() {
   // 파일값
   const handleFileUpload = file => {
     setUploadedFile(file);
-    console.log(uploadedFile);
+    console.log(file);
   };
 
   // 좌표값
   const handleMapClick = newLatlng => {
     setLatlng(newLatlng);
   };
-  console.log('poolating', latlng);
 
   // 특이사항 값
   const handleContentChange = e => {
     setContent(e.target.value);
-    console.log(content);
   };
 
   // post formdata
   const pooBoxSubmitHandler = () => {
-    const formData = new FormData();
-    formData.append('file', uploadedFile);
-    formData.append(
-      'content',
-      new Blob([JSON.stringify(content)], { type: 'application/json' }),
-    );
-    formData.append(
-      'pooLatitude',
-      new Blob([JSON.stringify(latlng.La)], { type: 'application/json' }),
-    );
-    formData.append(
-      'pooLongitude',
-      new Blob([JSON.stringify(latlng.Ma)], { type: 'application/json' }),
-    );
+    if (!latlng || !latlng.La || !latlng.Ma) {
+      setErrormsg('지도에서 위치를 선택해주세요');
+      return;
+    }
     if (!uploadedFile) {
-      console.log('이미지를 추가해주세요');
+      setErrormsg('이미지를 추가해주세요');
+      return;
     }
-    if (!latlng.La || !latlng.Ma || !latlng) {
-      console.log('위치를 추가해주세요');
-    }
-    if (latlng && uploadedFile && content) {
-      mutation.mutate(formData);
 
-      // form 조회
-      // for (let [key, value] of formData.entries()) { console.log(`${key}:`, value); }
-    }
+    const data = {};
+    const formData = new FormData();
+    formData.append('pooPhotoUrl', [uploadedFile]);
+    formData.append('content', JSON.stringify(content));
+    formData.append('pooLatitude', latlng.La);
+    formData.append('pooLongitude', latlng.Ma);
+    // formData.append('pooPhotoUrl', imageBlob);
+    // console.log([uploadedFile]);
+    // formData.append('content', JSON.stringify(content));
+    // console.log(content);
+    // formData.append('pooLatitude', latlng.La);
+    // console.log(latlng.La);
+    // formData.append('pooLongitude', latlng.Ma);
+    // console.log(latlng.Ma);
+
+    // formData.append(
+    //   'pooPhotoUrl',
+    //   new Blob([JSON.stringify([uploadedFile])], { type: 'image/jpeg' }),
+    // );
+    // formData.append(
+    //   'pooPhotoUrl',
+    //   new Blob([JSON.stringify(uploadedFile)], { type: 'application/json' }),
+    // );
+    // formData.append(
+    //   'content',
+    //   new Blob([JSON.stringify(content)], { type: 'application/json' }),
+    // );
+    // formData.append(
+    //   'pooLatitude',
+    //   new Blob([JSON.stringify(latlng.La)], { type: 'application/json' }),
+    // );
+    // formData.append(
+    //   'pooLongitude',
+    //   new Blob([JSON.stringify(latlng.Ma)], { type: 'application/json' }),
+    // );
+    data.formData = formData;
+    data.accessToken = accessToken;
+
+    mutation.mutate(data);
   };
 
   return (
-    <div>
+    <form method='post' encType='multipart/form-data'>
       <Headers text icon destination=''>
         푸박스 등록
       </Headers>
@@ -100,8 +123,11 @@ function PooPostcomponent() {
         >
           등록하기
         </Buttons>
+        <div className='flex justify-center text-sm text-[#FF4444]'>
+          {errormsg}
+        </div>
       </div>
-    </div>
+    </form>
   );
 }
 export default PooPostcomponent;

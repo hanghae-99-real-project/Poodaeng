@@ -20,7 +20,7 @@ function FileUploader({ onFileUpload }) {
       {!image ? (
         <>
           <label className='fileImg-label' htmlFor='fileImg'>
-            <div className='absolute flex items-center justify-center border w-[150px] h-[150px] bg-[#D9D9D9] rounded-[10px]'>
+            <div className='absolute flex items-center justify-center border w-[150px] h-[150px] bg-[#D9D9D9] rounded-full'>
               +
             </div>
           </label>
@@ -37,7 +37,7 @@ function FileUploader({ onFileUpload }) {
           {image && (
             <img
               role='none'
-              className='w-[150px] h-[150px] object-cover'
+              className='w-[150px] h-[150px] object-cover rounded-full'
               src={image}
               alt='Thumbnail'
               onClick={deleteImage}
