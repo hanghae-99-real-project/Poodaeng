@@ -23,7 +23,7 @@ const signUp = async (inputs) => {
 }
 
 const signIn = async (inputs) => {
-  const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/users/login`, inputs)
+  const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login`, inputs)
   return response
 }
 

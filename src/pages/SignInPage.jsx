@@ -1,16 +1,18 @@
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useMutation } from 'react-query';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { signIn } from '../api/sendCode';
 import Logo from '../components/common/Logo';
-import useInput from '../hooks/useInput';
 import useCurrentLocation from '../hooks/useCurrentLocation';
+import useInput from '../hooks/useInput';
+import { SET_TOKEN } from '../redux/modules/authSlice';
 // import { errorMsg } from '../data/inputs';
 
 const geoLocationOptions = {
@@ -25,13 +27,15 @@ function SignInPage() {
   /* toast 중복되도 상관없나? */
   const [message, setMessage] = useState(false);
   // const [geoError, setGeoError] = useState(false);
-  const [getCurrentLocation] = useCurrentLocation(geoLocationOptions);
+  // const [getCurrentLocation] = useCurrentLocation(geoLocationOptions);
+  const { location, error } = useCurrentLocation(geoLocationOptions);
 
   // eslint-disable-next-line no-unused-vars
   const [inputs, onChangeInputs, onClearInputs, onValidator] = useInput({
     phoneNumber: '',
     password: '',
   });
+  const dispatch = useDispatch();
 
   // const isError = true;
   const navigate = useNavigate();
@@ -42,15 +46,29 @@ function SignInPage() {
   const mutation = useMutation(signIn, {
     onSuccess: data => {
       console.log('login 성공 시 data >>>', data);
-      const token = data.headers.authorization.split(' ')[1];
-      const decodedToken = jwtDecode(token);
-      // console.log("디코드 정보:", decodedToken);
-      // eslint-disable-next-line no-unused-vars
-      const { sub, exp, auth, username, userId } = decodedToken;
-      const expireDate = new Date(exp * 1000); // 날짜단위로 변환해서 넣기.
-      Cookies.set('authentication', token, {
-        expires: expireDate,
+      /* Bearer 실종사건 */
+      // const token = data.data.split(' ')[1];
+      const { accessToken, refreshToken } = data.data;
+      const decodedAcToken = jwtDecode(accessToken);
+      const decodedRfToken = jwtDecode(refreshToken);
+
+      console.log('decodedAcToken >>>', decodedAcToken);
+      console.log('decodedRfToken >>>', decodedRfToken);
+
+      const { exp: RF_EXP } = decodedRfToken;
+      const rfExpireDate = new Date(RF_EXP * 1000);
+      console.log('rfExpireDate >>>', rfExpireDate);
+      Cookies.set('refreshToken', refreshToken, {
+        expires: rfExpireDate,
       });
+      // eslint-disable-next-line no-unused-vars
+      const { exp: AC_EXP, iat, userId } = decodedAcToken;
+      console.log('이거 초 단위인가?  >>> ', AC_EXP);
+      // const expireDate = new Date(AC_EXP * 1000); // 날짜단위로 변환해서 넣기.(ms 단위로 변환(?)해서 넣기)
+      const acExpireDate = AC_EXP * 1000; // ms 단위로 변환(?)해서 넣기
+      console.log('expireDate type 확인', typeof acExpireDate);
+      dispatch(SET_TOKEN({ userId, accessToken, acExpireDate }));
+
       onClearInputs();
       navigate('/');
     },
@@ -63,8 +81,11 @@ function SignInPage() {
   const onSubmitHandler = e => {
     e.preventDefault();
     console.log('onSubmitHandler activated');
+    console.log('location >>> ', location);
+    console.log('error >>> ', error);
     // onClearInputs();
-    const { location, error } = getCurrentLocation();
+    // const { location, error } = getCurrentLocation();
+    // const { location, error } = getCurrentLocation();
     if (error) {
       toast.error(error, {
         position: toast.POSITION.TOP_CENTER,
@@ -89,8 +110,8 @@ function SignInPage() {
       phoneNumber: inputs.phoneNumber,
       password: inputs.password,
       position: agreeCheck,
-      userLatitude: location.latitude,
-      userLongitude: location.longitude,
+      userLatitude: agreeCheck ? location.latitude : null,
+      userLongitude: agreeCheck ? location.longitude : null,
     });
   };
 
@@ -98,10 +119,10 @@ function SignInPage() {
     navigate('/signup');
   };
 
-  useEffect(() => {
-    /* 맨 처음 null 갱신, 갱신 안해놓으면 batch update때문에 null가져옴 */
-    getCurrentLocation();
-  }, []);
+  // useEffect(() => {
+  //   /* 맨 처음 null 갱신, 갱신 안해놓으면 batch update때문에 null가져옴 */
+  //   getCurrentLocation();
+  // }, []);
 
   return (
     <>
