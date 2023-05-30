@@ -1,5 +1,6 @@
 import React from "react"
-import Buttons from "../components/common/Buttons";
+// import Buttons from "../components/common/Buttons";
+import { ReactComponent as Kakao } from '../assets/images/KakaoLogo.svg';
 // import { useNavigate } from 'react-router-dom';
 
 function SocialKakao(){
@@ -16,8 +17,10 @@ function SocialKakao(){
   //     window.location.href = kakaoURLz
   // }
   return (
-      <Buttons type='button' bgColor='#F9EB00' onClick={handleLogin}>카카오톡으로 시작하기</Buttons>
-      // <button type='button' className='large-button bg-[#F9EB00]' onClick={handleLogin}>카카오톡으로 시작하기</button>
+      // <Buttons type='button' bgColor='#F9EB00' onClick={handleLogin}>카카오톡으로 시작하기</Buttons>
+      <div>
+        <button type='button' className='flex flex-row items-center justify-center gap-3 relative large-button bg-[#F9EB00]' onClick={handleLogin}><Kakao />카카오톡으로 시작하기</button>
+      </div>
   )
 }
 export default SocialKakao;

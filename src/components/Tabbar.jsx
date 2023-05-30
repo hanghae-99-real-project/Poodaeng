@@ -68,7 +68,7 @@ function Tabbar({ homeState = true, mapState = false, pooState = false }) {
     console.log('poobox', isPoobox);
   };
   return (
-    <div className='absolute left-0 bottom-0 border bg-[#FFFFFF] z-20'>
+    <div className='relative left-0 bottom-0 border bg-[#FFFFFF] z-20'>
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
         {isHome ? (
           <img

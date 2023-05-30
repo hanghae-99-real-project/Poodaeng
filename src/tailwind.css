@@ -19,6 +19,10 @@
     @apply flex justify-center items-center;
   }
 
+  .f-f-c {
+    @apply flex flex-col;
+  }
+
   .canvas {
     /* @apply overflow-hidden flex flex-col items-center relative w-[375px] h-[812px]  bg-[#FFFFFF]; */
     /* @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF]; */
@@ -195,4 +199,8 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+textarea {
+  resize: none;
 }
