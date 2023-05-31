@@ -20,8 +20,8 @@ const addPooBox = async (data) => {
   
   const config = {
     headers: { 
-      "Accesstoken": `Bearer ${accessToken}`,
-      "Refreshtoken": refreshToken,
+      "accesstoken": `Bearer ${accessToken}`,
+      "refreshtoken": refreshToken,
       "content-type" : "multipart/form-data"
   }
 };
