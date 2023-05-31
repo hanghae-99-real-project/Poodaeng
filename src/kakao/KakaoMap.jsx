@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 
-function KakaoMap() {
+function KakaoMap({ width, height, rounded }) {
   const { kakao } = window;
   const [message, setMessage] = useState(false);
   const geoLocationOptions = {
@@ -50,7 +50,7 @@ function KakaoMap() {
   return (
     <>
       {message && <ToastContainer />}
-      <div id='map' className='w-[500px] h-[500px]' />
+      <div id='map' className={`${width} ${height} ${rounded}`} />
     </>
   );
 }
