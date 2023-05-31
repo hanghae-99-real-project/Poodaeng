@@ -100,7 +100,6 @@ function PooPostcomponent() {
     // );
     // data.formData = formData;
     // data.accessToken = accessToken;
-    console.log('poopost', postData);
     mutation.mutate(postData);
   };
 
