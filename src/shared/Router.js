@@ -1,23 +1,26 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from '../pages/Home';
-import Layout from './Layout';
+import LoginSocial from '../components/LoginSocial';
+import LogoutTest from '../components/LogoutTest';
 import Alert from '../pages/Alert';
+import AuthCheck from '../pages/AuthCheck';
+import CompletePage from '../pages/CompletePage';
+import DaengFinder from '../pages/DaengFinder';
+import DaengFinderDetail from '../pages/DaengFinderDetail';
 import Events from '../pages/Events';
-import Map from '../pages/Map';
-import PooPost from '../pages/PooPost';
+import Home from '../pages/Home';
 import LoginPage from '../pages/LoginPage';
+import Map from '../pages/Map';
+import MyBookMark from '../pages/MyBookMark';
+import MyPost from '../pages/MyPost';
+import Mypage from '../pages/Mypage';
+import PooPost from '../pages/PooPost';
+import ProfileEdit from '../pages/ProfileEdit';
 import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignupPage';
-import AuthCheck from '../pages/AuthCheck';
-import DaengFinder from '../pages/DaengFinder';
-import CompletePage from '../pages/CompletePage';
-import Mypage from '../pages/Mypage';
-import LogoutTest from '../components/LogoutTest';
-import LoginSocial from '../components/LoginSocial';
-import MyPost from '../pages/MyPost';
-import MyBookMark from '../pages/MyBookMark';
-import ProfileEdit from '../pages/ProfileEdit';
+import Layout from './Layout';
+import LinkFooterLayout from './LinkFooterLayout';
+import ScrollLayout from './ScrollLayout';
 
 // import TokenCheck from '../utils/TokenCheck';
 /* Token 체크를 작성 업로드, 삭제, 수정 시에만 토큰을 보내서 확인하도록 구성하자. */
@@ -44,6 +47,12 @@ function Router() {
           <Route path='/mybookmark' element={<MyBookMark />}/>
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
+        </Route>
+        <Route element={<ScrollLayout />}>
+          nothing yet
+        </Route>
+        <Route element={<LinkFooterLayout />}>
+          <Route path='/daengfindDetail' element={<DaengFinderDetail/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

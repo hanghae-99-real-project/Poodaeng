@@ -57,7 +57,7 @@ function LoginAgree() {
             <div className='text-xl font-bold tracking-tighter mb-2'>
               푸댕은 위치기반 서비스예요
             </div>
-            <div className='text-xs text-cen w-full mb-3 tracking-tight'>
+            <div className='text-xs text-center leading-4 w-full mb-3 tracking-tight'>
               <p>위치 정보를 제공해주시면 산책하고 있는 곳에서</p>
               <p>가까운 푸박스를 찾아볼 수 있어요!</p>
             </div>
