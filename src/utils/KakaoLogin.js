@@ -9,7 +9,7 @@ function SocialKakao(){
   const restApiKey = process.env.REACT_APP_KAKAO_REST_API_KEY; // REST API KEY
   const redirectUri = process.env.REACT_APP_KAKAO_REDIRECT_URI // Redirect URI
   // oauth 요청 URL
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`;
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code&code=profile_nickname,profile_image,account_email`;
   const handleLogin = () => {
     window.location.href = kakaoURL;
   };

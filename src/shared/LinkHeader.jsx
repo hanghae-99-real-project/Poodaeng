@@ -1,0 +1,23 @@
+import React from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+
+function LinkHeader({ children, icon, destination, feature }) {
+  console.log('추가기능 feature >>>', feature);
+  const navigate = useNavigate();
+  return (
+    // py-5
+    <div className='f-fr-ic justify-between h-7 px-4 shadow-md pt-[61px] py-5'>
+      {icon && (
+        <IoIosArrowBack
+          className='text-2xl'
+          onClick={() => navigate(destination)}
+        />
+      )}
+      <div className='font-bold text-xl leading-6 text-center'>{children}</div>
+      {feature || <div className='w-3' />}
+    </div>
+  );
+}
+
+export default LinkHeader;

@@ -17,15 +17,23 @@ import LinkFooter from './LinkFooter';
 /* 스토어를 분리시킬 수도 있음. */
 const store = (set, get) => ({
   willUseFooter: false,
-  
+  willUseHeader: false,
+  SwitchHeader: (boolean)=> set(()=>({
+    willUseHeader: boolean,
+  })),
   SwitchFooter: (boolean)=> set(()=>({
     willUseFooter: boolean,
   })),
+  ConsoleHeaderState: () => {
+    console.log("Header 사용유무 확인 >>> ", get().willUserHeader);
+    const reply = get().willUseHeader;
+    return reply
+  },
   ConsoleFooterState: () => {
-    console.log("메서드 안 콘솔 >>> ", get().willUseFooter);
-    const sound = get().willUseFooter;
-    return sound
-  }
+    console.log("Footer 사용유무 확인 >>> ", get().willUseFooter);
+    const reply = get().willUseFooter;
+    return reply
+  },
 })
 
 /* devTools 사용 분기 처리 */
@@ -69,6 +77,7 @@ function LinkFooterLayout() {
         {/* <div className='canvas max-h-[(812-40)px] pt-0'>  */}
         {/* <div className='canvas max-h-[772px] pt-0'>  */}
         <div className='canvas pt-0'> 
+          {/* {willUseHeader && <LinkHeader />} */}
           <Outlet />
           {willUseFooter && <LinkFooter />}
         </div>

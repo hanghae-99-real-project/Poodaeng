@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { create } from 'zustand';
 import { shallow } from 'zustand/shallow';
 
@@ -27,32 +27,32 @@ export const searchListStore = create((set, get) => ({
       searchList: prev.searchList.filter(item => item.id !== id),
     }));
   },
-  onTextRef: ref => {
-    set(() => ({
-      text: ref.current.value,
-    }));
-  },
+  // onTextRef: ref => {
+  //   set(() => ({
+  //     text: ref.current.value,
+  //   }));
+  // },
 }));
 
 function Input() {
-  const { word, onWordChanger, setSearchList, onTextRef } = searchListStore(
+  const { word, onWordChanger, setSearchList } = searchListStore(
     state => ({
       word: state.word,
       onWordChanger: state.onWordChanger,
       setSearchList: state.setSearchList,
-      onTextRef: state.onTextRef,
+      // onTextRef: state.onTextRef,
     }),
     shallow,
   );
-  const inputRef = useRef();
-  onTextRef(inputRef);
+  // const inputRef = useRef();
+  // onTextRef(inputRef);
   const activeEnter = e => {
     if (e.key === 'Enter') {
       setSearchList();
     }
   };
-  console.log(inputRef.current);
-  console.log(inputRef);
+  // console.log(inputRef.current);
+  // console.log(inputRef);
   return (
     <div className='-translate-x-2'>
       <input
@@ -61,7 +61,7 @@ function Input() {
         placeholder='검색내용을 입력하세요'
         className='w-64'
         onKeyDown={activeEnter}
-        ref={inputRef}
+        // ref={inputRef}
       />
     </div>
   );

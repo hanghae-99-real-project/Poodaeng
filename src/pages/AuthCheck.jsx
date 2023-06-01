@@ -7,8 +7,8 @@ import {
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
-import qs from 'qs';
-import jwtDecode from 'jwt-decode';
+// import qs from 'qs';
+// import jwtDecode from 'jwt-decode';
 import Loading from '../components/common/Loading';
 // import Loading from '../components/Loading';
 
@@ -21,7 +21,7 @@ function AuthCheck() {
   const [searchParams, setSearchParams] = useSearchParams();
   console.log(searchParams.get('code'));
   const code = searchParams.get('code'); // 인가 코드 뜯어서 서버로 보내야 함.
-  console.log('code >>>', code);
+  console.log('인가 code >>>', code);
 
   // eslint-disable-next-line consistent-return
   const getKakaoToken = async () => {
@@ -32,14 +32,22 @@ function AuthCheck() {
     //   redirect_uri: process.env.REACT_APP_KAKAO_REDIRECT_URI,
     //   code,
     // });
+
     /* 인가코드는 쿼리 스트링으로 넘겨야 인식함 */
-    const payload = qs.stringify({
-      grant_type: 'authorization_code',
-      client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
-      client_secret: process.env.REACT_APP_KAKAO_CLIENT_SECRET,
-      redirect_uri: process.env.REACT_APP_KAKAO_REDIRECT_URI,
-      code,
-    });
+    /* to Kakao auth */
+    // const payload = qs.stringify({
+    //   grant_type: 'authorization_code',
+    //   client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
+    //   client_secret: process.env.REACT_APP_KAKAO_CLIENT_SECRET,
+    //   redirect_uri: process.env.REACT_APP_KAKAO_REDIRECT_URI,
+    //   code,
+    // });
+
+    /* to BE server */
+    // const payload = qs.stringify({
+    //   code,
+    // });
+
     // let response;
 
     // const payload = {
@@ -57,61 +65,42 @@ function AuthCheck() {
 
     try {
       // response = await axios
-      await axios
-        .post('https://kauth.kakao.com/oauth/token', payload)
-        .then(res => {
-          console.log('response >>>', res);
-          console.log('response.data >>>', res.data);
-          if (res.status === 200) {
-            console.log('jwtDecode result >>>', jwtDecode(res.data.id_token));
-            const { sub } = jwtDecode(res.data.id_token);
-            localStorage.setItem('kakaoUserId', sub);
-            navigate('/test', {
-              state: {
-                token: res.data.access_token,
-                userId: sub,
-              },
-            });
-          }
-        });
-
+      /* 카카오에 직접 */
       // await axios
-      //   // .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/kakao/signin`, {
-      //   .post(`http://localhost:3000/api/auth/kakao/signin`, {
-      //     headers: {
-      //       payload,
-      //     },
-      //   })
+      //   .post('https://kauth.kakao.com/oauth/token', payload)
       //   .then(res => {
       //     console.log('response >>>', res);
-      //     console.log('response.data >>>', res.data);
+      //     console.log(
+      //       '카카오auth에서 가져온 데이터 response.data >>>',
+      //       res.data,
+      //     );
+      //     if (res.status === 200) {
+      //       console.log('jwtDecode result >>>', jwtDecode(res.data.id_token));
+      //       const { sub } = jwtDecode(res.data.id_token);
+      //       localStorage.setItem('kakaoUserId', sub);
+      //       navigate('/', {
+      //         state: {
+      //           token: res.data.access_token,
+      //           userId: sub,
+      //         },
+      //       });
+      //     }
       //   });
 
-      // console.log('response >>>', response);
-
-      // const token = response.data.access_token;
-      // const headers = {
-      //   Authorization: `Bearer ${token}`,
-      // };
-      // const res = await axios.post('/api/auth/users/login', headers);
-      // console.log('BE response >>>', res);
-
-      // if (response) {
-      //   // const res = getKakaoToken();
-      //   console.log('response >>>', response);
-      //   console.log('response.data >>>', response.data);
-      //   if (response.status === 200) {
-      //     navigate('/test', {
-      //       state: {
-      //         token: response.data.access_token,
-      //       },
-      //     });
-      //     // return (
-      //     //   // <Navigate to='/signupcomplete' state={response.data.access_token} />
-      //     //   <Navigate to='/test' state={response.data.access_token} />
-      //     // );
-      //   }
-      // }
+      /* 서버에 */
+      const response = await axios
+        // .post(`http://localhost:3000/api/auth/kakao/signin`, {
+        .post(
+          `${process.env.REACT_APP_SERVER_URL}/api/auth/kakao/signin`,
+          {},
+          {
+            headers: {
+              authorization: `Bearer ${code}`,
+            },
+          },
+        );
+      console.log('서버 response >>>', response);
+      navigate('/');
     } catch (error) {
       console.log('getKakaoToken error >>>', error);
       navigate('/login', {

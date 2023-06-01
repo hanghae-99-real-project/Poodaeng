@@ -25,7 +25,7 @@ function SignUpPage() {
     passwordConfirm: '',
     code: '',
   });
-
+  console.log('render occured');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -10,7 +10,7 @@ function Card({ isDetail }) {
           ? 'flex-row gap-3 py-3 border-b border-[#ECECEC]'
           : 'flex-col gap-2'
       } `}
-      onClick={() => navigate('/daengfindDetail')}
+      onClick={() => navigate('/daengfinder/detail')}
     >
       <div
         className={`f-ic-jc ${

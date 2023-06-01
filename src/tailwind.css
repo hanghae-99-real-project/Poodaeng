@@ -19,6 +19,10 @@
     @apply flex justify-center items-center;
   }
 
+  .f {
+    @apply flex;
+  }
+
   .f-ic-jc {
     @apply flex items-center justify-center;
   }
@@ -53,6 +57,10 @@
 
   .f-fr-ic-jc {
     @apply f-fr items-center justify-center;
+  }
+
+  .f-fr-ic-jb {
+    @apply f-fr-ic justify-between;
   }
 
   .image {
@@ -239,6 +247,7 @@ input[type='number'] {
 
 textarea {
   resize: none;
+  outline: none;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');

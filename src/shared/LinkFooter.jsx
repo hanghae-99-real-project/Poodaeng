@@ -1,9 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { create } from 'zustand';
 import { shallow } from 'zustand/shallow';
 import { ReactComponent as Bookmark } from '../assets/images/BookmarkFilled.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
-import { ReactComponent as Magnifier } from '../assets/images/Magnifier.svg';
+import { ReactComponent as Comment } from '../assets/images/Magnifier.svg';
 
 /* immer 사용 */
 /* import { create } from 'zustand'
@@ -77,6 +78,7 @@ function LinkFooter() {
       }),
       shallow,
     );
+  const navigate = useNavigate();
   const bookmarkHandler = () => {
     if (isBookmark) {
       onCancelBookmark();
@@ -89,12 +91,16 @@ function LinkFooter() {
     onClipBoard();
   };
 
+  const temporaryPostId = 0;
   /* 여기 나중에 zustand나 redux로 전역으로 관리해서 게시글 눌렀을 때 그 인덱스 여기로 넘겨줘야 함. */
   return (
     <div className='relative bottom-0 z-50 w-full h-24 pt-3 px-5 border-t border-solid shadow-md'>
       <div className='f-fr-ic justify-between flex-wrap'>
         <div className='f-fr gap-6 w-fit flex-wrap h-5'>
-          <Magnifier className='cursor-pointer' />
+          <Comment
+            className='cursor-pointer'
+            onClick={() => navigate(`/daengfinder/comment/${temporaryPostId}`)}
+          />
           <Clip onClick={clipHandler} cursor-pointer />
         </div>
         <Bookmark
