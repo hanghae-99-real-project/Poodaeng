@@ -61,6 +61,8 @@ function SignInPage() {
       Cookies.set('refreshToken', refreshToken, {
         expires: rfExpireDate,
       });
+      console.log('로그인 할 때 받는 RT', refreshToken);
+      console.log('login data=>>', data.data);
       // eslint-disable-next-line no-unused-vars
       const { exp: AC_EXP, iat, userId } = decodedAcToken;
       console.log('이거 초 단위인가?  >>> ', AC_EXP);

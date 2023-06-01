@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ReactComponent as PooBox } from '../assets/images/Poobox.svg';
 // '../../assets/images/poobox.svg';
@@ -14,10 +14,6 @@ function Tabbar() {
   // const [isProfile, setIsProfile] = useState(false);
 
   const auth = useSelector(store => store.auth);
-
-  const location = useLocation(); // 현재 페이지로 넘어왔을 때 넘어온 값을 뽑아줌. 검색 키워드 : react-router-dom V6 useLocation, navigate, Outlet
-  const { state } = location;
-  console.log('페이지 넘어왔을 때 location state >>>', state); // 맨 처음 초기값 null -> state에 아무것도 안 담겨있다. // navigate로 넘어온 값을 false true false로 찍는다.
 
   const HomeIconHandler = () => {
     navigate('/');
