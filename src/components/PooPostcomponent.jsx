@@ -28,7 +28,6 @@ function PooPostcomponent() {
   // 파일값
   const handleFileUpload = file => {
     setUploadedFile(file);
-    console.log(file);
   };
 
   // 좌표값
@@ -41,6 +40,11 @@ function PooPostcomponent() {
     setContent(e.target.value);
   };
 
+  // const handleFileChange = e => {
+  //   const { name, files } = e.target;
+  //   setForm({ ...form, [name]: files[0] });
+  // };
+
   // post formdata
   const pooBoxSubmitHandler = () => {
     if (!latlng || !latlng.La || !latlng.Ma) {
@@ -52,14 +56,21 @@ function PooPostcomponent() {
       return;
     }
 
-    const data = {};
+    // const data = {};
     const formData = new FormData();
-    formData.append('pooPhotoUrl', [uploadedFile]);
-    formData.append('content', JSON.stringify(content));
-    formData.append('pooLatitude', latlng.La);
-    formData.append('pooLongitude', latlng.Ma);
-    // formData.append('pooPhotoUrl', imageBlob);
-    // console.log([uploadedFile]);
+    formData.append('pooPhotoUrl', uploadedFile);
+    // formData.append('content', content);
+    // formData.append('pooLatitude', latlng.La);
+    // formData.append('pooLongitude', latlng.Ma);
+
+    const postData = {
+      accessToken,
+      pooPhotoUrl: uploadedFile,
+      pooLatitude: latlng.La,
+      pooLongitude: latlng.Ma,
+      content,
+    };
+
     // formData.append('content', JSON.stringify(content));
     // console.log(content);
     // formData.append('pooLatitude', latlng.La);
@@ -87,10 +98,9 @@ function PooPostcomponent() {
     //   'pooLongitude',
     //   new Blob([JSON.stringify(latlng.Ma)], { type: 'application/json' }),
     // );
-    data.formData = formData;
-    data.accessToken = accessToken;
-
-    mutation.mutate(data);
+    // data.formData = formData;
+    // data.accessToken = accessToken;
+    mutation.mutate(postData);
   };
 
   return (
