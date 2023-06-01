@@ -6,7 +6,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
 import React, { useEffect, useRef } from 'react';
-import Headers from './Headers';
 
 function Kakaoserch() {
   const mapContainer = useRef(null);
