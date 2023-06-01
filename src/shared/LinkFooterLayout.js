@@ -1,16 +1,76 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { create } from 'zustand';
+import { shallow } from 'zustand/shallow';
+import { devtools } from 'zustand/middleware';
 import LinkFooter from './LinkFooter';
 
+
+/* -------------------------------------------------- */
+/* export const useFooterLayout = create(devtools(set => ({
+  willUseFooter: false,
+  SwitchFooter: (boolean)=> set(()=>({
+    willUseFooter: boolean,
+  }))
+}))) */
+/* The set function has a second argument, false by default. Instead of merging, it will replace the state model. Be careful not to wipe out parts you rely on, like actions. */
+/* 스토어를 분리시킬 수도 있음. */
+const store = (set, get) => ({
+  willUseFooter: false,
+  
+  SwitchFooter: (boolean)=> set(()=>({
+    willUseFooter: boolean,
+  })),
+  ConsoleFooterState: () => {
+    console.log("메서드 안 콘솔 >>> ", get().willUseFooter);
+    const sound = get().willUseFooter;
+    return sound
+  }
+})
+
+/* devTools 사용 분기 처리 */
+export const useFooterLayout = create(
+  process.env.NODE_ENV !== 'production'? devtools(store) : store
+)
+
+
+/* -------------------------------------------------- */
+
+
+
+/* get() 사용 */
+/* const storeA = create((set, get) => ({
+  count: 0,
+  increment: () => {
+    const currentCount = get().count;
+    set({ count: currentCount + 1 });
+  },
+})); */
+
+/* getState() 사용 */
+/* const storeB = create((set, get) => ({
+  updateStoreA: () => {
+    const currentCount = storeA.getState().count;
+    const updatedCount = currentCount + 1;
+    storeA.setState({ count: updatedCount });
+  },
+})); */
+
 function LinkFooterLayout() {
+  const { willUseFooter} = useFooterLayout(state=>({
+    willUseFooter: state.willUseFooter,
+  }), shallow);
+
   return (
     // <div className=' w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-yellow-400'>
       // <div className='w-screen h-[calc(var(--vh,1vh)*100)+65px] flex justify-center items-center bg-yellow-400'>
       <div className='w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-yellow-400'>
         {/* <div className='test-canvas'>  */}
+        {/* <div className='canvas max-h-[(812-40)px] pt-0'>  */}
+        {/* <div className='canvas max-h-[772px] pt-0'>  */}
         <div className='canvas pt-0'> 
           <Outlet />
-          <LinkFooter />
+          {willUseFooter && <LinkFooter />}
         </div>
       </div>
     // </div>

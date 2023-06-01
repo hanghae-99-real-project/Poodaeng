@@ -3,6 +3,7 @@ import { BiCategory } from 'react-icons/bi';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
+import { useNavigate } from 'react-router-dom';
 import { areaList } from '../data/Areas';
 import Card from './DaengFinder/Card';
 // import Tabbar from './Tabbar';
@@ -12,6 +13,7 @@ function DaengFindercomponent() {
   const [isShow, setIsShow] = useState(false);
   const [isDetail, setIsDetail] = useState(true);
 
+  const navigate = useNavigate();
   const selectAreaHandler = e => {
     const { innerText } = e.target;
     setSelectedArea(innerText);
@@ -25,7 +27,10 @@ function DaengFindercomponent() {
       <div className='flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] pb-5 mb-7 border-b shadow-md'>
         <div className='w-[30px]' />
         <div className='font-bold text-xl '>댕 finder</div>
-        <RxMagnifyingGlass className='text-3xl' />
+        <RxMagnifyingGlass
+          className='text-3xl cursor-pointer transition duration-300 ease-in-out hover:scale-110'
+          onClick={() => navigate('/daengfinder/search')}
+        />
       </div>
       <div className='w-full flex flex-row justify-between px-5 mb-6'>
         <div

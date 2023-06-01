@@ -19,8 +19,20 @@
     @apply flex justify-center items-center;
   }
 
+  .f-ic-jc {
+    @apply flex items-center justify-center;
+  }
+
   .f-fc {
     @apply flex flex-col;
+  }
+
+  .f-fc-jc {
+    @apply f-fc justify-center;
+  }
+
+  .f-fc-ic {
+    @apply f-fc items-center;
   }
 
   .f-fc-ic-jc {
@@ -31,8 +43,20 @@
     @apply flex flex-row;
   }
 
+  .f-fr-ic {
+    @apply f-fr items-center;
+  }
+
+  .f-fr-jc {
+    @apply f-fr justify-center;
+  }
+
   .f-fr-ic-jc {
     @apply f-fr items-center justify-center;
+  }
+
+  .image {
+    @apply object-cover w-full h-full;
   }
 
   .canvas {
@@ -229,5 +253,5 @@ textarea {
 }
 
 body {
-  font-family: 'Nunito Sans', 'SUITE-Regular';
+  font-family: 'SUITE-Regular', 'Nunito Sans';
 }

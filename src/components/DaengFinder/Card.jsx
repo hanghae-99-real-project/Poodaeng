@@ -9,18 +9,24 @@ function Card({ isDetail }) {
         isDetail
           ? 'flex-row gap-3 py-3 border-b border-[#ECECEC]'
           : 'flex-col gap-2'
-      }  `}
+      } `}
       onClick={() => navigate('/daengfindDetail')}
     >
       <div
-        className={`${
+        className={`f-ic-jc ${
           isDetail ? 'w-24 h-24' : 'w-40 h-40'
-        }  border border-[#9E9E9E]`}
+        }  border border-[#9E9E9E] overflow-hidden`}
       >
-        <img src='' alt='photoThumb' />
+        <img
+          src={`${process.env.PUBLIC_URL}/images/DoggyExample.png`}
+          alt='photoThumb'
+          className={`image transition duration-300 ease-in-out ${
+            !isDetail && 'hover:scale-110 cursor-pointer'
+          }`}
+        />
       </div>
       <div className={`flex flex-col justify-center gap-2 `}>
-        <div className='flex flex-col gap-1'>
+        <div className={`flex flex-col gap-1 ${isDetail && 'cursor-pointer'}`}>
           <h1 className='font-bold text-sm truncate'>
             방금 말티즈를 발견했어요. 너무 무서웠어요.
           </h1>

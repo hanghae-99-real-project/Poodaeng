@@ -1,14 +1,87 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import { shallow } from 'zustand/shallow';
 import { ReactComponent as Badge } from '../assets/images/Badge1.svg';
+import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import KakaoMap from '../kakao/KakaoMap';
+import { useClipStore } from '../shared/LinkFooter';
+import { useFooterLayout } from '../shared/LinkFooterLayout';
 
 function DaengFinderDetail() {
+  const [daeng, setDaeng] = useState('/images/DoggyExample.png');
+  const [activeBtn, setActiveBtn] = useState(0);
+  const { onModal, modalComment } = useClipStore(
+    state => ({
+      onModal: state.onModal,
+      modalComment: state.modalComment,
+    }),
+    shallow,
+  );
+  const { SwitchFooter } = useFooterLayout(
+    state => ({
+      SwitchFooter: state.SwitchFooter,
+    }),
+    shallow,
+  );
+
+  const navigate = useNavigate();
+
+  const imageList = [
+    '/images/DoggyExample.png',
+    '/images/DoggyExample.png',
+    '/images/DoggyExample.png',
+    '/images/MockImg.svg',
+  ];
+
+  const imageHandler = idx => {
+    setDaeng(imageList[idx]);
+    setActiveBtn(idx);
+  };
+
+  useEffect(() => {
+    SwitchFooter(true);
+  });
+
   return (
-    <div className='h-full w-full bg-yellow-300'>
-      <div className='flex items-center justify-center relative w-full h-80 mb-4'>
-        <img src='' alt='photoThumb' className='object-cover w-full h-full' />
+    <div className='h-full w-full'>
+      <IoIosArrowBack
+        className='absolute z-30 top-7 left-4 text-xl'
+        onClick={() => navigate('/daengfinder')}
+      />
+      <div className={`fixed inset-0 z-30 ${onModal ? '' : 'hidden'}`}>
+        <div role='none' className='absolute inset-0 bg-black opacity-30' />
+        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 f-fc-ic-jc  bg-[#FFFFFF] rounded-md  shadow-lg px-14 py-8'>
+          <div className='f-fc-ic gap-2 '>
+            <Clip className='blur-none' />
+            <div className='w-36 text-center text-sm whitespace-nowrap font-bold leading-4 blur-none'>
+              {modalComment}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className='bg-[#FFFFFF] px-5 h-[24.5rem] overflow-y-scroll'>
+      <div className='flex items-center justify-center relative w-full h-80'>
+        <div className='absolute bottom-3 f-fr-jc gap-3'>
+          {imageList.map((image, idx) => {
+            return (
+              <input
+                key={image}
+                type='button'
+                className={`w-2 h-2 rounded-full ${
+                  activeBtn === idx ? 'bg-[#FFFFFF]' : 'bg-[#B3B3B3]'
+                } cursor-pointer transition duration-150 `}
+                onClick={() => imageHandler(idx)}
+              />
+            );
+          })}
+        </div>
+        <img
+          src={`${process.env.PUBLIC_URL}${daeng}`}
+          alt='photoThumb'
+          className='object-cover w-full h-full'
+        />
+      </div>
+      <div className='bg-[#FFFFFF] px-5 h-[25rem] overflow-y-scroll'>
         <div className='f-fr text-xl font-semibold gap-2 border-b border-solid border-[#ECECEC] py-5'>
           <Badge />
           닉네임
