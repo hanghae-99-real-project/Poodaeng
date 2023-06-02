@@ -6,7 +6,7 @@ import Headers from './Headers';
 import FileUploader from './FileUploader';
 import Buttons from './common/Buttons';
 import KakaoClickMap from './KakaoClickMap';
-import addPooBox from '../api/poopost';
+import { addPooBox } from '../api/poobox';
 
 function PooPostcomponent() {
   const [latlng, setLatlng] = useState(null);

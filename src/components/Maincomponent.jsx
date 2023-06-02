@@ -60,7 +60,7 @@ function Maincomponent() {
               />
             </div>
           </div>
-          <div className='border mt-[15px]' />
+          <div className='border mt-4' />
         </div>
         <div className='mt-[10px] ml-[30px] font-[700]'>내 주변 실종신고</div>
         <div className='ml-[30px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
@@ -78,7 +78,7 @@ function Maincomponent() {
           </div>
         </div>
       </div>
-      <div className=''>
+      <div className='-mt-0.5'>
         <div className='mt-14'>
           <Tabbar />
         </div>

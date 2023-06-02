@@ -33,7 +33,7 @@ function Mypagecomponent() {
             <div className='mt-4 mr-5 mb-5 h-24 text-sm'>안유진 AN YUJIN</div>
             <div className='border mb-5' />
           </div>
-          <div className='ml-5 h-96'>
+          <div className='ml-5 h-52 mb-1.5'>
             <div
               className='large-button flex items-center text-lg cursor-pointer'
               onClick={() => navigate('/mypost')}
@@ -56,7 +56,7 @@ function Mypagecomponent() {
               이용 안내
             </div>
           </div>
-          <div className='mt-0.5'>
+          <div className='mt-40'>
             <Tabbar />
           </div>
         </div>
