@@ -18,7 +18,7 @@ function PooPostcomponent() {
   const queryClient = useQueryClient();
   const mutation = useMutation(addPooBox, {
     onSuccess: () => {
-      queryClient.invalidateQueries('pooPost');
+      queryClient.invalidateQueries('poobox');
     },
     onError: error => {
       console.log(error);

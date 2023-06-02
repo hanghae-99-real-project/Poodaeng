@@ -1,3 +1,6 @@
+/* eslint-disable no-sequences */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-alert */
 /* eslint-disable no-inner-declarations */
 /* eslint-disable no-undef */
@@ -47,7 +50,7 @@ function Kakaoserch() {
 
     const pointsMarkerImageSrc = './images/points.png';
     const pointsMarkerImageSize = new kakao.maps.Size(20, 32);
-    const pointsMarkerImageOption = { offset: new kakao.maps.Point(0, 0) };
+    const pointsMarkerImageOption = { offset: new kakao.maps.Point(7, 25) };
 
     const pointsMarkerImage = new kakao.maps.MarkerImage(
       pointsMarkerImageSrc,
@@ -56,9 +59,9 @@ function Kakaoserch() {
     );
 
     // 지도에 표시할 마커의 좌표 배열
-    const points = data.data.map(item => {
-      return new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude);
-    });
+    const points = data.data.map(
+      item => new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude),
+    );
 
     // 지도 영역 설정을 위한 경계 객체 생성
     const bounds = new kakao.maps.LatLngBounds();
