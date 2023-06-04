@@ -23,6 +23,7 @@ import LinkFooterLayout from './LinkFooterLayout';
 import ScrollLayout from './ScrollLayout';
 import DaengFinderSearchPage from '../pages/DaengFinderSearchPage';
 import DaengFinderCommentPage from '../pages/DaengFinderCommentPage';
+import DaengFinderWritePage from '../pages/DaengFinderWritePage';
 
 // import TokenCheck from '../utils/TokenCheck';
 /* Token 체크를 작성 업로드, 삭제, 수정 시에만 토큰을 보내서 확인하도록 구성하자. */
@@ -57,6 +58,7 @@ function Router() {
         <Route element={<LinkFooterLayout />}>
           <Route path='/daengfinder/detail' element={<DaengFinderDetail/>}/>
           <Route path='/daengfinder/comment/:postId' element={<DaengFinderCommentPage />}/>
+          <Route path='/daengfinder/write' element={<DaengFinderWritePage />}/>
         </Route>
       </Routes>
     </BrowserRouter>

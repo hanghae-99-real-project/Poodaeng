@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +9,18 @@ import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import KakaoMap from '../kakao/KakaoMap';
 import { useClipStore } from '../shared/LinkFooter';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
+import convertCoordinates from '../kakao/KakaoApi';
+// import useCurrentLocation from '../hooks/useCurrentLocation';
 
 function DaengFinderDetail() {
   const [daeng, setDaeng] = useState('/images/DoggyExample.png');
   const [activeBtn, setActiveBtn] = useState(0);
+  /* 이거 마커 포지션 안움직일 수도 있으니까 initVal을 현재 위치로 해야 함 */
+  const [markerPotision, setMarkerPosition] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
+  // useCurrentLocation();
   const { onModal, modalComment } = useClipStore(
     state => ({
       onModal: state.onModal,
@@ -24,9 +34,9 @@ function DaengFinderDetail() {
     }),
     shallow,
   );
-
   const navigate = useNavigate();
 
+  console.log('markerposition >>> ', markerPotision);
   const imageList = [
     '/images/DoggyExample.png',
     '/images/DoggyExample.png',
@@ -40,8 +50,17 @@ function DaengFinderDetail() {
   };
 
   useEffect(() => {
+    /* 잘 되는구만 캬캬 */
+    const response = convertCoordinates(
+      markerPotision.latitude,
+      markerPotision.longitude,
+    );
+    console.log('좌표 변환 값 >>>', response);
+  }, [markerPotision.latitude, markerPotision.longitude]);
+
+  useEffect(() => {
     SwitchFooter(true);
-  });
+  }, []);
 
   return (
     <div className='h-full w-full'>
@@ -116,7 +135,12 @@ function DaengFinderDetail() {
           </div>
           <div className='pt-5'>
             <label className='text-xs font-bold mb-2'>상세위치</label>
-            <KakaoMap width='w-80' height='h-36' rounded='rounded-sm' />
+            <KakaoMap
+              width='w-80'
+              height='h-36'
+              rounded='rounded-sm'
+              getMarkerPosition={setMarkerPosition}
+            />
             <div className='pt-5 f-fr gap-2 parent font-medium text-xs text-[#969696]'>
               <span>2023.05.03</span>
               <span>|</span>

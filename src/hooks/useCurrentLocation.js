@@ -1,7 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from 'react'
 
-function useCurrentLocation(options = {}){
+function useCurrentLocation(options = {
+  enableHighAccuracy: true,
+  timeout: 1000 * 60 * 1 /* === 1 minute */,
+  maximumAge: 1000 * 3600 * 24 /* === 24 hours */,
+}){
   const [location, setLocation] = useState();
   const [error, setError] = useState();
 

@@ -1,4 +1,9 @@
 {
+  // "parser": "@babel/eslint-parser",
+  // "parserOptions": {
+  //   "ecmaVersion": "latest",
+  //   "sourceType": "module"
+  // },
   "extends": [
     "airbnb",
     "eslint:recommended",
@@ -9,6 +14,10 @@
     // "eslint",
     "prettier"
   ],
+  "parserOptions": {
+    "ecmaVersion": 2020
+    // "sourceType": "module"
+  },
   "env": {
     "browser": true,
     "es2021": true,
@@ -37,6 +46,8 @@
     "react/button-has-type": 0,
     "jsx-a11y/label-has-associated-control": "off",
     "react/no-unknown-property": "off",
+    "no-plusplus": "off",
+    "no-unsafe-optional-chaining": "off",
     "react/jsx-filename-extension": [
       1,
       {

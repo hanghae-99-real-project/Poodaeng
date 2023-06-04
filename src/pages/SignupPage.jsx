@@ -174,7 +174,8 @@ function SignUpPage() {
       phoneNumber: inputs.phoneNumber,
       password: inputs.password,
       nickname: inputs.nickname,
-      position: agreeCheck,
+      userPhoto: null,
+      // position: agreeCheck,
     };
     mutation.mutate(result);
   };

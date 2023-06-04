@@ -76,7 +76,7 @@ function LinkFooterLayout() {
         {/* <div className='test-canvas'>  */}
         {/* <div className='canvas max-h-[(812-40)px] pt-0'>  */}
         {/* <div className='canvas max-h-[772px] pt-0'>  */}
-        <div className='canvas pt-0'> 
+        <div className='canvas pt-0 '> 
           {/* {willUseHeader && <LinkHeader />} */}
           <Outlet />
           {willUseFooter && <LinkFooter />}

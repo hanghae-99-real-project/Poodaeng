@@ -53,3 +53,22 @@ const { SwitchFooter } = useFooterLayout(
   }),
   shallow,
 );
+
+
+/* -------------------------------------------------- */
+
+const storeA = create((set, get) => ({
+  count: 0,
+  increment: () => {
+    const currentCount = get().count;
+    set({ count: currentCount + 1 });
+  },
+}));
+
+const storeB = create((set, get) => ({
+  updateStoreA: () => {
+    const currentCount = storeA.getState().count;
+    const updatedCount = currentCount + 1;
+    storeA.setState({ count: updatedCount });
+  },
+}));

@@ -210,10 +210,10 @@ video {
   -ms-user-select: none;
   user-select: none;
 }
-
 body::-webkit-scrollbar {
   display: none;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -221,6 +221,11 @@ body::-webkit-scrollbar {
 ::-webkit-scrollbar-track {
   display: none;
 }
+
+::-webkit-scrollbar-thumb {
+  display: none;
+}
+
 /* ::-webkit-scrollbar {
   width: 9px;
 }
@@ -254,13 +259,13 @@ textarea {
 @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @font-face {
-  font-family: 'SUITE-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2')
+  font-family: 'SUIT-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2')
     format('woff2');
-  font-weight: 400;
+  font-weight: normal;
   font-style: normal;
 }
 
 body {
-  font-family: 'SUITE-Regular', 'Nunito Sans';
+  font-family: 'SUIT-Regular', 'Nunito Sans';
 }

@@ -8,6 +8,9 @@ export const searchListStore = create((set, get) => ({
   text: '',
   setSearchList: () => {
     const search = get().word;
+    if (search.trim() === '') {
+      return;
+    }
     set(prev => ({
       searchList: [
         ...prev.searchList,
