@@ -1,11 +1,7 @@
-/* eslint-disable no-alert */
-/* eslint-disable no-inner-declarations */
-/* eslint-disable no-undef */
-/* eslint-disable consistent-return */
+/* eslint-disable func-names */
 /* eslint-disable no-plusplus */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-use-before-define */
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useQuery } from 'react-query';
 import { getPooBox } from '../api/poobox';
 
@@ -20,7 +16,6 @@ function Kakaoserch() {
     return <div>오류가 발생했습니다.</div>;
   }
 
-  // useEffect(() => {
   const { kakao } = window;
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
   const script = document.createElement('script');
@@ -47,7 +42,7 @@ function Kakaoserch() {
 
     const pointsMarkerImageSrc = './images/points.png';
     const pointsMarkerImageSize = new kakao.maps.Size(20, 32);
-    const pointsMarkerImageOption = { offset: new kakao.maps.Point(0, 0) };
+    const pointsMarkerImageOption = { offset: new kakao.maps.Point(7, 25) };
 
     const pointsMarkerImage = new kakao.maps.MarkerImage(
       pointsMarkerImageSrc,
@@ -56,9 +51,9 @@ function Kakaoserch() {
     );
 
     // 지도에 표시할 마커의 좌표 배열
-    const points = data.data.map(item => {
-      return new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude);
-    });
+    const points = data.data.map(
+      item => new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude),
+    );
 
     // 지도 영역 설정을 위한 경계 객체 생성
     const bounds = new kakao.maps.LatLngBounds();
@@ -73,6 +68,17 @@ function Kakaoserch() {
       });
       marker.setMap(map);
       bounds.extend(points[i]);
+
+      // 각 마커에 클릭 이벤트를 등록합니다
+      kakao.maps.event.addListener(
+        marker,
+        'click',
+        (function (currMarker) {
+          return function () {
+            infowindow.open(map, currMarker);
+          };
+        })(marker),
+      );
     }
 
     // 지도 영역을 설정한 경계에 맞춤
@@ -83,6 +89,49 @@ function Kakaoserch() {
       map.setCenter(center);
     }
 
+    // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+    const iwContent = `
+    <div style="padding:10px; width: 270px; height: 200px; display: flex; flex-direction: column; gap: 10px; border:1px solid black; border-radius: 10px; ">
+    <div>
+      <div style="display: flex; justify-content: center; justify-content: space-between;">
+        <div style="display: flex; gap: 5px">
+          <div style="font-size: 20px; font-weight: bold;">푸박스 정보</div>
+          <div style="margin-top: 10px; font-size: 10px;">더보기 > </div>
+        </div>
+          <div style="display: flex;">
+            <div onClick> X </div>
+          </div>
+        </div>
+      </div>
+    <div style="display: flex;">
+        <img src="" alt="img" style="width: 94px; height: 94px; border: 1px solid gray;">
+        <div style="flex-direction: column;">
+      <div style="margin: 10px;">
+        <div style="font-weight: bold; font-size: 12px;">주소</div>
+        <div style="font-size:10px">주소가 들어가요</div>
+      </div>
+      <div style="margin: 10px;">
+        <div style="font-weight: bold; font-size: 12px;">특이사항</div>
+        <div style="font-size:10px">특이사항이 들어가요</div>
+      </div>
+    </div>
+    </div>
+    <button style="border-radius: 8px; width: 250px; height: 41px; background-color: #8722ED; color: white; font-weight: bold;">여기로 길 찾기 시작</button>
+  </div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    const iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+    // 인포윈도우를 생성합니다
+    const infowindow = new kakao.maps.InfoWindow({
+      content: iwContent,
+      removable: iwRemoveable,
+    });
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'click', function () {
+      // 마커 위에 인포윈도우를 표시합니다
+      infowindow.open(map, marker);
+    });
+
     setBounds();
 
     // 브라우저의 위치 정보 사용 가능한 경우 마커와 정보창 표시
@@ -91,7 +140,7 @@ function Kakaoserch() {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         const locPosition = new kakao.maps.LatLng(lat, lon);
-        const message = '<div style="padding:5px;">내 위치</div>';
+        const message = '<div style="padding-left: 3rem ">내 위치</div>';
         displayMarker(map, locPosition, message);
       });
     } else {
@@ -123,7 +172,7 @@ function Kakaoserch() {
 
     // 정보창 내용 및 옵션 설정
     const iwContent = message;
-    const iwRemoveable = true;
+    const iwRemoveable = false;
 
     // 정보창 객체 생성
     const infowindow = new kakao.maps.InfoWindow({

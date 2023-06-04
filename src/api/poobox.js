@@ -29,7 +29,6 @@ const addPooBox = async (data) => {
     }
   };
   const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/map/poo`, formData, config);
-  console.log(response);
   return response;
 };
 
@@ -37,6 +36,7 @@ const addPooBox = async (data) => {
 const getPooBox = async () => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/map/poo`)
+    console.log('get success' , response);
     return response
   } catch (error) {
     return Promise.reject(error.data)
