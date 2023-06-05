@@ -9,7 +9,6 @@ import { getPooBox } from '../api/poobox';
 function Kakaoserch() {
   const mapContainer = useRef(null);
   const { isLoading, isError, data } = useQuery('poobox', getPooBox);
-
   if (isLoading) {
     return <div>로딩중입니다...</div>;
   }
@@ -74,6 +73,7 @@ function Kakaoserch() {
       marker.address = data.data[i].address;
       marker.content = data.data[i].content;
       marker.pooId = data.data[i].pooId;
+      marker.UserId = data.data[i].UserId;
       marker.imageUrl = data.data[i].imageUrl;
       marker.createdAt = data.data[i].createdAt;
 
@@ -109,7 +109,7 @@ function Kakaoserch() {
             </div>
           </div>
           <div style="display:flex; gap:10px;">
-            <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}')">상세 보기</div>
+            <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}')">상세 보기</div>
             <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;">길 찾기</div>
           </div>
         </div>`;
@@ -131,12 +131,22 @@ function Kakaoserch() {
       infowindow.close();
     }
 
-    function pooDetailHandler(pooId, address, content, imageUrl, createdAt) {
+    // 상세보기 이동 핸들러
+    function pooDetailHandler(
+      pooId,
+      address,
+      content,
+      imageUrl,
+      createdAt,
+      UserId,
+    ) {
       closeInfoWindow();
       window.location.href = `/map/${pooId}
       ?address=${encodeURIComponent(address)}
       &content=${encodeURIComponent(content)}
       &imageUrl=${encodeURIComponent(imageUrl)}
+      &pooId=${encodeURIComponent(pooId)}
+      &UserId=${encodeURIComponent(UserId)}
       &createdAt=${encodeURIComponent(createdAt)}`;
     }
 
@@ -171,11 +181,8 @@ function Kakaoserch() {
       </div>
       </div>
       <div style="display:flex; gap:10px;">
-      <div
-        style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;"
-        onclick="window.pooDetailHandler('${marker.pooId}', '${marker.address}', '${marker.content}', '${marker.imageUrl}', '${marker.createdAt}')">
-        상세 보기
-        </div>
+      <div style="display:flex; gap:10px;">
+            <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${marker.pooId}', '${marker.UserId}', '${marker.address}', '${marker.content}', '${marker.imageUrl}', '${marker.createdAt}')">상세 보기</div>
         <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;">길 찾기</div>
       </div>
     </div>`;

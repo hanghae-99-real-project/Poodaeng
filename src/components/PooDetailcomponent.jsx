@@ -10,8 +10,30 @@ function PooDetailcomponent() {
   const content = params.get('content');
   const imageUrl = params.get('imageUrl');
   const createdAt = params.get('createdAt');
+  const pooId = params.get('pooId');
+  const UserId = params.get('UserId');
 
-  console.log(address, content, imageUrl, createdAt);
+  // pooId
+  // UserId
+  // address
+  // content
+  // imageUrl
+  // createdAt
+
+  console.log(
+    'address>>>>>>>>',
+    address,
+    'content>>>>>>>>',
+    content,
+    'imageUrl>>>>>>>>',
+    imageUrl,
+    'createdAt>>>>>>>>',
+    createdAt,
+    'pooId>>>>>>>>',
+    pooId,
+    'UserId>>>>>>>>',
+    UserId,
+  );
   return (
     <div>
       <Headers text icon destination='map'>
