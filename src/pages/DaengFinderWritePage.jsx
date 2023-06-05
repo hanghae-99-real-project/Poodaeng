@@ -2,16 +2,63 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import { SlMagnifier } from 'react-icons/sl';
+import { useMutation } from 'react-query';
+import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { writePostLost } from '../api/daengFinder';
 import DaengFinderMap from '../components/DaengFinder/DaengFinderWrite/DaengFinderMap';
+import useInput from '../hooks/useInput';
 import LinkHeader from '../shared/LinkHeader';
 
 function DaengFinderWritePage() {
   const [image, setImage] = useState({ photo: [], preview: [] });
   const [alertMsg, setAlertMsg] = useState(false);
   const [mapMode, setMapMode] = useState(false);
+  const [target, onChangeHandler, onClearHandler] = useInput({
+    dogname: '',
+    title: '',
+    content: '',
+  });
+  const [latlng, setLatLng] = useState({
+    lostLatitude: '',
+    lostLongitude: '',
+  });
+  const { accessToken } = useSelector(store => store.auth);
   console.log('image >>>', image);
+
+  const mutation = useMutation(writePostLost, {
+    onSuccess: data => {
+      console.log('daengFinderWrite data>>> ', data);
+    },
+    onError: error => {
+      console.log('daengFinderWrite error>>> ', error);
+    },
+  });
+
+  const uploadPost = () => {
+    const formData = new FormData();
+    // formData.append('photo', image.photo[0]);
+    formData.append('dogname', target.dogname);
+    formData.append('title', target.title);
+    formData.append('content', target.content);
+    if (image.photo.length > 0) {
+      image.photo.forEach(img => {
+        // const blobImg = new Blob([JSON.stringify(img)], { type: 'image/*' });
+        // formData.append('photo', blobImg);
+        formData.append('lostPhotoUrl', img);
+      });
+    }
+    console.log('최종 위도 경도 >>>', latlng);
+    formData.append('latitude', latlng.lostLatitude);
+    formData.append('longitude', latlng.lostLongitude);
+    console.log('daengFinderWrite formData>>> ', ...formData);
+    const inputs = {
+      accessToken,
+      formData,
+    };
+    mutation.mutate(inputs);
+  };
 
   const imageHandler = e => {
     // e.preventDefault();
@@ -22,7 +69,6 @@ function DaengFinderWritePage() {
     console.log(e.target.files);
     console.log(Array.from(e.target.files));
 
-    const formData = new FormData();
     const maxSize = 1024 * 1024 * 25;
     // const fileList = e.target.files;
     const fileList = Array.from(e.target.files);
@@ -133,23 +179,35 @@ function DaengFinderWritePage() {
         destination={!mapMode ? '/daengfinder/detail' : false}
         setMapMode={mapMode ? setMapMode : false}
         feature={
-          !mapMode && <div className='text-[#8722ED] box-border'>등록</div>
+          !mapMode && (
+            <div
+              className='text-[#8722ED] box-border cursor-pointer'
+              onClick={uploadPost}
+            >
+              등록
+            </div>
+          )
         }
       >
         {/* 댓글&nbsp;{commentCount}{' '} */}
         댕파인더 글쓰기&nbsp;
       </LinkHeader>
       {mapMode ? (
+        // <DaengFinderMap setLatLng={setLatLng} />
         <DaengFinderMap />
       ) : (
         <div>
           <form className='py-9 px-6 border-b border-solid border-[#ECECEC]'>
             <div className='f-fc gap-3 mb-4'>
               <input
+                name='title'
+                value={target.title}
                 placeholder='제목을 작성해주세요'
                 className='w-full pb-4 font-semibold text-xl leading-6 placeholder:text-[#C7C7C7] border-b'
               />
               <input
+                name='dogname'
+                value={target.dogname}
                 placeholder='반려견 이름'
                 className='w-full pb-3 font-medium text-sm leading-4 placeholder:text-[#C7C7C7] border-b'
               />

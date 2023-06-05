@@ -3,9 +3,14 @@ import { BiCategory } from 'react-icons/bi';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { getPostLost } from '../api/daengFinder';
 import { areaList } from '../data/Areas';
 import Card from './DaengFinder/Card';
+// eslint-disable-next-line no-unused-vars
+import Loading from './common/Loading';
+import Loading2 from './common/Loading2';
 // import Tabbar from './Tabbar';
 
 function DaengFindercomponent() {
@@ -21,6 +26,35 @@ function DaengFindercomponent() {
   const selectOpenHandler = () => {
     setIsShow(prev => !prev);
   };
+
+  // eslint-disable-next-line no-unused-vars
+  const { data, isLoading, error, isError } = useQuery(
+    'getPostLost',
+    getPostLost,
+    {
+      refetchOnWindowFocus: false,
+    },
+  );
+
+  if (isLoading) {
+    return (
+      <div className='flex flex-col h-[812px] justify-center  items-center'>
+        <Loading />
+      </div>
+    );
+  }
+
+  if (isError) {
+    console.log('error >>>', error);
+    return (
+      // <div className='flex flex-col h-[812px] justify-center  items-center'>
+      //   <div className='text-red-500 text-center'>{error}</div>
+      // </div>
+      <Loading2 />
+    );
+  }
+
+  console.log('daengFindercomponent >>> ', data);
 
   return (
     <>

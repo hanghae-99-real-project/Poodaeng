@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
 import React, { useEffect, useState } from 'react';
@@ -49,14 +50,14 @@ function DaengFinderDetail() {
     setActiveBtn(idx);
   };
 
-  useEffect(() => {
-    /* 잘 되는구만 캬캬 */
-    const response = convertCoordinates(
-      markerPotision.latitude,
-      markerPotision.longitude,
-    );
-    console.log('좌표 변환 값 >>>', response);
-  }, [markerPotision.latitude, markerPotision.longitude]);
+  // useEffect(() => {
+  //   /* 잘 되는구만 캬캬 */
+  //   const response = convertCoordinates(
+  //     markerPotision.latitude,
+  //     markerPotision.longitude,
+  //   );
+  //   console.log('좌표 변환 값 >>>', response);
+  // }, [markerPotision.latitude, markerPotision.longitude]);
 
   useEffect(() => {
     SwitchFooter(true);
@@ -81,10 +82,11 @@ function DaengFinderDetail() {
       </div>
       <div className='flex items-center justify-center relative w-full h-80'>
         <div className='absolute bottom-3 f-fr-jc gap-3'>
-          {imageList.map((image, idx) => {
+          {imageList.map((_, idx) => {
             return (
               <input
-                key={image}
+                // eslint-disable-next-line react/no-array-index-key
+                key={idx}
                 type='button'
                 className={`w-2 h-2 rounded-full ${
                   activeBtn === idx ? 'bg-[#FFFFFF]' : 'bg-[#B3B3B3]'

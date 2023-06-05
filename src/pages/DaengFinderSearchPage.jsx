@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { RxMagnifyingGlass } from 'react-icons/rx';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
-import { ReactComponent as Xbutton } from '../assets/images/Xbutton.svg';
-import Input, { searchListStore } from '../zustand/components/Input';
+import { searchPostLost } from '../api/daengFinder';
 import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
+import { ReactComponent as Xbutton } from '../assets/images/Xbutton.svg';
+// import Loading from '../components/common/Loading';
+// import Loading2 from '../components/common/Loading2';
+import Input, { searchListStore } from '../zustand/components/Input';
 
 function DaengFinderSearchPage() {
+  const [searchStart, setsearchStart] = useState(false);
+  const navigate = useNavigate();
   const { word, searchList, setSearchList, onDeleteSearch } = searchListStore(
     store => ({
       /* test  */
@@ -19,11 +25,34 @@ function DaengFinderSearchPage() {
     }),
     shallow,
   );
-
   const matchResult = [];
   console.log('render occured');
 
-  const navigate = useNavigate();
+  // const moveToSearch = () => {
+  //   setSearchList();
+  // };
+
+  // eslint-disable-next-line no-unused-vars
+  const { data, isLoading, error, isError } = useQuery(
+    'searchPostLost',
+    searchPostLost,
+    {
+      searchStart,
+      refetchOnWindowFocus: false,
+      onSettled: () => {
+        setsearchStart(false);
+      },
+    },
+  );
+
+  if (isLoading) {
+    console.log('is loading');
+  }
+  if (isError) {
+    console.log('error 발생 >>>', error);
+  }
+  console.log('가져온 데이터 >>>', data);
+
   /* 812px - 40px 하고 시작했어야 했는데... 이미 375로 다 잡고 하고 있으니까 어쩔 수 없네 */
   return (
     <div className='w-full h-full'>
@@ -66,7 +95,6 @@ function DaengFinderSearchPage() {
               </ul>
             </>
           )}
-
           <div
             className={`${
               (word || matchResult.length) && 'hidden'
@@ -74,16 +102,6 @@ function DaengFinderSearchPage() {
           >
             <NoResult />
           </div>
-
-          {/* <li className='f-fr-ic justify-between font-medium leading-4 text-[#424242]'>
-            시바견 <Xbutton className='w-5 h-5' />
-          </li>
-          <li className='f-fr-ic justify-between font-medium leading-4 text-[#424242]'>
-            연희동 <Xbutton className='w-5 h-5' />
-          </li>
-          <li className='f-fr-ic justify-between font-medium leading-4 text-[#424242]'>
-            하얀 강아지 <Xbutton className='w-5 h-5' />
-          </li> */}
         </div>
       </div>
     </div>

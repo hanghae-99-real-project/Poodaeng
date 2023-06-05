@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import convertCoordinates from '../../../kakao/KakaoApi';
@@ -5,7 +6,7 @@ import KakaoMap from '../../../kakao/KakaoMap';
 import Loading from '../../common/Loading2';
 import { ReactComponent as Marker } from '../../../assets/images/MarkerPurple.svg';
 
-function DaengFinderMap() {
+function DaengFinderMap({ setLatLng }) {
   const [markerPotision, setMarkerPosition] = useState({
     latitude: 0,
     longitude: 0,
@@ -33,6 +34,11 @@ function DaengFinderMap() {
     'DaengFinder 도로명주소 >>>',
     data.data.documents[0].road_address.address_name,
   );
+  /* 이거 걍 위도경도 도로명 주소 zustand로 해버릴까 currentPosition이 아니라 marker 위치로 가져오기 */
+  // setLatLng({
+  //   lostLatitude: markerPotision.latitude,
+  //   lostLongitude: markerPotision.longitude,
+  // });
   const adrs = data.data.documents[0].road_address.address_name;
 
   return (

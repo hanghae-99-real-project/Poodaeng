@@ -57,13 +57,14 @@ function KakaoMap({ width, height, rounded, getMarkerPosition }) {
 
       const marker = new window.kakao.maps.Marker(markerOptions);
       marker.setMap(map);
-      /* marker는 ref 안 걸어도 될 듯? */
+      /* marker는 ref 안 걸어도 될 듯? 나중에 지우던가 */
       markerRef.current = marker;
       if (getMarkerPosition) {
         getMarkerPosition({ latitude, longitude });
       }
 
       // 마커 드래그 이벤트 처리
+      /* 여기 markerRef.current 안써도 되나? */
       window.kakao.maps.event.addListener(marker, 'dragend', async () => {
         const newPosition = marker.getPosition(); // 마커의 새로운 위치 좌표 얻기
         const newLatitude = newPosition.getLat();
