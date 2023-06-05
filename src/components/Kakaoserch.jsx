@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable func-names */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-use-before-define */
@@ -69,18 +70,55 @@ function Kakaoserch() {
       marker.setMap(map);
       bounds.extend(points[i]);
 
+      // 주소, 콘텐츠, pooId를 마커 객체에 추가
+      marker.address = data.data[i].address;
+      marker.content = data.data[i].content;
+      marker.pooId = data.data[i].pooId;
+      marker.imageUrl = data.data[i].imageUrl;
+      marker.createdAt = data.data[i].createdAt;
+
       // 각 마커에 클릭 이벤트를 등록합니다
       kakao.maps.event.addListener(
         marker,
         'click',
         (function (currMarker) {
           return function () {
+            const iwContent = `
+        <div style="padding:10px; width: 270px; height: 200px; display: flex; flex-direction: column; gap: 10px; border:1px solid black; border-radius: 10px; ">
+          <div>
+            <div style="display: flex; justify-content: center; justify-content: space-between;">
+              <div style="display: flex; gap: 5px;">
+                <div style="font-size: 20px; font-weight: bold;">푸박스 정보</div>
+              </div>
+              <div style="display: flex;">
+                <div onClick="window.closeInfoWindow()" style="cursor: pointer;"> X </div>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex;">
+            <img src="" alt="img" style="width: 94px; height: 94px; border: 1px solid gray;">
+            <div style="flex-direction: column;">
+              <div style="margin: 10px;">
+                <div style="font-weight: bold; font-size: 12px;">주소</div>
+                <div style="font-size:10px">${currMarker.address}</div>
+              </div>
+              <div style="margin: 10px;">
+                <div style="font-weight: bold; font-size: 12px;">특이사항</div>
+                <div style="font-size:10px">${currMarker.content}</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}')">상세 보기</div>
+            <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;">길 찾기</div>
+          </div>
+        </div>`;
+            infowindow.setContent(iwContent);
             infowindow.open(map, currMarker);
           };
         })(marker),
       );
     }
-
     // 지도 영역을 설정한 경계에 맞춤
     function setBounds() {
       map.setBounds(bounds);
@@ -88,42 +126,63 @@ function Kakaoserch() {
       map.setLevel(3);
       map.setCenter(center);
     }
+    // 인포 윈도우 닫기
+    function closeInfoWindow() {
+      infowindow.close();
+    }
+
+    function pooDetailHandler(pooId, address, content, imageUrl, createdAt) {
+      closeInfoWindow();
+      window.location.href = `/map/${pooId}
+      ?address=${encodeURIComponent(address)}
+      &content=${encodeURIComponent(content)}
+      &imageUrl=${encodeURIComponent(imageUrl)}
+      &createdAt=${encodeURIComponent(createdAt)}`;
+    }
+
+    // closeInfoWindow 함수를 전역 범위로 결합시키기 위해 window 객체에 연결
+    window.closeInfoWindow = closeInfoWindow;
+    window.pooDetailHandler = pooDetailHandler;
 
     // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
     const iwContent = `
-    <div style="padding:10px; width: 270px; height: 200px; display: flex; flex-direction: column; gap: 10px; border:1px solid black; border-radius: 10px; ">
-    <div>
-      <div style="display: flex; justify-content: center; justify-content: space-between;">
-        <div style="display: flex; gap: 5px">
-          <div style="font-size: 20px; font-weight: bold;">푸박스 정보</div>
-          <div style="margin-top: 10px; font-size: 10px;">더보기 > </div>
-        </div>
-          <div style="display: flex;">
-            <div onClick> X </div>
+      <div style="padding:10px; width: 270px; height: 200px; display: flex; flex-direction: column; gap: 10px; border:1px solid black; border-radius: 10px; ">
+      <div>
+        <div style="display: flex; justify-content: center; justify-content: space-between;">
+          <div style="display: flex; gap: 5px;">
+            <div style="font-size: 20px; font-weight: bold;">푸박스 정보</div>
+          </div>
+            <div style="display: flex;">
+              <div onClick=window.closeInfoWindow() style="cursor: pointer;"> X </div>
+            </div>
           </div>
         </div>
+      <div style="display: flex;">
+          <img src="" alt="img" style="width: 94px; height: 94px; border: 1px solid gray;">
+          <div style="flex-direction: column;">
+        <div style="margin: 10px;">
+          <div style="font-weight: bold; font-size: 12px;">주소</div>
+          <div style="font-size:10px">${marker.address}</div>
+        </div>
+        <div style="margin: 10px;">
+          <div style="font-weight: bold; font-size: 12px;">특이사항</div>
+          <div style="font-size:10px">${marker.content}</div>
+        </div>
       </div>
-    <div style="display: flex;">
-        <img src="" alt="img" style="width: 94px; height: 94px; border: 1px solid gray;">
-        <div style="flex-direction: column;">
-      <div style="margin: 10px;">
-        <div style="font-weight: bold; font-size: 12px;">주소</div>
-        <div style="font-size:10px">주소가 들어가요</div>
       </div>
-      <div style="margin: 10px;">
-        <div style="font-weight: bold; font-size: 12px;">특이사항</div>
-        <div style="font-size:10px">특이사항이 들어가요</div>
+      <div style="display:flex; gap:10px;">
+      <div
+        style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;"
+        onclick="window.pooDetailHandler('${marker.pooId}', '${marker.address}', '${marker.content}', '${marker.imageUrl}', '${marker.createdAt}')">
+        상세 보기
+        </div>
+        <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;">길 찾기</div>
       </div>
-    </div>
-    </div>
-    <button style="border-radius: 8px; width: 250px; height: 41px; background-color: #8722ED; color: white; font-weight: bold;">여기로 길 찾기 시작</button>
-  </div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    const iwRemoveable = false; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+    </div>`;
 
     // 인포윈도우를 생성합니다
     const infowindow = new kakao.maps.InfoWindow({
       content: iwContent,
-      removable: iwRemoveable,
     });
 
     // 마커에 클릭이벤트를 등록합니다
