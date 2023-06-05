@@ -36,7 +36,7 @@ function Router() {
           <Route path="/alert" element={<Alert />} />
           <Route path="/events" element={<Events />} />
           <Route path="/map" element={<Map />} />
-          <Route path='/map/:id' element={<PooDetail />} />
+          <Route path='/map/:pooId' element={<PooDetail />} />
           <Route path="/poopost" element={<PooPost />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/loginsocial' element={<LoginSocial />} />
@@ -51,7 +51,6 @@ function Router() {
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
           <Route path='/daengfinder/search' element={<DaengFinderSearchPage />} />
-          
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet

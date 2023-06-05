@@ -1,7 +1,8 @@
 import React from 'react';
+import PooDetailcomponent from '../components/PooDetailcomponent';
 
 function PooDetail() {
-  return <div>PooDetail</div>;
+  return <PooDetailcomponent />;
 }
 
 export default PooDetail;
