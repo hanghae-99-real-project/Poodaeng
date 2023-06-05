@@ -36,7 +36,6 @@ const addPooBox = async (data) => {
 const getPooBox = async () => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/map/poo`)
-    console.log('get success' , response);
     return response
   } catch (error) {
     return Promise.reject(error.data)
@@ -44,17 +43,25 @@ const getPooBox = async () => {
 };
 
 // 푸박스 신고
-const reportPooBox = async () => {
+const reportPooBox = async (data) => {
   const refreshtoken = Cookies.get('refreshToken'); 
   const { accessToken } = data;
+  const pooId = parseInt(data.pooId, 10);
+  const {reportContent} = data;
   const config = {
     headers: { 
       "accesstoken": `Bearer ${accessToken}`,
       "refreshtoken": refreshtoken,
-      "content-type" : "multipart/form-data"
-    }
+    },
   };
-  const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/report/:pooId`,asdf,config);
-  console.log(response);
+  console.log(accessToken)
+  console.log(refreshtoken)
+  console.log(pooId)
+  console.log(reportContent)
+  const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/report/${pooId}`, reportContent, config);
+  console.log(response)
+  return response
 }
+
+
 export {addPooBox, getPooBox, reportPooBox};
