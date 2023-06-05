@@ -42,4 +42,19 @@ const getPooBox = async () => {
     return Promise.reject(error.data)
   }
 };
-export {addPooBox, getPooBox};
+
+// 푸박스 신고
+const reportPooBox = async () => {
+  const refreshtoken = Cookies.get('refreshToken'); 
+  const { accessToken } = data;
+  const config = {
+    headers: { 
+      "accesstoken": `Bearer ${accessToken}`,
+      "refreshtoken": refreshtoken,
+      "content-type" : "multipart/form-data"
+    }
+  };
+  const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/report/:pooId`,asdf,config);
+  console.log(response);
+}
+export {addPooBox, getPooBox, reportPooBox};
