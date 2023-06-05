@@ -35,10 +35,10 @@ function DaengFinderMap({ setLatLng }) {
     data.data.documents[0].road_address.address_name,
   );
   /* 이거 걍 위도경도 도로명 주소 zustand로 해버릴까 currentPosition이 아니라 marker 위치로 가져오기 */
-  // setLatLng({
-  //   lostLatitude: markerPotision.latitude,
-  //   lostLongitude: markerPotision.longitude,
-  // });
+  setLatLng({
+    lostLatitude: markerPotision.latitude,
+    lostLongitude: markerPotision.longitude,
+  });
   const adrs = data.data.documents[0].road_address.address_name;
 
   return (

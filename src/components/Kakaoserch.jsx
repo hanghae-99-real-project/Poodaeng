@@ -16,6 +16,8 @@ function Kakaoserch() {
     return <div>오류가 발생했습니다.</div>;
   }
 
+  console.log('data >>>', data);
+
   const { kakao } = window;
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
   const script = document.createElement('script');
@@ -51,7 +53,7 @@ function Kakaoserch() {
     );
 
     // 지도에 표시할 마커의 좌표 배열
-    const points = data.data.map(
+    const points = data?.data?.getPooAll.map(
       item => new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude),
     );
 
@@ -70,12 +72,12 @@ function Kakaoserch() {
       bounds.extend(points[i]);
 
       // 주소, 콘텐츠, pooId를 마커 객체에 추가
-      marker.address = data.data[i].address;
-      marker.content = data.data[i].content;
-      marker.pooId = data.data[i].pooId;
-      marker.UserId = data.data[i].UserId;
-      marker.imageUrl = data.data[i].imageUrl;
-      marker.createdAt = data.data[i].createdAt;
+      marker.address = data.data.getPooAll[i].address;
+      marker.content = data.data.getPooAll[i].content;
+      marker.pooId = data.data.getPooAll[i].pooId;
+      marker.UserId = data.data.getPooAll[i].UserId;
+      marker.imageUrl = data.data.getPooAll[i].imageUrl;
+      marker.createdAt = data.data.getPooAll[i].createdAt;
 
       // 각 마커에 클릭 이벤트를 등록합니다
       kakao.maps.event.addListener(
