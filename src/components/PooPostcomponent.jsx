@@ -2,11 +2,12 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Headers from './Headers';
 import FileUploader from './FileUploader';
 import Buttons from './common/Buttons';
 import KakaoClickMap from './KakaoClickMap';
-import addPooBox from '../api/poopost';
+import { addPooBox } from '../api/poobox';
 
 function PooPostcomponent() {
   const [latlng, setLatlng] = useState(null);
@@ -14,11 +15,13 @@ function PooPostcomponent() {
   const [content, setContent] = useState('');
   const [errormsg, setErrormsg] = useState('');
   const { accessToken } = useSelector(store => store.auth);
+  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
   const mutation = useMutation(addPooBox, {
     onSuccess: () => {
-      queryClient.invalidateQueries('pooPost');
+      queryClient.invalidateQueries('poobox');
+      navigate('/map');
     },
     onError: error => {
       console.log(error);
