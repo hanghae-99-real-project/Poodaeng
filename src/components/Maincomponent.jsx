@@ -2,7 +2,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Tabbar from './Tabbar';
+// import TmapAPI from './Tmap/TmapAPI';
+// import Infowindow from './Tmap/Infowindow';
 import Kakaoserch from './Kakaoserch';
+// import TmapApi from './TmapApi';
 
 function Maincomponent() {
   const navigate = useNavigate();
@@ -47,7 +50,7 @@ function Maincomponent() {
           <div className='ml-[30px] mt-[4px] font-[500] text-[11px] text-[#808080]'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
-          <div className='relative w-[330px] h-[155px] border ml-[30px]'>
+          <div className='relative w-[330px] h-[155px] border ml-[30px] overflow-y-hidden'>
             <Kakaoserch />
             <div
               className='relative z-50 bg-[#4a3c7b] w-7 h-7 rounded-full bottom-10 left-72'

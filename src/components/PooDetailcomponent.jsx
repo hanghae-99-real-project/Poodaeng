@@ -14,15 +14,22 @@ function PooDetailComponent() {
   const params = new URLSearchParams(location.search);
   const address = params.get('address'); // UserId
   const content = params.get('content'); // address
-  const imageUrl = params.get('imageUrl'); //
+  const imageUrl = params.get('imageUrl'); // content
   const pooId = params.get('pooId'); // pooId
   const UserId = params.get('UserId'); // createdAT
-  const createdAt = params.get('createdAt'); // content?
+  const createdAt = params.get('createdAt'); // imgage
   const navigate = useNavigate();
   const refreshToken = Cookies.get('refreshToken');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contents, setContents] = useState('');
   const { accessToken } = useSelector(store => store.auth);
+
+  console.log('address', address);
+  console.log('content', content);
+  console.log('imageUrl', imageUrl);
+  console.log('pooId', pooId);
+  console.log('UserId', UserId);
+  console.log('createdAt', createdAt);
 
   const reportContent = {
     reportContent: contents,
@@ -72,7 +79,11 @@ function PooDetailComponent() {
         푸박스 정보
       </Headers>
       <div>
-        <img src={imageUrl} alt='img' className='w-full h-80 border' />
+        <img
+          src={createdAt}
+          alt='img'
+          className='w-full h-80 border object-cover'
+        />
         <div className='flex flex-col justify-between h-96 px-7 py-14'>
           <div className='flex justify-between'>
             <div>
@@ -87,7 +98,7 @@ function PooDetailComponent() {
           </div>
           <div>
             <div className='font-bold'>특이사항</div>
-            <div>{createdAt}</div>
+            <div>{imageUrl}</div>
           </div>
           <button className='bg-mainColor text-white w-full h-12 rounded-xl'>
             여기로 길 찾기 시작

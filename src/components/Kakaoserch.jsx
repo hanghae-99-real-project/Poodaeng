@@ -55,13 +55,13 @@ function Kakaoserch() {
       pointsMarkerImageOption,
     );
 
-    // 지도에 표시할 마커의 좌표 배열
-    const points = data?.data?.getPooAll.map(
-      item => new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude),
-    );
-
     // 지도 영역 설정을 위한 경계 객체 생성
     const bounds = new kakao.maps.LatLngBounds();
+
+    // 지도에 표시할 마커의 좌표 배열
+    const points = data?.data?.getPooAll?.map(
+      item => new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude),
+    );
 
     // 마커를 지도에 표시하고 경계 객체에 추가
     let i;
@@ -80,7 +80,7 @@ function Kakaoserch() {
       marker.content = data.data.getPooAll[i].content;
       marker.pooId = data.data.getPooAll[i].pooId;
       marker.UserId = data.data.getPooAll[i].UserId;
-      marker.imageUrl = data.data.getPooAll[i].imageUrl;
+      marker.imageUrl = data.data.getPooAll[i].pooPhotoUrl;
       marker.createdAt = data.data.getPooAll[i].createdAt;
 
       // 각 마커에 클릭 이벤트를 등록합니다
@@ -102,7 +102,7 @@ function Kakaoserch() {
         </div>
       </div>
       <div style="display: flex;">
-        <img src="" alt="img" style="width: 94px; height: 94px; border: 1px solid gray;">
+        <img src="${currMarker.imageUrl}" alt="img" style="width: 94px; height: 94px; border: 1px solid gray; object-fit: cover;">
         <div style="flex-direction: column;">
           <div style="margin: 10px;">
             <div style="font-weight: bold; font-size: 12px;">주소</div>
