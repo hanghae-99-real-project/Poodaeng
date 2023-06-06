@@ -46,7 +46,7 @@ function Kakaoserch() {
     const map = new kakao.maps.Map(mapContainer.current, mapOption);
 
     const pointsMarkerImageSrc = './images/points.png';
-    const pointsMarkerImageSize = new kakao.maps.Size(20, 32);
+    const pointsMarkerImageSize = new kakao.maps.Size(22, 32);
     const pointsMarkerImageOption = { offset: new kakao.maps.Point(7, 25) };
 
     const pointsMarkerImage = new kakao.maps.MarkerImage(
