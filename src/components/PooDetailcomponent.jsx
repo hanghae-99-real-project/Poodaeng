@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import Headers from './Headers';
 import { ReactComponent as Report } from '../assets/images/report.svg';
 import { reportPooBox } from '../api/poobox';
+import { dateConvert2 } from '../utils/DateConvert';
 
 function PooDetailComponent() {
   const location = useLocation();
@@ -94,7 +95,7 @@ function PooDetailComponent() {
           </div>
           <div className='flex'>
             <div className='font-bold'>등록 날짜</div>
-            &nbsp; <div>{UserId}</div>
+            &nbsp; <div>{dateConvert2(UserId)[1]}</div>
           </div>
           <div>
             <div className='font-bold'>특이사항</div>

@@ -66,8 +66,6 @@ function TmapPage() {
       //     return location;
       //   });
       // }, 5000);
-      var startY;
-      var startX;
 
       // socket.on('receive location', location => {
       //   console.log(location.latitude, location.longitude);
@@ -199,8 +197,7 @@ function TmapPage() {
 
               if (properties.pointType == 'S') {
                 //출발지 마커
-                markerImg =
-                  'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
+                markerImg = '../src/assets/images/mypoint.png';
                 pType = 'S';
                 size = new Tmapv2.Size(24, 38);
               } else if (properties.pointType == 'E') {

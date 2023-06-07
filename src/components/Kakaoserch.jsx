@@ -7,19 +7,22 @@ import React, { useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { getPooBox } from '../api/poobox';
+import Loading from './common/Loading';
 
 function Kakaoserch() {
   const navigate = useNavigate();
   const mapContainer = useRef(null);
   const { isLoading, isError, data } = useQuery('poobox', getPooBox);
   if (isLoading) {
-    return <div>로딩중입니다...</div>;
+    return (
+      <div className='flex flex-col h-[812px] justify-center  items-center'>
+        <Loading />
+      </div>
+    );
   }
   if (isError) {
     return <div>오류가 발생했습니다.</div>;
   }
-
-  console.log('data >>>', data);
 
   const { kakao } = window;
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가

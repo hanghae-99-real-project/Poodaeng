@@ -1,14 +1,32 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import Tabbar from './Tabbar';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
 import Kakaoserch from './Kakaoserch';
+import { getPostLost } from '../api/daengFinder';
+import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
 
 function Maincomponent() {
   const navigate = useNavigate();
+  const { isLoading, isError, data } = useQuery('getPostLost', getPostLost);
+  if (isLoading) {
+    return (
+      <div className='flex flex-col h-[812px] justify-center  items-center'>
+        <Loading />
+      </div>
+    );
+  }
+
+  if (isError) {
+    <div>오류가 발생했습니다.</div>;
+  }
+
+  console.log('data >>>', data);
 
   const AlertNavigateHander = () => {
     navigate('/alert');
@@ -69,16 +87,19 @@ function Maincomponent() {
         <div className='ml-[30px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='flex gap-[10px] w-[370px] h-32 overflow-x-auto ml-[30px]'>
-          <div className=' border w-[102px] h-[102px] rounded-xl'>
-            board card1
-          </div>
-          <div className='border w-[102px] h-[102px] rounded-xl'>
-            board card2
-          </div>
-          <div className=' border w-[102px] h-[102px] rounded-xl'>
-            board card3
-          </div>
+        <div className='flex gap-[10px] w-[370px] h-32 overflow-x-auto ml-[30px] flex-wrap'>
+          {data.data.map(item => (
+            <div
+              className='border w-[102px] h-[102px] rounded-xl'
+              key={item.id}
+            >
+              <img
+                src={item.lostPhotoUrl[0]}
+                alt='image'
+                className='w-full h-full object-cover'
+              />
+            </div>
+          ))}
         </div>
       </div>
       <div className='-mt-0.5'>
