@@ -67,7 +67,7 @@ function Kakaoserch() {
     let i;
     let marker;
     const infowindow = new kakao.maps.InfoWindow(); // infowindow 변수 선언 및 초기화
-    for (i = 0; i < points.length; i++) {
+    for (i = 0; i < points?.length; i++) {
       marker = new kakao.maps.Marker({
         position: points[i],
         image: pointsMarkerImage,
@@ -82,6 +82,8 @@ function Kakaoserch() {
       marker.UserId = data.data.getPooAll[i].UserId;
       marker.imageUrl = data.data.getPooAll[i].pooPhotoUrl;
       marker.createdAt = data.data.getPooAll[i].createdAt;
+      marker.pooLatitude = data.data.getPooAll[i].pooLatitude;
+      marker.pooLongitude = data.data.getPooAll[i].pooLongitude;
 
       // 각 마커에 클릭 이벤트를 등록합니다
       kakao.maps.event.addListener(
@@ -116,7 +118,8 @@ function Kakaoserch() {
       </div>
       <div style="display:flex; gap:10px;">
         <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}')">상세 보기</div>
-        <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;">길 찾기</div>
+        <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;" onclick="window.loadFindHandler('${currMarker.pooId}', '${currMarker.pooLatitude}','${currMarker.pooLongitude}','${currMarker.address}')">길 찾기</div>
+
       </div>
     </div>`;
             infowindow.setContent(iwContent);
@@ -161,9 +164,19 @@ function Kakaoserch() {
       navigate(`/map/${pooId}?${queryString}`);
     }
 
+    function loadFindHandler(pooId, pooLatitude, pooLongitude, address) {
+      const params = new URLSearchParams();
+      params.append('pooLatitude', pooLatitude);
+      params.append('pooLongitude', pooLongitude);
+      params.append('address', address);
+      const queryString = params.toString();
+      navigate(`/tmap/${pooId}?${queryString}`);
+    }
+
     // closeInfoWindow 함수를 전역 범위로 결합시키기 위해 window 객체에 연결
     window.closeInfoWindow = closeInfoWindow;
     window.pooDetailHandler = pooDetailHandler;
+    window.loadFindHandler = loadFindHandler;
 
     setBounds();
 

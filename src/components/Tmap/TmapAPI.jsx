@@ -1,114 +1,171 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import { getPooBox } from '../../api/poobox';
-import myLocationIcon from '../../assets/images/mypoint.png';
-import positionsIcon from '../../assets/images/points.png';
-import Infowindow from '../Infowindow';
+/* eslint-disable */
+import React, { useEffect } from 'react';
+import $ from 'jquery';
 
-function TmapAPI() {
-  const { isLoading, isError, data } = useQuery('poobox', getPooBox);
-  const [selectedMarker] = useState(null);
-
+function SimpleMap() {
   useEffect(() => {
-    if (!isLoading && !isError && data) {
-      const script = document.createElement('script');
-      script.innerHTML = `
-        var map;
-        var markers = [];
-        var lastTitle = '';
+    initTmap();
+  }, []);
 
-        function initTmap() {
-          map = new Tmapv2.Map("map_div", {
-            center: new Tmapv2.LatLng(37.56520450, 126.98702028),
-            width: "100%",
-            height: "100%",
-            zoom: 17
-          });
+  function initTmap() {
+    map = new Tmapv2.Map('map_div', {
+      center: new Tmapv2.LatLng(37.5652045, 126.98702028),
+      width: '100%',
+      height: '400px',
+      zoom: 17,
+      zoomControl: true,
+      scrollwheel: true,
+    });
 
-          var positions = ${JSON.stringify(data.data.getPooAll)};
+    marker_s = new Tmapv2.Marker({
+      position: new Tmapv2.LatLng(37.564991, 126.883937),
+      icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
+      iconSize: new Tmapv2.Size(24, 38),
+      map,
+    });
 
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-              var lon = position.coords.longitude;
-              var lat = position.coords.latitude;
-              var myPosition = new Tmapv2.LatLng(lat, lon);
-              var marker = createMarker(myPosition, "${myLocationIcon}", "내 위치");
-              lastTitle = "내 위치";
-              map.setCenter(myPosition);
-              map.addListener('mousemove', function () {
-                marker.setTitle(lastTitle);
-              });
+    marker_e = new Tmapv2.Marker({
+      position: new Tmapv2.LatLng(37.56034796361722, 127.00108653540178),
+      icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',
+      iconSize: new Tmapv2.Size(24, 38),
+      map,
+    });
+
+    const headers = {};
+    headers.appKey = 'NsJkoCuLC05rZqZf7Sfqk4hw8ZLfSuzf3GXq6qHi';
+
+    $.ajax({
+      method: 'POST',
+      headers,
+      url: 'https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result',
+      async: false,
+      data: {
+        startX: '126.883937',
+        startY: '37.564991',
+        endX: '127.00108653540178',
+        endY: '37.56034796361722',
+        reqCoordType: 'WGS84GEO',
+        resCoordType: 'EPSG3857',
+        startName: '출발지',
+        endName: '도착지',
+      },
+      success(response) {
+        const resultData = response.features;
+        const tDistance = `총 거리 : ${(
+          resultData[0].properties.totalDistance / 1000
+        ).toFixed(1)}km,`;
+        const tTime = ` 총 시간 : ${(
+          resultData[0].properties.totalTime / 60
+        ).toFixed(0)}분`;
+
+        $('#result').text(tDistance + tTime);
+
+        if (resultdrawArr.length > 0) {
+          for (var i in resultdrawArr) {
+            resultdrawArr[i].setMap(null);
+          }
+          resultdrawArr = [];
+        }
+
+        drawInfoArr = [];
+
+        for (var i in resultData) {
+          const { geometry } = resultData[i];
+          const { properties } = resultData[i];
+          var polyline_;
+
+          if (geometry.type == 'LineString') {
+            for (const j in geometry.coordinates) {
+              const latlng = new Tmapv2.Point(
+                geometry.coordinates[j][0],
+                geometry.coordinates[j][1],
+              );
+              var convertPoint =
+                new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+              const convertChange = new Tmapv2.LatLng(
+                convertPoint._lat,
+                convertPoint._lng,
+              );
+              drawInfoArr.push(convertChange);
+            }
+          } else {
+            let markerImg = '';
+            let pType = '';
+            var size;
+
+            if (properties.pointType == 'S') {
+              markerImg =
+                'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
+              pType = 'S';
+              size = new Tmapv2.Size(24, 38);
+            } else if (properties.pointType == 'E') {
+              markerImg =
+                'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
+              pType = 'E';
+              size = new Tmapv2.Size(24, 38);
+            } else {
+              markerImg = 'http://topopen.tmap.co.kr/imgs/point.png';
+              pType = 'P';
+              size = new Tmapv2.Size(8, 8);
+            }
+
+            const latlon = new Tmapv2.Point(
+              geometry.coordinates[0],
+              geometry.coordinates[1],
+            );
+            var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
+              latlon,
+            );
+            const routeInfoObj = {
+              markerImage: markerImg,
+              lng: convertPoint._lng,
+              lat: convertPoint._lat,
+              pointType: pType,
+            };
+
+            marker_p = new Tmapv2.Marker({
+              position: new Tmapv2.LatLng(routeInfoObj.lat, routeInfoObj.lng),
+              icon: routeInfoObj.markerImage,
+              iconSize: size,
+              map,
             });
           }
-
-          positions.forEach(function (position) {
-            var createdAt = position.createdAt;
-            var pooPhotoUrl = position.pooPhotoUrl;
-            var content = position.content;
-            var userId = position.UserId;
-            var pooId = position.pooId;
-            var lat = position.pooLatitude;
-            var lon = position.pooLongitude;
-            var title = position.address;
-            var lonlat = new Tmapv2.LatLng(lat, lon);
-            var marker = createMarker(lonlat, "${positionsIcon}", title);
-
-            marker.addListener('mouseover', function () {
-              lastTitle = '';
-              marker.setCursor('pointer');
-            });
-
-            marker.addListener('mouseout', function () {
-              lastTitle = '내 위치';
-              marker.setCursor('default');
-            });
-
-            //Marker에 클릭이벤트 등록.
-            marker.addListener("click", function(evt) {
-              document.getElementById("result").innerHTML = '';
-            });
-
-            markers.push(marker);
-          });
         }
-
-        function createMarker(position, icon, title) {
-          return new Tmapv2.Marker({
-            position: position,
-            map: map,
-            icon: icon,
-            title: title
-          });
-        }
-
-        initTmap();
-      `;
-
-      script.type = 'text/javascript';
-      script.async = 'async';
-      document.head.appendChild(script);
-    }
-  }, [isLoading, isError, data]);
-
-  if (isLoading) {
-    return <div>로딩중입니다...</div>;
+        drawLine(drawInfoArr);
+      },
+      error(request, status, error) {
+        console.log(
+          `code:${request.status}\n` +
+            `message:${request.responseText}\n` +
+            `error:${error}`,
+        );
+      },
+    });
   }
 
-  if (isError) {
-    return <div>오류가 발생했습니다.</div>;
+  function addComma(num) {
+    const regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ',');
+  }
+
+  function drawLine(arrPoint) {
+    let polyline_;
+
+    polyline_ = new Tmapv2.Polyline({
+      path: arrPoint,
+      strokeColor: '#DD0000',
+      strokeWeight: 6,
+      map,
+    });
+    resultdrawArr.push(polyline_);
   }
 
   return (
-    <div id='map_div' className='h-full w-full'>
-      {selectedMarker && (
-        <Infowindow
-          id='result'
-          address={selectedMarker.address}
-          content={selectedMarker.content}
-        />
-      )}
+    <div>
+      <div id='map_div' style={{ width: '100%', height: '400px' }} />
+      <p id='result' />
     </div>
   );
 }
 
-export default TmapAPI;
+export default SimpleMap;

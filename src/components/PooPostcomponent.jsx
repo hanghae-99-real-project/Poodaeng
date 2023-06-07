@@ -19,7 +19,8 @@ function PooPostcomponent() {
 
   const queryClient = useQueryClient();
   const mutation = useMutation(addPooBox, {
-    onSuccess: () => {
+    onSuccess: data => {
+      console.log('query success response >>> ', data);
       queryClient.invalidateQueries('poobox');
       navigate('/map');
     },
