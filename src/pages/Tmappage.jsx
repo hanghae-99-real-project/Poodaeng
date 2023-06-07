@@ -271,17 +271,17 @@ function TmapPage() {
 
   return (
     <div className='absolute'>
-      <div className='absolute my-5 -top-20 right-0 z-30 w-full h-32 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
+      <div className='absolute my-5 -top-20 right-0 z-30 w-full h-36 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
         <p id='result' />
         <div className='flex'>
           <div className='flex my-1'>
-            푸박스 위치: <div className='font-bold'>{targetAddress}</div>
+            푸박스 위치: <div className='font-bold ml-1'>{targetAddress}</div>
           </div>
         </div>
         <div className='flex justify-between'>
           <div></div>
           <div
-            className='border rounded-lg bg-[#8722ED] text-white px-7 py-2'
+            className='border rounded-lg bg-[#8722ED] text-white px-7 py-2 mt-3'
             onClick={() => navigate('/map')}
           >
             길찾기 종료
