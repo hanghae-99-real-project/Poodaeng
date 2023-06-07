@@ -1,9 +1,10 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-unused-vars */
+import { omit } from "lodash"
 import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 import { shallow } from "zustand/shallow"
+import convertCoordinates from "../../kakao/KakaoApi"
 
-/* eslint-disable no-unused-vars */
 const useFishStore = create((set) => ({
   fishies: {},
   fetch: async (pond) => {
@@ -12,6 +13,51 @@ const useFishStore = create((set) => ({
   },
 }))
 
+/* 위도 경도 구한 값을을 DaengFinderWritePage 전에 혹은 DaengFinderMap을 바로 꽂아주자. */
+/* 값 구하는 건 DaengFinderWritePage 이전 페이지에서 구해야 함. */
+export const useLocationStore = create((set, get)=> ({
+  location: {latitude: 0, longitude: 0},
+  roadAddress: '',
+  setLocation: (latitude, longitude)=> set(()=>({
+    location: {latitude, longitude},
+  })),
+  setRoadAddress: (roadAddress)=> {
+    if(roadAddress) {
+      set(()=>({
+        roadAddress,
+      }))
+    } else {
+      set(()=>({
+        roadAddress: '',
+      }))
+    }
+  },
+  getRoadAddress: async(latitude, longitude)=> {
+    try {
+      const response = await convertCoordinates(latitude, longitude)
+      set(()=>({
+        roadAddress:response
+      }))
+    } catch (error) {
+      set(()=>({
+        roadAddress: error
+      }))
+    }
+  }
+}))
+
+// useClipStore.setState({postId: ~~})
+// useClipStore.setState((prev)=>({postId: prev.postId + 1}))
+
+/* -------------------------------------------------- */
+
+
+const useFishStore2 = create((set) => ({
+  salmon: 1,
+  tuna: 2,
+  deleteEverything: () => set({}, true), // clears the entire store, actions included
+  deleteTuna: () => set((state) => omit(state, ['tuna']), true),
+}))
 
 
 
@@ -47,12 +93,12 @@ export const useFooterLayout = create(
 /* -------------------------------------------------- */
 
 
-const { SwitchFooter } = useFooterLayout(
-  state => ({
-    SwitchFooter: state.SwitchFooter,
-  }),
-  shallow,
-);
+// const { SwitchFooter } = useFooterLayout(
+//   state => ({
+//     SwitchFooter: state.SwitchFooter,
+//   }),
+//   shallow,
+// );
 
 
 /* -------------------------------------------------- */
@@ -72,3 +118,35 @@ const storeB = create((set, get) => ({
     storeA.setState({ count: updatedCount });
   },
 }));
+
+
+
+/* immer 사용 */
+/* import { create } from 'zustand'
+import { immer } from 'zustand/middleware/immer' // npm install immer 필요
+
+const useBeeStore = create(
+  immer((set) => ({ // <- 바로 요기 부분
+    bees: 0,
+    addBees: (by) =>
+      set((state) => {
+        state.bees += by
+      }),
+  }))
+) */
+
+// import { immer } from 'zustand/middleware/immer' // npm install immer 필요
+/* create 밑줄은 사용되면 자연스럽게 사라짐. */
+// const useBeeStore = create(set => ({
+//   bees: 0,
+//   immerInc: () =>
+//     set(() => ({
+//       bees: 0,
+//     })),
+//   // immerInc: () =>
+//   //   set(
+//   //     produce(state => {
+//   //       state.bees += 1;
+//   //     }),
+//   //   ),
+// }));

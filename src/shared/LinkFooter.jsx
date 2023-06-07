@@ -1,46 +1,45 @@
+import Cookies from 'js-cookie';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
+import { bookMarkLostPost } from '../api/daengFinder';
 import { ReactComponent as Bookmark } from '../assets/images/BookmarkFilled.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import { ReactComponent as Comment } from '../assets/images/Magnifier.svg';
 
-/* immer 사용 */
-/* import { create } from 'zustand'
-import { immer } from 'zustand/middleware/immer' // npm install immer 필요
-
-const useBeeStore = create(
-  immer((set) => ({ // <- 바로 요기 부분
-    bees: 0,
-    addBees: (by) =>
-      set((state) => {
-        state.bees += by
-      }),
-  }))
-) */
-
-// import { immer } from 'zustand/middleware/immer' // npm install immer 필요
-/* create 밑줄은 사용되면 자연스럽게 사라짐. */
-// const useBeeStore = create(set => ({
-//   bees: 0,
-//   immerInc: () =>
-//     set(() => ({
-//       bees: 0,
-//     })),
-//   // immerInc: () =>
-//   //   set(
-//   //     produce(state => {
-//   //       state.bees += 1;
-//   //     }),
-//   //   ),
-// }));
-
-export const useClipStore = create(set => ({
-  /* 서버에서 먼저 axios 요청 때 bookmark 된 상태인지 확인 받은 후에 색깔 변경해주는 식으로 ㄱ */
+const store = (set, get) => ({
+  /**
+   * @description 서버에서 먼저 axios 요청 때 bookmark 된 상태인지 확인 받은 후에 색깔 변경해주는 식으로 ㄱ
+   *  */
   isBookmark: false,
   onModal: false,
   modalComment: '',
+  postId: null,
+  userId: null,
+  // refreshToken: Cookies.get('refreshToken'),
+  // accessToken: null,
+  // setAccessToken: (accessToken) => {
+  //   set(()=>({
+  //     accessToken
+  //   }))
+  // },
+  getPostId: postId => {
+    set(() => ({
+      postId: parseInt(postId, 10),
+    }));
+  },
+  getUserId: userId => {
+    set(() => ({
+      userId: parseInt(userId, 10),
+    }));
+  },
+  getBookmarkState: isBookmark => {
+    set(() => ({
+      isBookmark,
+    }));
+  },
   onClipBoard: () => {
     // set(preState => ({ isClipped: !preState.isClipped }));
     set(() => ({
@@ -53,31 +52,77 @@ export const useClipStore = create(set => ({
     set(() => ({
       isBookmark: false,
     })),
-  onBookmark: () => {
+  onBookmark: async () => {
     // set(preState => ({ isBookmark:!preState.isBookmark }));
-    set(() => ({
-      isBookmark: true,
-      onModal: true,
-      modalComment: '북마크에 등록했어요!',
-    }));
-    setTimeout(() => set(prevState => ({ onModal: !prevState.onModal })), 1000);
+    const inputs = {
+      accessToken: JSON.parse(localStorage.getItem('accessToken')),
+      refreshToken: Cookies.get('refreshToken'),
+      postId: get().postId,
+    };
+    try {
+      const response = await bookMarkLostPost(inputs);
+      console.log('onBookMark response >>>', response);
+      set(() => ({
+        modalComment: get().isBookmark
+          ? '북마크를 취소했어요!'
+          : '북마크에 등록했어요!',
+        isBookmark: !get().isBookmark,
+        onModal: true,
+        // modalComment: '북마크에 등록했어요!',
+      }));
+      // set((prev) => ({
+      //   modalComment: prev.isBookmark
+      //     ? '북마크를 취소했어요!'
+      //     : '북마크에 등록했어요!',
+      //   isBookmark: !prev.isBookmark,
+      //   onModal: true,
+      //   // modalComment: '북마크에 등록했어요!',
+      // }));
+      setTimeout(
+        () => set(prevState => ({ onModal: !prevState.onModal })),
+        1000,
+      );
+    } catch (error) {
+      console.log(error);
+      set(() => ({
+        isBookmark: false,
+        onModal: true,
+        modalComment: '북마크 등록 실패!',
+      }));
+      setTimeout(
+        () => set(prevState => ({ onModal: !prevState.onModal })),
+        1000,
+      );
+    }
   },
-}));
+});
+
+export const useClipStore = create(
+  process.env.NODE_ENV === 'development' ? devtools(store) : store,
+);
 
 function LinkFooter() {
   /* 나중에 Bookmarked 들도 객체 형태로 만들어서 관리해야 할 듯 */
   // const [isBookmarked, setIsBookmarked] = useState(false);
   /* react의 비교로직과 달리 state로 가져온 사용법은 === 연산자를 쓰기 때문에 조금 더 효율적인 랜더링이 가능합니다. ( zustand가 내세우는 장점 중에 하나입니다 ) */
-  const { isBookmark, onClipBoard, onCancelBookmark, onBookmark } =
-    useClipStore(
-      state => ({
-        isBookmark: state.isBookmark,
-        onClipBoard: state.onClipBoard,
-        onCancelBookmark: state.onCancelBookmark,
-        onBookmark: state.onBookmark,
-      }),
-      shallow,
-    );
+  const {
+    postId,
+    userId,
+    isBookmark,
+    onClipBoard,
+    onCancelBookmark,
+    onBookmark,
+  } = useClipStore(
+    state => ({
+      postId: state.postId,
+      userId: state.userId,
+      isBookmark: state.isBookmark,
+      onClipBoard: state.onClipBoard,
+      onCancelBookmark: state.onCancelBookmark,
+      onBookmark: state.onBookmark,
+    }),
+    shallow,
+  );
   const navigate = useNavigate();
   const bookmarkHandler = () => {
     if (isBookmark) {
@@ -91,7 +136,6 @@ function LinkFooter() {
     onClipBoard();
   };
 
-  const temporaryPostId = 0;
   /* 여기 나중에 zustand나 redux로 전역으로 관리해서 게시글 눌렀을 때 그 인덱스 여기로 넘겨줘야 함. */
   return (
     <div className='relative bottom-0 z-50 w-full h-24 pt-3 px-5 border-t border-solid shadow-md'>
@@ -99,7 +143,11 @@ function LinkFooter() {
         <div className='f-fr gap-6 w-fit flex-wrap h-5'>
           <Comment
             className='cursor-pointer'
-            onClick={() => navigate(`/daengfinder/comment/${temporaryPostId}`)}
+            onClick={() =>
+              navigate(`/daengfinder/comment/${postId}`, {
+                state: { postOwnerId: userId },
+              })
+            }
           />
           <Clip onClick={clipHandler} cursor-pointer />
         </div>

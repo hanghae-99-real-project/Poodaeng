@@ -15,7 +15,7 @@ function LoginPage() {
 
   /* 나중에 캐릭 랜덤으로 나오도록 만들 예정 */
   useEffect(() => {
-    const animation = setTimeout(() => setIsLoading(false), 4000);
+    const animation = setTimeout(() => setIsLoading(false), 2000);
 
     return () => clearTimeout(animation);
   }, []);

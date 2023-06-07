@@ -1,18 +1,15 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { useEffect } from 'react';
-import {
-  // Navigate,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 // import qs from 'qs';
 // import jwtDecode from 'jwt-decode';
 import Loading from '../components/common/Loading';
 // import Loading from '../components/Loading';
 
-function AuthCheck() {
+function KakaoAuthCheck() {
+  const [isLoading, setIsLoading] = useState(true);
+
   const location = useLocation();
   const navigate = useNavigate();
   console.log('location >>>', location);
@@ -97,17 +94,30 @@ function AuthCheck() {
             headers: {
               authorization: `Bearer ${code}`,
             },
+            timeout: 10000 /* 10초 */,
+            timeoutErrorMessage: 'Request timed out',
           },
         );
       console.log('서버 response >>>', response);
-      navigate('/');
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate('/', {
+          state: {
+            message: '로그인 성공',
+          },
+        });
+      }, 1000);
     } catch (error) {
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate('/login', {
+          state: {
+            error,
+            message: '로그인 실패',
+          },
+        });
+      }, 1000);
       console.log('getKakaoToken error >>>', error);
-      navigate('/login', {
-        state: {
-          error: error.response.data.error,
-        },
-      });
       // return <Navigate to='/login' replace state={error.response.data.error} />;
     }
   };
@@ -134,7 +144,7 @@ function AuthCheck() {
     getKakaoToken();
   }, []);
 
-  return <Loading />;
+  return isLoading && <Loading />;
 }
 
-export default AuthCheck;
+export default KakaoAuthCheck;

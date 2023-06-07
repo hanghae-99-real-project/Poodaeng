@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginSocial from '../components/LoginSocial';
 import LogoutTest from '../components/LogoutTest';
 import Alert from '../pages/Alert';
-import AuthCheck from '../pages/AuthCheck';
+import KakaoAuthCheck from '../pages/KakaoAuthCheck';
 import CompletePage from '../pages/CompletePage';
 import DaengFinder from '../pages/DaengFinder';
 import DaengFinderDetail from '../pages/DaengFinderDetail';
@@ -30,7 +30,7 @@ import PooDetail from '../pages/PooDetail';
 // import TokenCheck from '../utils/TokenCheck';
 /* Token 체크를 작성 업로드, 삭제, 수정 시에만 토큰을 보내서 확인하도록 구성하자. */
 function Router() {
-  console.log("렌더링 발생하였습니다.")
+  console.log("Router 렌더링 발생하였습니다.")
   return (
     <BrowserRouter>
       <Routes>
@@ -43,7 +43,7 @@ function Router() {
           <Route path="/poopost" element={<PooPost />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/loginsocial' element={<LoginSocial />} />
-          <Route path='/auth' element={<AuthCheck />}/>
+          <Route path='/auth' element={<KakaoAuthCheck />}/>
           <Route path='/signin' element={<SignInPage />}/>
           <Route path='/signup' element={<SignUpPage />}/>
           <Route path='/signupcomplete' element={<CompletePage />}/>
@@ -59,7 +59,7 @@ function Router() {
           nothing yet
         </Route>
         <Route element={<LinkFooterLayout />}>
-          <Route path='/daengfinder/detail' element={<DaengFinderDetail/>}/>
+          <Route path='/daengfinder/detail/:postId' element={<DaengFinderDetail/>}/>
           <Route path='/daengfinder/comment/:postId' element={<DaengFinderCommentPage />}/>
           <Route path='/daengfinder/write' element={<DaengFinderWritePage />}/>
         </Route>

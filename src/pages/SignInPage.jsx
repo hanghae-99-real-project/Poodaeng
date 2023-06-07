@@ -43,6 +43,13 @@ function SignInPage() {
     setIsError(false);
   };
 
+  // const { setAccessToken } = useClipStore(
+  //   state => ({
+  //     setAccessToken: state.setAccessToken,
+  //   }),
+  //   shallow,
+  // );
+
   const mutation = useMutation(signIn, {
     onSuccess: data => {
       console.log('login 성공 시 data >>>', data);
@@ -64,9 +71,12 @@ function SignInPage() {
       // eslint-disable-next-line no-unused-vars
       const { exp: AC_EXP, iat, userId } = decodedAcToken;
       console.log('이거 초 단위인가?  >>> ', AC_EXP);
-      // const expireDate = new Date(AC_EXP * 1000); // 날짜단위로 변환해서 넣기.(ms 단위로 변환(?)해서 넣기)
+      // const expireDate = new Date(AC_EXP * 1000); // 날짜단위로 변환해서 넣기.(ms 단위로 변환해서 넣기)
       const acExpireDate = AC_EXP * 1000; // ms 단위로 변환(?)해서 넣기
       console.log('expireDate type 확인', typeof acExpireDate);
+      // setAccessToken(accessToken);
+      localStorage.setItem('accessToken', JSON.stringify(accessToken));
+      localStorage.setItem('userId', JSON.stringify(userId));
       dispatch(SET_TOKEN({ userId, accessToken, acExpireDate }));
 
       onClearInputs();

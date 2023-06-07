@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import { SlMagnifier } from 'react-icons/sl';
 import { useMutation } from 'react-query';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { shallow } from 'zustand/shallow';
 import { writePostLost } from '../api/daengFinder';
 import DaengFinderMap from '../components/DaengFinder/DaengFinderWrite/DaengFinderMap';
 import useInput from '../hooks/useInput';
 import LinkHeader from '../shared/LinkHeader';
+import { useLocationStore } from '../zustand/example/zustandAPI';
 
 function DaengFinderWritePage() {
   const [image, setImage] = useState({ photo: [], preview: [] });
@@ -20,12 +22,29 @@ function DaengFinderWritePage() {
     title: '',
     content: '',
   });
+  const [afterfirstSearch, setAfterFirstSearch] = useState(false);
+  const { location, roadAddress } = useLocationStore(
+    state => ({ location: state.location, roadAddress: state.roadAddress }),
+    shallow,
+  );
   const [latlng, setLatLng] = useState({
-    lostLatitude: '',
-    lostLongitude: '',
+    // lostLatitude: 33.450701,
+    // lostLongitude: 126.570667,
+    lostLatitude: location.latitude,
+    lostLongitude: location.longitude,
   });
-  const { accessToken } = useSelector(store => store.auth);
+  console.log(latlng);
+
+  // const { accessToken } = useSelector(store => store.auth);
   console.log('image >>>', image);
+  console.log('image[i] >>>', image.photo[0]);
+
+  // const getMarkerPosition = (latitude, longitude) => {
+  //   setLatLng({
+  //     lostLatitude: latitude,
+  //     lostLongitude: longitude,
+  //   });
+  // };
 
   const mutation = useMutation(writePostLost, {
     onSuccess: data => {
@@ -36,25 +55,31 @@ function DaengFinderWritePage() {
     },
   });
 
+  const searchAddressMode = () => {
+    setAfterFirstSearch(true);
+    setMapMode(true);
+  };
+
   const uploadPost = () => {
     const formData = new FormData();
+
     // formData.append('photo', image.photo[0]);
     formData.append('dogname', target.dogname);
     formData.append('title', target.title);
     formData.append('content', target.content);
     if (image.photo.length > 0) {
       image.photo.forEach(img => {
-        // const blobImg = new Blob([JSON.stringify(img)], { type: 'image/*' });
-        // formData.append('photo', blobImg);
-        formData.append('lostPhotoUrl', img);
+        // const jsonImg = JSON.stringify(img);
+        const blobImg = new Blob([img], { type: img.type });
+        formData.append('image', blobImg, img.name);
       });
     }
     console.log('최종 위도 경도 >>>', latlng);
-    formData.append('latitude', latlng.lostLatitude);
-    formData.append('longitude', latlng.lostLongitude);
-    console.log('daengFinderWrite formData>>> ', ...formData);
+    formData.append('lostLatitude', latlng.lostLatitude);
+    formData.append('lostLongitude', latlng.lostLongitude);
+    console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     const inputs = {
-      accessToken,
+      accessToken: JSON.parse(localStorage.getItem('accessToken')),
       formData,
     };
     mutation.mutate(inputs);
@@ -73,7 +98,8 @@ function DaengFinderWritePage() {
     // const fileList = e.target.files;
     const fileList = Array.from(e.target.files);
     // const photoList = [...image.photo];
-    const photoList = [];
+    const uploadList = [];
+    const previewList = [];
 
     // if (fileList.length > 5 || fileList.length < 1) {
     if (fileList.length < 1) {
@@ -124,59 +150,46 @@ function DaengFinderWritePage() {
       /* 새로운 이미지를 올리면 createObjectURL()을 통해 생성한 기존 URL을 revoke로 메모리상에서 폐기 => 메모리 누수 방지 */
       /* 주의할 점은 [i]를 붙여줘야 하는 것. 왜냐면 (현재시점) 직전에 올려둔 이미지를 지울 수도 있기 때문임. */
       /* 근데 나는 이미지 거꾸로 넣어주고 있음! 그래서 at을 써서 뒤에부터 지워줘야 함. */
-      if (fileList[i]) URL.revokeObjectURL(image.photo.at(-(i + 1)));
+      if (fileList[i]) URL.revokeObjectURL(image.preview.at(-(i + 1)));
       const url = URL.createObjectURL(fileList[i]);
 
       /* 얘도 배열임. */
-      photoList.push(url);
-
-      /* 1. 이미지가 5개보다 적을 때는 하나씩 추가되도록 짜고 */
-      /* 2. 한꺼번에 많이 추가할 수 있는 것도 해줘야 함 */
-      /* 3. 5개보다 많아지면 다 지우고 제일 최근 거로 교체 */
-
-      setImage(prev => ({
-        // photo: [...prev.photo, ...photoList].reverse().slice(0, 5),
-        // preview: [...prev.photo, ...photoList].reverse().slice(0, 5),
-        photo: [...photoList, ...prev.photo].slice(0, 5),
-        preview: [...photoList, ...prev.photo].slice(0, 5),
-      }));
+      uploadList.push(fileList[i]);
+      previewList.push(url);
     }
-
-    /* 사진은 1개 이상 5개 이하여야합니다 경고를 언제 띄울지 고민 */
-    /* 등록할 때 띄워야겠음.(comment는 사진 없어도 되고 게시글은 1 <= length <=5) */
-    // if (photoList.length > 5) {
-    //   photoList = photoList.slice(0, 5);
-    //   // previewList = previewList.slice(0, 5);
-    // } else if (photoList.length < 1) {
-    //   setAlertMsg(true);
-    //   /* 이거 1개 안하고 등록할 때도 띄우고 등록 막는 것으로 추가해야 함 */
-    //   toast.error('이미지는 최소 1개가 필요합니다.', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //   });
-    //   return;
-    // }
+    /* 1. 이미지가 5개보다 적을 때는 하나씩 추가되도록 짜고 */
+    /* 2. 한꺼번에 많이 추가할 수 있는 것도 해줘야 함 */
+    /* 3. 5개보다 많아지면 다 지우고 제일 최근 거로 교체 */
+    setImage(prev => ({
+      // photo: [...prev.photo, ...photoList].reverse().slice(0, 5),
+      // preview: [...prev.photo, ...photoList].reverse().slice(0, 5),
+      photo: [...uploadList, ...prev.photo].slice(0, 5),
+      preview: [...previewList, ...prev.preview].slice(0, 5),
+    }));
   };
 
   useEffect(() => {
     return () => {
-      for (let i = 0; i < image.photo.length; i++) {
-        URL.revokeObjectURL(image.photo[i]);
+      for (let i = 0; i < image.preview.length; i++) {
+        URL.revokeObjectURL(image.preview[i]);
       }
     };
   }, []);
+
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(pos => {
+  //     const latitude = pos?.coords?.latitude;
+  //     const longitude = pos?.coords?.longitude;
+  //     setLatLng({ lostLatitude: latitude, lostLongitude: longitude });
+  //   });
+  // }, []);
 
   return (
     <div className='w-full max-h-[812px]'>
       {alertMsg && <ToastContainer />}
       <LinkHeader
         icon
-        destination={!mapMode ? '/daengfinder/detail' : false}
+        destination={!mapMode ? '/daengfinder' : false}
         setMapMode={mapMode ? setMapMode : false}
         feature={
           !mapMode && (
@@ -193,21 +206,23 @@ function DaengFinderWritePage() {
         댕파인더 글쓰기&nbsp;
       </LinkHeader>
       {mapMode ? (
-        // <DaengFinderMap setLatLng={setLatLng} />
-        <DaengFinderMap />
+        <DaengFinderMap latlng={latlng} setLatLng={setLatLng} />
       ) : (
+        // <DaengFinderMap />
         <div>
           <form className='py-9 px-6 border-b border-solid border-[#ECECEC]'>
             <div className='f-fc gap-3 mb-4'>
               <input
                 name='title'
                 value={target.title}
+                onChange={onChangeHandler}
                 placeholder='제목을 작성해주세요'
                 className='w-full pb-4 font-semibold text-xl leading-6 placeholder:text-[#C7C7C7] border-b'
               />
               <input
                 name='dogname'
                 value={target.dogname}
+                onChange={onChangeHandler}
                 placeholder='반려견 이름'
                 className='w-full pb-3 font-medium text-sm leading-4 placeholder:text-[#C7C7C7] border-b'
               />
@@ -218,10 +233,16 @@ function DaengFinderWritePage() {
             </div>
             <div
               className='f-fr-ic gap-1 px-3 py-2 border border-solid rounded-md cursor-pointer'
-              onClick={() => setMapMode(true)}
+              onClick={searchAddressMode}
             >
               <SlMagnifier className='text-lg font-bold text-[#C9C9C9]' />
-              <div className='text-[#C7C7C7]'>실종 위치</div>
+              <div
+                className={`${
+                  (!afterfirstSearch || !roadAddress) && 'text-[#C7C7C7]'
+                }`}
+              >
+                {(afterfirstSearch && roadAddress) || '실종 위치'}
+              </div>
             </div>
             {/* 1. 최초에는 사진을 등록할 수 있는 박스 한 개가 존재해야 함. 선택한 사진들을 preview로 보여주고 싶음.
           2. 사진을 여러 개 선택할 경우 그 사진의 개수에 맞춰서 박스가 오른쪽에 추가적으로 생김. 단, 사진의 개수보다 사진을 등록할 수 있는 박스의 개수가 하나 더 많아야 함.
@@ -288,6 +309,9 @@ function DaengFinderWritePage() {
           </form>
           <div className='px-6 py-6 h-80'>
             <textarea
+              value={target.content}
+              name='content'
+              onChange={onChangeHandler}
               placeholder='글을 작성해주세요. 상세내용~
 허위작성이나 어쩌구 저쩌구를 자제해주세요'
               className='w-full h-full overflow-y-scroll'

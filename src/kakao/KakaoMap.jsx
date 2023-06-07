@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 
-function KakaoMap({ width, height, rounded, getMarkerPosition }) {
+function KakaoMap({ width, height, rounded, lat, lng, getMarkerPosition }) {
   const [message, setMessage] = useState(false);
   // const [address, setAddress] = useState('');
   const mapContainer = useRef(null);
@@ -18,10 +18,23 @@ function KakaoMap({ width, height, rounded, getMarkerPosition }) {
     maximumAge: 1000 * 3600 * 24 /* === 24 hours */,
   };
 
-  const result = useCurrentLocation(geoLocationOptions);
-  const latitude = result.location?.latitude + 0.00138377808305;
-  const longitude = result.location?.longitude + 0.0018242688706;
-  const error = result.error;
+  let latitude;
+  let longitude;
+  let error;
+  if (!lat && !lng) {
+    const result = useCurrentLocation(geoLocationOptions);
+    latitude = result?.location?.latitude + 0.00138377808305;
+    longitude = result?.location?.longitude + 0.0018242688706;
+    error = result.error;
+  } else {
+    latitude = lat;
+    longitude = lng;
+    error = false;
+  }
+  // const result = useCurrentLocation(geoLocationOptions);
+  // const latitude = result?.location?.latitude + 0.00138377808305;
+  // const longitude = result?.location?.longitude + 0.0018242688706;
+  // const error = result.error;
 
   useEffect(() => {
     if (error) {
@@ -60,23 +73,33 @@ function KakaoMap({ width, height, rounded, getMarkerPosition }) {
       /* marker는 ref 안 걸어도 될 듯? 나중에 지우던가 */
       markerRef.current = marker;
       if (getMarkerPosition) {
-        getMarkerPosition({ latitude, longitude });
+        // getMarkerPosition(latitude, longitude);
+        getMarkerPosition(prev => ({
+          ...prev,
+          lostLatitude: latitude,
+          lostLongitude: longitude,
+        }));
       }
 
       // 마커 드래그 이벤트 처리
       /* 여기 markerRef.current 안써도 되나? */
-      window.kakao.maps.event.addListener(marker, 'dragend', async () => {
+      window.kakao.maps.event.addListener(marker, 'dragend', () => {
         const newPosition = marker.getPosition(); // 마커의 새로운 위치 좌표 얻기
         const newLatitude = newPosition.getLat();
         const newLongitude = newPosition.getLng();
 
         console.log('새로운 위치 좌표:', newLatitude, newLongitude);
         if (getMarkerPosition) {
-          getMarkerPosition({ latitude: newLatitude, longitude: newLongitude });
+          // getMarkerPosition(newLatitude, newLongitude);
+          getMarkerPosition(prev => ({
+            ...prev,
+            lostLatitude: newLatitude,
+            lostLongitude: newLongitude,
+          }));
         }
       });
     }
-  }, [latitude, longitude]);
+  }, [latitude, longitude, getMarkerPosition]);
 
   return (
     <>
@@ -91,6 +114,7 @@ function KakaoMap({ width, height, rounded, getMarkerPosition }) {
 }
 
 export default React.memo(KakaoMap);
+// export default KakaoMap;
 
 // /* eslint-disable prefer-destructuring */
 // import React, { useEffect, useRef, useState } from 'react';

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
@@ -5,18 +6,34 @@ import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { shallow } from 'zustand/shallow';
 import { getPostLost } from '../api/daengFinder';
+import { ReactComponent as DaengFinderButton } from '../assets/images/DaengFinderMenu.svg';
 import { areaList } from '../data/Areas';
 import Card from './DaengFinder/Card';
 // eslint-disable-next-line no-unused-vars
+import { useLocationStore } from '../zustand/example/zustandAPI';
 import Loading from './common/Loading';
 import Loading2 from './common/Loading2';
+import useCurrentLocation from '../hooks/useCurrentLocation';
+import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
 // import Tabbar from './Tabbar';
 
 function DaengFindercomponent() {
   const [selectedArea, setSelectedArea] = useState('마포구 연남동');
   const [isShow, setIsShow] = useState(false);
   const [isDetail, setIsDetail] = useState(true);
+  const { setLocation } = useLocationStore(
+    prev => ({
+      setLocation: prev.setLocation,
+    }),
+    shallow,
+  );
+  const response = useCurrentLocation();
+  const location = response?.location;
+  const latitude = location?.latitude;
+  const longitude = location?.longitude;
+  setLocation(latitude, longitude);
 
   const navigate = useNavigate();
   const selectAreaHandler = e => {
@@ -25,6 +42,10 @@ function DaengFindercomponent() {
   };
   const selectOpenHandler = () => {
     setIsShow(prev => !prev);
+  };
+
+  const moveToDaengFinderWrite = () => {
+    navigate('/daengfinder/write');
   };
 
   // eslint-disable-next-line no-unused-vars
@@ -46,15 +67,13 @@ function DaengFindercomponent() {
 
   if (isError) {
     console.log('error >>>', error);
-    return (
-      // <div className='flex flex-col h-[812px] justify-center  items-center'>
-      //   <div className='text-red-500 text-center'>{error}</div>
-      // </div>
-      <Loading2 />
-    );
+    navigate('/', {
+      state: error,
+    });
   }
 
   console.log('daengFindercomponent >>> ', data);
+  console.log('data.data>>> ', data.data);
 
   return (
     <>
@@ -132,19 +151,36 @@ function DaengFindercomponent() {
           </div>
         </div>
       </div>
-      <div
-        className={`${
-          isDetail
-            ? 'flex flex-col gap-3 h-f w-full px-6 '
-            : 'grid grid-cols-2 gap-3 auto-cols-auto px-6'
-        }  overflow-y-scroll `}
-      >
+
+      {data?.data.length ? (
+        <div
+          // 46.6875rem
+          className={`${
+            isDetail
+              ? 'flex flex-col gap-3 h-f w-full px-6 '
+              : 'grid grid-cols-2 gap-3 auto-cols-auto px-6'
+          } min-h-[35.5rem] overflow-y-scroll `}
+        >
+          {data?.data?.map(card => {
+            return <Card key={card.postId} isDetail={isDetail} data={card} />;
+          })}
+          {/* <Card isDetail={isDetail} />
         <Card isDetail={isDetail} />
         <Card isDetail={isDetail} />
         <Card isDetail={isDetail} />
         <Card isDetail={isDetail} />
-        <Card isDetail={isDetail} />
-        <Card isDetail={isDetail} />
+        <Card isDetail={isDetail} /> */}
+        </div>
+      ) : (
+        <div className='h-full w-full f-ic-jc relative top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+          <NoResult />
+        </div>
+      )}
+      <div className='relative left-0 right-0 '>
+        <DaengFinderButton
+          className='absolute bottom-4 left-[6.5rem] cursor-pointer'
+          onClick={moveToDaengFinderWrite}
+        />
       </div>
     </>
   );

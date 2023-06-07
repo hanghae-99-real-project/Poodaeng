@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
@@ -14,12 +14,17 @@ import { useFooterLayout } from '../shared/LinkFooterLayout';
 import LinkHeader from '../shared/LinkHeader';
 
 function DaengFinderCommentPage() {
+  /**
+   * @description JSON 주석 풀어야 함. myId = 2 는 지워야 함.
+   */
+  // const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10);
+  const myId = 2;
   const [alertMsg, setAlertMsg] = useState(false);
   const [commentList, setCommentList] = useState([
     {
       commentId: 1,
       PostId: 1,
-      UserId: 'INTEGER',
+      UserId: 1,
       comment: '그만 탈출해...',
       commentPhotoUrl:
         'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
@@ -36,7 +41,7 @@ function DaengFinderCommentPage() {
     {
       commentId: 2,
       PostId: 1,
-      UserId: 'INTEGER',
+      UserId: 2,
       comment: '그만 탈출해...',
       commentPhotoUrl:
         'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
@@ -52,7 +57,7 @@ function DaengFinderCommentPage() {
     {
       commentId: 3,
       PostId: 1,
-      UserId: 'INTEGER',
+      UserId: 3,
       comment: '그만 탈출해...',
       commentPhotoUrl: '',
       nickname: '보라돌이',
@@ -67,7 +72,7 @@ function DaengFinderCommentPage() {
     {
       commentId: 4,
       PostId: 1,
-      UserId: 'INTEGER',
+      UserId: 4,
       comment: '그만 탈출해...',
       commentPhotoUrl:
         'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
@@ -83,7 +88,7 @@ function DaengFinderCommentPage() {
     {
       commentId: 5,
       PostId: 1,
-      UserId: 'INTEGER',
+      UserId: 5,
       comment: '그만 탈출해...',
       commentPhotoUrl:
         'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
@@ -102,7 +107,7 @@ function DaengFinderCommentPage() {
     {
       childCommentId: '1',
       CommentId: 1,
-      UserId: 'INTEGER',
+      UserId: 1,
       childComment: '헉 저 아까 가로수길 지나가다가 어쩌구~',
       nickname: '뚜비',
       userPhoto:
@@ -114,7 +119,7 @@ function DaengFinderCommentPage() {
     {
       childCommentId: '2',
       CommentId: 1,
-      UserId: 'INTEGER',
+      UserId: 10,
       childComment: 'STRING',
       nickname: 'STRING',
       userPhoto: '',
@@ -125,7 +130,43 @@ function DaengFinderCommentPage() {
     {
       childCommentId: '3',
       CommentId: 1,
-      UserId: 'INTEGER',
+      UserId: 1,
+      childComment: 'STRING',
+      nickname: 'STRING',
+      // userPhoto: 'JSON',
+      userPhoto: '',
+      createdAt: 'DATE',
+      updatedAt: 'DATE',
+      isPrivate: true,
+    },
+    {
+      childCommentId: '4',
+      CommentId: 4,
+      UserId: 1,
+      childComment: 'STRING',
+      nickname: 'STRING',
+      // userPhoto: 'JSON',
+      userPhoto: '',
+      createdAt: 'DATE',
+      updatedAt: 'DATE',
+      isPrivate: true,
+    },
+    {
+      childCommentId: '5',
+      CommentId: 4,
+      UserId: 1,
+      childComment: 'STRING',
+      nickname: 'STRING',
+      // userPhoto: 'JSON',
+      userPhoto: '',
+      createdAt: 'DATE',
+      updatedAt: 'DATE',
+      isPrivate: true,
+    },
+    {
+      childCommentId: '6',
+      CommentId: 4,
+      UserId: 1,
       childComment: 'STRING',
       nickname: 'STRING',
       // userPhoto: 'JSON',
@@ -147,6 +188,14 @@ function DaengFinderCommentPage() {
   });
   const imageRef = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { postOwnerId } = location.state;
+  // console.log(
+  //   'postOwnerId type >>>',
+  //   typeof postOwnerId, // number
+  //   'postOwnerId >>>',
+  //   postOwnerId, // 1
+  // );
 
   // const { data, isLoading, error, isError } = useQuery(
   //   'getComment',
@@ -266,7 +315,12 @@ function DaengFinderCommentPage() {
     <div className='w-full max-h-[812px]'>
       <LinkHeader icon destination='/daengfinder/detail'>
         {/* 댓글&nbsp;{commentCount}{' '} */}
-        댓글&nbsp;{commentList.length}
+        <div className='f-fr'>
+          댓글&nbsp;
+          <p className='text-[#DB00FF]'>
+            {commentList.length + replyList.length}
+          </p>
+        </div>
       </LinkHeader>
 
       <div className={`fixed inset-0 z-30 ${!modalVisible && 'hidden'} `}>
@@ -283,7 +337,7 @@ function DaengFinderCommentPage() {
           </div>
         </div>
       </div>
-      {/* 문제점 반만 잘려서 보인다. pb주는 건 임시방편 방법인가... */}
+      {/* 문제점 반만 잘려서 보인다. pb주는 건 임시방편 방법인가... => 바로 고침 */}
       <div className='h-[45.6875rem] box-border overflow-y-scroll'>
         {commentList.map(comment => {
           return (
@@ -291,6 +345,7 @@ function DaengFinderCommentPage() {
               <Comment
                 key={comment.commentId}
                 cmt={comment}
+                myId={myId}
                 enlargePhoto={enlargePhoto}
                 onReplyMode={onReplyMode}
               />
@@ -301,6 +356,7 @@ function DaengFinderCommentPage() {
                     <Reply
                       key={reply.childCommentId}
                       reply={reply}
+                      myId={myId}
                       onReplyMode={onReplyMode}
                     />
                   );
