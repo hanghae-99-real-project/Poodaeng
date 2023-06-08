@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 // import { useEffect } from 'react';
@@ -99,25 +100,25 @@ function KakaoAuthCheck() {
           },
         );
       console.log('서버 response >>>', response);
-      setTimeout(() => {
-        setIsLoading(false);
-        navigate('/', {
-          state: {
-            message: '로그인 성공',
-          },
-        });
-      }, 1000);
+      // setTimeout(() => {
+      //   setIsLoading(false);
+      //   navigate('/', {
+      //     state: {
+      //       message: '로그인 성공',
+      //     },
+      //   });
+      // }, 1000);
     } catch (error) {
-      setTimeout(() => {
-        setIsLoading(false);
-        console.log('error >>>', error);
-        navigate('/login', {
-          state: {
-            error,
-            message: '로그인 실패',
-          },
-        });
-      }, 1000);
+      // setTimeout(() => {
+      //   setIsLoading(false);
+      //   console.log('error >>>', error);
+      //   navigate('/login', {
+      //     state: {
+      //       error,
+      //       message: '로그인 실패',
+      //     },
+      //   });
+      // }, 1000);
       console.log('getKakaoToken error >>>', error);
       // return <Navigate to='/login' replace state={error.response.data.error} />;
     }
