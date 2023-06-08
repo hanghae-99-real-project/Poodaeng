@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
@@ -8,6 +9,7 @@ import Cookies from 'js-cookie';
 import Headers from './Headers';
 import { ReactComponent as Report } from '../assets/images/report.svg';
 import { reportPooBox } from '../api/poobox';
+import { dateConvert2 } from '../utils/DateConvert';
 
 function PooDetailComponent() {
   const location = useLocation();
@@ -18,6 +20,8 @@ function PooDetailComponent() {
   const pooId = params.get('pooId'); // pooId
   const UserId = params.get('UserId'); // createdAT
   const createdAt = params.get('createdAt'); // imgage
+  const pooLatitude = params.get('pooLatitude');
+  const pooLongitude = params.get('pooLongitude');
   const navigate = useNavigate();
   const refreshToken = Cookies.get('refreshToken');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,6 +34,8 @@ function PooDetailComponent() {
   console.log('pooId', pooId);
   console.log('UserId', UserId);
   console.log('createdAt', createdAt);
+  console.log('pooLatitude', pooLatitude);
+  console.log('pooLongitude', pooLongitude);
 
   const reportContent = {
     reportContent: contents,
@@ -73,6 +79,19 @@ function PooDetailComponent() {
     closeModal();
   };
 
+  function loadFindHandler(pooId, pooLatitude, pooLongitude, address) {
+    const params = new URLSearchParams();
+    params.append('pooLatitude', pooLatitude);
+    params.append('pooLongitude', pooLongitude);
+    params.append('address', address);
+    const queryString = params.toString();
+    navigate(`/tmap/${pooId}?${queryString}`);
+  }
+
+  // const targetLatitude = query.get('pooLatitude');
+  // const targetLongitude = query.get('pooLongitude');
+  // const targetAddress = query.get('address');
+
   return (
     <div>
       <Headers text icon destination='map'>
@@ -80,7 +99,7 @@ function PooDetailComponent() {
       </Headers>
       <div>
         <img
-          src={createdAt}
+          src={imageUrl}
           alt='img'
           className='w-full h-80 border object-cover'
         />
@@ -88,19 +107,24 @@ function PooDetailComponent() {
           <div className='flex justify-between'>
             <div>
               <div className='font-bold'>주소</div>
-              <div>{content}</div>
+              <div>{address}</div>
             </div>
             <Report className='cursor-pointer' onClick={openModal} />
           </div>
           <div className='flex'>
             <div className='font-bold'>등록 날짜</div>
-            &nbsp; <div>{UserId}</div>
+            &nbsp; <div>{dateConvert2(createdAt)[1]}</div>
           </div>
           <div>
             <div className='font-bold'>특이사항</div>
-            <div>{imageUrl}</div>
+            <div>{content}</div>
           </div>
-          <button className='bg-mainColor text-white w-full h-12 rounded-xl'>
+          <button
+            className='bg-mainColor text-white w-full h-12 rounded-xl'
+            onClick={() =>
+              loadFindHandler(pooId, pooLatitude, pooLongitude, address)
+            }
+          >
             여기로 길 찾기 시작
           </button>
         </div>
@@ -126,6 +150,7 @@ function PooDetailComponent() {
                   <input
                     type='radio'
                     checked={contents === '해당 위치에 푸박스가 없어졌어요.'}
+                    className='mr-2'
                   />
                   해당 위치에 푸박스가 없어졌어요.
                 </li>
@@ -133,6 +158,7 @@ function PooDetailComponent() {
                   <input
                     type='radio'
                     checked={contents === '푸박스가 설명과 달라요.'}
+                    className='mr-2'
                   />
                   푸박스가 설명과 달라요.
                 </li>

@@ -25,45 +25,6 @@
           scrollwheel: true,
         });
 
-        const address = '주소';
-        const content = '특이사항';
-        const pooId = '1';
-        const UserId = '2';
-        const imageUrl = 'image';
-        const createdAt = '2023-06-06';
-
-        // 1-1 다중 마커 테스트
-        var positions = [
-          //다중 마커 저장 배열 ( 서버에서 받아오는 data )
-          {
-            title: `${address}`,
-            lonlat: new Tmapv2.LatLng(37.5652045, 126.98702028), //좌표 지정
-          },
-          {
-            title: 'SKT타워',
-            lonlat: new Tmapv2.LatLng(37.566369, 126.984895),
-          },
-        ];
-
-        for (var i = 0; i < positions.length; i++) {
-          //for문을 통하여 배열 안에 있는 값을 마커 생성 ( 대신 map 사용 )
-          var lonlat = positions[i].lonlat;
-          var title = positions[i].title;
-          //Marker 객체 생성.
-          marker = new Tmapv2.Marker({
-            position: lonlat, //Marker의 중심좌표 설정.
-            map: map, //Marker가 표시될 Map 설정.
-            title: title, //Marker 타이틀.
-          });
-        }
-
-        // 1-2 마커 클릭 이벤트
-
-        //Marker에 클릭이벤트 등록.
-        marker.addListener('click', function (evt) {
-          document.getElementById('result').innerHTML = `hi`;
-        });
-
         // 2. 시작, 도착 심볼찍기
         // 시작
         marker_s = new Tmapv2.Marker({
