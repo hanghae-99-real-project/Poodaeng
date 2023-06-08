@@ -27,7 +27,7 @@
 ## 기여
 
 서대식
-- 메인화면 알림
+- 알림 기능
 - 이벤트
 - 공통 Header, Footer
 - Kakao API
