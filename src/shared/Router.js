@@ -63,7 +63,7 @@ function Router() {
         </Route>
         <Route element={<LinkFooterLayout />}>
           <Route path='/daengfinder/detail/:postId' element={<DaengFinderDetail/>}/>
-          <Route path='/daengfinder/comment/:postId' element={<DaengFinderCommentPage />}/>
+          <Route path='/daengfinder/detail/:postOwnerId/comment/:postId' element={<DaengFinderCommentPage />}/>
           <Route path='/daengfinder/write' element={<DaengFinderWritePage />}/>
         </Route>
       </Routes>
