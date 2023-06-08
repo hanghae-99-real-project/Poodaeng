@@ -7,19 +7,24 @@ import React, { useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { getPooBox } from '../api/poobox';
+import Loading from './common/Loading';
 
 function Kakaoserch() {
   const navigate = useNavigate();
   const mapContainer = useRef(null);
   const { isLoading, isError, data } = useQuery('poobox', getPooBox);
   if (isLoading) {
-    return <div>로딩중입니다...</div>;
+    return (
+      <div className='flex flex-col h-[812px] justify-center  items-center'>
+        <Loading />
+      </div>
+    );
   }
   if (isError) {
     return <div>오류가 발생했습니다.</div>;
   }
 
-  console.log('data >>>', data);
+  console.log('data', data.data.getPooAll);
 
   const { kakao } = window;
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
@@ -67,7 +72,7 @@ function Kakaoserch() {
     let i;
     let marker;
     const infowindow = new kakao.maps.InfoWindow(); // infowindow 변수 선언 및 초기화
-    for (i = 0; i < points.length; i++) {
+    for (i = 0; i < points?.length; i++) {
       marker = new kakao.maps.Marker({
         position: points[i],
         image: pointsMarkerImage,
@@ -82,6 +87,8 @@ function Kakaoserch() {
       marker.UserId = data.data.getPooAll[i].UserId;
       marker.imageUrl = data.data.getPooAll[i].pooPhotoUrl;
       marker.createdAt = data.data.getPooAll[i].createdAt;
+      marker.pooLatitude = data.data.getPooAll[i].pooLatitude;
+      marker.pooLongitude = data.data.getPooAll[i].pooLongitude;
 
       // 각 마커에 클릭 이벤트를 등록합니다
       kakao.maps.event.addListener(
@@ -90,11 +97,11 @@ function Kakaoserch() {
         (function (currMarker) {
           return function () {
             const iwContent = `
-    <div style="padding:10px; width: 270px; height: 200px; display: flex; flex-direction: column; gap: 10px; border:1px solid black; border-radius: 10px; ">
+    <div style="padding:15px 24px 15px 24px; width: 300px; height: 210px; display: flex; flex-direction: column; gap: 10px; border:1px solid black; border-radius: 10px; ">
       <div>
         <div style="display: flex; justify-content: center; justify-content: space-between;">
-          <div style="display: flex; gap: 5px;">
-            <div style="font-size: 20px; font-weight: bold;">푸박스 정보</div>
+          <div style="display: flex; gap: 5px; bord">
+            <div style="font-size: 15px; font-weight: bold;">푸박스 정보</div>
           </div>
           <div style="display: flex;">
             <div onClick="window.closeInfoWindow()" style="cursor: pointer;"> X </div>
@@ -114,9 +121,10 @@ function Kakaoserch() {
           </div>
         </div>
       </div>
-      <div style="display:flex; gap:10px;">
-        <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}')">상세 보기</div>
-        <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;">길 찾기</div>
+      <div style="display:flex; gap:10px; margin-bottom:20px; justify-content:center;">
+        <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}','${currMarker.pooLatitude}','${currMarker.pooLongitude}')">상세 보기</div>
+        <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;" onclick="window.loadFindHandler('${currMarker.pooId}', '${currMarker.pooLatitude}','${currMarker.pooLongitude}','${currMarker.address}')">길 찾기</div>
+
       </div>
     </div>`;
             infowindow.setContent(iwContent);
@@ -142,28 +150,42 @@ function Kakaoserch() {
     // 상세보기 핸들러
     function pooDetailHandler(
       pooId,
+      UserId,
       address,
       content,
       imageUrl,
       createdAt,
-      UserId,
+      pooLatitude,
+      pooLongitude,
     ) {
       const params = new URLSearchParams();
       params.append('pooId', pooId);
+      params.append('UserId', UserId);
       params.append('address', address);
       params.append('content', content);
       params.append('imageUrl', imageUrl);
       params.append('createdAt', createdAt);
-      params.append('UserId', UserId);
+      params.append('pooLatitude', pooLatitude);
+      params.append('pooLongitude', pooLongitude);
 
       const queryString = params.toString();
 
       navigate(`/map/${pooId}?${queryString}`);
     }
 
+    function loadFindHandler(pooId, pooLatitude, pooLongitude, address) {
+      const params = new URLSearchParams();
+      params.append('pooLatitude', pooLatitude);
+      params.append('pooLongitude', pooLongitude);
+      params.append('address', address);
+      const queryString = params.toString();
+      navigate(`/tmap/${pooId}?${queryString}`);
+    }
+
     // closeInfoWindow 함수를 전역 범위로 결합시키기 위해 window 객체에 연결
     window.closeInfoWindow = closeInfoWindow;
     window.pooDetailHandler = pooDetailHandler;
+    window.loadFindHandler = loadFindHandler;
 
     setBounds();
 

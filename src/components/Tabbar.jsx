@@ -34,7 +34,6 @@ function Tabbar() {
   /* functional state update 함수형 업데이트 => 이전 state를 기억(stale closure를 방지) */
 
   const PooPostIconHandler = () => {
-    // if (!accessToken) {
     if (!refreshToken) {
       return navigate('/login');
     }
@@ -42,7 +41,6 @@ function Tabbar() {
   };
 
   const DaengIconHandler = () => {
-    // if (!accessToken) {
     if (!refreshToken) {
       return navigate('/login');
     }
@@ -50,7 +48,6 @@ function Tabbar() {
   };
 
   const ProfileIconHandler = () => {
-    // if (!accessToken) {
     if (!refreshToken) {
       return navigate('/login');
     }
