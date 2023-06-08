@@ -110,6 +110,7 @@ function KakaoAuthCheck() {
     } catch (error) {
       setTimeout(() => {
         setIsLoading(false);
+        console.log('error >>>', error);
         navigate('/login', {
           state: {
             error,

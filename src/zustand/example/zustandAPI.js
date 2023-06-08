@@ -90,6 +90,27 @@ export const useFooterLayout = create(
 )
 
 
+const inputStore = set => ({
+  initialComment: null,
+  changeInitialVal: e => {
+    set(() => ({
+      initialComment: e.target.value,
+    }));
+  },
+  onClearInitialVal: () => {
+    set(() => ({ initialComment: null }));
+  },
+  // changeInitialVal: e => {
+  //   set(prev => ({
+  //     initialVal: { ...prev.initialVal, [e.target.name]: e.target.value },
+  //   }));
+  // },
+});
+export const InputStore = create(
+  process.env.NODE_ENV === 'development' ? devtools(inputStore) : inputStore,
+);
+
+
 /* -------------------------------------------------- */
 
 

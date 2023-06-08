@@ -39,9 +39,8 @@ export const searchListStore = create((set, get) => ({
 }));
 
 function Input() {
-  const { word, onWordChanger, setSearchList } = searchListStore(
+  const { onWordChanger, setSearchList } = searchListStore(
     state => ({
-      word: state.word,
       onWordChanger: state.onWordChanger,
       setSearchList: state.setSearchList,
       // onTextRef: state.onTextRef,
@@ -60,7 +59,6 @@ function Input() {
   return (
     <div className='-translate-x-2'>
       <input
-        value={word}
         onChange={onWordChanger}
         placeholder='검색내용을 입력하세요'
         className='w-64'

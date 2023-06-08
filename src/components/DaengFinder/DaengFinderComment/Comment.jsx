@@ -2,18 +2,20 @@
 import React, { useState } from 'react';
 import { IoMdLock } from 'react-icons/io';
 // import { create } from 'zustand';
+import { useParams } from 'react-router-dom';
 import Badge from '../../../assets/images/Badge1.svg';
+import { ReactComponent as CommentLocker } from '../../../assets/images/CommentLocker.svg';
 import { ReactComponent as Ddaeng } from '../../../assets/images/Ddaeng.svg';
 import { ReactComponent as Cancel } from '../../../assets/images/XSmallButton.svg';
 import { dateConvert2 } from '../../../utils/DateConvert';
-import { ReactComponent as CommentLocker } from '../../../assets/images/CommentLocker.svg';
 
 // const modalStore = create(set => ({
 //   closModal: () => set(() => ({})),
 // }));
 
-function Comment({ cmt, enlargePhoto, onReplyMode, myId }) {
+function Comment({ cmt, enlargePhoto, onReplyMode }) {
   const [editMode, setEditMode] = useState(false);
+
   /**
    * @description 가져온 comment의 userId와 내 accessToken의 userId가 일치하는지 확인한다.
    * 일치하면 비밀댓글을 볼 수 있게 설정.
@@ -22,6 +24,7 @@ function Comment({ cmt, enlargePhoto, onReplyMode, myId }) {
    * 근데 만약 새로고침 할 경우? private 변수는 휘발. local은 살아남음.
    * 액세스 토큰에 내 userId가 있음. 그걸 디코드 해서 비교해야 함.
    * 어쨌든 서버에서 액세스 토큰을 채워줬을 때 (status 203이면 interceptor 해서 다시 보내도록 해야 함.)
+   * @requires 포스트 작성자 postOwnerId랑 myId가 같으면 다 볼 수 있음.
    */
   /* 포스트 주인 userId가 10이라고 가정. 포스트 주인은 userId에 상관없이 다 볼 수 있음. */
   /* 나는 제 3자 */
@@ -37,6 +40,12 @@ function Comment({ cmt, enlargePhoto, onReplyMode, myId }) {
     isPrivate,
   } = cmt;
 
+  const params = useParams();
+  const postId = parseInt(params?.postId, 10); // string -> number
+  const postOwnerId = parseInt(params?.postOwnerId, 10); // string -> number
+  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10);
+  const userId = parseInt(UserId, 10);
+
   const openEditMode = () => {
     setEditMode(true);
   };
@@ -45,11 +54,9 @@ function Comment({ cmt, enlargePhoto, onReplyMode, myId }) {
     setEditMode(false);
   };
 
-  const userId = parseInt(UserId, 10);
-
   return (
     <div>
-      {isPrivate && userId !== myId ? (
+      {isPrivate && userId !== myId && postOwnerId !== myId ? (
         <div className='relative f-fr-ic gap-4 px-10 py-6 border-b border-solid bg-[#F6F6F6] text-xl text-[#525252] leading-6 font-medium'>
           <CommentLocker className='-translate-y-[0.1rem]' />
           비밀댓글입니다.

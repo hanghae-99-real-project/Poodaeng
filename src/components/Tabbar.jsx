@@ -2,8 +2,8 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Cookies from 'js-cookie';
-import { useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+// import { useSelector } from 'react-redux';
 import { ReactComponent as PooBox } from '../assets/images/Poobox.svg';
 import { ReactComponent as HomeIcon } from '../assets/images/home.svg';
 import { ReactComponent as MapIcon } from '../assets/images/Map.svg';
@@ -12,8 +12,8 @@ import { ReactComponent as ProfileIcon } from '../assets/images/myprofile.svg';
 
 function Tabbar() {
   const navigate = useNavigate();
-  const { accessToken } = useSelector(store => store.auth);
-  // const refreshToken = Cookies.get('refreshToken');
+  // const { accessToken } = useSelector(store => store.auth);
+  const refreshToken = Cookies.get('refreshToken');
   const HomeIconHandler = () => {
     navigate('/');
   };
@@ -34,21 +34,24 @@ function Tabbar() {
   /* functional state update 함수형 업데이트 => 이전 state를 기억(stale closure를 방지) */
 
   const PooPostIconHandler = () => {
-    if (!accessToken) {
+    // if (!accessToken) {
+    if (!refreshToken) {
       return navigate('/login');
     }
     navigate('/poopost');
   };
 
   const DaengIconHandler = () => {
-    if (!accessToken) {
+    // if (!accessToken) {
+    if (!refreshToken) {
       return navigate('/login');
     }
     navigate('/daengfinder');
   };
 
   const ProfileIconHandler = () => {
-    if (!accessToken) {
+    // if (!accessToken) {
+    if (!refreshToken) {
       return navigate('/login');
     }
     navigate('/mypage');

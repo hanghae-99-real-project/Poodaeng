@@ -3,7 +3,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import LoginSocial from '../components/LoginSocial';
 import LogoutTest from '../components/LogoutTest';
-import AuthCheck from '../pages/AuthCheck';
+import AuthCheck from '../pages/KakaoAuthCheck';
 import CompletePage from '../pages/CompletePage';
 import DaengFinder from '../pages/DaengFinder';
 import DaengFinderCommentPage from '../pages/DaengFinderCommentPage';

@@ -143,10 +143,11 @@ function LinkFooter() {
         <div className='f-fr gap-6 w-fit flex-wrap h-5'>
           <Comment
             className='cursor-pointer'
-            onClick={() =>
-              navigate(`/daengfinder/comment/${postId}`, {
-                state: { postOwnerId: userId },
-              })
+            onClick={
+              () => navigate(`/daengfinder/detail/${userId}/comment/${postId}`)
+              // navigate(`/daengfinder/detail/${userId}/comment/${postId}`, {
+              //   state: { postOwnerId: userId },
+              // })
             }
           />
           <Clip onClick={clipHandler} cursor-pointer />

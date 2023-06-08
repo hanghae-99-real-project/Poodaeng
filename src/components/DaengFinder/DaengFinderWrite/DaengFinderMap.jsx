@@ -51,12 +51,21 @@ function DaengFinderMap({ latlng, setLatLng }) {
   // lazy 업데이트 하기
   if (isLoading) {
     // console.log('로딩 중');
-    return <Loading />;
+    return (
+      /** @absolute inset0으로 잡아야 하나? */
+      <div className='f-ic-jc w-full h-full'>
+        <Loading />
+      </div>
+    );
   }
 
   if (isError) {
     console.log(error);
-    return <Loading />;
+    return (
+      <div className='f-ic-jc w-full h-full'>
+        <Loading />
+      </div>
+    );
   }
   // console.log('DaengFinder full data >>>', data);
   // console.log(

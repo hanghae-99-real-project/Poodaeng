@@ -8,8 +8,8 @@ const accesstoken = JSON.parse(localStorage.getItem("accessToken"))
 
 const axiosToken = axios.create({
     baseURL: `${process.env.REACT_APP_SERVER_URL}`,
-    timeout: 10000,
-    timeoutErrorMessage: "Request Timeout",
+    // timeout: 10000,
+    // timeoutErrorMessage: "Request Timeout",
 });
 // instance.defaults.headers.common.Authorization = rfToken
 // instance.defaults.headers = rfToken
@@ -17,6 +17,7 @@ const axiosToken = axios.create({
 
 axiosToken.interceptors.request.use(
   (config) => {
+    console.log('보낼 때 config headers >>> ', config.headers)
     config.headers.refreshtoken = refreshtoken;
     config.headers.accesstoken = `Bearer ${accesstoken}`;
     // config.data = // request body 를 의미함
@@ -30,20 +31,24 @@ axiosToken.interceptors.request.use(
     // do something with request error before error reporting
     console.log('axios interceptor request error >>>', error);
     return Promise.reject(error);
+    // await Promise.reject(error);
+    // throw Error(error);
+    // throw error;
   }
 )
 
 axiosToken.interceptors.response.use(
   async(response) => {
+    console.log('status 203 아닌데 resolve인 경우 >>>',response)
     if(response.status === 203){
       console.log('axios interceptor response data depth check >>> ', response);
-      const accessToken = response.data.newAccessToken;
-      const newAccessToken = JSON.stringify(accessToken);
+      const acToken = await response.data.newAccessToken;
+      const newAccessToken = JSON.stringify(acToken);
       localStorage.setItem("accessToken", newAccessToken);
       /**
        * @description should approach[attach] 'config' manually if you're retrying.
        */
-      response.config.headers.accesstoken = `Bearer ${accessToken}`;
+      response.config.headers.accesstoken = `Bearer ${acToken}`;
       const retryResponse = await axios.request(response.config);
       return retryResponse;
     }
@@ -52,9 +57,12 @@ axiosToken.interceptors.response.use(
   (error) => {
     console.log('axios interceptor response error >>>', error);
     /**
-     * @description 리프래쉬 토큰도 만료되고 액세스 토큰도 만료되는 경우의 로직을 짜야 함.
+     * @description 리프래쉬 토큰도 만료되고 [액세스 토큰도] 만료되는 경우의 로직을 짜야 함.
      */
     return Promise.reject(error);
+    //  Promise.reject(error);
+    // throw Error(error);
+    // throw error;
   }
 )
 
