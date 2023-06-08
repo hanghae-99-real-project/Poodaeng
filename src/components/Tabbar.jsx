@@ -41,9 +41,6 @@ function Tabbar() {
   };
 
   const DaengIconHandler = () => {
-    if (!refreshToken) {
-      return navigate('/login');
-    }
     navigate('/daengfinder');
   };
 
