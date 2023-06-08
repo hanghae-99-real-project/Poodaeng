@@ -3,12 +3,12 @@
 /* eslint-disable import/prefer-default-export */
 import axios from "axios";
 import Cookies from "js-cookie";
-import axiosToken from "./axiosToken"
+// import axiosToken from "./axiosToken"
 
 // 푸박스 등록
 const addPooBox = async (data) => {
-  // const refreshtoken = Cookies.get('refreshToken'); 
-  // const { accessToken } = data;
+  const refreshtoken = Cookies.get('refreshToken'); 
+  const accesstoken = JSON.parse(localStorage.getItem("accessToken"))
 
   // console.log('refreshtoken',refreshtoken)
   // console.log('accessToken',accessToken)
@@ -24,13 +24,13 @@ const addPooBox = async (data) => {
   
   const config = {
     headers: { 
-      // "accesstoken": `Bearer ${accessToken}`,
-      // "refreshtoken": refreshtoken,
+      "accesstoken": `Bearer ${accesstoken}`,
+      "refreshtoken": refreshtoken,
       "content-type" : "multipart/form-data"
     }
   };
-  // const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/map/poo`, formData, config);
-  const response = await axiosToken.post('/api/map/poo', formData, config);
+  const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/map/poo`, formData, config);
+  // const response = await axiosToken.post('/api/map/poo', formData, config);
   console.log(response)
   return response;
 };
