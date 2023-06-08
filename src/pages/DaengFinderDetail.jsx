@@ -127,6 +127,8 @@ function DaengFinderDetail() {
   const imageList = data?.data?.data?.lostPhotoUrl;
   const lostLatitude = data?.data?.data?.lostLatitude;
   const lostLongitude = data?.data?.data?.lostLongitude;
+  const nickname = data?.data?.data?.nickname;
+  const createdAt = data?.data?.data?.createdAt;
 
   return (
     <div className='h-full w-full'>
@@ -171,7 +173,7 @@ function DaengFinderDetail() {
       <div className='bg-[#FFFFFF] px-5 h-[25rem] overflow-y-scroll'>
         <div className='f-fr text-xl font-semibold gap-2 border-b border-solid border-[#ECECEC] py-5'>
           <Badge />
-          닉네임
+          {nickname}
         </div>
         <div className='py-4'>
           <div className='text-xl font-semibold pb-3'>
@@ -214,7 +216,8 @@ function DaengFinderDetail() {
               // getMarkerPosition={getMarkerPosition}
             />
             <div className='pt-5 f-fr gap-2 parent font-medium text-xs text-[#969696]'>
-              <span>2023.05.03</span>
+              {/* <span>2023.05.03</span> */}
+              <span>{dateConvert2(createdAt)[2]}</span>
               <span>|</span>
               <span>조회 34 회</span>
             </div>
