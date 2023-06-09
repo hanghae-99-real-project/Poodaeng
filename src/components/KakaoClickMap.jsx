@@ -1,4 +1,3 @@
-// KakaoClickMap.js
 import React, { useEffect, useRef } from 'react';
 
 function KakaoClickMap({ onMapClick }) {
@@ -14,20 +13,22 @@ function KakaoClickMap({ onMapClick }) {
 
     const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
 
+    const markerImage = new kakao.maps.MarkerImage(
+      './images/points.png',
+      new kakao.maps.Size(22, 32),
+    );
+
     const marker = new kakao.maps.Marker({
       position: map.getCenter(),
+      image: markerImage, // 새로운 마커 이미지 적용
     });
     marker.setMap(map);
 
     const onClick = mouseEvent => {
       const latlng = mouseEvent.latLng;
       marker.setPosition(latlng);
-
-      // 부모 컴포넌트의 상태를 업데이트합니다.
       onMapClick(latlng);
-
       const message = '';
-
       const resultDiv = document.getElementById('clickLatlng');
       resultDiv.innerHTML = message;
     };
@@ -50,4 +51,5 @@ function KakaoClickMap({ onMapClick }) {
     </div>
   );
 }
+
 export default KakaoClickMap;
