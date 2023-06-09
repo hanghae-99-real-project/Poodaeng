@@ -51,7 +51,7 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
   // const childComment = data.data?.childCommentsData?.childComment;
   // const createdAt = data.data?.childCommentsData?.createdAt;
 
-  const openEditMode = (childCommentId, UserId) => {
+  const openEditMode = (childCommentId, UserId, isPrivate) => {
     console.log('type check', typeof childCommentId);
     setEditMode(prev => ({
       ...prev,
@@ -61,6 +61,7 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
       commentId,
       userId: UserId,
       childCommentId,
+      absolutePrivate: isPrivate,
     }));
   };
 
@@ -135,7 +136,11 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
                     // className='w-1 h-5'
                     className='w-2 h-5 cursor-pointer'
                     onClick={() =>
-                      openEditMode(reply.childCommentId, reply.UserId)
+                      openEditMode(
+                        reply.childCommentId,
+                        reply.UserId,
+                        reply.isPrivate,
+                      )
                     }
                   />
                 </div>
