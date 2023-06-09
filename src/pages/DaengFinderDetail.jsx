@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 import { searchPostLostDetail } from '../api/daengFinder';
 import { ReactComponent as Badge } from '../assets/images/Badge1.svg';
@@ -26,17 +26,24 @@ function DaengFinderDetail() {
     lostLatitude: 0,
     lostLongitude: 0,
   });
-  const { onModal, modalComment, getPostId, getUserId, getBookmarkState } =
-    useClipStore(
-      state => ({
-        onModal: state.onModal,
-        modalComment: state.modalComment,
-        getPostId: state.getPostId,
-        getUserId: state.getUserId,
-        getBookmarkState: state.getBookmarkState,
-      }),
-      shallow,
-    );
+  const {
+    onModal,
+    modalComment,
+    setClipAddress,
+    getPostId,
+    getUserId,
+    getBookmarkState,
+  } = useClipStore(
+    state => ({
+      onModal: state.onModal,
+      modalComment: state.modalComment,
+      setClipAddress: state.setClipAddress,
+      getPostId: state.getPostId,
+      getUserId: state.getUserId,
+      getBookmarkState: state.getBookmarkState,
+    }),
+    shallow,
+  );
 
   /**
    * @checkPoint
@@ -51,6 +58,9 @@ function DaengFinderDetail() {
     shallow,
   );
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log('location >>>', location);
+
   const params = useParams();
   /**
    * @description {postId} 얘 문자형 숫자임.
@@ -87,6 +97,7 @@ function DaengFinderDetail() {
 
   useEffect(() => {
     SwitchFooter(true);
+    setClipAddress(location.pathname);
   }, []);
 
   const { isLoading, data, isError, error } = useQuery(
@@ -113,12 +124,20 @@ function DaengFinderDetail() {
   /** @checkPoint return문 없어도(순차적인 렌더링 없이) query 적용되는지 확인해보자. */
   if (isLoading) {
     console.log('isLoading >>> ');
-    return <Loading />;
+    return (
+      <div className='f-ic-jc w-full h-full'>
+        <Loading />
+      </div>
+    );
   }
 
   if (isError) {
     console.log('error >>> ', error);
-    return <Loading />;
+    return (
+      <div className='f-ic-jc w-full h-full'>
+        <Loading />
+      </div>
+    );
   }
 
   /** @camelCase 아닌 게 많다. 조심. */
@@ -133,7 +152,7 @@ function DaengFinderDetail() {
   return (
     <div className='h-full w-full'>
       <IoIosArrowBack
-        className='absolute z-30 top-7 left-4 text-xl'
+        className='absolute z-30 top-7 left-4 text-xl cursor-pointer'
         onClick={() => navigate('/daengfinder')}
       />
       <div className={`fixed inset-0 z-30 ${onModal ? '' : 'hidden'}`}>
@@ -147,79 +166,82 @@ function DaengFinderDetail() {
           </div>
         </div>
       </div>
-      <div className='flex items-center justify-center relative w-full h-80'>
-        <div className='absolute bottom-3 f-fr-jc gap-3'>
-          {daengList.length &&
-            daengList.map((_, idx) => {
-              return (
-                <input
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={idx}
-                  type='button'
-                  className={`w-2 h-2 rounded-full ${
-                    activeBtn === idx ? 'bg-[#FFFFFF]' : 'bg-[#B3B3B3]'
-                  } cursor-pointer transition duration-150 `}
-                  onClick={() => imageHandler(idx)}
-                />
-              );
-            })}
+      <div className='w-full h-[45rem] overflow-y-scroll'>
+        <div className='flex items-center justify-center relative w-full h-80'>
+          <div className='absolute bottom-3 f-fr-jc gap-3'>
+            {daengList.length &&
+              daengList.map((_, idx) => {
+                return (
+                  <input
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={idx}
+                    type='button'
+                    className={`w-2 h-2 rounded-full ${
+                      activeBtn === idx ? 'bg-[#FFFFFF]' : 'bg-[#B3B3B3]'
+                    } cursor-pointer transition duration-150 `}
+                    onClick={() => imageHandler(idx)}
+                  />
+                );
+              })}
+          </div>
+          <img
+            src={daeng}
+            alt='photoThumb'
+            className='object-cover w-full h-full'
+          />
         </div>
-        <img
-          src={daeng}
-          alt='photoThumb'
-          className='object-cover w-full h-full'
-        />
-      </div>
-      <div className='bg-[#FFFFFF] px-5 h-[25rem] overflow-y-scroll'>
-        <div className='f-fr text-xl font-semibold gap-2 border-b border-solid border-[#ECECEC] py-5'>
-          <Badge />
-          {nickname}
-        </div>
-        <div className='py-4'>
-          <div className='text-xl font-semibold pb-3'>
-            {data?.data?.data.title}
+        {/* <div className='bg-[#FFFFFF] px-5 h-[25rem] overflow-y-scroll'> */}
+        <div className='bg-[#FFFFFF] px-5 '>
+          <div className='f-fr text-xl font-semibold gap-2 border-b border-solid border-[#ECECEC] py-5'>
+            <Badge />
+            {nickname}
           </div>
-          <div className='f-fc gap-2'>
-            <p className='text-xs font-bold'>
-              반려동물 이름
-              <span className='pl-3 font-medium text-xs text-[#515151]'>
-                {data?.data?.data.dogname}
-              </span>
-            </p>
-            <p className='text-xs font-bold'>
-              실종 위치{' '}
-              <span className='pl-2 font-medium text-xs text-[#515151]'>
-                {data?.data?.data.address}
-              </span>
-            </p>
-            <p className='text-xs font-bold'>
-              실종 시각{' '}
-              <span className='pl-2 font-medium text-xs text-[#515151]'>
-                {dateConvert2(data?.data?.data.createdAt)[1]}
-              </span>
-            </p>
-          </div>
-          <div className='pt-5'>
-            <p className='font-medium text-xs leading-5 text-[#8C8C8C]'>
-              {data.data.data.content}
-            </p>
-          </div>
-          <div className='pt-5'>
-            <label className='text-xs font-bold mb-2'>상세위치</label>
-            <KakaoMap
-              width='w-80'
-              height='h-36'
-              rounded='rounded-sm'
-              lat={lostLatitude}
-              lng={lostLongitude}
-              getMarkerPosition={setMarkerPosition}
-              // getMarkerPosition={getMarkerPosition}
-            />
-            <div className='pt-5 f-fr gap-2 parent font-medium text-xs text-[#969696]'>
-              {/* <span>2023.05.03</span> */}
-              <span>{dateConvert2(createdAt)[2]}</span>
-              <span>|</span>
-              <span>조회 34 회</span>
+          <div className='py-4'>
+            <div className='text-xl font-semibold pb-3'>
+              {data?.data?.data.title}
+            </div>
+            <div className='f-fc gap-2'>
+              <p className='text-xs font-bold'>
+                반려동물 이름
+                <span className='pl-3 font-medium text-xs text-[#515151]'>
+                  {data?.data?.data.dogname}
+                </span>
+              </p>
+              <p className='text-xs font-bold'>
+                실종 위치{' '}
+                <span className='pl-2 font-medium text-xs text-[#515151]'>
+                  {data?.data?.data.address}
+                </span>
+              </p>
+              <p className='text-xs font-bold'>
+                실종 시각{' '}
+                <span className='pl-2 font-medium text-xs text-[#515151]'>
+                  {dateConvert2(data?.data?.data.createdAt)[1]}
+                </span>
+              </p>
+            </div>
+            <div className='pt-5'>
+              <p className='font-medium text-xs leading-5 text-[#8C8C8C]'>
+                {data.data.data.content}
+              </p>
+            </div>
+            <div className='pt-5'>
+              <label className='text-xs font-bold mb-2'>상세위치</label>
+              <KakaoMap
+                width='w-80'
+                height='h-36'
+                rounded='rounded-sm'
+                lat={lostLatitude}
+                lng={lostLongitude}
+                getMarkerPosition={setMarkerPosition}
+                // getMarkerPosition={getMarkerPosition}
+              />
+              <div className='pt-5 f-fr gap-2 parent font-medium text-xs text-[#969696]'>
+                {/* <span>2023.05.03</span> */}
+                <span>{dateConvert2(createdAt)[2]}</span>
+                <span>|</span>
+                <span>조회 34 회</span>
+              </div>
             </div>
           </div>
         </div>

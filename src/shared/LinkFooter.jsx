@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import React from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import { useNavigate } from 'react-router-dom';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
@@ -18,6 +19,7 @@ const store = (set, get) => ({
   modalComment: '',
   postId: null,
   userId: null,
+  url: 'https://front-end-fork-vegatality.vercel.app',
   // refreshToken: Cookies.get('refreshToken'),
   // accessToken: null,
   // setAccessToken: (accessToken) => {
@@ -39,6 +41,9 @@ const store = (set, get) => ({
     set(() => ({
       isBookmark,
     }));
+  },
+  setClipAddress: clipAddress => {
+    set({ url: `https://front-end-fork-vegatality.vercel.app${clipAddress}` });
   },
   onClipBoard: () => {
     // set(preState => ({ isClipped: !preState.isClipped }));
@@ -109,6 +114,7 @@ function LinkFooter() {
     postId,
     userId,
     isBookmark,
+    url,
     onClipBoard,
     onCancelBookmark,
     onBookmark,
@@ -117,6 +123,7 @@ function LinkFooter() {
       postId: state.postId,
       userId: state.userId,
       isBookmark: state.isBookmark,
+      url: state.url,
       onClipBoard: state.onClipBoard,
       onCancelBookmark: state.onCancelBookmark,
       onBookmark: state.onBookmark,
@@ -141,6 +148,10 @@ function LinkFooter() {
     <div className='relative bottom-0 z-50 w-full h-24 pt-3 px-5 border-t border-solid shadow-md'>
       <div className='f-fr-ic justify-between flex-wrap'>
         <div className='f-fr gap-6 w-fit flex-wrap h-5'>
+          <CopyToClipboard text={url} onCopy={clipHandler}>
+            <Clip className='cursor-pointer' />
+            {/* <Clip onClick={clipHandler} className='cursor-pointer' /> */}
+          </CopyToClipboard>
           <Comment
             className='cursor-pointer'
             onClick={
@@ -150,7 +161,6 @@ function LinkFooter() {
               // })
             }
           />
-          <Clip onClick={clipHandler} cursor-pointer />
         </div>
         <Bookmark
           className={`${isBookmark && 'fill-[#C699F4]'} cursor-pointer`}

@@ -575,6 +575,14 @@ function DaengFinderCommentPage() {
       ...prev,
       editModal: false,
     }));
+
+    if (
+      isEditMode.editMode &&
+      isEditMode.targetComment &&
+      isEditMode.contents
+    ) {
+      changeInitialVal(isEditMode.contents);
+    }
   };
 
   const controllLockButton = () => {
@@ -873,13 +881,6 @@ function DaengFinderCommentPage() {
             // placeholder={`${modeInfo}을 입력해주세요`}
             placeholder='댓글을 입력해주세요'
             name='comment'
-            defaultValue={
-              isEditMode.editMode &&
-              isEditMode.targetComment &&
-              isEditMode.contents
-                ? isEditMode.contents
-                : ''
-            }
             value={initialComment}
             onChange={e => changeInitialVal(e.target.value)}
           />
@@ -903,26 +904,26 @@ function DaengFinderCommentPage() {
               <>
                 {isEditMode.targetComment && (
                   <div
-                    className='f-ic-jc py-6 pt-8 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5'
+                    className='f-ic-jc py-6 pt-8 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'
                     onClick={onEditCommentMode}
                   >
                     수정하기
                   </div>
                 )}
                 <div
-                  className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5'
+                  className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'
                   onClick={deleteCommentReply}
                 >
                   삭제하기
                 </div>
               </>
             ) : (
-              <div className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5'>
+              <div className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'>
                 신고하기
               </div>
             )}
             <div
-              className='f-ic-jc py-6 pb-8 border-b border-solid text-white bg-mainColor'
+              className='f-ic-jc py-6 pb-8 border-b border-solid text-white bg-mainColor cursor-pointer'
               onClick={resetFunc}
             >
               취소

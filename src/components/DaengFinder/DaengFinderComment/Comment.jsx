@@ -136,7 +136,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
                 </div>
               </div>
             )} */}
-            <Ddaeng className='w-2 h-5' onClick={openEditMode} />
+            <Ddaeng className='w-2 h-5 cursor-pointer' onClick={openEditMode} />
           </div>
           <div className='f-fc gap-1 pl-10'>
             {commentPhotoUrl && (
@@ -145,7 +145,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
                   role='none'
                   src={`${commentPhotoUrl}`}
                   alt='photoThumb'
-                  className='image rounded-xl shadow-md'
+                  className='image rounded-xl shadow-md cursor-pointer'
                   onClick={enlargePhoto}
                 />
               </div>

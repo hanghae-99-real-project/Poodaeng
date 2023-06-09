@@ -129,7 +129,7 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
                   )} */}
                   <Ddaeng
                     // className='w-1 h-5'
-                    className='w-2 h-5'
+                    className='w-2 h-5 cursor-pointer'
                     onClick={() =>
                       openEditMode(reply.childCommentId, reply.UserId)
                     }

@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useCurrentLocation from '../hooks/useCurrentLocation';
+import { ReactComponent as Marker } from '../assets/images/MarkerPurple.svg';
 
 function KakaoMap({
   width,
@@ -15,6 +16,7 @@ function KakaoMap({
   lng,
   getMarkerPosition,
   clickable,
+  draggable,
 }) {
   const [message, setMessage] = useState(false);
   // const [address, setAddress] = useState('');
@@ -74,7 +76,7 @@ function KakaoMap({
        */
       const markerOptions = {
         position: new window.kakao.maps.LatLng(latitude, longitude),
-        draggable: clickable,
+        draggable,
         map,
       };
       const marker = new window.kakao.maps.Marker(markerOptions);
