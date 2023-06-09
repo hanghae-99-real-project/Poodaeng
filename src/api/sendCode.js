@@ -1,4 +1,5 @@
 import axios from "axios"
+import axiosToken from "./axiosToken"
 
 const sendCodeNumber = async (inputs) => {
   try {
@@ -27,4 +28,10 @@ const signIn = async (inputs) => {
   return response
 }
 
-export {sendCodeNumber , validateCodeNumber, signUp, signIn}
+const signOut = async () => {
+  console.log(1)
+  const response = await axiosToken.delete(`${process.env.REACT_APP_SERVER_URL}/api/auth/logout`)
+  console.log(response)
+  return response
+}
+export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut}
