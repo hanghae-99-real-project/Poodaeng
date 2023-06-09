@@ -43,7 +43,9 @@ const store = (set, get) => ({
     }));
   },
   setClipAddress: clipAddress => {
-    set({ url: `https://front-end-fork-vegatality.vercel.app${clipAddress}` });
+    set(() => ({
+      url: `https://front-end-fork-vegatality.vercel.app${clipAddress}`,
+    }));
   },
   onClipBoard: () => {
     // set(preState => ({ isClipped: !preState.isClipped }));
