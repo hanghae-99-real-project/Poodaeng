@@ -12,7 +12,6 @@ import { ReactComponent as ProfileIcon } from '../assets/images/myprofile.svg';
 
 function Tabbar() {
   const navigate = useNavigate();
-  // const { accessToken } = useSelector(store => store.auth);
   const refreshToken = Cookies.get('refreshToken');
   const HomeIconHandler = () => {
     navigate('/');
@@ -55,23 +54,23 @@ function Tabbar() {
     <div className='relative left-0 bottom-0 border bg-[#FFFFFF] z-20'>
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
         <HomeIcon
-          className='fill-[#AEAEAE] hover:fill-mainColor w-10 h-10 mt-1'
+          className='fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1'
           onClick={HomeIconHandler}
         />
         <MapIcon
-          className='fill-[#AEAEAE] hover:fill-mainColor w-10 h-10 mt-1'
+          className='fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1'
           onClick={MapIconHandler}
         />
         <PooBox
-          className='fill-[#AEAEAE] hover:fill-mainColor w-10 h-10 mt-1'
+          className='fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1'
           onClick={PooPostIconHandler}
         />
         <DaengIcon
-          className='fill-[#AEAEAE] hover:fill-mainColor w-10 h-10 mt-1'
+          className='fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1'
           onClick={DaengIconHandler}
         />
         <ProfileIcon
-          className='fill-[#AEAEAE] hover:fill-mainColor w-10 h-10 mt-1'
+          className='fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1'
           onClick={ProfileIconHandler}
         />
       </div>
