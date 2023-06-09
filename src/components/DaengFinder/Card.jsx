@@ -28,7 +28,11 @@ function Card({ isDetail, data }) {
           }`}
         />
       </div>
-      <div className={`flex flex-col justify-center gap-2 `}>
+      <div
+        className={`flex flex-col justify-between ${isDetail && 'py-2'} ${
+          !isDetail && 'gap-1'
+        } `}
+      >
         <div className={`flex flex-col gap-1 ${isDetail && 'cursor-pointer'}`}>
           <h1 className='font-bold text-sm truncate'>{data.title}</h1>
           {isDetail ? (

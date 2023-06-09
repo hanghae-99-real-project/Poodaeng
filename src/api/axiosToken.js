@@ -8,7 +8,8 @@ let refreshtoken;
 let accesstoken; 
 
 const axiosToken = axios.create({
-    baseURL: `${process.env.REACT_APP_SERVER_URL}`,
+    baseURL: process.env.REACT_APP_SERVER_URL,
+    // baseURL: `${process.env.REACT_APP_SERVER_URL}`,
     // timeout: 10000,
     // timeoutErrorMessage: "Request Timeout",
 });
@@ -57,6 +58,7 @@ axiosToken.interceptors.response.use(
         const retryResponse = await axios.request(response.config);
         return retryResponse;
       } catch(error){
+        console.log('axios interceptor retry error >>>', error);
         return Promise.reject(error);
       }
     }

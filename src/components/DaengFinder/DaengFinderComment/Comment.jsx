@@ -13,8 +13,8 @@ import { dateConvert2 } from '../../../utils/DateConvert';
 //   closModal: () => set(() => ({})),
 // }));
 
-function Comment({ cmt, enlargePhoto, onReplyMode }) {
-  const [editMode, setEditMode] = useState(false);
+function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
+  // const [editMode, setEditMode] = useState(false);
 
   /**
    * @description 가져온 comment의 userId와 내 accessToken의 userId가 일치하는지 확인한다.
@@ -38,6 +38,7 @@ function Comment({ cmt, enlargePhoto, onReplyMode }) {
     comment,
     createdAt,
     isPrivate,
+    commentId,
   } = cmt;
 
   const params = useParams();
@@ -46,13 +47,42 @@ function Comment({ cmt, enlargePhoto, onReplyMode }) {
   const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10);
   const userId = parseInt(UserId, 10);
 
-  const openEditMode = () => {
-    setEditMode(true);
+  /** @description 누르면 답글 모드 */
+  const onReplyMode = () => {
+    setIsCommentMode(prev => ({
+      ...prev,
+      inputMode: true,
+      commentId,
+      targetComment: false,
+      absolutePrivate: isPrivate,
+    }));
   };
 
-  const closeEditMode = () => {
-    setEditMode(false);
+  // const [isEditMode, setEditMode] = useState({
+  //   editMode: false,
+  //   targetComment: true,
+  //   userId: null, // 댓글 단 사람의 UserId
+  //   commentId: null,
+  //   childCommentId: null,
+  //   contents: '',
+  // });
+
+  const openEditMode = () => {
+    setEditMode({
+      editMode: true,
+      editModal: true,
+      targetComment: true,
+      userId: UserId,
+      commentId,
+      childCommentId: null,
+      contents: comment,
+      absolutePrivate: isPrivate,
+    });
   };
+
+  // const closeEditMode = () => {
+  //   setEditMode(false);
+  // };
 
   return (
     <div>
@@ -71,18 +101,23 @@ function Comment({ cmt, enlargePhoto, onReplyMode }) {
         >
           <div className='f-fr-ic justify-between'>
             <div className='f-fr-ic gap-2'>
-              <div className='f-ic-jc rounded-full w-8 h-8 overflow-hidden'>
+              <div className='f-ic-jc rounded-full w-8 h-auto overflow-hidden'>
                 <img
                   className='image'
                   src={userPhoto || Badge}
                   alt='photoThumb'
                 />
               </div>
-              <h1 className='f-fr-ic font-semibold text-xl leading-6'>
-                {nickname} {isPrivate && <IoMdLock className='text-base' />}
+              <h1
+                className={`f-fr-ic font-semibold ${
+                  nickname.length > 3 ? 'text-base' : 'text-xl'
+                } leading-6`}
+              >
+                {nickname}{' '}
+                <div>{isPrivate && <IoMdLock className='text-base' />}</div>
               </h1>
             </div>
-            {editMode && (
+            {/* {editMode && (
               <div>
                 <div
                   role='none'
@@ -100,8 +135,8 @@ function Comment({ cmt, enlargePhoto, onReplyMode }) {
                   <div className='py-3 px-20'>삭제하기</div>
                 </div>
               </div>
-            )}
-            <Ddaeng className='w-1 h-5' onClick={openEditMode} />
+            )} */}
+            <Ddaeng className='w-2 h-5' onClick={openEditMode} />
           </div>
           <div className='f-fc gap-1 pl-10'>
             {commentPhotoUrl && (

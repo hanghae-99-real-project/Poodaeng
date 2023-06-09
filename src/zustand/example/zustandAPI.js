@@ -92,13 +92,13 @@ export const useFooterLayout = create(
 
 const inputStore = set => ({
   initialComment: null,
-  changeInitialVal: e => {
+  changeInitialVal: value => {
     set(() => ({
-      initialComment: e.target.value,
+      initialComment: value,
     }));
   },
   onClearInitialVal: () => {
-    set(() => ({ initialComment: null }));
+    set(() => ({ initialComment: '' }));
   },
   // changeInitialVal: e => {
   //   set(prev => ({

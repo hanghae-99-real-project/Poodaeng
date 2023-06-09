@@ -14,7 +14,9 @@ function LinkHeader({ children, icon, destination, setMapMode, feature }) {
           className='text-2xl box-border -translate-x-2'
           // onClick={() => navigate(destination)}
           onClick={
-            setMapMode ? () => setMapMode(false) : () => navigate(destination)
+            setMapMode
+              ? () => setMapMode(prev => !prev)
+              : () => navigate(destination)
           }
         />
       )}

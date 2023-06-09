@@ -49,9 +49,34 @@ function DaengFinderWritePage() {
   const mutation = useMutation(writePostLost, {
     onSuccess: data => {
       console.log('daengFinderWrite data>>> ', data);
+      onClearHandler();
+      setAlertMsg(true);
+      toast.success('개시글 작성 완료', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      for (let i = 0; i < image.preview.length; i++) {
+        URL.revokeObjectURL(image.preview[i]);
+      }
+      setImage({ photo: [], preview: [] });
     },
     onError: error => {
       console.log('daengFinderWrite error>>> ', error);
+      setAlertMsg(true);
+      toast.error('게시글 작성 실패', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     },
   });
 
@@ -175,6 +200,10 @@ function DaengFinderWritePage() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    console.log('렌더링 테스트');
+  }, [roadAddress]);
 
   // useEffect(() => {
   //   navigator.geolocation.getCurrentPosition(pos => {

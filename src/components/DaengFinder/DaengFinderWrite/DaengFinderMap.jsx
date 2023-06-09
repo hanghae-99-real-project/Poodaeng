@@ -1,6 +1,6 @@
 /* eslint-disable no-return-await */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { shallow } from 'zustand/shallow';
 import { ReactComponent as Marker } from '../../../assets/images/MarkerPurple.svg';
@@ -10,6 +10,7 @@ import { useLocationStore } from '../../../zustand/example/zustandAPI';
 import Loading from '../../common/Loading2';
 
 function DaengFinderMap({ latlng, setLatLng }) {
+  const [toggle, setToggle] = useState(true);
   // console.log('latlng >>>', latlng);
 
   // let currentPosition;
@@ -20,9 +21,11 @@ function DaengFinderMap({ latlng, setLatLng }) {
   //     // setLatLng({ lostLatitude: latitude, lostLongitude: longitude });
   //   });
 
-  const { setRoadAddress } = useLocationStore(
+  const { location, roadAddress, setRoadAddress } = useLocationStore(
     state => ({
       setRoadAddress: state.setRoadAddress,
+      roadAddress: state.roadAddress,
+      location: state.location,
     }),
     shallow,
   );
@@ -39,7 +42,7 @@ function DaengFinderMap({ latlng, setLatLng }) {
       onSuccess: d => {
         console.log(
           'onSuccess >>>',
-          d.data.documents[0].road_address.address_name,
+          d.data?.documents[0]?.road_address?.address_name,
         );
         setRoadAddress(d?.data?.documents[0]?.road_address?.address_name);
       },
@@ -48,6 +51,12 @@ function DaengFinderMap({ latlng, setLatLng }) {
       },
     },
   );
+
+  useEffect(() => {
+    console.log('road Address >>>', roadAddress);
+  }, [roadAddress, location, setRoadAddress]);
+
+  // useEffect(() => {});
   // lazy 업데이트 하기
   if (isLoading) {
     // console.log('로딩 중');
@@ -92,6 +101,7 @@ function DaengFinderMap({ latlng, setLatLng }) {
         height='h-full'
         rounded='rounded-sm'
         getMarkerPosition={setLatLng}
+        clickable
       />
       ;
     </div>

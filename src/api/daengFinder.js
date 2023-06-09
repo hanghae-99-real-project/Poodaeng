@@ -145,6 +145,26 @@ const writePostReply = async(inputs) => {
   return response
 }
 
+const editPostComment = async(inputs) => {
+  const { postId, commentId, comment } = inputs;
+  console.log('postId >>> ', postId)
+  console.log('commentId >>> ', commentId)
+  console.log('comment>>> ', comment)
+  const response = await axiosToken.put(`/api/lostposts/${postId}/comments/${commentId}`, comment)
+  return response
+}
 
-export { writePostLost, getPostLost, searchPostLost, searchPostLostDetail, bookMarkLostPost, getPostComment, getPostReply, writePostComment, writePostReply };
+const deletePostComment = async(inputs) => {
+  const {postId, commentId} = inputs;
+  const response = await axiosToken.delete(`/api/lostposts/${postId}/comments/${commentId}`)
+  return response
+}
+
+const deletePostReply = async(inputs) => {
+  const {postId, commentId, childCommentId} =inputs;
+  const response = await axiosToken.delete(`/api/lostposts/${postId}/comments/${commentId}/childcomments/${childCommentId}`)
+  return response
+}
+
+export { writePostLost, getPostLost, searchPostLost, searchPostLostDetail, bookMarkLostPost, getPostComment, getPostReply, writePostComment, writePostReply, editPostComment, deletePostComment, deletePostReply };
 

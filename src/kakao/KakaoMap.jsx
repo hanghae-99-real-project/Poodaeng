@@ -7,7 +7,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 
-function KakaoMap({ width, height, rounded, lat, lng, getMarkerPosition }) {
+function KakaoMap({
+  width,
+  height,
+  rounded,
+  lat,
+  lng,
+  getMarkerPosition,
+  clickable,
+}) {
   const [message, setMessage] = useState(false);
   // const [address, setAddress] = useState('');
   const mapContainer = useRef(null);
@@ -23,8 +31,10 @@ function KakaoMap({ width, height, rounded, lat, lng, getMarkerPosition }) {
   let error;
   if (!lat && !lng) {
     const result = useCurrentLocation(geoLocationOptions);
-    latitude = result?.location?.latitude + 0.00138377808305;
-    longitude = result?.location?.longitude + 0.0018242688706;
+    // latitude = result?.location?.latitude + 0.00138377808305  - 0.0130874588651;
+    // longitude = result?.location?.longitude + 0.0018242688706;
+    latitude = result?.location?.latitude + 0.00138377808305 - 0.0130874588651;
+    longitude = result?.location?.longitude + 0.0018242688706 - 0.009787794504;
     error = result.error;
   } else {
     latitude = lat;
@@ -64,10 +74,9 @@ function KakaoMap({ width, height, rounded, lat, lng, getMarkerPosition }) {
        */
       const markerOptions = {
         position: new window.kakao.maps.LatLng(latitude, longitude),
-        draggable: true,
+        draggable: clickable,
         map,
       };
-
       const marker = new window.kakao.maps.Marker(markerOptions);
       marker.setMap(map);
       /* marker는 ref 안 걸어도 될 듯? 나중에 지우던가 */
@@ -83,23 +92,49 @@ function KakaoMap({ width, height, rounded, lat, lng, getMarkerPosition }) {
 
       // 마커 드래그 이벤트 처리
       /* 여기 markerRef.current 안써도 되나? */
-      window.kakao.maps.event.addListener(marker, 'dragend', () => {
-        const newPosition = marker.getPosition(); // 마커의 새로운 위치 좌표 얻기
-        const newLatitude = newPosition.getLat();
-        const newLongitude = newPosition.getLng();
 
-        console.log('새로운 위치 좌표:', newLatitude, newLongitude);
-        if (getMarkerPosition) {
-          // getMarkerPosition(newLatitude, newLongitude);
-          getMarkerPosition(prev => ({
-            ...prev,
-            lostLatitude: newLatitude,
-            lostLongitude: newLongitude,
-          }));
-        }
-      });
+      // lostLatitude: 37.173418250702696, lostLongitude: 128.4753615726882
+      // lostLatitude: 37.186510178083054, lostLongitude: 128.4851522688706
+      // {lostLatitude: 37.1734227194403, lostLongitude: 128.47536447436661}
+      if (clickable) {
+        window.kakao.maps.event.addListener(map, 'click', mouseEvent => {
+          const newLatLng = mouseEvent.latLng;
+          marker.setPosition(newLatLng);
+          const newPosition = marker.getPosition(); // 마커의 새로운 위치 좌표 얻기
+          const newLatitude = newPosition.getLat();
+          const newLongitude = newPosition.getLng();
+          // marker.setPosition(newLatitude, newLongitude);
+
+          console.log('새로운 위치 좌표:', newLatitude, newLongitude);
+          if (getMarkerPosition) {
+            // getMarkerPosition(newLatitude, newLongitude);
+            getMarkerPosition(prev => ({
+              ...prev,
+              lostLatitude: newLatitude,
+              lostLongitude: newLongitude,
+            }));
+          }
+        });
+
+        // window.kakao.maps.event.addListener(marker, 'dragend', () => {
+        //   const newPosition = marker.getPosition(); // 마커의 새로운 위치 좌표 얻기
+        //   const newLatitude = newPosition.getLat();
+        //   const newLongitude = newPosition.getLng();
+        //   marker.setPosition(newLatitude, newLongitude);
+
+        //   console.log('새로운 위치 좌표:', newLatitude, newLongitude);
+        //   if (getMarkerPosition) {
+        //     // getMarkerPosition(newLatitude, newLongitude);
+        //     getMarkerPosition(prev => ({
+        //       ...prev,
+        //       lostLatitude: newLatitude,
+        //       lostLongitude: newLongitude,
+        //     }));
+        //   }
+        // });
+      }
     }
-  }, [latitude, longitude, getMarkerPosition]);
+  }, [latitude, longitude, getMarkerPosition, markerRef]);
 
   return (
     <>
