@@ -53,7 +53,7 @@ function Mypagecomponent() {
               프로필 설정하기
             </div>
             <div className='large-button flex items-center text-lg cursor-pointer'>
-              이용 안내
+              로그 아웃
             </div>
           </div>
           <div className='mt-40'>
