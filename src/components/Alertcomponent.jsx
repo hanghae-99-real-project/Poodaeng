@@ -16,13 +16,13 @@ function Alertcomponent() {
       </Headers>
       <div className='h-5/6'>
         <div
-          className={`flex border ml-[10px] my-[10px] mr-[10px] p-[19px] rounded-[6px] 
+          className={`flex border ml-3 my-3 mr-3 p-5 rounded-md 
         ${backColor ? 'bg-[#FFFFFF]' : 'bg-[#D9D9D9]'}`}
           onClick={onClickHandler}
           role='none'
         >
           <img
-            className='flex bg-cover w-[43px] h-[43px] border rounded-full mr-[10px]'
+            className='flex bg-cover w-11 h-11 border rounded-full mr-3'
             src='https://img2.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202008/17/newsen/20200817160051331jsfk.jpg'
             alt='pt'
           />
