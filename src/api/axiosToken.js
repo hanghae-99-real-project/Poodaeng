@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import axios from "axios";
 import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 
 
 let refreshtoken; 
@@ -49,6 +50,9 @@ axiosToken.interceptors.response.use(
       const acToken = await response.data.newAccessToken;
       const newAccessToken = JSON.stringify(acToken);
       localStorage.setItem("accessToken", newAccessToken);
+      const decodedAcToken = await jwtDecode(acToken);
+      const { userId } = decodedAcToken;
+      localStorage.setItem('userId', JSON.stringify(userId));
       accesstoken = await acToken;
       /**
        * @description should approach[attach] 'config' manually if you're retrying.

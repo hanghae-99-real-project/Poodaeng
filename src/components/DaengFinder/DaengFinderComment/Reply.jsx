@@ -5,9 +5,9 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { getPostReply } from '../../../api/daengFinder';
 import { ReactComponent as Arrow } from '../../../assets/images/ArrowCurve.svg';
-import { ReactComponent as Badge } from '../../../assets/images/Badge1.svg';
 import { ReactComponent as CommentLocker } from '../../../assets/images/CommentLocker.svg';
 import { ReactComponent as Ddaeng } from '../../../assets/images/Ddaeng.svg';
+import Badge from '../../../assets/images/Badge1.svg';
 import { dateConvert2 } from '../../../utils/DateConvert';
 
 function Reply({ commentId, onReplyMode, setEditMode }) {
@@ -83,13 +83,17 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
             return reply.isPrivate &&
               reply.UserId !== myId &&
               postOwnerId !== myId ? (
-              <div className='relative f-fr-ic gap-4 py-6 px-6 pl-12 border-b border-solid bg-[#F6F6F6] text-[#525252] text-base font-medium leading-4'>
+              <div
+                key={reply.childCommentId}
+                className='relative f-fr-ic gap-4 py-6 px-6 pl-12 border-b border-solid bg-[#F6F6F6] text-[#525252] text-base font-medium leading-4'
+              >
                 <Arrow className='-translate-y-[0.15rem]' />
                 <CommentLocker />
                 비밀댓글입니다.
               </div>
             ) : (
               <div
+                key={reply.childCommentId}
                 className={`relative f-fc gap-4 py-6 px-6 pl-12 border-b border-solid ${
                   reply.isPrivate && 'bg-[#F6F6F6]'
                 }`}

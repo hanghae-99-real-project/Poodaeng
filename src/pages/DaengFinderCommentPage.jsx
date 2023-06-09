@@ -683,8 +683,8 @@ function DaengFinderCommentPage() {
       </div>
     );
   }
-  // console.log('getComment data >>>', data);
-  // console.log('dataList >>>', data.data?.commentsData);
+  console.log('getComment data >>>', data);
+  console.log('dataList >>>', data.data?.commentsData);
 
   // const [isCommentMode, setIsCommentMode] = useState({
   //   inputMode: false,
