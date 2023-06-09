@@ -1,14 +1,33 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 import Headers from './Headers';
 import MypageUnknown from './MypageUnknown';
 import Tabbar from './Tabbar';
+import { signOut } from '../api/sendCode';
 
 function Mypagecomponent() {
   // const tokens = Cookies.get('tokens');
   // const istoken = true;
   const istoken = true;
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(signOut, {
+    onSuccess: data => {
+      console.log('logout query success response >>> ', data);
+      queryClient.invalidateQueries('logout');
+    },
+    onError: error => {
+      console.log(error);
+    },
+  });
+
+  const logoutHandler = () => {
+    mutation.mutate();
+    navigate('/login');
+  };
+
   return (
     <div>
       {istoken ? (
@@ -52,8 +71,11 @@ function Mypagecomponent() {
             >
               프로필 설정하기
             </div>
-            <div className='large-button flex items-center text-lg cursor-pointer'>
-              로그 아웃
+            <div
+              className='large-button flex items-center text-lg cursor-pointer'
+              onClick={logoutHandler}
+            >
+              로그아웃
             </div>
           </div>
           <div className='mt-40'>
