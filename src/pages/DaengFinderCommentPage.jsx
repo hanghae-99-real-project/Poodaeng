@@ -262,9 +262,12 @@ function DaengFinderCommentPage() {
 
   const queryClient = useQueryClient();
   const mutation = useMutation(writePostComment, {
+    // variables는 { postId: 123, formData: { ... } }와 같은 값
+    // onSuccess: (dt, variables) => {
     onSuccess: dt => {
       console.log('writePostComment mutation success >>>', dt);
       queryClient.invalidateQueries(['getComment', postId]);
+      // queryClient.invalidateQueries(['getComment', variables.postId]);
       if (image.preview) URL.revokeObjectURL(image.preview);
       setImage({ photo: '', preview: '' });
       setInputMode(false);
@@ -385,7 +388,7 @@ function DaengFinderCommentPage() {
   const saveInputHandler = () => {
     /* 댓글 저장 로직 */
     // setImage((prev)=> ({...prev, preview: ''}));
-    const formData = new FormData();
+    // const formData = new FormData();
     // formData.append('comment', initialComment);
     // formData.append('isPrivate', privateComment);
     // const blobImg = new Blob([image.photo], { type: image.photo.type });
@@ -400,10 +403,6 @@ function DaengFinderCommentPage() {
       },
       postId,
     };
-    // const inputs = {
-    //   postId,
-    //   formData,
-    // };
     mutation.mutate(inputs);
   };
 
@@ -608,6 +607,11 @@ function DaengFinderCommentPage() {
           </button>
         </div>
       </div> */}
+      {/* <div className='fixed inset-0'>
+        <div className=''>
+
+        </div>
+      </div> */}
     </div>
 
     // <div className='w-full max-h-[812px]'>
@@ -741,8 +745,7 @@ function DaengFinderCommentPage() {
     //         className='h-fit max-h-12 px-4 w-full text-base placeholder:text-sm font-medium leading-6 '
     //         // placeholder={`${modeInfo}을 입력해주세요`}
     //         placeholder='댓글을 입력해주세요'
-    //         value={inputComment}
-    //         onChange={e => setInputComment(e.target.value)}
+    //         onChange={e => changeInitialVal(e)}
     //       />
     //       <button
     //         className={`w-16 px-3 py-3 font-bold text-base  text-white ${

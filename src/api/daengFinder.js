@@ -100,16 +100,16 @@ const bookMarkLostPost = async(inputs) => {
 }
 
 const getPostComment = async(postId) => {
-  // const response = await axiosToken.get(`/api/posts/${postId}/comments`)
   const response = await axiosToken.get(`/api/lostposts/${postId}/comments`)
+  // const response = await axiosToken.get(`/api/posts/${postId}/comments`)
   return response
 }
 
 const getPostReply = async(inputs) => {
   /* 쿠키에 리프레쉬 토큰이 남아있으면 로그인 하러 이동할 때 바로 로그인 완료시켜야 할 듯.  */
   const {postId, commentId} = inputs;
-  // const response = await axiosToken.get(`/api/posts/${postId}/comments/${commentId}/childcomments`)
   const response = await axiosToken.get(`/api/lostposts/${postId}/comments/${commentId}/childcomments`)
+  // const response = await axiosToken.get(`/api/posts/${postId}/comments/${commentId}/childcomments`)
   return response
 }
 
@@ -126,16 +126,22 @@ const writePostComment = async(inputs) => {
     // const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/posts/${postId}/comments`,formData,config)
     // return response
     const { postId, formData } = inputs;
+    const { commentPhotoUrl } = formData;
+    const config = {
+      headers : {
+        'content-type': commentPhotoUrl? 'multipart/form-data':'application/json'
+      }
+    }
+    const response = await axiosToken.post(`/api/lostposts/${postId}/comments`, formData, config)
     // const response = await axiosToken.post(`/api/posts/${postId}/comments`, formData)
     // const response = await axiosToken.post(`/api/posts/${postId}/comments`, formData, config)
-    const response = await axiosToken.post(`/api/lostposts/${postId}/comments`, formData)
     return response
 }
 
 const writePostReply = async(inputs) => {
   const { postId, commentId, formData } = inputs;
-  // const response = await axiosToken.post(`/api/posts/${postId}/comments/${commentId}/childcomments`, formData)
   const response = await axiosToken.post(`/api/lostposts/${postId}/comments/${commentId}/childcomments`, formData)
+  // const response = await axiosToken.post(`/api/posts/${postId}/comments/${commentId}/childcomments`, formData)
   return response
 }
 

@@ -3,8 +3,9 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 
-const refreshtoken = Cookies.get("refreshToken");
-const accesstoken = JSON.parse(localStorage.getItem("accessToken"))
+let refreshtoken; 
+// const accesstoken = JSON.parse(localStorage.getItem("accessToken"))
+let accesstoken; 
 
 const axiosToken = axios.create({
     baseURL: `${process.env.REACT_APP_SERVER_URL}`,
@@ -16,8 +17,10 @@ const axiosToken = axios.create({
 
 
 axiosToken.interceptors.request.use(
-  (config) => {
+  async(config) => {
     console.log('보낼 때 config headers >>> ', config.headers)
+    refreshtoken = Cookies.get("refreshToken");
+    accesstoken = await JSON.parse(localStorage.getItem("accessToken"))
     config.headers.refreshtoken = refreshtoken;
     config.headers.accesstoken = `Bearer ${accesstoken}`;
     // config.data = // request body 를 의미함
@@ -45,12 +48,17 @@ axiosToken.interceptors.response.use(
       const acToken = await response.data.newAccessToken;
       const newAccessToken = JSON.stringify(acToken);
       localStorage.setItem("accessToken", newAccessToken);
+      accesstoken = await acToken;
       /**
        * @description should approach[attach] 'config' manually if you're retrying.
        */
       response.config.headers.accesstoken = `Bearer ${acToken}`;
-      const retryResponse = await axios.request(response.config);
-      return retryResponse;
+      try{
+        const retryResponse = await axios.request(response.config);
+        return retryResponse;
+      } catch(error){
+        return Promise.reject(error);
+      }
     }
     return response;
   },
