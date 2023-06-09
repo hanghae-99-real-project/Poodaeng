@@ -34,14 +34,14 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='flex flex-row justify-between w-[375px]'>
+      <div className='flex flex-row justify-between w-96'>
         <img
-          className='ml-[20px] mb-[8px] object-contain'
+          className='ml-5 mb-2 object-contain'
           src='./images/Logo.png'
           alt='PooDaeng.png'
         />
         <img
-          className='mr-[22px] mb-[20px] object-contain cursor-pointer'
+          className='mr-5 mb-5 object-contain cursor-pointer'
           src='./images//Group 120.png'
           alt='Alert.png'
           onClick={AlertNavigateHander}
@@ -49,26 +49,26 @@ function Maincomponent() {
       </div>
       <div className='max-h-[586px]'>
         <div
-          className='flex justify-center items-center w-[375px] h-[150px] ml-[12px] border-t border-b cursor-pointer'
+          className='flex justify-center items-center w-auto h-40 ml- border-t border-b cursor-pointer'
           role='none'
           onClick={() => navigate('/events')}
         >
           <div className=''>
             <img
-              className='w-[375px] h-[150px] object-cover'
+              className='w-96 h-40 object-cover'
               src='./images/Event.png'
               alt='eventbanner'
             />
           </div>
         </div>
         <div className='relative'>
-          <div className='ml-[30px] mt-[10px] font-[700] text-[20px] '>
+          <div className='ml-8 mt-3 font-[700] text-[20px] '>
             내 주변 푸박스 찾기
           </div>
-          <div className='ml-[30px] mt-[4px] font-[500] text-[11px] text-[#808080]'>
+          <div className='ml-8 mt-1 font-[500] text-[11px] text-[#808080]'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
-          <div className='relative w-[330px] h-[155px] border ml-[30px] overflow-y-hidden'>
+          <div className='relative w-[340px] h-40 border ml-4 overflow-y-hidden'>
             <Kakaoserch />
             <div
               className='relative z-50 bg-[#4a3c7b] w-7 h-7 rounded-full bottom-10 left-72'
@@ -83,16 +83,13 @@ function Maincomponent() {
           </div>
           <div className='border mt-4' />
         </div>
-        <div className='mt-[10px] ml-[30px] font-[700]'>내 주변 실종신고</div>
-        <div className='ml-[30px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
+        <div className='mt-3 ml-8 font-[700]'>내 주변 실종신고</div>
+        <div className='ml-8 mt-1 font-[500] mb-5 text-[11px] text-[#808080]'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='flex gap-[10px] w-[370px] h-52 overflow-x-auto ml-[30px] flex-wrap'>
+        <div className='flex gap-3 w-auto justify-center h-52 overflow-x-auto flex-wrap'>
           {data.data.map(item => (
-            <div
-              className='border w-[102px] h-[102px] rounded-xl'
-              key={item.id}
-            >
+            <div className='border w-24 h-24 rounded-xl' key={item.id}>
               <img
                 src={item.lostPhotoUrl[0]}
                 alt='image'
