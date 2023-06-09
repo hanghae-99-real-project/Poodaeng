@@ -131,7 +131,7 @@ function PooPostcomponent() {
         />
         <Buttons
           type='button'
-          bgColor='#449AFF'
+          bgColor='#8722ED'
           textColor='#FFFFFF'
           onClick={pooBoxSubmitHandler}
         >
