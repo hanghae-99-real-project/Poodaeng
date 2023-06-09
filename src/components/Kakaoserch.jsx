@@ -208,9 +208,9 @@ function Kakaoserch() {
   // 마커와 정보창을 표시하는 함수
   function displayMarker(map, locPosition, message) {
     // 마커 이미지 설정
-    const imageSrc = './images/Group 47.png';
-    const imageSize = new kakao.maps.Size(16, 32);
-    const imageOption = { offset: new kakao.maps.Point(7, 25) };
+    const imageSrc = './images/mypoint.png';
+    const imageSize = new kakao.maps.Size(32, 32);
+    const imageOption = { offset: new kakao.maps.Point(15, 25) };
 
     const markerImage = new kakao.maps.MarkerImage(
       imageSrc,
