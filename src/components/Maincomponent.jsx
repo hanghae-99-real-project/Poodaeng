@@ -47,15 +47,15 @@ function Maincomponent() {
           onClick={AlertNavigateHander}
         />
       </div>
-      <div className='max-h-[600px]'>
+      <div className='max-h-[586px]'>
         <div
-          className='flex justify-center items-center w-[373px] h-[150px] ml-[14px] border-t border-b cursor-pointer'
+          className='flex justify-center items-center w-[375px] h-[150px] ml-[12px] border-t border-b cursor-pointer'
           role='none'
           onClick={() => navigate('/events')}
         >
           <div className=''>
             <img
-              className='w-[373px] h-[150px] object-cover'
+              className='w-[375px] h-[150px] object-cover'
               src='./images/Event.png'
               alt='eventbanner'
             />
@@ -87,7 +87,7 @@ function Maincomponent() {
         <div className='ml-[30px] mt-[4px] font-[500] mb-[20px] text-[11px] text-[#808080]'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='flex gap-[10px] w-[370px] h-32 overflow-x-auto ml-[30px] flex-wrap'>
+        <div className='flex gap-[10px] w-[370px] h-52 overflow-x-auto ml-[30px] flex-wrap'>
           {data.data.map(item => (
             <div
               className='border w-[102px] h-[102px] rounded-xl'

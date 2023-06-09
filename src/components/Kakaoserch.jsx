@@ -138,7 +138,7 @@ function Kakaoserch() {
     function setBounds() {
       map.setBounds(bounds);
       const center = map.getCenter();
-      map.setLevel(3);
+      map.setLevel(4);
       map.setCenter(center);
     }
 

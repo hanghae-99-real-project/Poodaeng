@@ -3,12 +3,12 @@
 /* eslint-disable import/prefer-default-export */
 import axios from "axios";
 import Cookies from "js-cookie";
-import axiosToken from "./axiosToken"
+// import axiosToken from "./axiosToken"
 
 // 푸박스 등록
 const addPooBox = async (data) => {
   // const refreshtoken = Cookies.get('refreshToken'); 
-  // const { accessToken } = data;
+  // const accesstoken = JSON.parse(localStorage.getItem("accessToken"))
 
   // console.log('refreshtoken',refreshtoken)
   // console.log('accessToken',accessToken)
@@ -24,7 +24,7 @@ const addPooBox = async (data) => {
   
   const config = {
     headers: { 
-      // "accesstoken": `Bearer ${accessToken}`,
+      // "accesstoken": `Bearer ${accesstoken}`,
       // "refreshtoken": refreshtoken,
       "content-type" : "multipart/form-data"
     }
