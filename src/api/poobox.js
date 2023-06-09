@@ -3,6 +3,7 @@
 /* eslint-disable import/prefer-default-export */
 import axios from "axios";
 import Cookies from "js-cookie";
+import axiosToken from "./axiosToken";
 // import axiosToken from "./axiosToken"
 
 // 푸박스 등록
