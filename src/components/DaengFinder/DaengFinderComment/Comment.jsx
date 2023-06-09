@@ -102,11 +102,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
           <div className='f-fr-ic justify-between'>
             <div className='f-fr-ic gap-2'>
               <div className='f-ic-jc rounded-full w-8 h-auto overflow-hidden'>
-                <img
-                  className='image'
-                  src={userPhoto || Badge}
-                  alt='photoThumb'
-                />
+                <img className='image' src={userPhoto || Badge} alt='' />
               </div>
               <h1
                 className={`f-fr-ic font-semibold ${
@@ -117,25 +113,6 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
                 <div>{isPrivate && <IoMdLock className='text-base' />}</div>
               </h1>
             </div>
-            {/* {editMode && (
-              <div>
-                <div
-                  role='none'
-                  className='absolute inset-0'
-                  onClick={closeEditMode}
-                />
-                <div className='absolute right-4 top-5 rounded-md overflow-hidden bg-white shadow-lg'>
-                  <div className='relative py-3 px-20 border-b border-solid '>
-                    수정하기
-                    <Cancel
-                      className='absolute right-1 top-1 w-5 h-5'
-                      onClick={closeEditMode}
-                    />
-                  </div>
-                  <div className='py-3 px-20'>삭제하기</div>
-                </div>
-              </div>
-            )} */}
             <Ddaeng className='w-2 h-5 cursor-pointer' onClick={openEditMode} />
           </div>
           <div className='f-fc gap-1 pl-10'>

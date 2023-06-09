@@ -51,13 +51,13 @@ function SignInPage() {
   // );
 
   const mutation = useMutation(signIn, {
-    onSuccess: data => {
+    onSuccess: async data => {
       console.log('login 성공 시 data >>>', data);
       /* Bearer 실종사건 */
       // const token = data.data.split(' ')[1];
       const { accessToken, refreshToken } = data.data;
-      const decodedAcToken = jwtDecode(accessToken);
-      const decodedRfToken = jwtDecode(refreshToken);
+      const decodedAcToken = await jwtDecode(accessToken);
+      const decodedRfToken = await jwtDecode(refreshToken);
 
       console.log('decodedAcToken >>>', decodedAcToken);
       console.log('decodedRfToken >>>', decodedRfToken);
