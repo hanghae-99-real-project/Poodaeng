@@ -19,7 +19,7 @@ const store = (set, get) => ({
   modalComment: '',
   postId: null,
   userId: null,
-  url: 'https://front-end-fork-vegatality.vercel.app',
+  url: '',
   // refreshToken: Cookies.get('refreshToken'),
   // accessToken: null,
   // setAccessToken: (accessToken) => {

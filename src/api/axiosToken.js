@@ -44,9 +44,8 @@ axiosToken.interceptors.request.use(
 
 axiosToken.interceptors.response.use(
   async(response) => {
-    console.log('status 203 아닌데 resolve인 경우 >>>',response)
     if(response.status === 203){
-      console.log('axios interceptor response data depth check >>> ', response);
+      // console.log('axios interceptor response data depth check >>> ', response);
       const acToken = await response.data.newAccessToken;
       const newAccessToken = JSON.stringify(acToken);
       localStorage.setItem("accessToken", newAccessToken);

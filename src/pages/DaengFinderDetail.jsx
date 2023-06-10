@@ -97,8 +97,11 @@ function DaengFinderDetail() {
 
   useEffect(() => {
     SwitchFooter(true);
-    setClipAddress(location.pathname);
   }, []);
+
+  useEffect(() => {
+    setClipAddress(location.pathname);
+  }, [location, navigate]);
 
   const { isLoading, data, isError, error } = useQuery(
     ['daengFinderDetail', postId],

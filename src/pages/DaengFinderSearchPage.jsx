@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { useQuery } from 'react-query';
@@ -14,17 +14,18 @@ import Input, { searchListStore } from '../zustand/components/Input';
 function DaengFinderSearchPage() {
   const [searchStart, setsearchStart] = useState(false);
   const navigate = useNavigate();
-  const { word, searchList, setSearchList, onDeleteSearch } = searchListStore(
+  const inputRef = useRef();
+  // const { word, searchList, setSearchList, onDeleteSearch } = searchListStore(
+  const { searchList, setSearchList, onDeleteSearch } = searchListStore(
     store => ({
-      /* test  */
-      // searchList: [...store.searchList],
-      word: store.word,
+      // word: store.word,
       searchList: store.searchList,
       setSearchList: store.setSearchList,
       onDeleteSearch: store.onDeleteSearch,
     }),
     shallow,
   );
+  // const inputRef = useRef(word);
   const matchResult = [];
   console.log('render occured');
 
@@ -32,12 +33,21 @@ function DaengFinderSearchPage() {
   //   setSearchList();
   // };
 
-  // eslint-disable-next-line no-unused-vars
+  useEffect(() => {
+    searchListStore.subscribe(
+      store => store.word,
+      // eslint-disable-next-line no-unused-vars
+      (newword, prevword) => {
+        inputRef.current = newword;
+      },
+    );
+  }, []);
+
   const { data, isLoading, error, isError } = useQuery(
-    'searchPostLost',
+    ['searchPostLost'],
     searchPostLost,
     {
-      searchStart,
+      enabled: searchStart,
       refetchOnWindowFocus: false,
       onSettled: () => {
         setsearchStart(false);
@@ -69,7 +79,7 @@ function DaengFinderSearchPage() {
       </div>
       <div className='h-full px-7 py-8'>
         <div className='relative h-full'>
-          {word && (
+          {inputRef.current && (
             <>
               <label className='block text-sm font-bold leading-5 pb-4'>
                 최근 검색
@@ -97,7 +107,7 @@ function DaengFinderSearchPage() {
           )}
           <div
             className={`${
-              (word || matchResult.length) && 'hidden'
+              (inputRef.current || matchResult.length) && 'hidden'
             } h-full w-full f-ic-jc absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2`}
           >
             <NoResult />

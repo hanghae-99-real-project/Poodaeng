@@ -6,13 +6,7 @@ import { devtools } from 'zustand/middleware';
 import LinkFooter from './LinkFooter';
 
 
-/* -------------------------------------------------- */
-/* export const useFooterLayout = create(devtools(set => ({
-  willUseFooter: false,
-  SwitchFooter: (boolean)=> set(()=>({
-    willUseFooter: boolean,
-  }))
-}))) */
+
 /* The set function has a second argument, false by default. Instead of merging, it will replace the state model. Be careful not to wipe out parts you rely on, like actions. */
 /* 스토어를 분리시킬 수도 있음. */
 const store = (set, get) => ({

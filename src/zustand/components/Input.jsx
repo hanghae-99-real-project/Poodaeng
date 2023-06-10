@@ -1,8 +1,9 @@
 import React from 'react';
 import { create } from 'zustand';
+import { subscribeWithSelector } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 
-export const searchListStore = create((set, get) => ({
+const input = (set, get) => ({
   searchList: [],
   word: '',
   text: '',
@@ -36,7 +37,9 @@ export const searchListStore = create((set, get) => ({
   //     text: ref.current.value,
   //   }));
   // },
-}));
+});
+
+export const searchListStore = create(subscribeWithSelector(input));
 
 function Input() {
   const { onWordChanger, setSearchList } = searchListStore(
@@ -47,15 +50,12 @@ function Input() {
     }),
     shallow,
   );
-  // const inputRef = useRef();
-  // onTextRef(inputRef);
   const activeEnter = e => {
     if (e.key === 'Enter') {
       setSearchList();
     }
   };
-  // console.log(inputRef.current);
-  // console.log(inputRef);
+
   return (
     <div className='-translate-x-2'>
       <input

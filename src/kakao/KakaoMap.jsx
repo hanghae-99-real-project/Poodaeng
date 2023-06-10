@@ -17,6 +17,7 @@ function KakaoMap({
   getMarkerPosition,
   clickable,
   draggable,
+  setToggle,
 }) {
   const [message, setMessage] = useState(false);
   // const [address, setAddress] = useState('');
@@ -35,8 +36,10 @@ function KakaoMap({
     const result = useCurrentLocation(geoLocationOptions);
     // latitude = result?.location?.latitude + 0.00138377808305  - 0.0130874588651;
     // longitude = result?.location?.longitude + 0.0018242688706;
-    latitude = result?.location?.latitude + 0.00138377808305 - 0.0130874588651;
-    longitude = result?.location?.longitude + 0.0018242688706 - 0.009787794504;
+    // latitude = result?.location?.latitude + 0.00138377808305 - 0.0130874588651;
+    // longitude = result?.location?.longitude + 0.0018242688706 - 0.009787794504;
+    latitude = result?.location?.latitude - 0.00005367039534;
+    longitude = result?.location?.longitude - 0.0011494247362;
     error = result.error;
   } else {
     latitude = lat;

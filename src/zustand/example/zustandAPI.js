@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { omit } from "lodash"
 import { create } from "zustand"
-import { devtools } from "zustand/middleware"
+import { devtools, subscribeWithSelector } from "zustand/middleware"
 import { shallow } from "zustand/shallow"
 import convertCoordinates from "../../kakao/KakaoApi"
 
@@ -15,7 +15,7 @@ const useFishStore = create((set) => ({
 
 /* 위도 경도 구한 값을을 DaengFinderWritePage 전에 혹은 DaengFinderMap을 바로 꽂아주자. */
 /* 값 구하는 건 DaengFinderWritePage 이전 페이지에서 구해야 함. */
-export const useLocationStore = create((set, get)=> ({
+const locationStore = subscribeWithSelector((set, get)=> ({
   location: {latitude: 0, longitude: 0},
   roadAddress: '',
   setLocation: (latitude, longitude)=> set(()=>({
@@ -23,28 +23,41 @@ export const useLocationStore = create((set, get)=> ({
   })),
   setRoadAddress: (roadAddress)=> {
     if(roadAddress) {
-      set(()=>({
-        roadAddress,
+      set((prev)=>({
+        ...prev,
+        roadAddress
       }))
     } else {
-      set(()=>({
+      set((prev)=>({
+        ...prev,
         roadAddress: '',
       }))
     }
   },
   getRoadAddress: async(latitude, longitude)=> {
     try {
-      const response = await convertCoordinates(latitude, longitude)
-      set(()=>({
-        roadAddress:response
-      }))
+      await convertCoordinates(latitude, longitude).then(d => {
+        const rdAd = d.data?.documents[0]?.road_address?.address_name;
+        const ad = d.data?.documents[0]?.address?.address_name;
+        set((prev)=>({
+          ...prev,
+          roadAddress:rdAd || ad
+        }))
+      })
+      .catch(err => console.log(err));
     } catch (error) {
-      set(()=>({
+      set((prev)=>({
+        ...prev,
         roadAddress: error
       }))
     }
   }
 }))
+
+
+export const useLocationStore = create(
+  process.env.NODE_ENV === 'development'? devtools(locationStore, {name: 'locationStore'}) : locationStore
+  )
 
 // useClipStore.setState({postId: ~~})
 // useClipStore.setState((prev)=>({postId: prev.postId + 1}))
@@ -71,23 +84,23 @@ const useFishStore2 = create((set) => ({
 }))) */
 /* The set function has a second argument, false by default. Instead of merging, it will replace the state model. Be careful not to wipe out parts you rely on, like actions. */
 /* 스토어를 분리시킬 수도 있음. */
-const store = (set, get) => ({
-  willUseFooter: false,
+// const store = (set, get) => ({
+//   willUseFooter: false,
   
-  SwitchFooter: (boolean)=> set(()=>({
-    willUseFooter: boolean,
-  })),
-  ConsoleFooterState: () => {
-    console.log("메서드 안 콘솔 >>> ", get().willUseFooter);
-    const sound = get().willUseFooter;
-    return sound
-  }
-})
+//   SwitchFooter: (boolean)=> set(()=>({
+//     willUseFooter: boolean,
+//   })),
+//   ConsoleFooterState: () => {
+//     console.log("메서드 안 콘솔 >>> ", get().willUseFooter);
+//     const sound = get().willUseFooter;
+//     return sound
+//   }
+// })
 
-/* devTools 사용 분기 처리 */
-export const useFooterLayout = create(
-  process.env.NODE_ENV !== 'production'? devtools(store) : store
-)
+// /* devTools 사용 분기 처리 */
+// export const useFooterLayout = create(
+//   process.env.NODE_ENV !== 'production'? devtools(store) : store
+// )
 
 
 const inputStore = set => ({
@@ -107,7 +120,7 @@ const inputStore = set => ({
   // },
 });
 export const InputStore = create(
-  process.env.NODE_ENV === 'development' ? devtools(inputStore) : inputStore,
+  subscribeWithSelector(process.env.NODE_ENV === 'development' ? devtools(inputStore) : inputStore)
 );
 
 

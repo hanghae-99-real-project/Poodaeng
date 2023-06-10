@@ -17,7 +17,7 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
   const params = useParams();
   const postId = parseInt(params?.postId, 10); // string -> number
   const postOwnerId = parseInt(params?.postOwnerId, 10); // string -> number
-  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10);
+  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
 
   const payload = {
     postId,
@@ -226,4 +226,4 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
   );
 }
 
-export default Reply;
+export default React.memo(Reply);

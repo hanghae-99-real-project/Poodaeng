@@ -8,6 +8,9 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
+import { shallow } from 'zustand/shallow';
 import { signIn } from '../api/sendCode';
 import Logo from '../components/common/Logo';
 import useCurrentLocation from '../hooks/useCurrentLocation';
@@ -15,20 +18,73 @@ import useInput from '../hooks/useInput';
 import { SET_TOKEN } from '../redux/modules/authSlice';
 // import { errorMsg } from '../data/inputs';
 
-const geoLocationOptions = {
-  enableHighAccuracy: true,
-  timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
-  maximumAge: 1000 * 3600 * 24, // 24 hour
+const store = set => {
+  const initialState = {
+    authenticated: false,
+    userId: null,
+    accessToken: null,
+    expireTime: null,
+    // userName: '',
+    // email: null,
+  };
+  return {
+    /** @description tokenState가 변경되면 initialState도 변경이 되는가? get()으로 접근이 가능한가? */
+    tokenState: initialState,
+    setToken: (userId, accessToken, acExpireDate) => {
+      console.log(
+        '값 체크. 초기화 값은 절대 변경되면 안 됨. >>>',
+        initialState,
+      );
+      set(
+        () => ({
+          tokenState: {
+            authenticated: true,
+            userId,
+            accessToken,
+            expireTime: acExpireDate,
+          },
+        }),
+        false,
+        'setToken',
+      );
+    },
+    deleteToken: () => {
+      console.log('초기화 값인지 체크 >>>', initialState);
+      set(() => ({
+        tokenState: initialState,
+      }));
+    },
+  };
 };
+
+export const tokenStore = create(
+  persist(
+    process.env.NODE_ENV !== 'production'
+      ? devtools(store, { name: 'tokenStore' })
+      : store,
+    {
+      name: 'userIdTest',
+      // storage: createJSONStorage(() => localStorage),
+      partialize: state => ({ userId: state.tokenState.userId }),
+    },
+  ),
+);
 
 /* alt shift O = import 정렬 */
 function SignInPage() {
+  const geoLocationOptions = {
+    enableHighAccuracy: true,
+    timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
+    maximumAge: 1000 * 3600 * 24, // 24 hour
+  };
   const [isError, setIsError] = useState(false);
   /* toast 중복되도 상관없나? */
   const [message, setMessage] = useState(false);
-  // const [geoError, setGeoError] = useState(false);
-  // const [getCurrentLocation] = useCurrentLocation(geoLocationOptions);
   const { location, error } = useCurrentLocation(geoLocationOptions);
+  const { setToken } = tokenStore(
+    state => ({ setToken: state.setToken }),
+    shallow,
+  );
 
   // eslint-disable-next-line no-unused-vars
   const [inputs, onChangeInputs, onClearInputs, onValidator] = useInput({
@@ -42,13 +98,6 @@ function SignInPage() {
   const onClose = () => {
     setIsError(false);
   };
-
-  // const { setAccessToken } = useClipStore(
-  //   state => ({
-  //     setAccessToken: state.setAccessToken,
-  //   }),
-  //   shallow,
-  // );
 
   const mutation = useMutation(signIn, {
     onSuccess: async data => {
@@ -68,8 +117,7 @@ function SignInPage() {
       Cookies.set('refreshToken', refreshToken, {
         expires: rfExpireDate,
       });
-      // eslint-disable-next-line no-unused-vars
-      const { exp: AC_EXP, iat, userId } = decodedAcToken;
+      const { exp: AC_EXP, userId } = decodedAcToken;
       console.log('이거 초 단위인가?  >>> ', AC_EXP);
       // const expireDate = new Date(AC_EXP * 1000); // 날짜단위로 변환해서 넣기.(ms 단위로 변환해서 넣기)
       const acExpireDate = AC_EXP * 1000; // ms 단위로 변환(?)해서 넣기
@@ -77,6 +125,7 @@ function SignInPage() {
       // setAccessToken(accessToken);
       localStorage.setItem('accessToken', JSON.stringify(accessToken));
       localStorage.setItem('userId', JSON.stringify(userId));
+      setToken(userId, accessToken, AC_EXP);
       dispatch(SET_TOKEN({ userId, accessToken, acExpireDate }));
 
       onClearInputs();

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
@@ -9,14 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 import { getPostLost } from '../api/daengFinder';
 import { ReactComponent as DaengFinderButton } from '../assets/images/DaengFinderMenu.svg';
-import { areaList } from '../data/Areas';
-import Card from './DaengFinder/Card';
-// eslint-disable-next-line no-unused-vars
-import { useLocationStore } from '../zustand/example/zustandAPI';
-import Loading from './common/Loading';
-import Loading2 from './common/Loading2';
-import useCurrentLocation from '../hooks/useCurrentLocation';
 import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
+import { areaList } from '../data/Areas';
+import useCurrentLocation from '../hooks/useCurrentLocation';
+import { useLocationStore } from '../zustand/example/zustandAPI';
+import Card from './DaengFinder/Card';
+import Loading from './common/Loading';
 // import Tabbar from './Tabbar';
 
 function DaengFindercomponent() {

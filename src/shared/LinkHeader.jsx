@@ -4,7 +4,6 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 
 function LinkHeader({ children, icon, destination, setMapMode, feature }) {
-  console.log('추가기능 feature >>>', feature);
   const navigate = useNavigate();
   return (
     // py-5

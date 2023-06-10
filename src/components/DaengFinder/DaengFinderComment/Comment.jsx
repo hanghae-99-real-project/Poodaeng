@@ -44,7 +44,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
   const params = useParams();
   const postId = parseInt(params?.postId, 10); // string -> number
   const postOwnerId = parseInt(params?.postOwnerId, 10); // string -> number
-  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10);
+  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
   const userId = parseInt(UserId, 10);
 
   /** @description 누르면 답글 모드 */
@@ -221,4 +221,4 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
   );
 }
 
-export default Comment;
+export default React.memo(Comment);

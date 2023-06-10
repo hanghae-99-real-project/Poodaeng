@@ -12,6 +12,7 @@ import DaengFinderMap from '../components/DaengFinder/DaengFinderWrite/DaengFind
 import useInput from '../hooks/useInput';
 import LinkHeader from '../shared/LinkHeader';
 import { useLocationStore } from '../zustand/example/zustandAPI';
+import convertCoordinates from '../kakao/KakaoApi';
 
 function DaengFinderWritePage() {
   const [image, setImage] = useState({ photo: [], preview: [] });
@@ -28,10 +29,8 @@ function DaengFinderWritePage() {
     shallow,
   );
   const [latlng, setLatLng] = useState({
-    // lostLatitude: 33.450701,
-    // lostLongitude: 126.570667,
-    lostLatitude: location.latitude,
-    lostLongitude: location.longitude,
+    lostLongitude: '',
+    lostLatitude: '',
   });
   console.log(latlng);
 
@@ -194,24 +193,18 @@ function DaengFinderWritePage() {
   };
 
   useEffect(() => {
+    setLatLng({
+      // lostLatitude: 33.450701,
+      // lostLongitude: 126.570667,
+      lostLatitude: location.latitude,
+      lostLongitude: location.longitude,
+    });
     return () => {
       for (let i = 0; i < image.preview.length; i++) {
         URL.revokeObjectURL(image.preview[i]);
       }
     };
   }, []);
-
-  useEffect(() => {
-    console.log('렌더링 테스트');
-  }, [roadAddress]);
-
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(pos => {
-  //     const latitude = pos?.coords?.latitude;
-  //     const longitude = pos?.coords?.longitude;
-  //     setLatLng({ lostLatitude: latitude, lostLongitude: longitude });
-  //   });
-  // }, []);
 
   return (
     <div className='w-full max-h-[812px]'>

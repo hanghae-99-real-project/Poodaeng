@@ -26,162 +26,6 @@ import { InputStore } from '../zustand/example/zustandAPI';
 
 function DaengFinderCommentPage() {
   const [alertMsg, setAlertMsg] = useState(false);
-  // const [commentList, setCommentList] = useState([
-  //   {
-  //     commentId: 1,
-  //     PostId: 1,
-  //     UserId: 1,
-  //     comment: '그만 탈출해...',
-  //     commentPhotoUrl:
-  //       'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
-  //     nickname: '보라돌이',
-  //     userPhoto:
-  //       'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
-  //     createdAt: Date(),
-  //     updatedAt: 'DATE',
-  //     isPrivate: true,
-  //     commentLatitude: 'DECIMAL(17, 14)',
-  //     commentLongitude: 'DECIMAL(17, 14)',
-  //     address: 'STRING',
-  //   },
-  //   {
-  //     commentId: 2,
-  //     PostId: 1,
-  //     UserId: 2,
-  //     comment: '그만 탈출해...',
-  //     commentPhotoUrl:
-  //       'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
-  //     nickname: '보라돌이',
-  //     userPhoto: '',
-  //     createdAt: Date(),
-  //     updatedAt: 'DATE',
-  //     isPrivate: false,
-  //     commentLatitude: 'DECIMAL(17, 14)',
-  //     commentLongitude: 'DECIMAL(17, 14)',
-  //     address: 'STRING',
-  //   },
-  //   {
-  //     commentId: 3,
-  //     PostId: 1,
-  //     UserId: 3,
-  //     comment: '그만 탈출해...',
-  //     commentPhotoUrl: '',
-  //     nickname: '보라돌이',
-  //     userPhoto: '',
-  //     createdAt: Date(),
-  //     updatedAt: 'DATE',
-  //     isPrivate: true,
-  //     commentLatitude: 'DECIMAL(17, 14)',
-  //     commentLongitude: 'DECIMAL(17, 14)',
-  //     address: 'STRING',
-  //   },
-  //   {
-  //     commentId: 4,
-  //     PostId: 1,
-  //     UserId: 4,
-  //     comment: '그만 탈출해...',
-  //     commentPhotoUrl:
-  //       'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
-  //     nickname: '보라돌이',
-  //     userPhoto: '',
-  //     createdAt: Date(),
-  //     updatedAt: 'DATE',
-  //     isPrivate: false,
-  //     commentLatitude: 'DECIMAL(17, 14)',
-  //     commentLongitude: 'DECIMAL(17, 14)',
-  //     address: 'STRING',
-  //   },
-  //   {
-  //     commentId: 5,
-  //     PostId: 1,
-  //     UserId: 5,
-  //     comment: '그만 탈출해...',
-  //     commentPhotoUrl:
-  //       'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
-  //     nickname: '보라돌이',
-  //     userPhoto: '',
-  //     createdAt: Date(),
-  //     updatedAt: 'DATE',
-  //     isPrivate: false,
-  //     commentLatitude: 'DECIMAL(17, 14)',
-  //     commentLongitude: 'DECIMAL(17, 14)',
-  //     address: 'STRING',
-  //   },
-  // ]);
-
-  // const [replyList, setReplyList] = useState([
-  //   {
-  //     childCommentId: '1',
-  //     CommentId: 1,
-  //     UserId: 1,
-  //     childComment: '헉 저 아까 가로수길 지나가다가 어쩌구~',
-  //     nickname: '뚜비',
-  //     userPhoto:
-  //       'https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_1280.jpg',
-  //     createdAt: Date(),
-  //     updatedAt: 'DATE',
-  //     isPrivate: true,
-  //   },
-  //   {
-  //     childCommentId: '2',
-  //     CommentId: 1,
-  //     UserId: 10,
-  //     childComment: 'STRING',
-  //     nickname: 'STRING',
-  //     userPhoto: '',
-  //     createdAt: 'DATE',
-  //     updatedAt: 'DATE',
-  //     isPrivate: true,
-  //   },
-  //   {
-  //     childCommentId: '3',
-  //     CommentId: 1,
-  //     UserId: 1,
-  //     childComment: 'STRING',
-  //     nickname: 'STRING',
-  //     // userPhoto: 'JSON',
-  //     userPhoto: '',
-  //     createdAt: 'DATE',
-  //     updatedAt: 'DATE',
-  //     isPrivate: true,
-  //   },
-  //   {
-  //     childCommentId: '4',
-  //     CommentId: 4,
-  //     UserId: 1,
-  //     childComment: 'STRING',
-  //     nickname: 'STRING',
-  //     // userPhoto: 'JSON',
-  //     userPhoto: '',
-  //     createdAt: 'DATE',
-  //     updatedAt: 'DATE',
-  //     isPrivate: true,
-  //   },
-  //   {
-  //     childCommentId: '5',
-  //     CommentId: 4,
-  //     UserId: 1,
-  //     childComment: 'STRING',
-  //     nickname: 'STRING',
-  //     // userPhoto: 'JSON',
-  //     userPhoto: '',
-  //     createdAt: 'DATE',
-  //     updatedAt: 'DATE',
-  //     isPrivate: true,
-  //   },
-  //   {
-  //     childCommentId: '6',
-  //     CommentId: 4,
-  //     UserId: 1,
-  //     childComment: 'STRING',
-  //     nickname: 'STRING',
-  //     // userPhoto: 'JSON',
-  //     userPhoto: '',
-  //     createdAt: 'DATE',
-  //     updatedAt: 'DATE',
-  //     isPrivate: true,
-  //   },
-  // ]);
 
   /* 댓글에 있는 사진 모달(확대) */
   const [modalVisible, setModalVisible] = useState(false);
@@ -198,9 +42,9 @@ function DaengFinderCommentPage() {
    * 3. 또한 userId와 myId가 다를 경우 신고하기&취소 버튼만 보여야 하고, useId와 myId가 같은 경우에는 수정하기, 삭제하기, 취소 버튼이 보여야 함.
    * 4. [@requires 전역변수: myId, postId ]  [댓글: commentId, UserId, myId, comment] [대댓글: commentId, childCommentId, myId, comment]
    * 5. setting
-   * 6. editMode가 켜졌을 때 input 모드를 꺼야 함. editMode에서 수정하기/삭제하기
-   * 7. 문제점: 내가 답글을 달려고 하는 댓글이 이미 isPrivate이 true 면 밑의 답글은 privateComment 선택 못하게 막아야 함. absolutePrivate
-   * 8. 대댓글 수정은 없다.
+   * 6. editMode가 켜졌을 때 input 모드도 켜야 함. editMode에서 수정하기/삭제하기 경로를 정해서 수정하기일 경우 기존값을 input에 전달.
+   * 7. 문제점: 내가 답글을 달려고 하는 댓글이 이미 isPrivate이 true 면 밑의 답글은 privateComment 선택 못하게 막아야 함. => absolutePrivate 생성
+   * 8. *대댓글 수정은 없다.
    * {
    *  editMode: false,
    *  targetComment: true, // 댓글을 바꾸는/삭제하는 모드인지 대댓글을 바꾸는/삭제하는 모드인지
@@ -255,7 +99,7 @@ function DaengFinderCommentPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
-  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10);
+  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
   // const myId = 2;
   const postId = parseInt(params?.postId, 10); // string -> number
   const postOwnerId = parseInt(params?.postOwnerId, 10); // string -> number
@@ -311,7 +155,7 @@ function DaengFinderCommentPage() {
     // variables는 { postId: 123, formData: { ... } }와 같은 값
     // onSuccess: (dt, variables) => {
     onSuccess: dt => {
-      console.log('writePostComment mutation success >>>', dt);
+      // console.log('writePostComment mutation success >>>', dt);
       resetFunc();
       queryClient.invalidateQueries(['getComment', postId]);
       // queryClient.invalidateQueries(['getComment', variables.postId]);
@@ -347,7 +191,7 @@ function DaengFinderCommentPage() {
 
   const mutation2 = useMutation(writePostReply, {
     onSuccess: dt => {
-      console.log('writePostReply mutation success >>>', dt);
+      // console.log('writePostReply mutation success >>>', dt);
       // queryClient.invalidateQueries(['getReply', postId]);
       resetFunc();
       queryClient.invalidateQueries(['getReply', isCommentMode.commentId]);
@@ -381,7 +225,7 @@ function DaengFinderCommentPage() {
 
   const editPostCommentMutation = useMutation(editPostComment, {
     onSuccess: dt => {
-      console.log('editPostCommentMutation success >>>', dt);
+      // console.log('editPostCommentMutation success >>>', dt);
       resetFunc();
       queryClient.invalidateQueries(['getComment', postId]);
     },
@@ -404,7 +248,7 @@ function DaengFinderCommentPage() {
 
   const deleteCommentMutation = useMutation(deletePostComment, {
     onSuccess: dt => {
-      console.log('deleteCommentMutation success >>>', dt);
+      // console.log('deleteCommentMutation success >>>', dt);
       resetFunc();
       queryClient.invalidateQueries(['getComment', postId]);
     },
@@ -427,7 +271,7 @@ function DaengFinderCommentPage() {
 
   const deleteReplyMutation = useMutation(deletePostReply, {
     onSuccess: dt => {
-      console.log('deleteReplyMutation success >>>', dt);
+      // console.log('deleteReplyMutation success >>>', dt);
       queryClient.invalidateQueries(['getReply', isEditMode.commentId]);
       resetFunc();
     },
@@ -452,7 +296,7 @@ function DaengFinderCommentPage() {
    * @description 이거는 댓글의 사진 확대 했을 때 모달을 열고 사진 확대시키는 함수
    */
   const enlargePhoto = e => {
-    console.log(e.target.src);
+    // console.log(e.target.src);
     setModalImg(e.target.src);
     setModalVisible(true);
   };
@@ -466,8 +310,8 @@ function DaengFinderCommentPage() {
   };
 
   const imageHandler = event => {
-    console.log('event >>>', event);
-    console.log(event.target.files[0]);
+    // console.log('event >>>', event);
+    // console.log(event.target.files[0]);
     const file = event.target.files[0];
     if (!file) return;
 
@@ -683,31 +527,24 @@ function DaengFinderCommentPage() {
       </div>
     );
   }
-  console.log('getComment data >>>', data);
-  console.log('dataList >>>', data.data?.commentsData);
+  // console.log('getComment data >>>', data);
+  // console.log('dataList >>>', data.data?.commentsData);
 
-  // const [isCommentMode, setIsCommentMode] = useState({
-  //   inputMode: false,
-  //   postId: null,
-  //   userId: null,
-  //   commentId: null,
-  //   childCommentId: null,
-
-  console.log(
-    '상태 체크 >>>',
-    'isEditMode.editMode',
-    isEditMode.editMode,
-    'isEditMode.targetComment',
-    isEditMode.targetComment,
-    'isEditMode.contents',
-    isEditMode.contents,
-    'isCommentMode.absolutePrivate',
-    isCommentMode.absolutePrivate,
-    'isEditMode.absolutePrivate',
-    isEditMode.absolutePrivate,
-    'privateComment',
-    privateComment,
-  );
+  // console.log(
+  //   '상태 체크 >>>',
+  //   'isEditMode.editMode',
+  //   isEditMode.editMode,
+  //   'isEditMode.targetComment',
+  //   isEditMode.targetComment,
+  //   'isEditMode.contents',
+  //   isEditMode.contents,
+  //   'isCommentMode.absolutePrivate',
+  //   isCommentMode.absolutePrivate,
+  //   'isEditMode.absolutePrivate',
+  //   isEditMode.absolutePrivate,
+  //   'privateComment',
+  //   privateComment,
+  // );
 
   // });
   return (
@@ -739,7 +576,7 @@ function DaengFinderCommentPage() {
         </div>
       </div>
       {/* 문제점 반만 잘려서 보인다. pb주는 건 임시방편 방법인가... => 바로 고침 */}
-      <div className='h-[45.6875rem] box-border overflow-y-scroll'>
+      <div className='h-[90.0246%] pb-8 box-border overflow-y-scroll'>
         {data.data?.commentsData?.length > 0
           ? data.data?.commentsData.map(comment => {
               return (
@@ -931,199 +768,7 @@ function DaengFinderCommentPage() {
           </div>
         </div>
       )}
-      {/* <div className='absolute z-20 bottom-4 left-0 right-0  bg-transparent px-6'>
-        <div className='f-fr-ic'>
-          <div className='w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white'>
-            <Unlock className='object-contain w-3 h-auto' />
-          </div>
-          <div className='w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white'>
-            <Camera className='object-contain w-4 h-auto' />
-          </div>
-        </div>
-        <div className='f-fr-ic-jb overflow-hidden border border-solid rounded-lg'>
-          <textarea
-            className='h-fit max-h-12 px-4 w-full text-base placeholder:text-sm font-medium leading-6 '
-            placeholder='댓글을 입력해주세요'
-          />
-          <button className='w-16 px-3 py-3 font-bold text-base  text-white bg-[#E2CAFB]'>
-            등록
-          </button>
-        </div>
-      </div> */}
-      {/* <div className='fixed inset-0'>
-        <div className=''>
-
-        </div>
-      </div> */}
     </div>
-
-    // <div className='w-full max-h-[812px]'>
-    //   <LinkHeader icon destination={`/daengfinder/detail/${postId}`}>
-    //     {/* 댓글&nbsp;{commentCount}{' '} */}
-    //     <div className='f-fr'>
-    //       댓글&nbsp;
-    //       <p className='text-[#DB00FF]'>
-    //         {commentList.length + replyList.length}
-    //       </p>
-    //     </div>
-    //   </LinkHeader>
-
-    //   <div className={`fixed inset-0 z-30 ${!modalVisible && 'hidden'} `}>
-    //     <div className='absolute inset-0 bg-black opacity-30' />
-    //     <div className='fixed f-fc-ic-jc gap-5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-    //       <div className='f-ic-jc w-80 h-80 shadow-xl rounded-lg overflow-hidden'>
-    //         <img src={`${modalImg}`} alt='photoThumb' className='image' />
-    //       </div>
-    //       <div
-    //         className='rounded-full w-12 h-12 bg-white overflow-hidden shadow-md cursor-pointer'
-    //         onClick={closeModal}
-    //       >
-    //         <Cancel className='image shadow-md' />
-    //       </div>
-    //     </div>
-    //   </div>
-    //   {/* 문제점 반만 잘려서 보인다. pb주는 건 임시방편 방법인가... => 바로 고침 */}
-    //   <div className='h-[45.6875rem] box-border overflow-y-scroll'>
-    //     {commentList.map(comment => {
-    //       return (
-    //         <>
-    //           <Comment
-    //             key={comment.commentId}
-    //             cmt={comment}
-    //             myId={myId}
-    //             enlargePhoto={enlargePhoto}
-    //             onReplyMode={onReplyMode}
-    //           />
-    //           <Reply
-    //             commentId={comment.commentId}
-    //             // key={reply.childCommentId}
-    //             // reply={reply}
-    //             myId={myId}
-    //             onReplyMode={onReplyMode}
-    //           />
-    //         </>
-    //       );
-    //     })}
-    //     {/* {commentList.map(comment => {
-    //       return (
-    //         <>
-    //           <Comment
-    //             key={comment.commentId}
-    //             cmt={comment}
-    //             myId={myId}
-    //             enlargePhoto={enlargePhoto}
-    //             onReplyMode={onReplyMode}
-    //           />
-    //           {replyList
-    //             .filter(ele => ele.CommentId === comment.commentId)
-    //             .map(reply => {
-    //               return (
-    //                 <Reply
-    //                   key={reply.childCommentId}
-    //                   reply={reply}
-    //                   myId={myId}
-    //                   onReplyMode={onReplyMode}
-    //                 />
-    //               );
-    //             })}
-    //         </>
-    //       );
-    //     })} */}
-    //   </div>
-    //   {/* 모달 댓글 등록 창 컴포넌트로 분리 & zustand 해서 렌더링 최적화 ㄱ */}
-    //   <div
-    //     className={`absolute inset-0 bg-black opacity-30 ${
-    //       inputMode ? '' : 'hidden'
-    //     }`}
-    //     onClick={onCloseHandler}
-    //   />
-    //   <div className='absolute z-20 bottom-4 left-0 right-0 bg-transparent px-6'>
-    //     {inputMode && image.preview ? (
-    //       <div className='relative f-ic-jc w-40 h-40 mb-2 bg-white shadow-md rounded-md'>
-    //         <img src={image.preview} alt='photoThumb' className='image' />
-    //         <div
-    //           className='f-ic-jc rounded-full overflow-hidden w-7 h-7 absolute -top-1 -right-2 bg-[#FFFFFF] shadow-md cursor-pointer'
-    //           onClick={() => setImage({ photo: '', preview: '' })}
-    //         >
-    //           <XsmallBtn className='image' />
-    //         </div>
-    //       </div>
-    //     ) : null}
-    //     <div className={`f-fr-ic gap-2 mb-2 ${!inputMode && 'hidden'}`}>
-    //       <div
-    //         className={`w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white ${
-    //           privateComment && 'bg-[#F1E2FF]'
-    //         } shadow-md cursor-pointer`}
-    //         onClick={() => setPrivateComment(prev => !prev)}
-    //       >
-    //         <Lock
-    //           className={`object-contain w-3 h-auto  ${
-    //             privateComment ? 'fill-[#A54BFF]' : 'fill-[#747474]'
-    //           }`}
-    //         />
-    //       </div>
-    //       <div className='w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white shadow-md cursor-pointer'>
-    //         <Camera
-    //           title='upload image'
-    //           className='object-contain w-4 h-auto'
-    //           onClick={() => imageRef.current.click()}
-    //         />
-    //         <input
-    //           ref={imageRef}
-    //           type='file'
-    //           id='imageInput'
-    //           accept='image/*'
-    //           className='hidden'
-    //           onChange={imageHandler}
-    //         />
-    //       </div>
-    //     </div>
-    //     <div
-    //       className={`f-fr-ic-jb overflow-hidden ${
-    //         !inputMode && 'border opacity-60'
-    //       }  rounded-lg shadow-md`}
-    //       onFocus={onCommentMode}
-    //     >
-    //       <textarea
-    //         className='h-fit max-h-12 px-4 w-full text-base placeholder:text-sm font-medium leading-6 '
-    //         // placeholder={`${modeInfo}을 입력해주세요`}
-    //         placeholder='댓글을 입력해주세요'
-    //         onChange={e => changeInitialVal(e)}
-    //       />
-    //       <button
-    //         className={`w-16 px-3 py-3 font-bold text-base  text-white ${
-    //           inputMode ? 'bg-mainColor' : 'bg-[#E2CAFB]'
-    //         }`}
-    //         disabled={!inputMode}
-    //         onClick={saveInputHandler}
-    //       >
-    //         등록
-    //       </button>
-    //     </div>
-    //   </div>
-    //   <div className='absolute z-50 inset-0'>
-    //     <div role='none' className='absolute inset-0 bg-black opacity-30' />
-    //     <div className='absolute f-fc justify-end bottom-0 left-0 right-0 rounded-t-xl bg-[#FFFFFF]'>
-    //       {editModeInfo.userId === myId ? (
-    //         <>
-    //           <div className='f-ic-jc py-6 pt-8 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5'>
-    //             수정하기
-    //           </div>
-    //           <div className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5'>
-    //             삭제하기
-    //           </div>
-    //         </>
-    //       ) : (
-    //         <div className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5'>
-    //           신고하기
-    //         </div>
-    //       )}
-    //       <div className='f-ic-jc py-6 pb-8 border-b border-solid text-white bg-mainColor'>
-    //         취소
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 
