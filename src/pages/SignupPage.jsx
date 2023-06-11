@@ -242,6 +242,7 @@ function SignUpPage() {
           {/* <div className='relative flex flex-col after:content-["Goodbye"] after:text-amber-300 after:text-2xl'> */}
           <div className='relative flex flex-col '>
             <input
+              autoFocus
               type='number'
               name='phoneNumber'
               value={inputs.phoneNumber}

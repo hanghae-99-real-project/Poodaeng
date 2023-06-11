@@ -1,66 +1,5 @@
-/* eslint-disable no-undef */
 import axios from "axios";
-// import Cookies from "js-cookie";
 import axiosToken from './axiosToken';
-
-// const bookMarkLostPost = async(inputs) => {
-//   const { accessToken, refreshToken, postId} = inputs;
-//   const config = {
-//     headers: {
-//       refreshtoken: refreshToken,
-//       accesstoken: `Bearer ${accessToken}`,
-//     }
-//   }
-//   // const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/posts/${postId}/bookmark`, {}, config)
-//   const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/auth/${postId}/bookmark`, {}, config)
-//   return response
-// }
-
-
-
-// const writePostLost = async(inputs) => {
-//   const refreshtoken = Cookies.get('refreshToken'); 
-//   const {accessToken} = inputs;
-//   const {formData} = inputs;
-//   const config = {
-//     headers: {
-//       // Authorization: `Bearer ${accessToken}`,
-//       // 'content-type': 'multipart/form-data'
-//       // // 'content-type': 'application/json'
-//       accesstoken : `Bearer ${accessToken}`,
-//       refreshtoken,
-//       'content-type': 'multipart/form-data'
-//       // 'content-type': 'application/json'
-//     }
-//   }
-//   const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/lostposts`,formData,config)
-//   return response
-// }
-
-// const getPostLost = async() => {
-//   const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/lostposts`)
-//   return response
-// }
-
-// const searchPostLost = async(inputs) => {
-//   const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/search/lostPosts`,inputs)
-//   return response
-// }
-
-// const searchPostLostDetail = async(id) => {
-//   console.log('api postid >>>', id)
-//   const postId = parseInt(id, 10);
-//   const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/lostposts/${postId}`)
-//   return response
-// } 
-
-// const bookMarkLostPost = async(inputs) => {
-//   // const { accessToken, refreshToken, postId} = inputs;
-//   const { postId } = inputs;
-//   // const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/posts/${postId}/bookmark`, {}, config)
-//   const response = await axiosToken.put(`${process.env.REACT_APP_SERVER_URL}/api/auth/${postId}/bookmark`, {}, config)
-//   return response
-// }
 
 const writePostLost = async(inputs) => {
   const {formData} = inputs;
@@ -92,7 +31,6 @@ const searchPostLostDetail = async(id) => {
 } 
 
 const bookMarkLostPost = async(inputs) => {
-  // const { accessToken, refreshToken, postId} = inputs;
   const { postId } = inputs;
   const response = await axiosToken.put(`${process.env.REACT_APP_SERVER_URL}/api/lostposts/${postId}/bookmark`)
   // const response = await axiosToken.put(`${process.env.REACT_APP_SERVER_URL}/api/auth/${postId}/bookmark`)
@@ -114,22 +52,12 @@ const getPostReply = async(inputs) => {
 }
 
 const writePostComment = async(inputs) => {
-    // const {postId, formData} = inputs;
-    // const refreshtoken = Cookies.get('refreshToken');   
-    // const accesstoken = JSON.parse(localStorage.getItem('accessToken'));
-    // const config = {
-    //   headers: {
-    //     refreshtoken,
-    //     accesstoken :`Bearer ${accesstoken}`,
-    //   }
-    // }
-    // const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/posts/${postId}/comments`,formData,config)
-    // return response
     const { postId, formData } = inputs;
     const { commentPhotoUrl } = formData;
+    const contentType = commentPhotoUrl? 'multipart/form-data':'application/json'
     const config = {
       headers : {
-        'content-type': commentPhotoUrl? 'multipart/form-data':'application/json'
+        'content-type': contentType
       }
     }
     const response = await axiosToken.post(`/api/lostposts/${postId}/comments`, formData, config)

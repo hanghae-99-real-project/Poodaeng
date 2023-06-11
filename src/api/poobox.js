@@ -2,7 +2,6 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/prefer-default-export */
 import axios from "axios";
-import Cookies from "js-cookie";
 import axiosToken from "./axiosToken";
 // import axiosToken from "./axiosToken"
 
@@ -48,24 +47,14 @@ const getPooBox = async () => {
 
 // 푸박스 신고
 const reportPooBox = async (data) => {
-  const refreshtoken = Cookies.get('refreshToken'); 
-  const { accessToken } = data;
   const pooId = parseInt(data.pooId, 10);
   const {reportContent} = data;
-  const config = {
-    headers: { 
-      "accesstoken": `Bearer ${accessToken}`,
-      "refreshtoken": refreshtoken,
-    },
-  };
-  console.log(accessToken)
-  console.log(refreshtoken)
   console.log(pooId)
   console.log(reportContent)
-  const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/report/${pooId}`, reportContent, config);
+  const response = await axiosToken.put(`${process.env.REACT_APP_SERVER_URL}/api/report/${pooId}`, reportContent);
   console.log(response)
   return response
 }
 
 
-export {addPooBox, getPooBox, reportPooBox};
+export { addPooBox, getPooBox, reportPooBox };

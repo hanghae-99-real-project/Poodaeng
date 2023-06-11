@@ -1,20 +1,18 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Headers from './Headers';
-import FileUploader from './FileUploader';
-import Buttons from './common/Buttons';
-import KakaoClickMap from './KakaoClickMap';
 import { addPooBox } from '../api/poobox';
+import FileUploader from './FileUploader';
+import Headers from './Headers';
+import KakaoClickMap from './KakaoClickMap';
+import Buttons from './common/Buttons';
 
 function PooPostcomponent() {
   const [latlng, setLatlng] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [content, setContent] = useState('');
   const [errormsg, setErrormsg] = useState('');
-  const { accessToken } = useSelector(store => store.auth);
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -68,7 +66,6 @@ function PooPostcomponent() {
     // formData.append('pooLongitude', latlng.Ma);
 
     const postData = {
-      accessToken,
       pooPhotoUrl: uploadedFile,
       pooLatitude: latlng.La,
       pooLongitude: latlng.Ma,

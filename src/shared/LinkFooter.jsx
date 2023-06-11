@@ -9,6 +9,7 @@ import { bookMarkLostPost } from '../api/daengFinder';
 import { ReactComponent as Bookmark } from '../assets/images/BookmarkFilled.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import { ReactComponent as Comment } from '../assets/images/Magnifier.svg';
+import { tokenStore } from '../pages/SignInPage';
 
 const store = (set, get) => ({
   /**
@@ -62,7 +63,8 @@ const store = (set, get) => ({
   onBookmark: async () => {
     // set(preState => ({ isBookmark:!preState.isBookmark }));
     const inputs = {
-      accessToken: JSON.parse(localStorage.getItem('accessToken')),
+      // accessToken: JSON.parse(localStorage.getItem('accessToken')),
+      accessToken: tokenStore.getState().tokenState.accessToken,
       refreshToken: Cookies.get('refreshToken'),
       postId: get().postId,
     };

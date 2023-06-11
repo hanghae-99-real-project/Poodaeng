@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { omit } from "lodash"
 import { create } from "zustand"
-import { devtools, subscribeWithSelector } from "zustand/middleware"
+import { devtools, persist, subscribeWithSelector } from "zustand/middleware"
 import { shallow } from "zustand/shallow"
 import convertCoordinates from "../../kakao/KakaoApi"
 
@@ -104,7 +104,7 @@ const useFishStore2 = create((set) => ({
 
 
 const inputStore = set => ({
-  initialComment: null,
+  initialComment: '',
   changeInitialVal: value => {
     set(() => ({
       initialComment: value,
@@ -120,7 +120,8 @@ const inputStore = set => ({
   // },
 });
 export const InputStore = create(
-  subscribeWithSelector(process.env.NODE_ENV === 'development' ? devtools(inputStore) : inputStore)
+  // subscribeWithSelector(process.env.NODE_ENV === 'development' ? devtools(inputStore) : inputStore)
+  persist(process.env.NODE_ENV === 'development' ? devtools(inputStore, {name: "inputStore"}) : inputStore, {name: "inputMemory"})
 );
 
 

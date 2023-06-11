@@ -1,15 +1,14 @@
 /* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
-import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import Headers from './Headers';
-import { ReactComponent as Report } from '../assets/images/report.svg';
+import React, { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { reportPooBox } from '../api/poobox';
+import { ReactComponent as Report } from '../assets/images/report.svg';
 import { dateConvert2 } from '../utils/DateConvert';
+import Headers from './Headers';
 
 function PooDetailComponent() {
   const location = useLocation();
@@ -26,7 +25,7 @@ function PooDetailComponent() {
   const refreshToken = Cookies.get('refreshToken');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contents, setContents] = useState('');
-  const { accessToken } = useSelector(store => store.auth);
+  // const { accessToken } = useSelector(store => store.auth);
 
   console.log('address', address);
   console.log('content', content);
@@ -44,7 +43,6 @@ function PooDetailComponent() {
   const reportData = {
     pooId,
     UserId: address,
-    accessToken,
     reportContent,
   };
 

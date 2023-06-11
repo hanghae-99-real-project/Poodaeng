@@ -48,6 +48,7 @@
     "react/no-unknown-property": "off",
     "no-plusplus": "off",
     "no-unsafe-optional-chaining": "off",
+    "jsx-a11y/no-autofocus": "off",
     "react/jsx-filename-extension": [
       1,
       {

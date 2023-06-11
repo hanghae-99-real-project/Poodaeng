@@ -34,7 +34,6 @@ function DaengFinderWritePage() {
   });
   console.log(latlng);
 
-  // const { accessToken } = useSelector(store => store.auth);
   console.log('image >>>', image);
   console.log('image[i] >>>', image.photo[0]);
 
@@ -103,7 +102,6 @@ function DaengFinderWritePage() {
     formData.append('lostLongitude', latlng.lostLongitude);
     console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     const inputs = {
-      accessToken: JSON.parse(localStorage.getItem('accessToken')),
       formData,
     };
     mutation.mutate(inputs);

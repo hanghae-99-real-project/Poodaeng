@@ -9,6 +9,7 @@ import { ReactComponent as CommentLocker } from '../../../assets/images/CommentL
 import { ReactComponent as Ddaeng } from '../../../assets/images/Ddaeng.svg';
 import Badge from '../../../assets/images/Badge1.svg';
 import { dateConvert2 } from '../../../utils/DateConvert';
+import { tokenStore } from '../../../pages/SignInPage';
 
 function Reply({ commentId, onReplyMode, setEditMode }) {
   // const [editMode, setEditMode] = useState(false);
@@ -17,7 +18,11 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
   const params = useParams();
   const postId = parseInt(params?.postId, 10); // string -> number
   const postOwnerId = parseInt(params?.postOwnerId, 10); // string -> number
-  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
+  const { userId } = tokenStore(state => ({
+    userId: state.tokenState.userId,
+  }));
+  const myId = userId;
+  // const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
 
   const payload = {
     postId,

@@ -23,6 +23,7 @@ import Loading from '../components/common/Loading2';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import LinkHeader from '../shared/LinkHeader';
 import { InputStore } from '../zustand/example/zustandAPI';
+import { tokenStore } from './SignInPage';
 
 function DaengFinderCommentPage() {
   const [alertMsg, setAlertMsg] = useState(false);
@@ -95,14 +96,28 @@ function DaengFinderCommentPage() {
     }),
     shallow,
   );
+
+  const { userId } = tokenStore(
+    state => ({
+      userId: state.tokenState.userId,
+    }),
+    shallow,
+  );
+
   const imageRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
-  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
+
+  // const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
+  const myId = userId;
   // const myId = 2;
   const postId = parseInt(params?.postId, 10); // string -> number
   const postOwnerId = parseInt(params?.postOwnerId, 10); // string -> number
+  console.log(
+    '새로고침 하고 local storage에서 꺼낸 게 아닌데도 id를 기억하려나? >>>',
+    userId,
+  );
   // console.log('postId >>>', postId, 'postOwnerId >>>', postOwnerId);
 
   /**
@@ -176,16 +191,22 @@ function DaengFinderCommentPage() {
       console.log('writePostComment mutation error >>>', err);
       resetFunc();
       setAlertMsg(true);
-      toast.error('댓글 작성 오류!', {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: 'empty-comment-toast',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(
+        // err.code === 'ECONNABORTED' ? err.config.message : '댓글 작성 오류!',
+        err.code === 'ECONNABORTED'
+          ? err.config.message
+          : err.response.data.errorMessage,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'empty-comment-toast',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
     },
   });
 
@@ -209,17 +230,24 @@ function DaengFinderCommentPage() {
     onError: err => {
       console.log('writePostReply error >>>', err);
       resetFunc();
+      const errSegrement = userId
+        ? '다시 로그인 해주세요'
+        : err.response.data.errorMessage;
       setAlertMsg(true);
-      toast.error('답글 작성 오류', {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: 'empty-comment-toast',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(
+        // err.code === 'ECONNABORTED' ? err.config.message : '답글 작성 오류.',
+        err.code === 'ECONNABORTED' ? err.config.message : errSegrement,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'empty-comment-toast',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
     },
   });
 
@@ -232,17 +260,24 @@ function DaengFinderCommentPage() {
     onError: err => {
       console.log('editPostCommentMutation error >>>', err);
       resetFunc();
+      const errSegrement = userId
+        ? '다시 로그인 해주세요'
+        : err.response.data.errorMessage;
       setAlertMsg(true);
-      toast.error('댓글 수정 실패', {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: 'empty-comment-toast',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(
+        // err.code === 'ECONNABORTED' ? err.config.message : '댓글 수정 실패',
+        err.code === 'ECONNABORTED' ? err.config.message : errSegrement,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'empty-comment-toast',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
     },
   });
 
@@ -255,17 +290,23 @@ function DaengFinderCommentPage() {
     onError: err => {
       console.log('deleteCommentMutation error >>>', err);
       resetFunc();
+      const errSegrement = userId
+        ? '다시 로그인 해주세요'
+        : err.response.data.errorMessage;
       setAlertMsg(true);
-      toast.error('댓글 삭제 오류', {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: 'empty-comment-toast',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(
+        err.code === 'ECONNABORTED' ? err.config.message : errSegrement,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'empty-comment-toast',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
     },
   });
 
@@ -278,17 +319,23 @@ function DaengFinderCommentPage() {
     onError: err => {
       console.log('deleteReplyMutation error >>>', err);
       resetFunc();
+      const errSegrement = userId
+        ? '다시 로그인 해주세요'
+        : err.response.data.errorMessage;
       setAlertMsg(true);
-      toast.error('답글 삭제 오류', {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: 'empty-comment-toast',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(
+        err.code === 'ECONNABORTED' ? err.config.message : errSegrement,
+        {
+          position: toast.POSITION.TOP_CENTER,
+          toastId: 'empty-comment-toast',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        },
+      );
     },
   });
 
@@ -449,6 +496,21 @@ function DaengFinderCommentPage() {
     // console.log('multipart 모드 인가요? >>>', image.photo);
     let inputs;
 
+    if (initialComment.trim() === '') {
+      setAlertMsg(true);
+      toast.error('공백은 불가능합니다.', {
+        position: toast.POSITION.TOP_CENTER,
+        toastId: 'empty-comment-toast',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
     if (isEditMode.editMode) {
       if (isEditMode.targetComment) {
         inputs = {
@@ -592,7 +654,7 @@ function DaengFinderCommentPage() {
                   />
                   <Reply
                     commentId={comment.commentId}
-                    // key={reply.childCommentId}
+                    key={comment.createdAt}
                     // reply={reply}
                     // myId={myId}
                     // onReplyMode={onReplyMode}

@@ -8,6 +8,7 @@ import { ReactComponent as CommentLocker } from '../../../assets/images/CommentL
 import { ReactComponent as Ddaeng } from '../../../assets/images/Ddaeng.svg';
 import { ReactComponent as Cancel } from '../../../assets/images/XSmallButton.svg';
 import { dateConvert2 } from '../../../utils/DateConvert';
+import { tokenStore } from '../../../pages/SignInPage';
 
 // const modalStore = create(set => ({
 //   closModal: () => set(() => ({})),
@@ -44,7 +45,11 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
   const params = useParams();
   const postId = parseInt(params?.postId, 10); // string -> number
   const postOwnerId = parseInt(params?.postOwnerId, 10); // string -> number
-  const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
+  const { tokenUserId } = tokenStore(state => ({
+    tokenUserId: state.tokenState.userId,
+  }));
+  // const myId = parseInt(JSON.parse(localStorage.getItem('userId')), 10) || null;
+  const myId = tokenUserId;
   const userId = parseInt(UserId, 10);
 
   /** @description 누르면 답글 모드 */

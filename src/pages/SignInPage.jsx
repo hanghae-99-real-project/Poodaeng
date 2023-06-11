@@ -4,70 +4,64 @@ import React, { useState } from 'react';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
+// eslint-disable-next-line import/no-cycle
 import { signIn } from '../api/sendCode';
 import Logo from '../components/common/Logo';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 import useInput from '../hooks/useInput';
-import { SET_TOKEN } from '../redux/modules/authSlice';
 // import { errorMsg } from '../data/inputs';
 
-const store = set => {
-  const initialState = {
-    authenticated: false,
-    userId: null,
-    accessToken: null,
-    expireTime: null,
-    // userName: '',
-    // email: null,
-  };
-  return {
-    /** @description tokenState가 변경되면 initialState도 변경이 되는가? get()으로 접근이 가능한가? */
-    tokenState: initialState,
-    setToken: (userId, accessToken, acExpireDate) => {
-      console.log(
-        '값 체크. 초기화 값은 절대 변경되면 안 됨. >>>',
-        initialState,
-      );
-      set(
-        () => ({
-          tokenState: {
-            authenticated: true,
-            userId,
-            accessToken,
-            expireTime: acExpireDate,
-          },
-        }),
-        false,
-        'setToken',
-      );
-    },
-    deleteToken: () => {
-      console.log('초기화 값인지 체크 >>>', initialState);
-      set(() => ({
-        tokenState: initialState,
-      }));
-    },
-  };
+const initialState = {
+  authenticated: false,
+  userId:
+    parseInt(JSON.parse(localStorage.getItem('userId'))?.state?.userId, 10) ||
+    null,
+  accessToken: null,
+  expireTime: null,
+  // userName: '',
+  // email: null,
 };
+const store = set => ({
+  /** @description tokenState가 변경되면 initialState도 변경이 되는가? get()으로 접근이 가능한가? */
+  tokenState: initialState,
+  setToken: (userId, accessToken, acExpireDate) => {
+    console.log('값 체크. 초기화 값은 절대 변경되면 안 됨. >>>', initialState);
+    set(
+      () => ({
+        tokenState: {
+          authenticated: true,
+          userId,
+          accessToken,
+          expireTime: acExpireDate,
+        },
+      }),
+      false,
+      'setToken',
+    );
+  },
+  deleteToken: () => {
+    console.log('초기화 값인지 체크 >>>', initialState);
+    set(() => ({
+      tokenState: initialState,
+    }));
+  },
+});
+
+const persistTokenStore = persist(store, {
+  name: 'userId',
+  partialize: state => ({ userId: state.tokenState.userId }),
+});
 
 export const tokenStore = create(
-  persist(
-    process.env.NODE_ENV !== 'production'
-      ? devtools(store, { name: 'tokenStore' })
-      : store,
-    {
-      name: 'userIdTest',
-      // storage: createJSONStorage(() => localStorage),
-      partialize: state => ({ userId: state.tokenState.userId }),
-    },
-  ),
+  process.env.NODE_ENV !== 'production'
+    ? devtools(persistTokenStore, { name: 'tokenStore' })
+    : persistTokenStore,
 );
 
 /* alt shift O = import 정렬 */
@@ -78,7 +72,6 @@ function SignInPage() {
     maximumAge: 1000 * 3600 * 24, // 24 hour
   };
   const [isError, setIsError] = useState(false);
-  /* toast 중복되도 상관없나? */
   const [message, setMessage] = useState(false);
   const { location, error } = useCurrentLocation(geoLocationOptions);
   const { setToken } = tokenStore(
@@ -91,7 +84,7 @@ function SignInPage() {
     phoneNumber: '',
     password: '',
   });
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const isError = true;
   const navigate = useNavigate();
@@ -123,10 +116,10 @@ function SignInPage() {
       const acExpireDate = AC_EXP * 1000; // ms 단위로 변환(?)해서 넣기
       console.log('expireDate type 확인', typeof acExpireDate);
       // setAccessToken(accessToken);
-      localStorage.setItem('accessToken', JSON.stringify(accessToken));
-      localStorage.setItem('userId', JSON.stringify(userId));
-      setToken(userId, accessToken, AC_EXP);
-      dispatch(SET_TOKEN({ userId, accessToken, acExpireDate }));
+      // localStorage.setItem('accessToken', JSON.stringify(accessToken));
+      // localStorage.setItem('userId', JSON.stringify(userId));
+      setToken(userId, accessToken, acExpireDate);
+      // dispatch(SET_TOKEN({ userId, accessToken, acExpireDate }));
 
       onClearInputs();
       navigate('/');
@@ -228,6 +221,8 @@ function SignInPage() {
           <div className='flex flex-col items-center gap-6 mb-8'>
             <div className='relative flex flex-col'>
               <input
+                autoFocus
+                autoComplete='true'
                 type='number'
                 name='phoneNumber'
                 value={inputs.phoneNumber}
@@ -243,6 +238,7 @@ function SignInPage() {
               <input
                 type='password'
                 name='password'
+                autoComplete='true'
                 value={inputs.password}
                 onChange={onChangeInputs}
                 className='w-60 text-base font-bold border-b border-[#CACACA]'
