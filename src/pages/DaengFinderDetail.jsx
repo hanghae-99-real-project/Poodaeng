@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
+import DOMPurify from 'dompurify';
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useQuery } from 'react-query';
@@ -224,9 +225,15 @@ function DaengFinderDetail() {
               </p>
             </div>
             <div className='pt-5'>
-              <p className='font-medium text-xs leading-5 text-[#8C8C8C]'>
+              {/* <p className='font-medium text-xs leading-5 text-[#8C8C8C]'>
                 {data.data.data.content}
-              </p>
+              </p> */}
+              <p
+                className='font-medium text-xs leading-5 text-[#8C8C8C]'
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(data.data.data.content),
+                }}
+              />
             </div>
             <div className='pt-5'>
               <label className='text-xs font-bold mb-2'>상세위치</label>

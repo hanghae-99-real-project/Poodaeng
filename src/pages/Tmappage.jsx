@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 import $ from 'jquery';
-import Tabbar from '../components/Tabbar';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function TmapPage() {
@@ -288,8 +287,9 @@ function TmapPage() {
           </div>
         </div>
       </div>
-      <div id='map_div' className='w-full h-full' />
-      <Tabbar />
+      <div id='map_div' className='w-full h-full'>
+        <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'></div>
+      </div>
     </div>
   );
 }

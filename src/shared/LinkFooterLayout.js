@@ -32,7 +32,7 @@ const store = (set, get) => ({
 
 /* devTools 사용 분기 처리 */
 export const useFooterLayout = create(
-  process.env.NODE_ENV !== 'production'? devtools(store) : store
+  process.env.NODE_ENV !== 'production'? devtools(store, {name: 'checkFooter'}) : store
 )
 
 

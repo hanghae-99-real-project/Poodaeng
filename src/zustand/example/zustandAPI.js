@@ -128,13 +128,18 @@ export const InputStore = create(
 /* -------------------------------------------------- */
 
 
-// const { SwitchFooter } = useFooterLayout(
-//   state => ({
-//     SwitchFooter: state.SwitchFooter,
-//   }),
-//   shallow,
-// );
+const initialValue = ""
+const store = (set)=> ({
+  quillValue: initialValue,
+  setQuillValue: (pureText, htmlText) =>{
+    console.log('순수 텍스트', pureText)
+    console.log('htmlText', htmlText)
+    set(()=> ({quillValue: htmlText}))
+  },
+  clearQuillValue: () => set(()=>({quillValue: initialValue}))
+})
 
+export const useQuillStore = create(subscribeWithSelector(store))
 
 /* -------------------------------------------------- */
 
