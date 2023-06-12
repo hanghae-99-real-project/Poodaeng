@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as MapIcon } from '../assets/images/Map.svg';
-import { ReactComponent as PooBox } from '../assets/images/Poobox.svg';
-import { ReactComponent as DaengIcon } from '../assets/images/daengfinder.svg';
-import { ReactComponent as HomeIcon } from '../assets/images/home.svg';
-import { ReactComponent as ProfileIcon } from '../assets/images/myprofile.svg';
+import { ReactComponent as MapIcon } from '../assets/images/newMap.svg';
+import { ReactComponent as PooBox } from '../assets/images/newPoobox.svg';
+import { ReactComponent as DaengIcon } from '../assets/images/newDaengfinder.svg';
+import { ReactComponent as HomeIcon } from '../assets/images/newHome.svg';
+import { ReactComponent as ProfileIcon } from '../assets/images/newMyprofile.svg';
 
 function Tabbar({ isActive, setIsActive }) {
   const navigate = useNavigate();
