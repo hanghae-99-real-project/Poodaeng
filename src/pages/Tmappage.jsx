@@ -194,24 +194,6 @@ function TmapPage() {
               var pType = '';
               var size;
 
-              if (properties.pointType == 'S') {
-                //출발지 마커
-                markerImg = '../src/assets/images/mypoint.png';
-                pType = 'S';
-                size = new Tmapv2.Size(24, 38);
-              } else if (properties.pointType == 'E') {
-                //도착지 마커
-                markerImg =
-                  'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
-                pType = 'E';
-                size = new Tmapv2.Size(24, 38);
-              } else {
-                //각 포인트 마커
-                markerImg = 'http://topopen.tmap.co.kr/imgs/point.png';
-                pType = 'P';
-                size = new Tmapv2.Size(8, 8);
-              }
-
               // 경로들의 결과값들을 포인트 객체로 변환
               var latlon = new Tmapv2.Point(
                 geometry.coordinates[0],

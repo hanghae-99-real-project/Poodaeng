@@ -8,7 +8,7 @@ function KakaoClickMap({ onMapClick }) {
 
     const mapOption = {
       center: new kakao.maps.LatLng(37.56665, 126.9785),
-      level: 5,
+      level: 4,
     };
 
     const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
