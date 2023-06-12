@@ -8,7 +8,7 @@ function KakaoClickMap({ onMapClick }) {
 
     const mapOption = {
       center: new kakao.maps.LatLng(37.56665, 126.9785),
-      level: 8,
+      level: 4,
     };
 
     const map = new kakao.maps.Map(mapContainerRef.current, mapOption);
@@ -20,7 +20,7 @@ function KakaoClickMap({ onMapClick }) {
 
     const marker = new kakao.maps.Marker({
       position: map.getCenter(),
-      image: markerImage, // 새로운 마커 이미지 적용
+      image: markerImage,
     });
     marker.setMap(map);
 
@@ -34,6 +34,22 @@ function KakaoClickMap({ onMapClick }) {
     };
 
     kakao.maps.event.addListener(map, 'click', onClick);
+
+    // 현재 위치 가져오기
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const { latitude, longitude } = position.coords;
+          const currentPosition = new kakao.maps.LatLng(latitude, longitude);
+          map.setCenter(currentPosition);
+          marker.setPosition(currentPosition);
+          onMapClick(currentPosition);
+        },
+        error => {
+          console.error('Error getting current position:', error);
+        },
+      );
+    }
 
     return () => {
       kakao.maps.event.removeListener(map, 'click', onClick);

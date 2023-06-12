@@ -27,6 +27,7 @@ import DaengFinderCommentPage from '../pages/DaengFinderCommentPage';
 import DaengFinderWritePage from '../pages/DaengFinderWritePage';
 import PooDetail from '../pages/PooDetail';
 import TmapPage from '../pages/Tmappage';
+import TabbarsOutlet from './TabbarsOutlet';
 
 
 // import TokenCheck from '../utils/TokenCheck';
@@ -36,12 +37,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout/>}>
-          <Route path="/" element={<Home />} />
-          <Route path="/alert" element={<Alert />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/map" element={<Map />} />
-          <Route path='/map/:pooId' element={<PooDetail />} />
+      <Route element={<Layout/>}>
           <Route path="/poopost" element={<PooPost />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/loginsocial' element={<LoginSocial />} />
@@ -49,14 +45,10 @@ function Router() {
           <Route path='/signin' element={<SignInPage />}/>
           <Route path='/signup' element={<SignUpPage />}/>
           <Route path='/signupcomplete' element={<CompletePage />}/>
-          <Route path='/mypage' element={<Mypage />}/>
           <Route path='/test' element={<LogoutTest />}/>
-          <Route path='/mypost' element={<MyPost />}/>
-          <Route path='/mybookmark' element={<MyBookMark />}/>
-          <Route path='/profileedit' element={<ProfileEdit />}/>
-          <Route path='/daengfinder' element={<DaengFinder />}/>
           <Route path='/daengfinder/search' element={<DaengFinderSearchPage />} />
           <Route path='/tmap/:pooId' element={<TmapPage />} />
+          <Route path='/map/:pooId' element={<PooDetail />} />
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet
@@ -65,6 +57,17 @@ function Router() {
           <Route path='/daengfinder/detail/:postId' element={<DaengFinderDetail/>}/>
           <Route path='/daengfinder/detail/:postOwnerId/comment/:postId' element={<DaengFinderCommentPage />}/>
           <Route path='/daengfinder/write' element={<DaengFinderWritePage />}/>
+        </Route>
+        <Route element={<TabbarsOutlet />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/alert" element={<Alert />} /> 
+          <Route path="/events" element={<Events />} />
+          <Route path="/map" element={<Map />} />
+          <Route path='/mypage' element={<Mypage />}/>
+          <Route path='/mypost' element={<MyPost />}/>
+          <Route path='/mybookmark' element={<MyBookMark />}/>
+          <Route path='/profileedit' element={<ProfileEdit />}/>
+          <Route path='/daengfinder' element={<DaengFinder />}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,6 @@
 import React from 'react';
-import Kakaoserch from '../components/Kakaoserch';
 import Headers from '../components/Headers';
-import Tabbar from '../components/Tabbar';
+import Kakaoserch from '../components/Kakaoserch';
 // import TmapAPI from '../components/Tmap/TmapAPI';
 
 function Map() {
@@ -12,7 +11,6 @@ function Map() {
       </Headers>
       <Kakaoserch />
       {/* <TmapAPI /> */}
-      <Tabbar />
     </>
   );
 }
