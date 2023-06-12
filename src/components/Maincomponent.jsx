@@ -10,6 +10,7 @@ import Kakaoserch from './Kakaoserch';
 import { getPostLost } from '../api/daengFinder';
 import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
+import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
 
 function Maincomponent() {
   const navigate = useNavigate();
@@ -71,14 +72,11 @@ function Maincomponent() {
           <div className='relative w-[340px] h-40 border ml-4 overflow-y-hidden'>
             <Kakaoserch />
             <div
-              className='relative z-50 bg-[#4a3c7b] w-7 h-7 rounded-full bottom-10 left-72'
+              className='relative left-60 bottom-10 flex items-center justify-center z-50 bg-white w-20 h-7 rounded-md text-xs text-mainColor font-bold shadow-xl'
               onClick={() => navigate('/map')}
             >
-              <img
-                src='./images/Vector 56.png'
-                alt='button'
-                className='absolute z-30 top-[50%] left-[53%] -translate-x-1/2 -translate-y-1/2 '
-              />
+              <div>지도 보기</div>
+              <NextBt className='ml-1' />
             </div>
           </div>
           <div className='border mt-4' />
