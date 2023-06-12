@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import { SlMagnifier } from 'react-icons/sl';
 import { useMutation } from 'react-query';
 // import { useSelector } from 'react-redux';
+import DOMPurify from 'dompurify';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
@@ -11,10 +12,16 @@ import { writePostLost } from '../api/daengFinder';
 import DaengFinderMap from '../components/DaengFinder/DaengFinderWrite/DaengFinderMap';
 import useInput from '../hooks/useInput';
 import LinkHeader from '../shared/LinkHeader';
-import { useLocationStore } from '../zustand/example/zustandAPI';
-import convertCoordinates from '../kakao/KakaoApi';
+import { useLocationStore, useQuillStore } from '../zustand/example/zustandAPI';
+// eslint-disable-next-line import/order
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import useQuill from '../hooks/useQuillEditor';
+import QuillEditor from '../utils/QuillEditor';
+import { useFooterLayout } from '../shared/LinkFooterLayout';
 
 function DaengFinderWritePage() {
+  const quillRef = useRef();
   const [image, setImage] = useState({ photo: [], preview: [] });
   const [alertMsg, setAlertMsg] = useState(false);
   const [mapMode, setMapMode] = useState(false);
@@ -23,6 +30,18 @@ function DaengFinderWritePage() {
     title: '',
     content: '',
   });
+  const [RenderQuill] = useQuill();
+  const { quillValue, setQuillValue, clearQuillValue } = useQuillStore(
+    state => ({
+      quillValue: state.quillValue,
+      setQuillValue: state.setQuillValue,
+      clearQuillValue: state.clearQuillValue,
+    }),
+    shallow,
+  );
+  const { SwitchFooter } = useFooterLayout(state => ({
+    SwitchFooter: state.SwitchFooter,
+  }));
   const [afterfirstSearch, setAfterFirstSearch] = useState(false);
   const { location, roadAddress } = useLocationStore(
     state => ({ location: state.location, roadAddress: state.roadAddress }),
@@ -32,22 +51,18 @@ function DaengFinderWritePage() {
     lostLongitude: '',
     lostLatitude: '',
   });
-  console.log(latlng);
-
-  console.log('image >>>', image);
-  console.log('image[i] >>>', image.photo[0]);
-
-  // const getMarkerPosition = (latitude, longitude) => {
-  //   setLatLng({
-  //     lostLatitude: latitude,
-  //     lostLongitude: longitude,
-  //   });
-  // };
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [['bold', 'italic', 'underline']],
+      handlers: {},
+    },
+  }));
 
   const mutation = useMutation(writePostLost, {
     onSuccess: data => {
       console.log('daengFinderWrite data>>> ', data);
       onClearHandler();
+      clearQuillValue();
       setAlertMsg(true);
       toast.success('개시글 작성 완료', {
         position: toast.POSITION.TOP_CENTER,
@@ -89,7 +104,8 @@ function DaengFinderWritePage() {
     // formData.append('photo', image.photo[0]);
     formData.append('dogname', target.dogname);
     formData.append('title', target.title);
-    formData.append('content', target.content);
+    // formData.append('content', target.content);
+    formData.append('content', quillValue);
     if (image.photo.length > 0) {
       image.photo.forEach(img => {
         // const jsonImg = JSON.stringify(img);
@@ -117,16 +133,12 @@ function DaengFinderWritePage() {
     console.log(Array.from(e.target.files));
 
     const maxSize = 1024 * 1024 * 25;
-    // const fileList = e.target.files;
     const fileList = Array.from(e.target.files);
-    // const photoList = [...image.photo];
     const uploadList = [];
     const previewList = [];
 
-    // if (fileList.length > 5 || fileList.length < 1) {
     if (fileList.length < 1) {
       setAlertMsg(true);
-      /* 이거 1개 안하고 등록할 때도 띄우고 등록 막는 것으로 추가해야 함 */
       toast.error('이미지 1개이상 5개이하 필요', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 5000,
@@ -191,6 +203,7 @@ function DaengFinderWritePage() {
   };
 
   useEffect(() => {
+    SwitchFooter(false);
     setLatLng({
       // lostLatitude: 33.450701,
       // lostLongitude: 126.570667,
@@ -264,13 +277,6 @@ function DaengFinderWritePage() {
                 {(afterfirstSearch && roadAddress) || '실종 위치'}
               </div>
             </div>
-            {/* 1. 최초에는 사진을 등록할 수 있는 박스 한 개가 존재해야 함. 선택한 사진들을 preview로 보여주고 싶음.
-          2. 사진을 여러 개 선택할 경우 그 사진의 개수에 맞춰서 박스가 오른쪽에 추가적으로 생김. 단, 사진의 개수보다 사진을 등록할 수 있는 박스의 개수가 하나 더 많아야 함.
-          3. 특정 사진을 수정하고 싶은 경우에는 특정 사진이 담겨 있는 특정 박스를 눌러서 수정할 수 있어야 함
-          4. 최소 1개의 사진이 필요하고 최대 5개까지 만들 수 있음. 즉, 사진의 개수와 동일하게 박스도 최소 1개 최대 5개까지만 가능함.
-          5. URL.createObjectURL을 사용하고 싶음
-          6. 기본 input태그는 안보이게 display:none으로 처리하고 label로 스타일을 customize 하고 싶음. */}
-
             <div className='pt-6'>
               <div className='pb-2'>
                 사진 등록{' '}
@@ -327,7 +333,17 @@ function DaengFinderWritePage() {
               </div>
             </div>
           </form>
-          <div className='px-6 py-6 h-80'>
+          <div className='px-6 py-6 h-64'>
+            {/* <ReactQuill
+              className='px-6 py-6 h-64'
+              theme='snow'
+              modules={modules}
+              ref={quillRef}
+              onChange={setQuillValue}
+            /> */}
+            <QuillEditor quillRef={quillRef} />
+          </div>
+          {/* <div className='px-6 py-6 h-80'>
             <textarea
               value={target.content}
               name='content'
@@ -336,7 +352,7 @@ function DaengFinderWritePage() {
 허위작성이나 어쩌구 저쩌구를 자제해주세요'
               className='w-full h-full overflow-y-scroll'
             />
-          </div>
+          </div> */}
         </div>
       )}
     </div>

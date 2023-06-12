@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDateDiff } from '../../utils/DateConvert';
@@ -37,7 +38,13 @@ function Card({ isDetail, data }) {
           <h1 className='font-bold text-sm truncate'>{data.title}</h1>
           {isDetail ? (
             // whitespace-normal 이랑 whitespace-nowrap이랑 똑같다
-            <p className=' text-xs w-56   line-clamp-3'>{data.content}</p>
+            // <p className=' text-xs w-56   line-clamp-3'>{data.content}</p>
+            <p
+              className=' text-xs w-56   line-clamp-3'
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(data.content),
+              }}
+            />
           ) : null}
         </div>
         <div>
