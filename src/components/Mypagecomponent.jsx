@@ -15,8 +15,8 @@ function Mypagecomponent() {
   const queryClient = useQueryClient();
   const mutation = useMutation(signOut, {
     onSuccess: data => {
-      console.log('logout query success response >>> ', data);
       queryClient.invalidateQueries('logout');
+      console.log('logout query success response >>> ', data);
     },
     onError: error => {
       console.log(error);
