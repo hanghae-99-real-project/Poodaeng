@@ -31,19 +31,20 @@ function Kakaoserch() {
 
   console.log('data', data.data.getPooAll);
 
-  const { kakao } = window;
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
   const script = document.createElement('script');
   script.src = process.env.REACT_APP_KAKAO_KEY;
   script.async = true;
-  document.head.appendChild(script);
 
   // 스크립트 로드된 이후 지도 초기화
   script.onload = () => {
+    const { kakao } = window;
     kakao.maps.load(() => {
       initializeMap();
     });
   };
+
+  document.head.appendChild(script);
 
   // 지도를 초기화하는 함수
   function initializeMap() {
@@ -252,7 +253,7 @@ function Kakaoserch() {
         <MyGeo
           role='none'
           onClick={initializeMap}
-          className='absolute z-10 w-12 h-12 border right-1 bottom-20 cursor-pointer'
+          className='absolute z-10 w-12 h-12 right-1 bottom-20 cursor-pointer'
         />
       )}
     </div>

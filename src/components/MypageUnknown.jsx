@@ -14,7 +14,7 @@ function MypageUnknown() {
           <div>푸댕의 서비스를 이용하세용!</div>
         </div>
         <button
-          className='large-button bg-[#449AFF] text-white mt-6 mb-3'
+          className='large-button bg-mainColor text-white mt-6 mb-3'
           onClick={() => navigate('/login')}
         >
           로그인/회원가입
