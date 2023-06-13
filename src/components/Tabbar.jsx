@@ -11,7 +11,7 @@ function Tabbar({ isActive, setIsActive }) {
   const navigate = useNavigate();
   const refreshToken = Cookies.get('refreshToken');
 
-  console.log('active', isActive);
+  // console.log('active', isActive);
 
   const HomeIconHandler = () => {
     navigate('/');

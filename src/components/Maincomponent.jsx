@@ -27,8 +27,6 @@ function Maincomponent() {
     <div>오류가 발생했습니다.</div>;
   }
 
-  console.log('data >>>', data);
-
   const AlertNavigateHander = () => {
     navigate('/alert');
   };

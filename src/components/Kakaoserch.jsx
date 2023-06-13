@@ -29,8 +29,6 @@ function Kakaoserch() {
     return <div>오류가 발생했습니다.</div>;
   }
 
-  console.log('data', data.data.getPooAll);
-
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
   const script = document.createElement('script');
   script.src = process.env.REACT_APP_KAKAO_KEY;
@@ -39,9 +37,11 @@ function Kakaoserch() {
   // 스크립트 로드된 이후 지도 초기화
   script.onload = () => {
     const { kakao } = window;
-    kakao.maps.load(() => {
-      initializeMap();
-    });
+    if (mapContainer.current !== null) {
+      kakao.maps.load(() => {
+        initializeMap();
+      });
+    }
   };
 
   document.head.appendChild(script);
@@ -52,6 +52,10 @@ function Kakaoserch() {
     const mapOption = {
       center: new kakao.maps.LatLng(37.5652352, 127.0284288),
     };
+
+    if (mapContainer.current === null) {
+      window.location.reload();
+    }
 
     // 지도 객체 생성 후 컨테이너에 지도 표시
     const map = new kakao.maps.Map(mapContainer.current, mapOption);
