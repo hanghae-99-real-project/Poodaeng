@@ -2,6 +2,7 @@
 import axios from "axios"
 import Cookies from "js-cookie"
 import axiosToken from "./axiosToken"
+import { tokenStore } from "../pages/SignInPage"
 
 const sendCodeNumber = async (inputs) => {
   try {
@@ -31,9 +32,11 @@ const signIn = async (inputs) => {
 }
 
 const signOut = async () => {
+  const { deleteToken } = tokenStore.getState()
   const response = await axiosToken.delete(`${process.env.REACT_APP_SERVER_URL}/api/auth/logout`)
   console.log(response)
   Cookies.remove('refreshToken');
+  deleteToken()
   return response
 }
 export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut}
