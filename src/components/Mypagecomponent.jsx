@@ -37,7 +37,7 @@ function Mypagecomponent() {
     );
   }
   if (isError) {
-    return <div>오류가 발생했습니다.</div>;
+    return <MypageUnknown />;
   }
 
   console.log('mypagecontent>>>', data.data.mypageContent);
