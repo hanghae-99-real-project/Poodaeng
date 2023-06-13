@@ -184,7 +184,8 @@ function DaengFindercomponent() {
             isDetail
               ? 'flex flex-col gap-3  w-full px-6 '
               : 'grid grid-cols-2 gap-3 auto-cols-auto px-6'
-          } min-h-[35.5rem] overflow-y-scroll `}
+          } min-h-[75%] pb-[5rem] overflow-y-scroll `}
+          // } min-h-[35.5rem] overflow-y-scroll `}
         >
           {data?.data?.map(card => {
             return <Card key={card.postId} isDetail={isDetail} data={card} />;
@@ -195,7 +196,7 @@ function DaengFindercomponent() {
           <NoResult />
         </div>
       )}
-      <div className='relative left-0 right-0 '>
+      <div className='relative bottom-16 left-0 right-0 '>
         <DaengFinderButton
           className='absolute bottom-4 left-[6.5rem] cursor-pointer'
           onClick={moveToDaengFinderWrite}
