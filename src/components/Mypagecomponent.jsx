@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Cookies from 'js-cookie';
 import Headers from './Headers';
 import MypageUnknown from './MypageUnknown';
 import Tabbar from './Tabbar';
 import { signOut } from '../api/sendCode';
+import { getMypageCount } from '../api/myPage';
+import Loading from './common/Loading';
 
 function Mypagecomponent() {
-  // const tokens = Cookies.get('tokens');
   const refreshToken = Cookies.get('refreshToken');
   const navigate = useNavigate();
 
@@ -28,6 +29,26 @@ function Mypagecomponent() {
     navigate('/login');
   };
 
+  const { isLoading, isError, data } = useQuery('profile', getMypageCount);
+
+  if (isLoading) {
+    return (
+      <div className='flex flex-col h-[812px] justify-center  items-center'>
+        <Loading />
+      </div>
+    );
+  }
+  if (isError) {
+    return <div>오류가 발생했습니다.</div>;
+  }
+
+  console.log('mypagecontent>>>', data);
+
+  // const pooData = data?.data?.getMyPooData;
+  // if (!pooData) {
+  //   return <Loading />;
+  // }
+
   return (
     <div>
       {refreshToken ? (
@@ -43,28 +64,48 @@ function Mypagecomponent() {
                 />
               </div>
               <div className='flex flex-col justify-center gap-2 ml-3'>
-                <div className='font-bold text-lg '>_yujin_an</div>
+                <div className='font-bold text-2xl '>
+                  _yujin_an<span className='text-[#A4A4A4] ml-1'>님</span>
+                </div>
                 <div className='w-32 h-4 text-sm text-[#AEAEAE]'>
                   _yujin_an@IVE.com
                 </div>
               </div>
             </div>
-            <div className='mt-4 mr-5 mb-5 h-24 text-sm'>안유진 AN YUJIN</div>
+            <div className='flex justify-evenly mt-4 mr-5 mb-5 h-24 text-sm border rounded-lg p-2 bg-[#F3F3F3]'>
+              <div
+                className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer'
+                onClick={() => navigate('/mypost')}
+              >
+                <div> 작성한글</div>
+                <div className='font-bold text-mainColor'>
+                  0<span className='text-black'>개</span>
+                </div>
+              </div>
+              <div className='border' />
+              <div
+                className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer'
+                onClick={() => navigate('/mypoobox')}
+              >
+                <div> 등록한 푸박스</div>
+                <div className='font-bold text-mainColor'>
+                  0<span className='text-black'>개</span>
+                </div>
+              </div>
+              <div className='border' />
+              <div
+                className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer'
+                onClick={() => navigate('/mybookmark')}
+              >
+                <div> 북마크</div>
+                <div className='font-bold text-mainColor'>
+                  0<span className='text-black'>개</span>
+                </div>
+              </div>
+            </div>
             <div className='border mb-5' />
           </div>
           <div className='ml-5 h-52 mb-1.5'>
-            <div
-              className='large-button flex items-center text-lg cursor-pointer'
-              onClick={() => navigate('/mypost')}
-            >
-              내가 작성한 글 보기
-            </div>
-            <div
-              className='large-button flex items-center text-lg cursor-pointer'
-              onClick={() => navigate('/mybookmark')}
-            >
-              북마크
-            </div>
             <div
               className='large-button flex items-center text-lg cursor-pointer'
               onClick={() => navigate('/profileedit')}

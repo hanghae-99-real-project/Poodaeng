@@ -51,10 +51,19 @@ const reportPooBox = async (data) => {
   const {reportContent} = data;
   console.log(pooId)
   console.log(reportContent)
-  const response = await axiosToken.put(`${process.env.REACT_APP_SERVER_URL}/api/report/${pooId}`, reportContent);
+  const response = await axiosToken.put(`/api/report/${pooId}`, reportContent);
   console.log(response)
   return response
 }
 
+// 내 푸박스 조회
+const getMyPooBox = async () => {
+  try {
+    const response = await axiosToken.get(`/api/auth/mypage/mypoo`)
+    return response
+  } catch (error) {
+    return Promise.reject(error.data)
+  }
+};
 
-export { addPooBox, getPooBox, reportPooBox };
+export { addPooBox, getPooBox, reportPooBox, getMyPooBox };
