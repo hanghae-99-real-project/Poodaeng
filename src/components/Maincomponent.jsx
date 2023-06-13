@@ -63,13 +63,13 @@ function Maincomponent() {
           </div>
         </div>
         <div className='relative'>
-          <div className='ml-8 mt-3 font-[700] text-[20px] '>
+          <div className='ml-7 mt-3 font-[700] text-xl '>
             내 주변 푸박스 찾기
           </div>
-          <div className='ml-8 mt-1 font-[500] text-[11px] text-[#808080]'>
+          <div className='ml-7 mt-1 font-[500] text-xs text-[#808080] mb-1'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
-          <div className='relative w-[340px] h-40 border ml-4 overflow-y-hidden'>
+          <div className='relative w-[340px] h-40 border ml-5 overflow-y-hidden'>
             <Kakaoserch />
             <div
               className='relative left-60 bottom-10 flex items-center justify-center z-50 bg-white w-20 h-7 rounded-md text-xs text-mainColor font-bold shadow-xl'
@@ -81,8 +81,8 @@ function Maincomponent() {
           </div>
           <div className='border mt-4' />
         </div>
-        <div className='mt-3 ml-8 font-[700]'>내 주변 실종신고</div>
-        <div className='ml-8 mt-1 font-[500] mb-5 text-[11px] text-[#808080]'>
+        <div className='ml-7 mt-3 font-[700] text-xl'>내 주변 실종신고</div>
+        <div className='ml-7 mt-1 font-[500] text-xs text-[#808080] mb-1'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
         <div className='flex gap-3 w-auto justify-center h-52 overflow-x-auto flex-wrap'>

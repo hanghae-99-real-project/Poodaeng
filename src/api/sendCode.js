@@ -30,7 +30,6 @@ const signIn = async (inputs) => {
 }
 
 const signOut = async () => {
-  console.log(1)
   const response = await axiosToken.delete(`${process.env.REACT_APP_SERVER_URL}/api/auth/logout`)
   console.log(response)
   return response
