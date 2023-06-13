@@ -430,7 +430,7 @@ function DaengFinderWritePage() {
               </div>
             </div>
           </form>
-          <div className='px-6 py-6 h-64'>
+          <div className='px-6 py-6 pb-12 h-64'>
             <QuillEditor />
           </div>
         </div>

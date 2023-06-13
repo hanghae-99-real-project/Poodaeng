@@ -1,21 +1,20 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
 import Cookies from 'js-cookie';
+import React from 'react';
+import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import { signOut } from '../api/sendCode';
 import Headers from './Headers';
 import MypageUnknown from './MypageUnknown';
 import Tabbar from './Tabbar';
-import { signOut } from '../api/sendCode';
 
 function Mypagecomponent() {
   // const tokens = Cookies.get('tokens');
   const refreshToken = Cookies.get('refreshToken');
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
   const mutation = useMutation(signOut, {
     onSuccess: data => {
-      queryClient.invalidateQueries('logout');
       console.log('logout query success response >>> ', data);
     },
     onError: error => {
