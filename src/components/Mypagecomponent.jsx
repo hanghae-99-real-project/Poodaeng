@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { getMypageCount } from '../api/myPage';
 import { signOut } from '../api/sendCode';
 import Headers from './Headers';
-import MypageUnknown from './MypageUnknown';
 import Tabbar from './Tabbar';
 import Loading from './common/Loading';
 
@@ -36,11 +35,11 @@ function Mypagecomponent() {
       </div>
     );
   }
+
   if (isError) {
-    return <MypageUnknown />;
+    return navigate('/unknown');
   }
 
-  console.log('mypagecontent>>>', data.data.mypageContent);
   const { mypageContent } = data.data;
 
   // const pooData = data?.data?.getMyPooData;
@@ -126,7 +125,7 @@ function Mypagecomponent() {
           </div>
         </div>
       ) : (
-        <MypageUnknown />
+        navigate('/unknown')
       )}
     </div>
   );

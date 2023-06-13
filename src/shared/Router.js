@@ -29,6 +29,7 @@ import PooDetail from '../pages/PooDetail';
 import TmapPage from '../pages/Tmappage';
 import TabbarsOutlet from './TabbarsOutlet';
 import MyPooboxcomponent from '../components/MyPooboxcomponent';
+import Unknown from '../pages/Unknown';
 
 
 // import TokenCheck from '../utils/TokenCheck';
@@ -50,6 +51,7 @@ function Router() {
           <Route path='/daengfinder/search' element={<DaengFinderSearchPage />} />
           <Route path='/tmap/:pooId' element={<TmapPage />} />
           <Route path='/map/:pooId' element={<PooDetail />} />
+          <Route path='/unknown' element={<Unknown />} />
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet

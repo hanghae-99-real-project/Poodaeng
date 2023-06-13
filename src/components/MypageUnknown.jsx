@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Headers from './Headers';
-import Tabbar from './Tabbar';
 
 function MypageUnknown() {
   const navigate = useNavigate();
@@ -20,9 +19,7 @@ function MypageUnknown() {
           로그인/회원가입
         </button>
       </div>
-      <div className='mt-0.5'>
-        <Tabbar />
-      </div>
+      <div className='mt-0.5' />
     </div>
   );
 }
