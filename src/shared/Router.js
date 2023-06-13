@@ -28,7 +28,7 @@ import DaengFinderWritePage from '../pages/DaengFinderWritePage';
 import PooDetail from '../pages/PooDetail';
 import TmapPage from '../pages/Tmappage';
 import TabbarsOutlet from './TabbarsOutlet';
-import MyPooboxcomponent from '../components/MyPostcomponent copy';
+import MyPooboxcomponent from '../components/MyPooboxcomponent';
 
 
 // import TokenCheck from '../utils/TokenCheck';

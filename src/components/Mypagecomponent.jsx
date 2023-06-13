@@ -42,6 +42,7 @@ function Mypagecomponent() {
 
   console.log('mypagecontent>>>', data.data.mypageContent);
   const { mypageContent } = data.data;
+
   // const pooData = data?.data?.getMyPooData;
   // if (!pooData) {
   //   return <Loading />;
@@ -77,7 +78,7 @@ function Mypagecomponent() {
               >
                 <div> 작성한글</div>
                 <div className='font-bold text-mainColor'>
-                  {mypageContent[0]}
+                  {mypageContent[1]}
                   <span className='text-black'>개</span>
                 </div>
               </div>
@@ -88,7 +89,7 @@ function Mypagecomponent() {
               >
                 <div> 등록한 푸박스</div>
                 <div className='font-bold text-mainColor'>
-                  {mypageContent[1]}
+                  {mypageContent[0]}
                   <span className='text-black'>개</span>
                 </div>
               </div>
