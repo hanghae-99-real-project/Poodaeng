@@ -15,9 +15,11 @@ const useFishStore = create((set) => ({
 
 /* 위도 경도 구한 값을을 DaengFinderWritePage 전에 혹은 DaengFinderMap을 바로 꽂아주자. */
 /* 값 구하는 건 DaengFinderWritePage 이전 페이지에서 구해야 함. */
+const initRoadAddress = ''
+const initLocation = {latitude: 0, longitude: 0}
 const locationStore = subscribeWithSelector((set, get)=> ({
-  location: {latitude: 0, longitude: 0},
-  roadAddress: '',
+  location: {...initLocation},
+  roadAddress: initRoadAddress,
   setLocation: (latitude, longitude)=> set(()=>({
     location: {latitude, longitude},
   })),
@@ -51,7 +53,8 @@ const locationStore = subscribeWithSelector((set, get)=> ({
         roadAddress: error
       }))
     }
-  }
+  },
+  clearRoadAddresss: () => set(()=>({roadAddress: initRoadAddress, location: {...initLocation}}))
 }))
 
 
@@ -130,13 +133,14 @@ export const InputStore = create(
 
 const initialValue = ""
 const store = (set)=> ({
+  pureText: initialValue,
   quillValue: initialValue,
   setQuillValue: (pureText, htmlText) =>{
     console.log('순수 텍스트', pureText)
     console.log('htmlText', htmlText)
-    set(()=> ({quillValue: htmlText}))
+    set(()=> ({pureText ,quillValue: htmlText}))
   },
-  clearQuillValue: () => set(()=>({quillValue: initialValue}))
+  clearQuillValue: () => set(()=>({pureText:initialValue ,quillValue: initialValue}))
 })
 
 export const useQuillStore = create(subscribeWithSelector(store))

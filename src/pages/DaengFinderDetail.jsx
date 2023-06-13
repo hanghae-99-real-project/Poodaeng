@@ -4,25 +4,39 @@
 import DOMPurify from 'dompurify';
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import { shallow } from 'zustand/shallow';
-import { searchPostLostDetail } from '../api/daengFinder';
+import { deleteMyPost, searchPostLostDetail } from '../api/daengFinder';
 import { ReactComponent as Badge } from '../assets/images/Badge1.svg';
+import { ReactComponent as CheckedPurple } from '../assets/images/CheckedPurple.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
+import { ReactComponent as WhiteDdaeng } from '../assets/images/WhiteDdaeng.svg';
 import Loading from '../components/common/Loading2';
 import KakaoMap from '../kakao/KakaoMap';
 import { useClipStore } from '../shared/LinkFooter';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import { dateConvert2 } from '../utils/DateConvert';
+import { tokenStore } from './SignInPage';
+import { toastSuccess } from '../utils/ToastFreeSetting';
+
 // import useCurrentLocation from '../hooks/useCurrentLocation';
 
 function DaengFinderDetail() {
+  const [errorMsg, setErrorMsg] = useState(false);
   const [daengList, setDaengList] = useState([]);
-  // const [daeng, setDaeng] = useState('/images/DoggyExample.png');
   const [daeng, setDaeng] = useState();
   const [activeBtn, setActiveBtn] = useState(0);
-  /* 이거 마커 포지션 안움직일 수도 있으니까 initVal을 현재 위치로 해야 함 */
+  const [editModal, setEditModal] = useState(false);
+  const [passPostId, setPassPostId] = useState('');
+  const [moreInfo, setMoreInfo] = useState({
+    createdAt: '',
+    address: '',
+    title: '',
+    content: '',
+    dogname: '',
+  });
   const [markerPotision, setMarkerPosition] = useState({
     lostLatitude: 0,
     lostLongitude: 0,
@@ -45,57 +59,86 @@ function DaengFinderDetail() {
     }),
     shallow,
   );
-
-  /**
-   * @checkPoint
-   * @param {Number} latitude
-   * @param {Number} longitude
-   */
-
+  const { userId: myId } = tokenStore(
+    state => ({
+      userId: state.tokenState.userId,
+    }),
+    shallow,
+  );
   const { SwitchFooter } = useFooterLayout(
     state => ({
       SwitchFooter: state.SwitchFooter,
     }),
     shallow,
   );
+
   const navigate = useNavigate();
   const location = useLocation();
-  console.log('location >>>', location);
-
+  const reDirection = location.state?.destination || null;
   const params = useParams();
   /**
    * @description {postId} 얘 문자형 숫자임.
    */
-  const { postId } = params;
+  let { postId } = params;
+  postId = parseInt(postId, 10);
+  console.log('postId 살아있는지 확인 >>>', postId);
 
-  console.log('markerposition >>> ', markerPotision);
-  // const imageList = [
-  //   '/images/DoggyExample.png',
-  //   '/images/DoggyExample.png',
-  //   '/images/DoggyExample.png',
-  //   '/images/MockImg.svg',
-  // ];
+  const queryClient = useQueryClient();
+  const deleteMutation = useMutation(deleteMyPost, {
+    onMutate: (variables, context) => {
+      console.log('Mutation about to start >>>', variables);
+      const previous = context;
+      console.log('previous >>>', previous);
+    },
+    onSuccess: (data, variables) => {
+      console.log('deleteMutation success >>>', data);
+      console.log('deleteMutation parameter >>>', variables);
+      queryClient.removeQueries(['daengFinderDetail', postId]);
+      navigate(reDirection || '/daengfinder', {
+        state: '게시글 삭제 완료',
+      });
+    },
+    onError: error => {
+      console.log('deleteMutation error >>>', error);
+    },
+  });
 
-  // const imageHandler = idx => {
-  //   // eslint-disable-next-line no-use-before-define
-  //   setDaeng(imageList[idx]);
-  //   setActiveBtn(idx);
-  // };
   const imageHandler = idx => {
     // eslint-disable-next-line no-use-before-define
     setDaeng(daengList[idx]);
     setActiveBtn(idx);
   };
 
-  // useEffect(() => {
-  //   /* 잘 되는구만 캬캬 */
-  //   const response = convertCoordinates(
-  //     markerPotision.latitude,
-  //     markerPotision.longitude,
-  //   );
-  //   console.log('좌표 변환 값 >>>', response);
-  // }, [markerPotision.latitude, markerPotision.longitude]);
+  const editModeHandler = () => {
+    setEditModal(prev => !prev);
+  };
 
+  const { isLoading, data, isError, error } = useQuery(
+    ['daengFinderDetail', postId],
+    () => searchPostLostDetail(postId),
+    {
+      enabled: !daeng,
+      refetchOnWindowFocus: false,
+      onSuccess: successData => {
+        console.log('useQuery >>>', successData);
+      },
+    },
+  );
+  const moveToPostEditPage = () => {
+    navigate('/daengfinder/write', {
+      state: {
+        passPostId,
+        daengList,
+        latitude: markerPotision.lostLatitude,
+        longitude: markerPotision.lostLongitude,
+        createdAt: moreInfo.createdAt,
+        dogname: moreInfo.dogname,
+        title: moreInfo.title,
+        content: moreInfo.content,
+        address: moreInfo.address,
+      },
+    });
+  };
   useEffect(() => {
     SwitchFooter(true);
   }, []);
@@ -104,25 +147,21 @@ function DaengFinderDetail() {
     setClipAddress(location.pathname);
   }, [location, navigate]);
 
-  const { isLoading, data, isError, error } = useQuery(
-    ['daengFinderDetail', postId],
-    () => searchPostLostDetail(postId),
-    {
-      enabled: !daeng,
-      refetchOnWindowFocus: false,
-      // onSuccess: () => {
-      //   setDaengList(data?.data?.data?.lostPhotoUrl || []);
-      //   setDaeng(data?.data?.data?.lostPhotoUrl[0] || null);
-      // },
-    },
-  );
-
   useEffect(() => {
     console.log('useEffect processed');
+    const deepData = data?.data?.data;
     setDaengList(data?.data?.data?.lostPhotoUrl || []);
     setDaeng(data?.data?.data?.lostPhotoUrl[0] || null);
+    setPassPostId(data?.data?.data?.postId);
     getPostId(data?.data?.data?.postId);
     getUserId(data?.data?.data?.UserId);
+    setMoreInfo({
+      createdAt: deepData?.createdAt,
+      address: deepData?.address,
+      title: deepData?.title,
+      content: deepData?.content,
+      dogname: deepData?.dogname,
+    });
   }, [data]);
 
   /** @checkPoint return문 없어도(순차적인 렌더링 없이) query 적용되는지 확인해보자. */
@@ -137,11 +176,17 @@ function DaengFinderDetail() {
 
   if (isError) {
     console.log('error >>> ', error);
-    return (
-      <div className='f-ic-jc w-full h-full'>
-        <Loading />
-      </div>
-    );
+    setErrorMsg(true);
+    toast.error('Error occured while Loading', {
+      position: toast.POSITION.TOP_CENTER,
+      toastId: 'empty-comment-toast',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   }
 
   /** @camelCase 아닌 게 많다. 조심. */
@@ -155,10 +200,17 @@ function DaengFinderDetail() {
 
   return (
     <div className='h-full w-full'>
+      {errorMsg && <ToastContainer />}
       <IoIosArrowBack
         className='absolute z-30 top-7 left-4 text-xl cursor-pointer'
-        onClick={() => navigate('/daengfinder')}
+        onClick={() => navigate(reDirection ? '/mypost' : '/daengfinder')}
       />
+      {deepData?.UserId === myId ? (
+        <WhiteDdaeng
+          className='absolute z-30 top-6 right-4  cursor-pointer'
+          onClick={editModeHandler}
+        />
+      ) : null}
       <div className={`fixed inset-0 z-30 ${onModal ? '' : 'hidden'}`}>
         <div role='none' className='absolute inset-0 bg-black opacity-30' />
         <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 f-fc-ic-jc  bg-[#FFFFFF] rounded-md  shadow-lg px-14 py-8'>
@@ -250,12 +302,42 @@ function DaengFinderDetail() {
                 {/* <span>2023.05.03</span> */}
                 <span>{dateConvert2(createdAt)[2]}</span>
                 <span>|</span>
-                <span>조회 34 회</span>
+                <span>{deepData.views}&nbsp;회</span>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {editModal && (
+        <div className='absolute z-50 inset-0'>
+          <div role='none' className='absolute inset-0 bg-black opacity-30' />
+          <div className='absolute f-fc justify-end bottom-0 left-0 right-0 rounded-t-xl bg-[#FFFFFF]'>
+            <div className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'>
+              <CheckedPurple />
+              &nbsp;찾았어요
+            </div>
+            <div
+              className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'
+              onClick={moveToPostEditPage}
+            >
+              수정하기
+            </div>
+
+            <div
+              className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'
+              onClick={() => deleteMutation.mutate(postId)}
+            >
+              삭제하기
+            </div>
+            <div
+              className='f-ic-jc py-6 pb-8 border-b border-solid text-white bg-mainColor cursor-pointer'
+              onClick={editModeHandler}
+            >
+              취소
+            </div>
+          </div>
+        </div>
+      )}
     </div>
     // <div className='h-full w-full'>
     //   <IoIosArrowBack

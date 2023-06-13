@@ -24,6 +24,7 @@ import { useFooterLayout } from '../shared/LinkFooterLayout';
 import LinkHeader from '../shared/LinkHeader';
 import { InputStore } from '../zustand/example/zustandAPI';
 import { tokenStore } from './SignInPage';
+import { toastSuccess } from '../utils/ToastFreeSetting';
 
 function DaengFinderCommentPage() {
   const [alertMsg, setAlertMsg] = useState(false);
@@ -176,6 +177,7 @@ function DaengFinderCommentPage() {
       // queryClient.invalidateQueries(['getComment', variables.postId]);
       if (image.preview) URL.revokeObjectURL(image.preview);
       setImage({ photo: '', preview: '' });
+      setAlertMsg(true);
       toast.success('댓글 작성 완료!', {
         position: toast.POSITION.TOP_CENTER,
         toastId: 'empty-comment-toast',
@@ -216,6 +218,7 @@ function DaengFinderCommentPage() {
       // queryClient.invalidateQueries(['getReply', postId]);
       resetFunc();
       queryClient.invalidateQueries(['getReply', isCommentMode.commentId]);
+      setAlertMsg(true);
       toast.success('답글 작성 완료!', {
         position: toast.POSITION.TOP_CENTER,
         toastId: 'empty-comment-toast',
@@ -256,6 +259,8 @@ function DaengFinderCommentPage() {
       // console.log('editPostCommentMutation success >>>', dt);
       resetFunc();
       queryClient.invalidateQueries(['getComment', postId]);
+      setAlertMsg(true);
+      toastSuccess('댓글 수정 완료');
     },
     onError: err => {
       console.log('editPostCommentMutation error >>>', err);
@@ -443,9 +448,10 @@ function DaengFinderCommentPage() {
     setIsCommentMode(prev => ({
       ...prev,
       inputMode: true,
+      // absolutePrivate:
+      //   isCommentMode.absolutePrivate || isEditMode.absolutePrivate, // true면 무조건 private 모드 해제 불가능
       // commentId: null,
       // targetComment: true, // true면 댓글 false면 답글모드 + 카메라 불가능
-      // absolutePrivate: false, // true면 무조건 private 모드 해제 불가능
     }));
     event.stopPropagation();
   };
@@ -484,6 +490,11 @@ function DaengFinderCommentPage() {
     }
   };
 
+  console.log(
+    'isCommentMode private Final check >>>',
+    isCommentMode.absolutePrivate,
+  );
+  console.log('private Final check >>>', privateComment);
   const saveInputHandler = () => {
     /* 댓글 저장 로직 */
     // setImage((prev)=> ({...prev, preview: ''}));
@@ -537,7 +548,7 @@ function DaengFinderCommentPage() {
       inputs = {
         formData: {
           childComment: initialComment,
-          isPrivate: privateComment,
+          isPrivate: isCommentMode.absolutePrivate,
         },
         commentId: isCommentMode.commentId,
         postId,
@@ -582,12 +593,20 @@ function DaengFinderCommentPage() {
 
   if (isError) {
     console.log('comment page error >>>', error);
-    // navigate('/daengfinder');
-    return (
-      <div className='f-ic-jc w-full h-full'>
-        <Loading />
-      </div>
-    );
+    setAlertMsg(true);
+    toast.error('Error occured while Loading', {
+      position: toast.POSITION.TOP_CENTER,
+      toastId: 'empty-comment-toast',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setTimeout(() => {
+      navigate(-1);
+    }, 1000);
   }
   // console.log('getComment data >>>', data);
   // console.log('dataList >>>', data.data?.commentsData);
@@ -664,31 +683,6 @@ function DaengFinderCommentPage() {
               );
             })
           : null}
-        {/* {commentList.map(comment => {
-          return (
-            <>
-              <Comment
-                key={comment.commentId}
-                cmt={comment}
-                myId={myId}
-                enlargePhoto={enlargePhoto}
-                onReplyMode={onReplyMode}
-              />
-              {replyList
-                .filter(ele => ele.CommentId === comment.commentId)
-                .map(reply => {
-                  return (
-                    <Reply
-                      key={reply.childCommentId}
-                      reply={reply}
-                      myId={myId}
-                      onReplyMode={onReplyMode}
-                    />
-                  );
-                })}
-            </>
-          );
-        })} */}
       </div>
       {/* 모달 댓글 등록 창 컴포넌트로 분리 & zustand 해서 렌더링 최적화 ㄱ */}
       {/* 댓글 모드 모달 */}
@@ -741,11 +735,14 @@ function DaengFinderCommentPage() {
           {isCommentMode.inputMode &&
             isCommentMode.targetComment &&
             !isEditMode.editMode && (
-              <div className='w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white shadow-md cursor-pointer'>
+              <div
+                className='w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white shadow-md cursor-pointer'
+                onClick={() => imageRef.current.click()}
+              >
                 <Camera
                   title='upload image'
                   className='object-contain w-4 h-auto'
-                  onClick={() => imageRef.current.click()}
+                  // onClick={() => imageRef.current.click()}
                 />
                 <input
                   ref={imageRef}

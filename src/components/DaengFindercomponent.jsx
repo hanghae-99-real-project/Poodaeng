@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import Cookies from 'js-cookie';
+import React, { useEffect, useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import { shallow } from 'zustand/shallow';
 import { getPostLost } from '../api/daengFinder';
 import { ReactComponent as DaengFinderButton } from '../assets/images/DaengFinderMenu.svg';
 import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
 import { areaList } from '../data/Areas';
 import useCurrentLocation from '../hooks/useCurrentLocation';
+import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useLocationStore } from '../zustand/example/zustandAPI';
 import Card from './DaengFinder/Card';
 import Loading from './common/Loading';
@@ -20,6 +23,7 @@ function DaengFindercomponent() {
   const [selectedArea, setSelectedArea] = useState('마포구 연남동');
   const [isShow, setIsShow] = useState(false);
   const [isDetail, setIsDetail] = useState(true);
+  const [alertMsg, setAlertMsg] = useState(false);
   const { setLocation } = useLocationStore(
     prev => ({
       setLocation: prev.setLocation,
@@ -27,9 +31,11 @@ function DaengFindercomponent() {
     shallow,
   );
   const response = useCurrentLocation();
+  const loc = useLocation();
   const location = response?.location;
   const latitude = location?.latitude;
   const longitude = location?.longitude;
+  const checkRefreshToken = Cookies.get('refreshToken');
   setLocation(latitude, longitude);
 
   const navigate = useNavigate();
@@ -42,8 +48,29 @@ function DaengFindercomponent() {
   };
 
   const moveToDaengFinderWrite = () => {
+    if (!checkRefreshToken) {
+      setAlertMsg(true);
+      toast.error('로그인 후 이용해 주세요', {
+        position: toast.POSITION.TOP_CENTER,
+        toastId: 'empty-comment-toast',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
     navigate('/daengfinder/write');
   };
+
+  useEffect(() => {
+    if (loc.state) {
+      setAlertMsg(true);
+      toastSuccess(loc.state);
+    }
+  }, []);
 
   // eslint-disable-next-line no-unused-vars
   const { data, isLoading, error, isError } = useQuery(
@@ -74,6 +101,7 @@ function DaengFindercomponent() {
 
   return (
     <>
+      {alertMsg && <ToastContainer />}
       <div className='flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] pb-5 mb-7 border-b shadow-md'>
         <div className='w-[30px]' />
         <div className='font-bold text-xl '>댕 finder</div>
@@ -154,19 +182,13 @@ function DaengFindercomponent() {
           // 46.6875rem
           className={`${
             isDetail
-              ? 'flex flex-col gap-3 h-f w-full px-6 '
+              ? 'flex flex-col gap-3  w-full px-6 '
               : 'grid grid-cols-2 gap-3 auto-cols-auto px-6'
           } min-h-[35.5rem] overflow-y-scroll `}
         >
           {data?.data?.map(card => {
             return <Card key={card.postId} isDetail={isDetail} data={card} />;
           })}
-          {/* <Card isDetail={isDetail} />
-        <Card isDetail={isDetail} />
-        <Card isDetail={isDetail} />
-        <Card isDetail={isDetail} />
-        <Card isDetail={isDetail} />
-        <Card isDetail={isDetail} /> */}
         </div>
       ) : (
         <div className='h-full w-full f-ic-jc relative top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2'>

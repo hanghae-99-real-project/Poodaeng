@@ -1,8 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { create } from 'zustand';
-import { shallow } from 'zustand/shallow';
 import { devtools } from 'zustand/middleware';
+import { shallow } from 'zustand/shallow';
 import LinkFooter from './LinkFooter';
 
 
@@ -64,16 +64,11 @@ function LinkFooterLayout() {
   }), shallow);
 
   return (
-    // <div className=' w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-yellow-400'>
-      // <div className='w-screen h-[calc(var(--vh,1vh)*100)+65px] flex justify-center items-center bg-yellow-400'>
       <div className='w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-yellow-400'>
-        {/* <div className='test-canvas'>  */}
-        {/* <div className='canvas max-h-[(812-40)px] pt-0'>  */}
-        {/* <div className='canvas max-h-[772px] pt-0'>  */}
         <div className='canvas pt-0 '> 
           {/* {willUseHeader && <LinkHeader />} */}
           <Outlet />
-          {willUseFooter && <LinkFooter />}
+          {willUseFooter && <LinkFooter/>}
         </div>
       </div>
     // </div>

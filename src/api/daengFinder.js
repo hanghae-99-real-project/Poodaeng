@@ -83,16 +83,34 @@ const editPostComment = async(inputs) => {
 }
 
 const deletePostComment = async(inputs) => {
-  const {postId, commentId} = inputs;
+  const { postId, commentId } = inputs;
   const response = await axiosToken.delete(`/api/lostposts/${postId}/comments/${commentId}`)
   return response
 }
 
 const deletePostReply = async(inputs) => {
-  const {postId, commentId, childCommentId} =inputs;
+  const { postId, commentId, childCommentId } =inputs;
   const response = await axiosToken.delete(`/api/lostposts/${postId}/comments/${commentId}/childcomments/${childCommentId}`)
   return response
 }
 
-export { writePostLost, getPostLost, searchPostLost, searchPostLostDetail, bookMarkLostPost, getPostComment, getPostReply, writePostComment, writePostReply, editPostComment, deletePostComment, deletePostReply };
+const editMyPost = async(inputs) => {
+  const { postId, formData } = inputs;
+  console.log('postId Type',typeof postId)
+  console.log('formData >>>', formData)
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data'
+    }
+  }
+  const response = await axiosToken.put(`/api/lostPosts/${postId}`, formData, config)
+  return response
+}
+
+const deleteMyPost = async(postId) => {
+  const response = await axiosToken.delete(`/api/lostposts/${postId}`)
+  return response
+}
+
+export { writePostLost, getPostLost, searchPostLost, searchPostLostDetail, bookMarkLostPost, getPostComment, getPostReply, writePostComment, writePostReply, editPostComment, deletePostComment, deletePostReply, editMyPost, deleteMyPost };
 

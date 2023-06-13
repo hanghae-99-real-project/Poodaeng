@@ -1,5 +1,5 @@
 import React from 'react';
-import MyBookmarkcomponent from '../components/MyBookmarkcomponent';
+import MyBookmarkcomponent from '../components/MyPostcomponent';
 
 function MyBookMark() {
   return <MyBookmarkcomponent />;

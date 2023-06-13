@@ -41,6 +41,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
     isPrivate,
     commentId,
   } = cmt;
+  console.log('안쪽 isPrivate 상태 체크', isPrivate);
 
   const params = useParams();
   const postId = parseInt(params?.postId, 10); // string -> number
@@ -54,6 +55,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
 
   /** @description 누르면 답글 모드 */
   const onReplyMode = () => {
+    console.log('답글 모드 private check >>>', isPrivate);
     setIsCommentMode(prev => ({
       ...prev,
       inputMode: true,
@@ -148,81 +150,6 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
         </div>
       )}
     </div>
-    // <div
-    //   className={`relative f-fc gap-4 py-6 px-6 border-b border-solid ${
-    //     isPrivate && 'bg-[#F6F6F6]'
-    //   }`}
-    // >
-    //   <div className='f-fr-ic justify-between'>
-    //     <div className='f-fr-ic gap-2'>
-    //       <div className='f-ic-jc rounded-full w-8 h-8 overflow-hidden'>
-    //         {/* <img className='image' src={Badge} alt='no' /> */}
-    //         <img className='image' src={userPhoto || Badge} alt='photoThumb' />
-    //       </div>
-    //       <h1 className='f-fr-ic font-semibold text-xl leading-6'>
-    //         {nickname} {isPrivate && <IoMdLock className='text-base' />}
-    //       </h1>
-    //     </div>
-    //     {editMode && (
-    //       <div>
-    //         <div
-    //           role='none'
-    //           className='absolute inset-0'
-    //           onClick={closeEditMode}
-    //         />
-    //         <div className='absolute right-4 top-5 rounded-md overflow-hidden bg-white shadow-lg'>
-    //           <div className='relative py-3 px-20 border-b border-solid '>
-    //             수정하기
-    //             <Cancel
-    //               className='absolute right-1 top-1 w-5 h-5'
-    //               onClick={closeEditMode}
-    //             />
-    //           </div>
-    //           <div className='py-3 px-20'>삭제하기</div>
-    //         </div>
-    //       </div>
-    //     )}
-    //     {/* {editMode && (
-    //       <div className='absolute right-4 top-5 rounded-md overflow-hidden bg-white shadow-lg'>
-    //         <div className='relative py-3 px-20 border-b border-solid '>
-    //           수정하기
-    //           <Cancel
-    //             className='absolute right-1 top-1 w-5 h-5'
-    //             onClick={closeEditMode}
-    //           />
-    //         </div>
-    //         <div className='py-3 px-20'>삭제하기</div>
-    //       </div>
-    //     )} */}
-    //     <Ddaeng className='w-1 h-5' onClick={openEditMode} />
-    //   </div>
-    //   <div className='f-fc gap-1 pl-10'>
-    //     {commentPhotoUrl && (
-    //       <div className='f-ic-jc w-28 h-28 mb-3'>
-    //         <img
-    //           role='none'
-    //           src={`${commentPhotoUrl}`}
-    //           alt='photoThumb'
-    //           className='image rounded-xl shadow-md'
-    //           onClick={enlargePhoto}
-    //         />
-    //       </div>
-    //     )}
-    //     <div className='pr-12 font-medium text-sm'>{comment}</div>
-    //     <div className='f-fr-ic-jb'>
-    //       <span className='font-medium text-sm text-[#A8A8A8]'>
-    //         {/* 2023. 5. 12 17:03 */}
-    //         {dateConvert2(createdAt)[0]}
-    //       </span>
-    //       <button
-    //         className='px-2 py-1 whitespace-nowrap font-medium text-xs leading-5 border border-solid rounded-2xl'
-    //         onClick={onReplyMode}
-    //       >
-    //         답글달기
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
 

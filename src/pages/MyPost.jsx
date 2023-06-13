@@ -1,8 +1,14 @@
 import React from 'react';
-import MyPostcomponent from '../components/MyBookmarkcomponent';
+import MyPostcomponent from '../components/MyPostcomponent';
+import Tabbar from '../components/Tabbar';
 
 function MyPost() {
-  return <MyPostcomponent />;
+  return (
+    <>
+      <MyPostcomponent />
+      <Tabbar />
+    </>
+  );
 }
 
 export default MyPost;

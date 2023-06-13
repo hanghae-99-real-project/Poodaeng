@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDateDiff } from '../../utils/DateConvert';
 
-function Card({ isDetail, data }) {
+function Card({ isDetail, data, linkAddress }) {
   const navigate = useNavigate();
   return (
     <div
@@ -13,7 +13,13 @@ function Card({ isDetail, data }) {
           : 'flex-col gap-2'
       } `}
       // onClick={() => navigate('/daengfinder/detail')}
-      onClick={() => navigate(`/daengfinder/detail/${data.postId}`)}
+      onClick={() =>
+        navigate(`/daengfinder/detail/${data.postId}`, {
+          state: {
+            destination: linkAddress || '',
+          },
+        })
+      }
     >
       <div
         className={`f-ic-jc ${
@@ -42,7 +48,9 @@ function Card({ isDetail, data }) {
             <p
               className=' text-xs w-56   line-clamp-3'
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(data.content),
+                __html: DOMPurify.sanitize(data.content, {
+                  ALLOWED_TAGS: ['p'],
+                }),
               }}
             />
           ) : null}

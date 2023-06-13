@@ -1,36 +1,50 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 import { SlMagnifier } from 'react-icons/sl';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 // import { useSelector } from 'react-redux';
-import DOMPurify from 'dompurify';
+import 'react-quill/dist/quill.snow.css';
+import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
-import { writePostLost } from '../api/daengFinder';
+import { editMyPost, writePostLost } from '../api/daengFinder';
 import DaengFinderMap from '../components/DaengFinder/DaengFinderWrite/DaengFinderMap';
 import useInput from '../hooks/useInput';
-import LinkHeader from '../shared/LinkHeader';
-import { useLocationStore, useQuillStore } from '../zustand/example/zustandAPI';
-// eslint-disable-next-line import/order
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import useQuill from '../hooks/useQuillEditor';
-import QuillEditor from '../utils/QuillEditor';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
+import LinkHeader from '../shared/LinkHeader';
+import QuillEditor from '../utils/QuillEditor';
+import { useLocationStore, useQuillStore } from '../zustand/example/zustandAPI';
+import { toastSuccess } from '../utils/ToastFreeSetting';
 
 function DaengFinderWritePage() {
-  const quillRef = useRef();
+  const pageLocation = useLocation();
+  const Ps = pageLocation.state;
+  console.log('넘어온 navigate state >>>', Ps);
+
+  const checkPostId = Ps?.passPostId ?? '';
+  const daengList = Ps?.daengList ?? [];
+  const latitude = Ps?.latitude ?? '';
+  const longitude = Ps?.longitude ?? '';
+  const createdAt = Ps?.createdAt ?? '';
+  const dogname = Ps?.dogname ?? '';
+  const title = Ps?.title ?? '';
+  const content = Ps?.content ?? '';
+  const address = Ps?.address ?? '';
+  const [target, onChangeHandler, onClearHandler] = useInput({
+    dogname,
+    title,
+    // content,
+  });
   const [image, setImage] = useState({ photo: [], preview: [] });
   const [alertMsg, setAlertMsg] = useState(false);
   const [mapMode, setMapMode] = useState(false);
-  const [target, onChangeHandler, onClearHandler] = useInput({
-    dogname: '',
-    title: '',
-    content: '',
+  const [latlng, setLatLng] = useState({
+    lostLongitude: '',
+    lostLatitude: '',
   });
-  const [RenderQuill] = useQuill();
+  const [afterfirstSearch, setAfterFirstSearch] = useState(false);
   const { quillValue, setQuillValue, clearQuillValue } = useQuillStore(
     state => ({
       quillValue: state.quillValue,
@@ -42,27 +56,23 @@ function DaengFinderWritePage() {
   const { SwitchFooter } = useFooterLayout(state => ({
     SwitchFooter: state.SwitchFooter,
   }));
-  const [afterfirstSearch, setAfterFirstSearch] = useState(false);
-  const { location, roadAddress } = useLocationStore(
-    state => ({ location: state.location, roadAddress: state.roadAddress }),
+  const { location, roadAddress, clearRoadAddresss } = useLocationStore(
+    state => ({
+      location: state.location,
+      roadAddress: state.roadAddress,
+      clearRoadAddresss: state.clearRoadAddresss,
+    }),
     shallow,
   );
-  const [latlng, setLatLng] = useState({
-    lostLongitude: '',
-    lostLatitude: '',
-  });
-  const modules = useMemo(() => ({
-    toolbar: {
-      container: [['bold', 'italic', 'underline']],
-      handlers: {},
-    },
-  }));
 
+  const queryClient = useQueryClient();
   const mutation = useMutation(writePostLost, {
     onSuccess: data => {
       console.log('daengFinderWrite data>>> ', data);
+      queryClient.invalidateQueries('getPostLost');
       onClearHandler();
       clearQuillValue();
+      clearRoadAddresss();
       setAlertMsg(true);
       toast.success('개시글 작성 완료', {
         position: toast.POSITION.TOP_CENTER,
@@ -93,31 +103,97 @@ function DaengFinderWritePage() {
     },
   });
 
+  const editMutation = useMutation(editMyPost, {
+    onSuccess: data => {
+      console.log('daengFinderWrite data>>> ', data);
+      queryClient.invalidateQueries('getPostLost');
+      onClearHandler();
+      clearQuillValue();
+      clearRoadAddresss();
+      setAlertMsg(true);
+      toastSuccess('게시글 수정 완료');
+      for (let i = 0; i < image.preview.length; i++) {
+        URL.revokeObjectURL(image.preview[i]);
+      }
+      setImage({ photo: [], preview: [] });
+    },
+    onError: error => {
+      console.log('daengFinderWrite error>>> ', error);
+      setAlertMsg(true);
+      toast.error('게시글 수정 실패', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    },
+  });
+
   const searchAddressMode = () => {
     setAfterFirstSearch(true);
     setMapMode(true);
   };
 
   const uploadPost = () => {
-    const formData = new FormData();
+    /**
+     *
+     *  @description 이거 나중에 수정하는 것도 이미지 올릴 수 있게 바뀌면 조건문 바꿔야 함.
+     * 그냥 !checkPostId 빼면 될 듯.
+     *  */
+    if (!checkPostId && image.photo.length < 1) {
+      setAlertMsg(true);
+      toast.error('이미지 1개이상 5개이하 필요', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
 
-    // formData.append('photo', image.photo[0]);
-    formData.append('dogname', target.dogname);
+    let inputs;
+    const formData = new FormData();
     formData.append('title', target.title);
     // formData.append('content', target.content);
     formData.append('content', quillValue);
+    if (checkPostId) {
+      inputs = {
+        postId: checkPostId,
+        formData,
+        // formData: {
+        //   title: target.title,
+        //   content: quillValue,
+        // },
+      };
+      editMutation.mutate(inputs);
+      return;
+    }
+    formData.append('dogname', target.dogname);
     if (image.photo.length > 0) {
       image.photo.forEach(img => {
         // const jsonImg = JSON.stringify(img);
         const blobImg = new Blob([img], { type: img.type });
         formData.append('image', blobImg, img.name);
+        // if (checkPostId) {
+        //   const blobImg = new Blob([img], { type: img.type ||  'image/*' });
+        //   formData.append('image', blobImg, img.name || img);
+        // } else {
+        //   const blobImg = new Blob([img], { type: img.type });
+        //   formData.append('image', blobImg, img.name);
+        // }
       });
     }
     console.log('최종 위도 경도 >>>', latlng);
     formData.append('lostLatitude', latlng.lostLatitude);
     formData.append('lostLongitude', latlng.lostLongitude);
     console.log('daengFinderWrite formData before transfer >>> ', ...formData);
-    const inputs = {
+    inputs = {
       formData,
     };
     mutation.mutate(inputs);
@@ -137,19 +213,20 @@ function DaengFinderWritePage() {
     const uploadList = [];
     const previewList = [];
 
-    if (fileList.length < 1) {
-      setAlertMsg(true);
-      toast.error('이미지 1개이상 5개이하 필요', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      return;
-    }
+    /** @description 이건 제출할 때 필요. 여기서는 불필요. 나중에 옮기셈. */
+    // if (fileList.length < 1) {
+    //   setAlertMsg(true);
+    //   toast.error('이미지 1개이상 5개이하 필요', {
+    //     position: toast.POSITION.TOP_CENTER,
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //   });
+    //   return;
+    // }
 
     for (let i = 0; i < fileList.length; i++) {
       const fileType = fileList[i].type.split('/')[0];
@@ -204,13 +281,30 @@ function DaengFinderWritePage() {
 
   useEffect(() => {
     SwitchFooter(false);
-    setLatLng({
-      // lostLatitude: 33.450701,
-      // lostLongitude: 126.570667,
-      lostLatitude: location.latitude,
-      lostLongitude: location.longitude,
-    });
+    if (checkPostId) {
+      setLatLng({
+        lostLatitude: latitude,
+        lostLongitude: longitude,
+      });
+    } else {
+      setLatLng({
+        // lostLatitude: 33.450701,
+        // lostLongitude: 126.570667,
+        lostLatitude: location.latitude,
+        lostLongitude: location.longitude,
+      });
+    }
+    if (content) {
+      setQuillValue('', content);
+    }
+    if (daengList.length > 0) {
+      setImage(prev => ({
+        photo: [...prev.photo, ...daengList].slice(0, 5),
+        preview: [...prev.preview, ...daengList].slice(0, 5),
+      }));
+    }
     return () => {
+      clearQuillValue();
       for (let i = 0; i < image.preview.length; i++) {
         URL.revokeObjectURL(image.preview[i]);
       }
@@ -271,16 +365,19 @@ function DaengFinderWritePage() {
               <SlMagnifier className='text-lg font-bold text-[#C9C9C9]' />
               <div
                 className={`${
-                  (!afterfirstSearch || !roadAddress) && 'text-[#C7C7C7]'
+                  (!afterfirstSearch || !roadAddress) &&
+                  !address &&
+                  'text-[#C7C7C7]'
                 }`}
               >
-                {(afterfirstSearch && roadAddress) || '실종 위치'}
+                {(afterfirstSearch && roadAddress) || address || '실종 위치'}
               </div>
             </div>
             <div className='pt-6'>
               <div className='pb-2'>
                 사진 등록{' '}
                 <span className='font-bold leading-4 text-[#A54BFF]'>
+                  {/* {daengList? daengList.length : image.preview.length} */}
                   {image.preview.length}
                 </span>
                 /5
@@ -334,25 +431,8 @@ function DaengFinderWritePage() {
             </div>
           </form>
           <div className='px-6 py-6 h-64'>
-            {/* <ReactQuill
-              className='px-6 py-6 h-64'
-              theme='snow'
-              modules={modules}
-              ref={quillRef}
-              onChange={setQuillValue}
-            /> */}
-            <QuillEditor quillRef={quillRef} />
+            <QuillEditor />
           </div>
-          {/* <div className='px-6 py-6 h-80'>
-            <textarea
-              value={target.content}
-              name='content'
-              onChange={onChangeHandler}
-              placeholder='글을 작성해주세요. 상세내용~
-허위작성이나 어쩌구 저쩌구를 자제해주세요'
-              className='w-full h-full overflow-y-scroll'
-            />
-          </div> */}
         </div>
       )}
     </div>

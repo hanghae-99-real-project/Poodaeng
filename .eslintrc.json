@@ -50,6 +50,7 @@
     "no-unsafe-optional-chaining": "off",
     "jsx-a11y/no-autofocus": "off",
     "react/function-component-definition": "off",
+    "no-param-reassign": "off",
     "react/jsx-filename-extension": [
       1,
       {
