@@ -21,7 +21,7 @@ function MyPostcomponent() {
   );
   const navigate = useNavigate();
 
-  const { isLoading, data, isError } = useQuery(
+  const { isLoading, data, isError, error } = useQuery(
     ['getMyPost', userId],
     getMyPost,
     {
@@ -44,20 +44,9 @@ function MyPostcomponent() {
   }
 
   if (isError) {
-    setErrorMsg(true);
-    toast.error('Error occured while Loading', {
-      position: toast.POSITION.TOP_CENTER,
-      toastId: 'empty-comment-toast',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+    navigate('/mypage', {
+      state: error,
     });
-    setTimeout(() => {
-      navigate('/mypage');
-    }, 1000);
   }
   console.log('data depth check >>>', data);
 

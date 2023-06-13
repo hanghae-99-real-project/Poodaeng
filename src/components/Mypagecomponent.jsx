@@ -1,22 +1,20 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Cookies from 'js-cookie';
+import React from 'react';
+import { useMutation, useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { getMypageCount } from '../api/myPage';
+import { signOut } from '../api/sendCode';
 import Headers from './Headers';
 import MypageUnknown from './MypageUnknown';
 import Tabbar from './Tabbar';
-import { signOut } from '../api/sendCode';
-import { getMypageCount } from '../api/myPage';
 import Loading from './common/Loading';
 
 function Mypagecomponent() {
   const refreshToken = Cookies.get('refreshToken');
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
   const mutation = useMutation(signOut, {
     onSuccess: data => {
-      queryClient.invalidateQueries('logout');
       console.log('logout query success response >>> ', data);
     },
     onError: error => {
