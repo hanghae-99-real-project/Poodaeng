@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
+import Cookies from 'js-cookie';
 import Headers from './Headers';
 import MypageUnknown from './MypageUnknown';
 import Tabbar from './Tabbar';
@@ -8,8 +9,7 @@ import { signOut } from '../api/sendCode';
 
 function Mypagecomponent() {
   // const tokens = Cookies.get('tokens');
-  // const istoken = true;
-  const istoken = true;
+  const refreshToken = Cookies.get('refreshToken');
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -30,7 +30,7 @@ function Mypagecomponent() {
 
   return (
     <div>
-      {istoken ? (
+      {refreshToken ? (
         <div className='flex flex-col'>
           <Headers text>마이페이지</Headers>
           <div className='flex flex-col ml-5 mt-5'>

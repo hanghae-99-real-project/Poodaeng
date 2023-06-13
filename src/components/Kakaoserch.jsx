@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-undef */
 /* eslint-disable func-names */
@@ -5,13 +6,17 @@
 /* eslint-disable no-use-before-define */
 import React, { useRef } from 'react';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getPooBox } from '../api/poobox';
 import Loading from './common/Loading';
+import { ReactComponent as MyGeo } from '../assets/images/MyGeo.svg';
 
 function Kakaoserch() {
   const navigate = useNavigate();
   const mapContainer = useRef(null);
+  const location = useLocation();
+  const isMapPage = location.pathname === '/map';
+
   const { isLoading, isError, data } = useQuery('poobox', getPooBox);
   if (isLoading) {
     return (
@@ -26,19 +31,20 @@ function Kakaoserch() {
 
   console.log('data', data.data.getPooAll);
 
-  const { kakao } = window;
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
   const script = document.createElement('script');
   script.src = process.env.REACT_APP_KAKAO_KEY;
   script.async = true;
-  document.head.appendChild(script);
 
   // 스크립트 로드된 이후 지도 초기화
   script.onload = () => {
+    const { kakao } = window;
     kakao.maps.load(() => {
       initializeMap();
     });
   };
+
+  document.head.appendChild(script);
 
   // 지도를 초기화하는 함수
   function initializeMap() {
@@ -239,15 +245,18 @@ function Kakaoserch() {
     infowindow.open(map, marker);
     map.setCenter(locPosition);
   }
-  // }, []);
 
   // 지도가 표시될 컨테이너 반환
   return (
-    <div
-      id='map2'
-      ref={mapContainer}
-      style={{ width: '100%', height: '100%' }}
-    />
+    <div id='map2' ref={mapContainer} style={{ width: '100%', height: '100%' }}>
+      {isMapPage && (
+        <MyGeo
+          role='none'
+          onClick={initializeMap}
+          className='absolute z-10 w-12 h-12 right-1 bottom-20 cursor-pointer'
+        />
+      )}
+    </div>
   );
 }
 
