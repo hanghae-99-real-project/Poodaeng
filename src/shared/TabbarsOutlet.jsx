@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Tabbar from '../components/Tabbar';
 
 function TabbarsOutlet() {
-  const [isActive, setIsActive] = useState('home');
+  const [isActive, setIsActive] = useState('');
 
   return (
     <div>

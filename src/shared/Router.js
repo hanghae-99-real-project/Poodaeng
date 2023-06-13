@@ -28,6 +28,7 @@ import DaengFinderWritePage from '../pages/DaengFinderWritePage';
 import PooDetail from '../pages/PooDetail';
 import TmapPage from '../pages/Tmappage';
 import TabbarsOutlet from './TabbarsOutlet';
+import MyPooboxcomponent from '../components/MyPostcomponent copy';
 
 
 // import TokenCheck from '../utils/TokenCheck';
@@ -68,6 +69,7 @@ function Router() {
           <Route path='/mybookmark' element={<MyBookMark />}/>
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
+          <Route path='/mypoobox' element={<MyPooboxcomponent />}/>
         </Route>
       </Routes>
     </BrowserRouter>
