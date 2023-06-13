@@ -1,69 +1,96 @@
 import React from 'react';
 import { create } from 'zustand';
-import { subscribeWithSelector } from 'zustand/middleware';
+import { persist, subscribeWithSelector } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 
 const input = (set, get) => ({
   searchList: [],
   word: '',
-  text: '',
+  searchWordSnapshot: '',
   setSearchList: () => {
-    const search = get().word;
-    if (search.trim() === '') {
+    const search = get().word.trim();
+    if (search === '') {
       console.log('empty search');
       return;
     }
-    set(prev => ({
-      searchList: [
-        ...prev.searchList,
-        {
-          item: search,
-          id: prev.searchList.length ? prev.searchList.at(-1).id + 1 : 0,
-        },
-      ],
-    }));
-  },
-  onWordChanger: e =>
     set(() => ({
-      word: e.target.value,
+      searchWordSnapshot: search,
+    }));
+    /** @description 중복 처리 로직 생각해보기 */
+    const prevSearchList = get().searchList;
+    const filterResult = prevSearchList.find(list => list.item === search);
+    if (filterResult) {
+      console.log('duplication of search');
+    } else {
+      set(prev => ({
+        searchList: [
+          ...prev.searchList,
+          {
+            item: search,
+            id: prev.searchList.length ? prev.searchList.at(-1).id + 1 : 0,
+          },
+        ],
+      }));
+    }
+  },
+  onWordChanger: value =>
+    set(() => ({
+      word: value,
     })),
   onDeleteSearch: id => {
     set(prev => ({
       searchList: prev.searchList.filter(item => item.id !== id),
     }));
   },
-  // onTextRef: ref => {
-  //   set(() => ({
-  //     text: ref.current.value,
-  //   }));
-  // },
+  clearSearchList: () => set(() => ({ searchList: [] })),
+  clearWord: () => set(() => ({ word: '', searchWordSnapshot: '' })),
+  clearSearchWordAll: () =>
+    set(() => ({ searchList: [], word: '', searchWordSnapshot: '' })),
 });
 
-export const searchListStore = create(subscribeWithSelector(input));
+/**
+ * @description searchWordSnapshot 얘도 persist 해야 할 수도
+ */
+export const searchListStore = create(
+  subscribeWithSelector(
+    persist(input, {
+      name: 'searchList',
+      partialize: state => ({
+        searchList: state.searchList,
+        word: state.word,
+        searchWordSnapshot: state.searchWordSnapshot,
+      }),
+    }),
+  ),
+);
 
-function Input() {
-  const { onWordChanger, setSearchList } = searchListStore(
+// function Input({ setShowRecent }) {
+function Input({ searchDaengFinderPost }) {
+  const { word, onWordChanger } = searchListStore(
     state => ({
+      word: state.word,
       onWordChanger: state.onWordChanger,
       setSearchList: state.setSearchList,
-      // onTextRef: state.onTextRef,
     }),
     shallow,
   );
   const activeEnter = e => {
     if (e.key === 'Enter') {
-      setSearchList();
+      // setSearchList();
+      searchDaengFinderPost();
     }
   };
 
   return (
-    <div className='-translate-x-2'>
+    <div className='pl-2'>
       <input
-        onChange={onWordChanger}
+        autoFocus
+        // onClick={() => setShowRecent(true)}
+        onChange={e => onWordChanger(e.target.value)}
         placeholder='검색내용을 입력하세요'
-        className='w-64'
+        className='w-64 py-2'
         onKeyDown={activeEnter}
-        // ref={inputRef}
+        value={word}
       />
     </div>
   );

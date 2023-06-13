@@ -23,14 +23,6 @@ function KakaoAuthCheck() {
 
   // eslint-disable-next-line consistent-return
   const getKakaoToken = async () => {
-    // const payload = JSON.stringify({
-    //   grant_type: 'authorization_code',
-    //   client_id: process.env.REACT_APP_KAKAO_REST_API_KEY,
-    //   client_secret: process.env.REACT_APP_KAKAO_CLIENT_SECRET,
-    //   redirect_uri: process.env.REACT_APP_KAKAO_REDIRECT_URI,
-    //   code,
-    // });
-
     /* 인가코드는 쿼리 스트링으로 넘겨야 인식함 */
     /* to Kakao auth */
     // const payload = qs.stringify({

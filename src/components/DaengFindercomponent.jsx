@@ -17,7 +17,6 @@ import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useLocationStore } from '../zustand/example/zustandAPI';
 import Card from './DaengFinder/Card';
 import Loading from './common/Loading';
-// import Tabbar from './Tabbar';
 
 function DaengFindercomponent() {
   const [selectedArea, setSelectedArea] = useState('마포구 연남동');
@@ -182,9 +181,9 @@ function DaengFindercomponent() {
           // 46.6875rem
           className={`${
             isDetail
-              ? 'flex flex-col gap-3  w-full px-6 '
-              : 'grid grid-cols-2 gap-3 auto-cols-auto px-6'
-          } min-h-[75%] pb-[5rem] overflow-y-scroll `}
+              ? 'flex flex-col gap-3  w-full'
+              : 'grid grid-cols-2 gap-3 auto-cols-auto'
+          } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll `}
           // } min-h-[35.5rem] overflow-y-scroll `}
         >
           {data?.data?.map(card => {
@@ -196,9 +195,9 @@ function DaengFindercomponent() {
           <NoResult />
         </div>
       )}
-      <div className='relative bottom-16 left-0 right-0 '>
+      <div className='relative w-full bottom-16 '>
         <DaengFinderButton
-          className='absolute bottom-4 left-[6.5rem] cursor-pointer'
+          className='absolute bottom-4 right-4 cursor-pointer'
           onClick={moveToDaengFinderWrite}
         />
       </div>

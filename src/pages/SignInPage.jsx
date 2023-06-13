@@ -24,8 +24,6 @@ const initialState = {
     null,
   accessToken: null,
   expireTime: null,
-  // userName: '',
-  // email: null,
 };
 const store = set => ({
   /** @description tokenState가 변경되면 initialState도 변경이 되는가? get()으로 접근이 가능한가? */
@@ -48,7 +46,7 @@ const store = set => ({
   deleteToken: () => {
     console.log('초기화 값인지 체크 >>>', initialState);
     set(() => ({
-      tokenState: initialState,
+      tokenState: { ...initialState, userId: null },
     }));
   },
 });

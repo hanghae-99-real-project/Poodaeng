@@ -83,6 +83,15 @@ function DaengFinderDetail() {
   postId = parseInt(postId, 10);
   console.log('postId 살아있는지 확인 >>>', postId);
 
+  const imageHandler = idx => {
+    setDaeng(daengList[idx]);
+    setActiveBtn(idx);
+  };
+
+  const editModeHandler = () => {
+    setEditModal(prev => !prev);
+  };
+
   const queryClient = useQueryClient();
   const deleteMutation = useMutation(deleteMyPost, {
     onMutate: (variables, context) => {
@@ -102,16 +111,6 @@ function DaengFinderDetail() {
       console.log('deleteMutation error >>>', error);
     },
   });
-
-  const imageHandler = idx => {
-    // eslint-disable-next-line no-use-before-define
-    setDaeng(daengList[idx]);
-    setActiveBtn(idx);
-  };
-
-  const editModeHandler = () => {
-    setEditModal(prev => !prev);
-  };
 
   const { isLoading, data, isError, error } = useQuery(
     ['daengFinderDetail', postId],
@@ -150,6 +149,7 @@ function DaengFinderDetail() {
   useEffect(() => {
     console.log('useEffect processed');
     const deepData = data?.data?.data;
+    getBookmarkState(deepData?.BookMarks);
     setDaengList(data?.data?.data?.lostPhotoUrl || []);
     setDaeng(data?.data?.data?.lostPhotoUrl[0] || null);
     setPassPostId(data?.data?.data?.postId);
@@ -203,7 +203,11 @@ function DaengFinderDetail() {
       {errorMsg && <ToastContainer />}
       <IoIosArrowBack
         className='absolute z-30 top-7 left-4 text-xl cursor-pointer'
-        onClick={() => navigate(reDirection ? '/mypost' : '/daengfinder')}
+        onClick={() =>
+          navigate(reDirection ? '/mypost' : '/daengfinder', {
+            preventScrollReset: true,
+          })
+        }
       />
       {deepData?.UserId === myId ? (
         <WhiteDdaeng

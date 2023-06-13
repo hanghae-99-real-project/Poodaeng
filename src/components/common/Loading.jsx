@@ -3,26 +3,27 @@ import React from 'react';
 
 function Loading() {
   return (
-    <div className='absolute inset-0 flex flex-col items-center bg-gradient-to-r from-mainColor from-[20.87%] to-purple-600 to-[100%] default:transition duration-150'>
+    <div className='absolute inset-0 flex flex-col items-center justify-between bg-gradient-to-r from-mainColor from-[20.87%] to-purple-600 to-[100%] default:transition duration-150'>
       {/* <div
         className='logo-div'
         style={{ backgroundImage: `url(/images/PooDaeng.svg)` }}
       /> */}
       <img
-        className='px-24 pt-40 pb-32'
+        className='px-24 pt-40 '
         src={`${process.env.PUBLIC_URL}/images/LoadingText.svg`}
         alt='photoThumb'
       />
-      <img
-        className='pb-28 z-20 animate-bounce motion '
-        src={`${process.env.PUBLIC_URL}/images/DogPoo.svg`}
-        alt='photoThumb'
-      />
-      <img
-        className='absolute bottom-0'
-        src={`${process.env.PUBLIC_URL}/images/WhiteDog.svg`}
-        alt='photoThumb'
-      />
+      <div className='relative bottom-0 f-fc-ic w-full h-fit'>
+        <img
+          className='absolute pb-28 z-20 animate-bounce motion '
+          src={`${process.env.PUBLIC_URL}/images/DogPoo.svg`}
+          alt='photoThumb'
+        />
+        <img
+          src={`${process.env.PUBLIC_URL}/images/WhiteDog.svg`}
+          alt='photoThumb'
+        />
+      </div>
       {/* <img
         className='w-[121px] h-[115px] object-cover z-10 border rounded-md'
         src={`${process.env.PUBLIC_URL}/images/testImage.jpg`}

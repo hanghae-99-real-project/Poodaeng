@@ -673,6 +673,7 @@ function DaengFinderCommentPage() {
                   />
                   <Reply
                     commentId={comment.commentId}
+                    parentCommentUserId={comment.UserId}
                     key={comment.createdAt}
                     // reply={reply}
                     // myId={myId}

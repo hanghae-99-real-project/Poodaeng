@@ -3,7 +3,9 @@ import React from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { shallow } from 'zustand/shallow';
 import { signOut } from '../api/sendCode';
+import { tokenStore } from '../pages/SignInPage';
 import Headers from './Headers';
 import MypageUnknown from './MypageUnknown';
 import Tabbar from './Tabbar';
@@ -12,9 +14,16 @@ function Mypagecomponent() {
   // const tokens = Cookies.get('tokens');
   const refreshToken = Cookies.get('refreshToken');
   const navigate = useNavigate();
+  const { deleteToken } = tokenStore(
+    state => ({
+      deleteToken: state.deleteToken,
+    }),
+    shallow,
+  );
 
   const mutation = useMutation(signOut, {
     onSuccess: data => {
+      deleteToken();
       console.log('logout query success response >>> ', data);
     },
     onError: error => {

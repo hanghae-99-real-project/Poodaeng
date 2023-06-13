@@ -46,7 +46,6 @@ function Router() {
           <Route path='/signup' element={<SignUpPage />}/>
           <Route path='/signupcomplete' element={<CompletePage />}/>
           <Route path='/test' element={<LogoutTest />}/>
-          <Route path='/daengfinder/search' element={<DaengFinderSearchPage />} />
           <Route path='/tmap/:pooId' element={<TmapPage />} />
           <Route path='/map/:pooId' element={<PooDetail />} />
         </Route>
@@ -68,6 +67,7 @@ function Router() {
           <Route path='/mybookmark' element={<MyBookMark />}/>
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
+          <Route path='/daengfinder/search' element={<DaengFinderSearchPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
