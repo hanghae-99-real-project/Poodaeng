@@ -243,7 +243,7 @@ function TmapPage() {
 
     polyline_ = new Tmapv2.Polyline({
       path: arrPoint,
-      strokeColor: '#DD0000',
+      strokeColor: ' #9932CC ',
       strokeWeight: 6,
       map: map,
     });

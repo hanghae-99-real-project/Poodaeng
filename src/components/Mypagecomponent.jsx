@@ -40,8 +40,8 @@ function Mypagecomponent() {
     return <div>오류가 발생했습니다.</div>;
   }
 
-  console.log('mypagecontent>>>', data);
-
+  console.log('mypagecontent>>>', data.data.mypageContent);
+  const { mypageContent } = data.data;
   // const pooData = data?.data?.getMyPooData;
   // if (!pooData) {
   //   return <Loading />;
@@ -77,7 +77,8 @@ function Mypagecomponent() {
               >
                 <div> 작성한글</div>
                 <div className='font-bold text-mainColor'>
-                  0<span className='text-black'>개</span>
+                  {mypageContent[0]}
+                  <span className='text-black'>개</span>
                 </div>
               </div>
               <div className='border' />
@@ -87,7 +88,8 @@ function Mypagecomponent() {
               >
                 <div> 등록한 푸박스</div>
                 <div className='font-bold text-mainColor'>
-                  0<span className='text-black'>개</span>
+                  {mypageContent[1]}
+                  <span className='text-black'>개</span>
                 </div>
               </div>
               <div className='border' />
@@ -97,7 +99,8 @@ function Mypagecomponent() {
               >
                 <div> 북마크</div>
                 <div className='font-bold text-mainColor'>
-                  0<span className='text-black'>개</span>
+                  {mypageContent[2]}
+                  <span className='text-black'>개</span>
                 </div>
               </div>
             </div>
