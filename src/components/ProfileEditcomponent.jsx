@@ -19,7 +19,7 @@ function ProfileEditcomponent() {
           <FileUploader onFileUpload={handleFileUpload} />
         </div>
         <div className='font-bold text-[20px]'>닉네임</div>
-        <div className='border '>수정버튼 대신 중복확인은 어떤가요?</div>
+        <div className='border '>수정?</div>
       </div>
       <div className='border' />
       <div className='flex flex-col'>
