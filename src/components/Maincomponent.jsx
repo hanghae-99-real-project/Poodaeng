@@ -2,30 +2,31 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
+// import { useQuery } from 'react-query';
 import Tabbar from './Tabbar';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
 import Kakaoserch from './Kakaoserch';
-import Loading from './common/Loading';
+// import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
 import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
-import getDaengMain from '../api/main';
+// import getDaengMain from '../api/main';
+import SlideComponent from './Slidecomponent';
 
 function Maincomponent() {
   const navigate = useNavigate();
-  const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain);
-  if (isLoading) {
-    return (
-      <div className='flex flex-col h-[812px] justify-center  items-center'>
-        <Loading />
-      </div>
-    );
-  }
+  // const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain);
+  // if (isLoading) {
+  //   return (
+  //     <div className='flex flex-col h-[812px] justify-center  items-center'>
+  //       <Loading />
+  //     </div>
+  //   );
+  // }
 
-  if (isError) {
-    <div>오류가 발생했습니다.</div>;
-  }
+  // if (isError) {
+  //   <div>오류가 발생했습니다.</div>;
+  // }
 
   const AlertNavigateHander = () => {
     navigate('/alert');
@@ -84,7 +85,7 @@ function Maincomponent() {
           주변의 실종 반려동물들을 찾아주세요.
         </div>
         <div className='flex gap-3 w-auto justify-center h-40 overflow-x-auto flex-wrap'>
-          {data.data.lostPostsData.map(item => (
+          {/* {data.data.lostPostsData.map(item => (
             <div className='border w-24 h-24 rounded-xl' key={item.id}>
               <img
                 src={item.lostPhotoUrl[0]}
@@ -92,7 +93,8 @@ function Maincomponent() {
                 className='w-full h-full object-cover'
               />
             </div>
-          ))}
+          ))} */}
+          <SlideComponent />
         </div>
       </div>
       <div className='-mt-0.5'>

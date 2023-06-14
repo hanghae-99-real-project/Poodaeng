@@ -52,6 +52,7 @@ function Router() {
           <Route path='/tmap/:pooId' element={<TmapPage />} />
           <Route path='/map/:pooId' element={<PooDetail />} />
           <Route path='/unknown' element={<Unknown />} />
+          <Route path='/profileedit' element={<ProfileEdit />}/>
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet
@@ -69,7 +70,6 @@ function Router() {
           <Route path='/mypage' element={<Mypage />}/>
           <Route path='/mypost' element={<MyPost />}/>
           <Route path='/mybookmark' element={<MyBookMark />}/>
-          <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
           <Route path='/mypoobox' element={<MyPooboxcomponent />}/>
         </Route>
