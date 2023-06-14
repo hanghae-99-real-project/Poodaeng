@@ -3,10 +3,9 @@ import React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import { shallow } from 'zustand/shallow';
 import { getMypageCount } from '../api/myPage';
 import { signOut } from '../api/sendCode';
-import { tokenStore } from '../pages/SignInPage';
+import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 import Headers from './Headers';
 import Tabbar from './Tabbar';
 import Loading from './common/Loading';
@@ -14,16 +13,10 @@ import Loading from './common/Loading';
 function Mypagecomponent() {
   const refreshToken = Cookies.get('refreshToken');
   const navigate = useNavigate();
-  const { deleteToken } = tokenStore(
-    state => ({
-      deleteToken: state.deleteToken,
-    }),
-    shallow,
-  );
 
   const mutation = useMutation(signOut, {
     onSuccess: data => {
-      deleteToken();
+      resetUserInfoLog();
       console.log('logout query success response >>> ', data);
     },
     onError: error => {

@@ -64,14 +64,6 @@ function DaengFindercomponent() {
     navigate('/daengfinder/write');
   };
 
-  useEffect(() => {
-    if (loc.state) {
-      setAlertMsg(true);
-      toastSuccess(loc.state);
-    }
-  }, []);
-
-  // eslint-disable-next-line no-unused-vars
   const { data, isLoading, error, isError } = useQuery(
     'getPostLost',
     getPostLost,
@@ -79,6 +71,13 @@ function DaengFindercomponent() {
       refetchOnWindowFocus: false,
     },
   );
+
+  useEffect(() => {
+    if (loc.state) {
+      setAlertMsg(true);
+      toastSuccess(loc.state);
+    }
+  }, []);
 
   if (isLoading) {
     return (

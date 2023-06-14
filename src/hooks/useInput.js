@@ -5,11 +5,6 @@ const useInput = (initialValue) => {
 
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
-        // if (name === "email") {
-        //     setTarget((pre) => ({ ...pre, userId: value }));
-        // } else {
-        //     setTarget((pre) => ({ ...pre, [name]: value }));
-        // }
         setTarget((pre) => ({ ...pre, [name]: value }));
     };
 
@@ -17,6 +12,11 @@ const useInput = (initialValue) => {
         setTarget(initialValue);
     };
 
+    /**
+     * @description
+     * 1. 닉네임은 0글자 초과면 무조건 true
+     * 2. password는 8글자 이상, 특수문자 1개 이상, 대문자 영어 1개 이상이면 true
+     */
     const onValidator = (input) => {
         let result;
         // const nickName = ''
