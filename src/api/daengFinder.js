@@ -14,7 +14,8 @@ const writePostLost = async(inputs) => {
 }
 
 const getPostLost = async() => {
-  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/lostposts`)
+  // const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/lostposts`)
+  const response = await axiosToken.get('/api/lostposts')
   return response
 }
 

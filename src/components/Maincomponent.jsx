@@ -84,7 +84,7 @@ function Maincomponent() {
           주변의 실종 반려동물들을 찾아주세요.
         </div>
         <div className='flex gap-3 w-auto justify-center h-52 overflow-x-auto flex-wrap'>
-          {data.data.length > 0
+          {data?.data?.length > 0
             ? data?.data?.map(item => (
                 <div className='border w-24 h-24 rounded-xl' key={item.id}>
                   <img

@@ -55,7 +55,7 @@ function KakaoAuthCheck() {
       setToken(userId, accessToken, acExpireDate);
       setTimeout(() => {
         setIsLoading(false);
-        navigate('/', {
+        navigate('/signincomplete', {
           replace: true,
         });
       }, 1000);
