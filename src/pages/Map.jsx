@@ -7,7 +7,7 @@ function Map() {
   return (
     <>
       <Headers text icon destination=''>
-        푸 박스 찾기
+        푸박스 찾기
       </Headers>
       <Kakaoserch />
       {/* <TmapAPI /> */}

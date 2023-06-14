@@ -44,6 +44,9 @@ function Mypagecomponent() {
   }
 
   const { mypageContent } = data.data;
+  const myInfo = data.data.getMyInfoData;
+
+  console.log('data', data.data.getMyInfoData);
 
   // const pooData = data?.data?.getMyPooData;
   // if (!pooData) {
@@ -66,10 +69,11 @@ function Mypagecomponent() {
               </div>
               <div className='flex flex-col justify-center gap-2 ml-3'>
                 <div className='font-bold text-2xl '>
-                  _yujin_an<span className='text-[#A4A4A4] ml-1'>님</span>
+                  {myInfo.nickname}
+                  <span className='text-[#A4A4A4] ml-1'>님</span>
                 </div>
                 <div className='w-32 h-4 text-sm text-[#AEAEAE]'>
-                  _yujin_an@IVE.com
+                  {myInfo.phoneNumber}
                 </div>
               </div>
             </div>
