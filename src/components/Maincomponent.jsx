@@ -84,15 +84,17 @@ function Maincomponent() {
           주변의 실종 반려동물들을 찾아주세요.
         </div>
         <div className='flex gap-3 w-auto justify-center h-52 overflow-x-auto flex-wrap'>
-          {data.data.map(item => (
-            <div className='border w-24 h-24 rounded-xl' key={item.id}>
-              <img
-                src={item.lostPhotoUrl[0]}
-                alt='image'
-                className='w-full h-full object-cover'
-              />
-            </div>
-          ))}
+          {data.data.length > 0
+            ? data?.data?.map(item => (
+                <div className='border w-24 h-24 rounded-xl' key={item.id}>
+                  <img
+                    src={item.lostPhotoUrl[0]}
+                    alt='image'
+                    className='w-full h-full object-cover'
+                  />
+                </div>
+              ))
+            : null}
         </div>
       </div>
       <div className='-mt-0.5'>

@@ -269,7 +269,7 @@ function SignInPage() {
             className=' px-2 text-sm font-bold border-b border-[#CACACA]'
             onClick={moveToSignUp}
           >
-            이메일 회원가입
+            전화번호 회원가입
           </button>
         </div>
       </div>
