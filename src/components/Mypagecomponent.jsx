@@ -2,8 +2,10 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import { getMypageCount } from '../api/myPage';
 import { signOut } from '../api/sendCode';
+import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 import Headers from './Headers';
 import Tabbar from './Tabbar';
 import Loading from './common/Loading';
@@ -14,6 +16,7 @@ function Mypagecomponent() {
 
   const mutation = useMutation(signOut, {
     onSuccess: data => {
+      resetUserInfoLog();
       console.log('logout query success response >>> ', data);
     },
     onError: error => {
@@ -77,7 +80,13 @@ function Mypagecomponent() {
             <div className='flex justify-evenly mt-4 mr-5 mb-5 h-24 text-sm border rounded-lg p-2 bg-[#F3F3F3]'>
               <div
                 className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer'
-                onClick={() => navigate('/mypost')}
+                onClick={() =>
+                  navigate('/mypost', {
+                    state: {
+                      BookmarkMode: false,
+                    },
+                  })
+                }
               >
                 <div> 작성한글</div>
                 <div className='font-bold text-mainColor'>
@@ -99,7 +108,13 @@ function Mypagecomponent() {
               <div className='border' />
               <div
                 className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer'
-                onClick={() => navigate('/mybookmark')}
+                onClick={() =>
+                  navigate('/mybookmark', {
+                    state: {
+                      BookmarkMode: true,
+                    },
+                  })
+                }
               >
                 <div> 북마크</div>
                 <div className='font-bold text-mainColor'>

@@ -1,14 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import MyPostcomponent from '../components/MyPostcomponent';
-import Tabbar from '../components/Tabbar';
 
 function MyPost() {
-  return (
-    <>
-      <MyPostcomponent />
-      <Tabbar />
-    </>
-  );
+  const location = useLocation();
+  const { BookmarkMode } = location.state;
+
+  return <MyPostcomponent BookmarkMode={BookmarkMode} />;
 }
 
 export default MyPost;

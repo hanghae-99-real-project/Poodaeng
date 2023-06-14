@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
-import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
+// import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
 import { useQuery } from 'react-query';
@@ -11,17 +11,16 @@ import { shallow } from 'zustand/shallow';
 import { getPostLost } from '../api/daengFinder';
 import { ReactComponent as DaengFinderButton } from '../assets/images/DaengFinderMenu.svg';
 import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
-import { areaList } from '../data/Areas';
+// import { areaList } from '../data/Areas';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useLocationStore } from '../zustand/example/zustandAPI';
 import Card from './DaengFinder/Card';
 import Loading from './common/Loading';
-// import Tabbar from './Tabbar';
 
 function DaengFindercomponent() {
-  const [selectedArea, setSelectedArea] = useState('마포구 연남동');
-  const [isShow, setIsShow] = useState(false);
+  // const [selectedArea, setSelectedArea] = useState('마포구 연남동');
+  // const [isShow, setIsShow] = useState(false);
   const [isDetail, setIsDetail] = useState(true);
   const [alertMsg, setAlertMsg] = useState(false);
   const { setLocation } = useLocationStore(
@@ -39,13 +38,13 @@ function DaengFindercomponent() {
   setLocation(latitude, longitude);
 
   const navigate = useNavigate();
-  const selectAreaHandler = e => {
-    const { innerText } = e.target;
-    setSelectedArea(innerText);
-  };
-  const selectOpenHandler = () => {
-    setIsShow(prev => !prev);
-  };
+  // const selectAreaHandler = e => {
+  //   const { innerText } = e.target;
+  //   setSelectedArea(innerText);
+  // };
+  // const selectOpenHandler = () => {
+  //   setIsShow(prev => !prev);
+  // };
 
   const moveToDaengFinderWrite = () => {
     if (!checkRefreshToken) {
@@ -65,14 +64,6 @@ function DaengFindercomponent() {
     navigate('/daengfinder/write');
   };
 
-  useEffect(() => {
-    if (loc.state) {
-      setAlertMsg(true);
-      toastSuccess(loc.state);
-    }
-  }, []);
-
-  // eslint-disable-next-line no-unused-vars
   const { data, isLoading, error, isError } = useQuery(
     'getPostLost',
     getPostLost,
@@ -80,6 +71,13 @@ function DaengFindercomponent() {
       refetchOnWindowFocus: false,
     },
   );
+
+  useEffect(() => {
+    if (loc.state) {
+      setAlertMsg(true);
+      toastSuccess(loc.state);
+    }
+  }, []);
 
   if (isLoading) {
     return (
@@ -110,8 +108,9 @@ function DaengFindercomponent() {
           onClick={() => navigate('/daengfinder/search')}
         />
       </div>
-      <div className='w-full flex flex-row justify-between px-5 mb-6'>
-        <div
+      <div className='w-full flex flex-row justify-between px-5 mb-3'>
+        <div role='none' />
+        {/* <div
           className={`flex flex-col justify-center relative w-40 h-9  border border-[#ACACAC] shadow-md rounded-md
           after:content-[${(
             <RiArrowUpSFill className='text-amber-300 after:text-sm ' />
@@ -148,7 +147,7 @@ function DaengFindercomponent() {
               );
             })}
           </ul>
-        </div>
+        </div> */}
         <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
           <div
             className={`p-1  ${
@@ -177,17 +176,17 @@ function DaengFindercomponent() {
         </div>
       </div>
 
-      {data?.data.length ? (
+      {data?.data?.lostPostsData?.length ? (
         <div
           // 46.6875rem
           className={`${
             isDetail
-              ? 'flex flex-col gap-3  w-full px-6 '
-              : 'grid grid-cols-2 gap-3 auto-cols-auto px-6'
-          } min-h-[75%] pb-[5rem] overflow-y-scroll `}
+              ? 'flex flex-col gap-3  w-full'
+              : 'grid grid-cols-2 gap-3 auto-cols-auto'
+          } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll `}
           // } min-h-[35.5rem] overflow-y-scroll `}
         >
-          {data?.data?.map(card => {
+          {data?.data?.lostPostsData?.map(card => {
             return <Card key={card.postId} isDetail={isDetail} data={card} />;
           })}
         </div>
@@ -196,9 +195,9 @@ function DaengFindercomponent() {
           <NoResult />
         </div>
       )}
-      <div className='relative bottom-16 left-0 right-0 '>
+      <div className='relative w-full bottom-16 '>
         <DaengFinderButton
-          className='absolute bottom-4 left-[6.5rem] cursor-pointer'
+          className='absolute bottom-4 right-4 cursor-pointer'
           onClick={moveToDaengFinderWrite}
         />
       </div>

@@ -18,8 +18,12 @@ const getPostLost = async() => {
   return response
 }
 
-const searchPostLost = async(inputs) => {
-  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/search/lostPosts`,inputs)
+const searchPostLost = async(word) => {
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/search/lostposts`,{
+    params: {
+      search: word
+    },
+  })
   return response
 }
 
@@ -97,13 +101,13 @@ const deletePostReply = async(inputs) => {
 const editMyPost = async(inputs) => {
   const { postId, formData } = inputs;
   console.log('postId Type',typeof postId)
-  console.log('formData >>>', formData)
+  console.log('formData >>>', ...formData)
   const config = {
     headers: {
       'content-type': 'multipart/form-data'
     }
   }
-  const response = await axiosToken.put(`/api/lostPosts/${postId}`, formData, config)
+  const response = await axiosToken.put(`/api/lostposts/${postId}`, formData, config)
   return response
 }
 

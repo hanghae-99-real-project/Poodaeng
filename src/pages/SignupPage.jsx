@@ -1,5 +1,5 @@
+import { debounce } from 'lodash';
 import React, { useState } from 'react';
-// import { IoIosArrowBack } from 'react-icons/io';
 import { BsCheckLg } from 'react-icons/bs';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
@@ -8,10 +8,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sendCodeNumber, signUp, validateCodeNumber } from '../api/sendCode';
 import Headers from '../components/Headers';
-import { inputContents, errorMsg } from '../data/inputs';
+import { errorMsg, inputContents } from '../data/inputs';
 import useInput from '../hooks/useInput';
 import { SET_TIMER } from '../redux/modules/timerSlice';
 import AuthTimer from '../utils/AuthTimer';
+import { toastError } from '../utils/ToastFreeSetting';
 
 function SignUpPage() {
   const [getAuthMode, setGetAuthMode] = useState(false);
@@ -60,21 +61,23 @@ function SignUpPage() {
         );
         setMessage(true);
         toast.error(`휴대폰 인증번호 발송 에러 발생`, {
-          // toast.error(`요청한 데이터 형식이 올바르지 않습니다.!`, {
           position: toast.POSITION.TOP_CENTER,
           toastId: 'empty-comment-toast',
         });
       }
     } else {
-      console.log('전화번호 형식이 맞지 않습니다.');
+      setMessage(true);
+      toastError('전화번호 형식이 맞지 않습니다.');
     }
   };
 
   /* getRe */
-  const getReAuthHandler = async () => {
+  const getReAuthHandler = debounce(async () => {
     /* setCheckTimeMode 순서와 위치가 중요! */
     setCheckTimeMode(prev => !prev);
-    const response = await sendCodeNumber({ phoneNumber: inputs.phoneNumber });
+    const response = await sendCodeNumber({
+      phoneNumber: inputs.phoneNumber,
+    });
     if (response.status === 200) {
       /* 기존 거 언마운트 */
       /* state functional update * 2 */
@@ -91,8 +94,7 @@ function SignUpPage() {
         response.errorMessage,
       );
     }
-  };
-
+  }, 200);
   /* CodeNumber Validation */
   const codeMutation = useMutation(validateCodeNumber, {
     onSuccess: data => {
@@ -107,11 +109,7 @@ function SignUpPage() {
       console.log('code number validate error');
       console.log('인증 번호 확인 실패 결과 >>>', error);
       setMessage(true);
-      toast.error(`인증번호 불일치!`, {
-        // toast.error(`요청한 데이터 형식이 올바르지 않습니다.!`, {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: 'empty-comment-toast',
-      });
+      toastError(`인증번호 불일치!`);
     },
   });
   const codeSendHandler = () => {
@@ -153,19 +151,23 @@ function SignUpPage() {
   const registerHandler = e => {
     e.preventDefault();
     if (!isAuthNumber) {
-      console.log('휴대폰 번호를 인증받으세요!');
+      setMessage(true);
+      toastError('휴대폰 번호를 인증받으세요!');
       return;
     }
     if (inputs.nickname.trim() === '') {
-      console.log('공백은 입력할 수 없습니다.');
+      setMessage(true);
+      toastError('공백은 입력할 수 없습니다.');
       return;
     }
     if (!onValidator('password')) {
-      console.log('비밀번호 형식이 맞지 않습니다.');
+      setMessage(true);
+      toastError('비밀번호 형식이 맞지 않습니다.');
       return;
     }
     if (!onValidator('passwordConfirm')) {
-      console.log('비밀번호가 일치하지 않습니다.');
+      setMessage(true);
+      toastError('비밀번호가 일치하지 않습니다.');
       return;
     }
     const agreeCheck = localStorage.getItem('agreed') === 'true';

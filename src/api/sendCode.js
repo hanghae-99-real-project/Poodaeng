@@ -31,6 +31,19 @@ const signIn = async (inputs) => {
   return response
 }
 
+const kakaoSignIn = async(code) => {
+  const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/kakao/signin`,
+  {},
+  {
+    headers: {
+      authorization: `Bearer ${code}`,
+    },
+    timeout: 3000 /* 3초 */,
+    timeoutErrorMessage: 'Request timed out',
+  },)
+  return response
+}
+
 const signOut = async () => {
   const { deleteToken } = tokenStore.getState()
   const response = await axiosToken.delete(`${process.env.REACT_APP_SERVER_URL}/api/auth/logout`)
@@ -38,4 +51,5 @@ const signOut = async () => {
   deleteToken()
   return response
 }
-export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut}
+
+export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut, kakaoSignIn}

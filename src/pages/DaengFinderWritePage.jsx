@@ -74,7 +74,7 @@ function DaengFinderWritePage() {
       clearQuillValue();
       clearRoadAddresss();
       setAlertMsg(true);
-      toast.success('개시글 작성 완료', {
+      toast.success('게시글 작성 완료', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 5000,
         hideProgressBar: false,
@@ -106,7 +106,7 @@ function DaengFinderWritePage() {
   const editMutation = useMutation(editMyPost, {
     onSuccess: data => {
       console.log('daengFinderWrite data>>> ', data);
-      queryClient.invalidateQueries('getPostLost');
+      // queryClient.invalidateQueries('getPostLost');
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
@@ -143,7 +143,8 @@ function DaengFinderWritePage() {
      *  @description 이거 나중에 수정하는 것도 이미지 올릴 수 있게 바뀌면 조건문 바꿔야 함.
      * 그냥 !checkPostId 빼면 될 듯.
      *  */
-    if (!checkPostId && image.photo.length < 1) {
+    // if (!checkPostId && image.photo.length < 1) {
+    if (image.photo.length < 1) {
       setAlertMsg(true);
       toast.error('이미지 1개이상 5개이하 필요', {
         position: toast.POSITION.TOP_CENTER,
@@ -162,6 +163,26 @@ function DaengFinderWritePage() {
     formData.append('title', target.title);
     // formData.append('content', target.content);
     formData.append('content', quillValue);
+
+    formData.append('dogname', target.dogname);
+    if (image.photo.length > 0) {
+      image.photo.forEach(img => {
+        // const jsonImg = JSON.stringify(img);
+        // const blobImg = new Blob([img], { type: img.type });
+        // formData.append('image', blobImg, img.name);
+        if (checkPostId) {
+          const blobImg = new Blob([img], { type: img.type || 'image/*' });
+          formData.append('image', blobImg, img.name || img);
+        } else {
+          const blobImg = new Blob([img], { type: img.type });
+          formData.append('image', blobImg, img.name);
+        }
+      });
+    }
+    console.log('최종 위도 경도 >>>', latlng);
+    formData.append('lostLatitude', parseFloat(latlng.lostLatitude));
+    formData.append('lostLongitude', parseFloat(latlng.lostLongitude));
+    console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     if (checkPostId) {
       inputs = {
         postId: checkPostId,
@@ -174,25 +195,6 @@ function DaengFinderWritePage() {
       editMutation.mutate(inputs);
       return;
     }
-    formData.append('dogname', target.dogname);
-    if (image.photo.length > 0) {
-      image.photo.forEach(img => {
-        // const jsonImg = JSON.stringify(img);
-        const blobImg = new Blob([img], { type: img.type });
-        formData.append('image', blobImg, img.name);
-        // if (checkPostId) {
-        //   const blobImg = new Blob([img], { type: img.type ||  'image/*' });
-        //   formData.append('image', blobImg, img.name || img);
-        // } else {
-        //   const blobImg = new Blob([img], { type: img.type });
-        //   formData.append('image', blobImg, img.name);
-        // }
-      });
-    }
-    console.log('최종 위도 경도 >>>', latlng);
-    formData.append('lostLatitude', latlng.lostLatitude);
-    formData.append('lostLongitude', latlng.lostLongitude);
-    console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     inputs = {
       formData,
     };
@@ -330,13 +332,20 @@ function DaengFinderWritePage() {
         }
       >
         {/* 댓글&nbsp;{commentCount}{' '} */}
-        댕파인더 글쓰기&nbsp;
+        {mapMode ? (
+          <text className='text-base'>
+            핀을 찍어서 실종 위치를 선택해주세요
+          </text>
+        ) : (
+          '댕파인더 글쓰기'
+        )}
+        &nbsp;
       </LinkHeader>
       {mapMode ? (
         <DaengFinderMap latlng={latlng} setLatLng={setLatLng} />
       ) : (
         // <DaengFinderMap />
-        <div>
+        <div className='h-full'>
           <form className='py-9 px-6 border-b border-solid border-[#ECECEC]'>
             <div className='f-fc gap-3 mb-4'>
               <input
@@ -430,7 +439,7 @@ function DaengFinderWritePage() {
               </div>
             </div>
           </form>
-          <div className='px-6 py-6 pb-12 h-64'>
+          <div className='px-6 py-6 h-[35%]'>
             <QuillEditor />
           </div>
         </div>

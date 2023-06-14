@@ -5,7 +5,7 @@ import LoginSocial from '../components/LoginSocial';
 import LogoutTest from '../components/LogoutTest';
 import Alert from '../pages/Alert';
 import KakaoAuthCheck from '../pages/KakaoAuthCheck';
-import CompletePage from '../pages/CompletePage';
+import SignInCompletePage from '../pages/SignInCompletePage';
 import DaengFinder from '../pages/DaengFinder';
 import DaengFinderDetail from '../pages/DaengFinderDetail';
 import Events from '../pages/Events';
@@ -44,11 +44,10 @@ function Router() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/loginsocial' element={<LoginSocial />} />
           <Route path='/auth' element={<KakaoAuthCheck />}/>
-          <Route path='/signin' element={<SignInPage />}/>
           <Route path='/signup' element={<SignUpPage />}/>
-          <Route path='/signupcomplete' element={<CompletePage />}/>
+          <Route path='/signin' element={<SignInPage />}/>
+          <Route path='/signincomplete' element={<SignInCompletePage />}/>
           <Route path='/test' element={<LogoutTest />}/>
-          <Route path='/daengfinder/search' element={<DaengFinderSearchPage />} />
           <Route path='/tmap/:pooId' element={<TmapPage />} />
           <Route path='/map/:pooId' element={<PooDetail />} />
           <Route path='/unknown' element={<Unknown />} />
@@ -71,6 +70,7 @@ function Router() {
           <Route path='/mypost' element={<MyPost />}/>
           <Route path='/mybookmark' element={<MyBookMark />}/>
           <Route path='/daengfinder' element={<DaengFinder />}/>
+          <Route path='/daengfinder/search' element={<DaengFinderSearchPage />} />
           <Route path='/mypoobox' element={<MyPooboxcomponent />}/>
         </Route>
       </Routes>

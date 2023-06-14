@@ -14,4 +14,4 @@ const getMypageCount = async() => {
   const response = await axiosToken.get('/api/auth/mypage');
   return response
 }
-export {getMyPost, getMyBookMark ,getMypageCount}
+export { getMyPost, getMyBookMark, getMypageCount }
