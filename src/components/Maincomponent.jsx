@@ -23,6 +23,7 @@ function Maincomponent() {
     );
   }
 
+  console.log(data.data.lostPostsData);
   if (isError) {
     <div>오류가 발생했습니다.</div>;
   }
@@ -67,7 +68,7 @@ function Maincomponent() {
           <div className='ml-7 mt-1 font-[500] text-xs text-[#808080] mb-1'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
-          <div className='relative w-[340px] h-40 border ml-5 overflow-y-hidden'>
+          <div className='relative w-[340px] h-40 border ml-4 overflow-y-hidden'>
             <Kakaoserch />
             <div
               className='relative left-60 bottom-10 flex items-center justify-center z-50 bg-white w-20 h-7 rounded-md text-xs text-mainColor font-bold shadow-xl'

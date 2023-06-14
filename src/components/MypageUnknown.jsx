@@ -1,13 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Headers from './Headers';
-import Tabbar from './Tabbar';
 
 function MypageUnknown() {
   const navigate = useNavigate();
   return (
     <div className='flex flex-col justify-between'>
-      <Headers text> 마이페이지 </Headers>
+      <Headers text icon destination=''>
+        마이페이지
+      </Headers>
       <div className='my-64 flex flex-col items-center justify-center'>
         <div className='flex flex-col items-center justify-center font-bold text-lg'>
           <div>회원 가입하고 </div>
@@ -20,9 +21,7 @@ function MypageUnknown() {
           로그인/회원가입
         </button>
       </div>
-      <div className='mt-0.5'>
-        <Tabbar />
-      </div>
+      <div className='mt-0.5' />
     </div>
   );
 }

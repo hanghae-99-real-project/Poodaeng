@@ -10,4 +10,8 @@ const getMyBookMark = async() => {
   return response
 }
 
-export {getMyPost, getMyBookMark}
+const getMypageCount = async() => {
+  const response = await axiosToken.get('/api/auth/mypage');
+  return response
+}
+export {getMyPost, getMyBookMark ,getMypageCount}

@@ -3,6 +3,8 @@
 import React, { useEffect } from 'react';
 import $ from 'jquery';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ReactComponent as Arrow } from '../assets/images/Guidearrow.svg';
+import { ReactComponent as Clock } from '../assets/images/Clock.svg';
 
 function TmapPage() {
   useEffect(() => {
@@ -85,18 +87,18 @@ function TmapPage() {
         });
       }
 
-      if (!marker_s) {
-        marker_s = new Tmapv2.Marker({
-          position: new Tmapv2.LatLng(parseFloat(startY), parseFloat(startX)),
-          icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
-          iconSize: new Tmapv2.Size(24, 38),
-          map: map,
-        });
-      } else {
-        marker_s.setPosition(
-          new Tmapv2.LatLng(parseFloat(startY), parseFloat(startX)),
-        );
-      }
+      // if (!marker_s) {
+      //   marker_s = new Tmapv2.Marker({
+      //     position: new Tmapv2.LatLng(parseFloat(startY), parseFloat(startX)),
+      //     icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
+      //     iconSize: new Tmapv2.Size(24, 38),
+      //     map: map,
+      //   });
+      // } else {
+      //   marker_s.setPosition(
+      //     new Tmapv2.LatLng(parseFloat(startY), parseFloat(startX)),
+      //   );
+      // }
 
       // 3. 경로탐색 API 사용요청
       var headers = {};
@@ -132,16 +134,16 @@ function TmapPage() {
           // 시작
           marker_s = new Tmapv2.Marker({
             position: new Tmapv2.LatLng(parseFloat(startY), parseFloat(startX)),
-            icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
-            iconSize: new Tmapv2.Size(24, 38),
+            icon: 'https://i.ibb.co/9tBNj38/mappoint.png',
+            iconSize: new Tmapv2.Size(32, 40),
             map: map,
           });
 
           // 도착
           marker_e = new Tmapv2.Marker({
             position: new Tmapv2.LatLng(parseFloat(endY), parseFloat(endX)),
-            icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',
-            iconSize: new Tmapv2.Size(24, 38),
+            icon: 'https://i.ibb.co/pWTYpzs/End.png',
+            iconSize: new Tmapv2.Size(22, 38),
             map: map,
           });
           //결과 출력
@@ -153,7 +155,7 @@ function TmapPage() {
             ' 예상 소요 시간 : ' +
             (resultData[0].properties.totalTime / 60).toFixed(0) +
             '분';
-          $('#result').text(tDistance + tTime);
+          $('#result').text(tTime);
 
           //기존 그려진 라인 & 마커가 있다면 초기화
           if (resultdrawArr.length > 0) {
@@ -243,7 +245,7 @@ function TmapPage() {
 
     polyline_ = new Tmapv2.Polyline({
       path: arrPoint,
-      strokeColor: '#DD0000',
+      strokeColor: ' #9932CC ',
       strokeWeight: 6,
       map: map,
     });
@@ -253,11 +255,15 @@ function TmapPage() {
   return (
     <div className='absolute'>
       <div className='absolute my-5 -top-20 right-0 z-30 w-full h-36 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
-        <p id='result' />
         <div className='flex'>
           <div className='flex my-1'>
+            <Arrow className='mt-1 mr-2' />
             푸박스 위치: <div className='font-bold ml-1'>{targetAddress}</div>
           </div>
+        </div>
+        <div className='flex justify-start pr-2'>
+          <Clock className='mt-1 mr-2' />
+          <span id='result' className='pr-32' />
         </div>
         <div className='flex justify-between'>
           <div></div>

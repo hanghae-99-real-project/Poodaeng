@@ -47,7 +47,6 @@ const kakaoSignIn = async(code) => {
 const signOut = async () => {
   const { deleteToken } = tokenStore.getState()
   const response = await axiosToken.delete(`${process.env.REACT_APP_SERVER_URL}/api/auth/logout`)
-  console.log(response)
   Cookies.remove('refreshToken');
   deleteToken()
   return response
