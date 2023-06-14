@@ -23,6 +23,7 @@ function Maincomponent() {
     );
   }
 
+  console.log(data.data.lostPostsData);
   if (isError) {
     <div>오류가 발생했습니다.</div>;
   }
@@ -84,7 +85,7 @@ function Maincomponent() {
           주변의 실종 반려동물들을 찾아주세요.
         </div>
         <div className='flex gap-3 w-auto justify-center h-40 overflow-x-auto flex-wrap'>
-          {data.data.map(item => (
+          {data.data.lostPostsData.map(item => (
             <div className='border w-24 h-24 rounded-xl' key={item.id}>
               <img
                 src={item.lostPhotoUrl[0]}
