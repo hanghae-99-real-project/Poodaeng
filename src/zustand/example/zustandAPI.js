@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { omit } from "lodash"
+import Cookies from "js-cookie"
 import { create } from "zustand"
 import { devtools, persist, subscribeWithSelector } from "zustand/middleware"
 import { shallow } from "zustand/shallow"
 import convertCoordinates from "../../kakao/KakaoApi"
+import { tokenStore } from "../../pages/SignInPage"
+import { searchListStore } from "../components/Input"
 
 
 const initRoadAddress = ''
@@ -95,3 +97,10 @@ const store = (set)=> ({
 export const useQuillStore = create(subscribeWithSelector(store))
 
 
+export const resetUserInfoLog = () => {
+  const { deleteToken } = tokenStore.getState()
+  const { clearSearchWordAll } = searchListStore.getState()
+  Cookies.remove('refreshToken')
+  deleteToken()
+  clearSearchWordAll()
+}

@@ -130,7 +130,7 @@ function MyPostcomponent({ BookmarkMode }) {
                 key={card.postId}
                 isDetail
                 data={card}
-                linkAddress='/mypost'
+                linkAddress={BookmarkMode ? '/mybookmark' : '/mypost'}
               />
             );
           })}
