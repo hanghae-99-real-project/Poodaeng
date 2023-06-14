@@ -26,6 +26,17 @@ const SlideComponent = () => {
     setCurrentImgOrder(currentImgOrder - 1.5); // 이전 이미지로 이동하기 위해 currentImgOrder 값을 감소시킵니다.
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      moveToNextSlide();
+      console.log('화면넘어감');
+    }, 2000); // 1000ms(1초)마다 moveToNextSlide 함수가 호출되도록 합니다.
+
+    return () => {
+      clearInterval(interval); // 컴포넌트가 언마운트될 때 타이머를 제거합니다.
+    };
+  }, []);
+
   const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain);
 
   if (isLoading) {
