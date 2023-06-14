@@ -20,7 +20,7 @@ function LinkHeader({ children, icon, destination, setMapMode, feature }) {
         />
       )}
       <div
-        className={`box-border font-bold text-xl leading-6 text-center ${
+        className={`f-fr-ic box-border font-bold text-xl  leading-6 text-center ${
           feature && 'translate-x-2'
         }`}
       >

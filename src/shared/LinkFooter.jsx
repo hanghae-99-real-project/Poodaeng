@@ -1,6 +1,6 @@
-import Cookies from 'js-cookie';
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
@@ -9,7 +9,6 @@ import { bookMarkLostPost } from '../api/daengFinder';
 import { ReactComponent as Bookmark } from '../assets/images/BookmarkFilled.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import { ReactComponent as Comment } from '../assets/images/Magnifier.svg';
-import { tokenStore } from '../pages/SignInPage';
 
 const store = (set, get) => ({
   /**
@@ -38,9 +37,15 @@ const store = (set, get) => ({
       userId: parseInt(userId, 10),
     }));
   },
-  getBookmarkState: isBookmark => {
+  // getBookmarkState: isBookmark => {
+
+  //   set(() => ({
+  //     isBookmark
+  //   }));
+  // },
+  getBookmarkState: isBookmarkArray => {
     set(() => ({
-      isBookmark,
+      isBookmark: isBookmarkArray?.length > 0,
     }));
   },
   setClipAddress: clipAddress => {
@@ -56,16 +61,13 @@ const store = (set, get) => ({
     }));
     setTimeout(() => set(prevState => ({ onModal: !prevState.onModal })), 1000);
   },
-  onCancelBookmark: () =>
-    set(() => ({
-      isBookmark: false,
-    })),
+  // onCancelBookmark: () =>
+  //   set(() => ({
+  //     isBookmark: false,
+  //   })),
   onBookmark: async () => {
     // set(preState => ({ isBookmark:!preState.isBookmark }));
     const inputs = {
-      // accessToken: JSON.parse(localStorage.getItem('accessToken')),
-      accessToken: tokenStore.getState().tokenState.accessToken,
-      refreshToken: Cookies.get('refreshToken'),
       postId: get().postId,
     };
     try {
@@ -93,10 +95,14 @@ const store = (set, get) => ({
       );
     } catch (error) {
       console.log(error);
+
       set(() => ({
         isBookmark: false,
         onModal: true,
-        modalComment: '북마크 등록 실패!',
+        modalComment:
+          error.code === 'ECONNABORTED'
+            ? '로그인 후 이용할 수 있습니다.'
+            : '북마크 등록 실패!',
       }));
       setTimeout(
         () => set(prevState => ({ onModal: !prevState.onModal })),
@@ -120,7 +126,7 @@ function LinkFooter() {
     isBookmark,
     url,
     onClipBoard,
-    onCancelBookmark,
+    // onCancelBookmark,
     onBookmark,
   } = useClipStore(
     state => ({
@@ -129,18 +135,21 @@ function LinkFooter() {
       isBookmark: state.isBookmark,
       url: state.url,
       onClipBoard: state.onClipBoard,
-      onCancelBookmark: state.onCancelBookmark,
+      // onCancelBookmark: state.onCancelBookmark,
       onBookmark: state.onBookmark,
     }),
     shallow,
   );
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const bookmarkHandler = () => {
-    if (isBookmark) {
-      onCancelBookmark();
-      return;
-    }
     onBookmark();
+    queryClient.invalidateQueries(['daengFinderDetail', postId]);
+    // if (isBookmark) {
+    //   onCancelBookmark();
+    //   return;
+    // }
+    // onBookmark();
   };
 
   const clipHandler = () => {

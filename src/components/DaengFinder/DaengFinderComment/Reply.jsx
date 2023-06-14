@@ -11,7 +11,7 @@ import Badge from '../../../assets/images/Badge1.svg';
 import { dateConvert2 } from '../../../utils/DateConvert';
 import { tokenStore } from '../../../pages/SignInPage';
 
-function Reply({ commentId, onReplyMode, setEditMode }) {
+function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
   // const [editMode, setEditMode] = useState(false);
   // const { userPhoto, childComment, createdAt, isPrivate } = reply;
   // const { UserId, userPhoto, childComment, createdAt, isPrivate } = reply;
@@ -81,6 +81,10 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
    * 4. 비밀 대댓글 수정 시 Locker 보라색으로 isPrivate true로 고정되고 비밀댓글 해제 못하도록 해야 함.
    * @requires 포스트 작성자 postOwnerId랑 myId가 같으면 다 볼 수 있음.
    */
+  /**
+   * @description 내가 대댓글을 단 상위 커멘트의 유저 ID 가 필요하고  내가 댓글을 단 childComment의 UserId가 필요함.
+   * 같다면 볼 수 있게
+   */
   return (
     // <div>대기</div>
     <div>
@@ -88,7 +92,8 @@ function Reply({ commentId, onReplyMode, setEditMode }) {
         ? data.data?.childCommentsData?.map(reply => {
             return reply.isPrivate &&
               reply.UserId !== myId &&
-              postOwnerId !== myId ? (
+              postOwnerId !== myId &&
+              parentCommentUserId !== myId ? (
               <div
                 key={reply.childCommentId}
                 className='relative f-fr-ic gap-4 py-6 px-6 pl-12 border-b border-solid bg-[#F6F6F6] text-[#525252] text-base font-medium leading-4'
