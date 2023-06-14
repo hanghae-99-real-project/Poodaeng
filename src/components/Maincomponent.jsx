@@ -7,14 +7,14 @@ import Tabbar from './Tabbar';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
 import Kakaoserch from './Kakaoserch';
-import { getPostLost } from '../api/daengFinder';
 import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
 import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
+import getDaengMain from '../api/main';
 
 function Maincomponent() {
   const navigate = useNavigate();
-  const { isLoading, isError, data } = useQuery('getPostLost', getPostLost);
+  const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain);
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
@@ -23,7 +23,6 @@ function Maincomponent() {
     );
   }
 
-  console.log(data.data.lostPostsData);
   if (isError) {
     <div>오류가 발생했습니다.</div>;
   }

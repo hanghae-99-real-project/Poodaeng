@@ -4,11 +4,14 @@ import FileUploader from './FileUploader';
 
 function ProfileEditcomponent() {
   const [uploadedFile, setUploadedFile] = useState(null);
+
   // 파일값
   const handleFileUpload = file => {
     setUploadedFile(file);
-    console.log(uploadedFile);
+    console.log(file);
   };
+  console.log(uploadedFile);
+
   return (
     <div>
       <Headers text icon destination='mypage'>
