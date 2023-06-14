@@ -121,6 +121,7 @@ function SignInPage() {
 
       onClearInputs();
       navigate('/');
+      // navigate('/signincomplete')
     },
     onError: err => {
       console.log(err);

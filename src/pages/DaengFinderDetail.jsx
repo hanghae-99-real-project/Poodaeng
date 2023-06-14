@@ -205,6 +205,9 @@ function DaengFinderDetail() {
         className='absolute z-30 top-7 left-4 text-xl cursor-pointer'
         onClick={() =>
           navigate(reDirection ? '/mypost' : '/daengfinder', {
+            state: {
+              BookmarkMode: reDirection === '/mybookmark',
+            },
             preventScrollReset: true,
           })
         }
