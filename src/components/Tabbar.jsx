@@ -47,11 +47,11 @@ function Tabbar({ isActive, setIsActive }) {
   };
 
   const ProfileIconHandler = () => {
-    // if (!refreshToken) {
-    //   navigate('/unknown');
-    // } else {
-    navigate('/mypage');
-    // }
+    if (!refreshToken) {
+      navigate('/unknown');
+    } else {
+      navigate('/mypage');
+    }
     setIsActive('mypage');
   };
 

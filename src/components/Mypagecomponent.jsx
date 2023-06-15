@@ -51,6 +51,8 @@ function Mypagecomponent() {
   //   2:갯수 ]
   const myInfo = data?.data?.getMyInfoData;
 
+  console.log('mypage', myInfo.userPhoto[0]);
+
   // const pooData = data?.data?.getMyPooData;
   // if (!pooData) {
   //   return <Loading />;
@@ -65,7 +67,7 @@ function Mypagecomponent() {
             <div>
               <img
                 className='w-24 h-24 rounded-full object-contain bg-cover'
-                src='https://img2.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202008/17/newsen/20200817160051331jsfk.jpg'
+                src={myInfo.userPhoto[0]}
                 alt='profile img'
               />
             </div>
