@@ -57,6 +57,7 @@ function KakaoAuthCheck() {
         setIsLoading(false);
         navigate('/signincomplete', {
           replace: true,
+          fromSocial: true,
         });
       }, 1000);
     },

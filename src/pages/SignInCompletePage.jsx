@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 import { ReactComponent as SignInCompleteCharacter } from '../assets/images/SignInCompleteCharacter.svg';
 import Buttons from '../components/common/Buttons';
@@ -14,6 +14,8 @@ function SignInCompletePage() {
     }),
     shallow,
   );
+  const location = useLocation();
+  const fromSocial = location.state?.fromSocial;
   useEffect(() => {
     SwitchFooter(false);
   }, []);
@@ -43,7 +45,7 @@ function SignInCompletePage() {
           type='button'
           bgColor='#8722ED'
           textColor='#fff'
-          onClick={() => navigate('/signin')}
+          onClick={() => navigate(fromSocial ? '/' : '/signin')}
         >
           푸댕 시작하기
         </Buttons>

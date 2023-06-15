@@ -129,10 +129,11 @@ function SignUpPage() {
     onError: error => {
       console.log('회원가입 제출 error >> ', error);
       setMessage(true);
-      toast.error(`회원가입에 실패했습니다.`, {
-        position: toast.POSITION.TOP_CENTER,
-        toastId: 'sign-up-error-toast',
-      });
+      if (error.response?.data?.errorMessage) {
+        toastError(error.response?.data?.errorMessage);
+      } else {
+        toastError('회원가입 실패');
+      }
     },
   });
 
