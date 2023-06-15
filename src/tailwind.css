@@ -1,7 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 :root {
   --vh: 100%;
 }
@@ -92,6 +101,12 @@
 
   .error-msg {
     @apply absolute -bottom-4 left-0 font-semibold  text-[10px] text-[#FF4444];
+  }
+
+  .animate-slide-up {
+    animation-name: slide-up;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
   }
 }
 /* footer 가 있다면 */
