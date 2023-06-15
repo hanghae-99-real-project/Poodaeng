@@ -24,12 +24,15 @@ function ProfileEditcomponent() {
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
-        <Loading />
+        {/* <Loading /> */} 로딩중
       </div>
     );
   }
   if (isError) {
-    return navigate('/unknown');
+    // if (status !== 401) {
+    //   return navigate('/unknown');
+    // }
+    console.log('geterror', isError);
   }
   const { getMyInfoData } = data.data;
   console.log(data.data.getMyInfoData);
@@ -100,8 +103,8 @@ function ProfileEditcomponent() {
       queryClient.invalidateQueries('poobox');
       navigate('/map');
     },
-    onError: error => {
-      console.log(error);
+    onError: errors => {
+      console.log(errors);
     },
   });
 
@@ -167,14 +170,14 @@ function ProfileEditcomponent() {
 
         {nickEdit ? (
           <>
-            <div className='w-20 font-bold text-lg'>
+            <div className='flex items-center justify-center w-full font-bold text-lg'>
               {getMyInfoData.nickname}
             </div>
             <div
               className='fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black bg-opacity-50'
               onClick={closeModal}
             >
-              <div className='absolute bottom-5 rounded'>
+              <div className='absolute bottom-28 rounded'>
                 <div className='flex items-center mb-4'>
                   <input
                     type='text'
@@ -185,7 +188,7 @@ function ProfileEditcomponent() {
                   />
                   <button
                     onClick={handleComplete}
-                    className='bg-blue-500 text-white w-20 py-2 rounded-lg rounded-l-none'
+                    className='bg-mainColor text-white w-20 py-2 rounded-lg rounded-l-none'
                   >
                     완료
                   </button>
@@ -195,7 +198,9 @@ function ProfileEditcomponent() {
             </div>
           </>
         ) : (
-          <div className='w-20 font-bold text-lg'>{getMyInfoData.nickname}</div>
+          <div className='flex items-center justify-center w-full font-bold text-lg'>
+            {getMyInfoData.nickname}
+          </div>
         )}
 
         <Edit className='cursor-pointer' onClick={nickEditHandler} />

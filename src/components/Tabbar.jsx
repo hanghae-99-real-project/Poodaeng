@@ -14,9 +14,12 @@ function Tabbar({ isActive, setIsActive }) {
   const refreshToken = Cookies.get('refreshToken');
 
   // console.log('active', isActive);
-  const {deleteToken} = tokenStore((state)=>({
-    deleteToken: state.deleteToken
-  }), shallow)
+  const { deleteToken } = tokenStore(
+    state => ({
+      deleteToken: state.deleteToken,
+    }),
+    shallow,
+  );
 
   const HomeIconHandler = () => {
     navigate('/');
@@ -30,7 +33,7 @@ function Tabbar({ isActive, setIsActive }) {
 
   const PooPostIconHandler = () => {
     if (!refreshToken) {
-      deleteToken()
+      deleteToken();
       navigate('/login');
     } else {
       navigate('/poopost');
@@ -44,11 +47,11 @@ function Tabbar({ isActive, setIsActive }) {
   };
 
   const ProfileIconHandler = () => {
-    if (!refreshToken) {
-      navigate('/unknown');
-    } else {
-      navigate('/mypage');
-    }
+    // if (!refreshToken) {
+    //   navigate('/unknown');
+    // } else {
+    navigate('/mypage');
+    // }
     setIsActive('mypage');
   };
 
