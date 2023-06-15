@@ -1,5 +1,5 @@
 import React from 'react';
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react';
 import WelcomeConfetti from '../../../assets/images/Welcome.json';
 
 const Welcome = () => {
@@ -12,7 +12,7 @@ const Welcome = () => {
     },
   };
 
-  return <Lottie options={defaultOptions} />;
+  return <Lottie {...defaultOptions} />;
 };
 
 export default Welcome;
