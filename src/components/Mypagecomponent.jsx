@@ -35,7 +35,7 @@ function Mypagecomponent() {
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
-        {/* <Loading /> */} 로딩중 mypagecompo
+        {/* <Loading /> */} 로딩중 mypagecomponent
       </div>
     );
   }
