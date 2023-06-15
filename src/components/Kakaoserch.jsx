@@ -8,7 +8,6 @@ import React, { useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPooBox } from '../api/poobox';
-import Loading from './common/Loading';
 import { ReactComponent as MyGeo } from '../assets/images/MyGeo.svg';
 
 function Kakaoserch() {
@@ -20,13 +19,15 @@ function Kakaoserch() {
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
-        <Loading />
+        {/* <Loading /> */} 로딩중 입니다
       </div>
     );
   }
   if (isError) {
     return <div>오류가 발생했습니다.</div>;
   }
+  console.log('map>>>>>>>>>', data);
+
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
   const script = document.createElement('script');
   script.src = process.env.REACT_APP_KAKAO_KEY;
@@ -40,6 +41,7 @@ function Kakaoserch() {
       });
     }
   };
+
   document.head.appendChild(script);
   // 지도를 초기화하는 함수
   function initializeMap() {
