@@ -1,7 +1,7 @@
 import DOMPurify from 'dompurify';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getDateDiff } from '../../utils/DateConvert';
+import { dateConvert2, getDateDiff } from '../../utils/DateConvert';
 
 function Card({ isDetail, data, linkAddress, justSearch }) {
   const navigate = useNavigate();
@@ -59,13 +59,13 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
             <p className=' text-xs w-56 line-clamp-3'>{data.address}</p>
           )}
         </div>
-        {!justSearch && (
-          <div>
-            <p className='text-xs font-medium text-[#969696]'>
-              {getDateDiff(data.createdAt)}
-            </p>
-          </div>
-        )}
+        <div>
+          <p className='text-xs font-medium text-[#969696]'>
+            {justSearch
+              ? dateConvert2(data.createdAt)[0]
+              : getDateDiff(data.createdAt)}
+          </p>
+        </div>
       </div>
     </div>
   );

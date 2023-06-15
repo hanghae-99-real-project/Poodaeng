@@ -124,7 +124,7 @@ function SignUpPage() {
     onSuccess: data => {
       console.log('회원가입 제출 res >> ', data);
       onClearInputs();
-      navigate('/signin');
+      navigate('/signincomplete');
     },
     onError: error => {
       console.log('회원가입 제출 error >> ', error);
@@ -307,9 +307,6 @@ function SignUpPage() {
           >
             다음
           </button>
-          {/* <Buttons type='submit' bgColor='#C2C2C2' textColor='#fff'>
-            다음
-          </Buttons> */}
         </div>
       </form>
     </div>

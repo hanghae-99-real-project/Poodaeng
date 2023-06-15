@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import LoginSocial from '../components/LoginSocial';
 import LogoutTest from '../components/LogoutTest';
 import AuthCheck from '../pages/KakaoAuthCheck';
-import CompletePage from '../pages/CompletePage';
+import SignInCompletePage from '../pages/SignInCompletePage';
 import DaengFinder from '../pages/DaengFinder';
 import DaengFinderCommentPage from '../pages/DaengFinderCommentPage';
 import DaengFinderDetail from '../pages/DaengFinderDetail';
@@ -49,7 +49,7 @@ function LazyRouter() {
               <Route path='/auth' element={<AuthCheck />}/>
               <Route path='/signin' element={<SignInPage />}/>
               <Route path='/signup' element={<SignUpPage />}/>
-              <Route path='/signupcomplete' element={<CompletePage />}/>
+              <Route path='/signincomplete' element={<SignInCompletePage />}/>
               <Route path='/mypage' element={<Mypage />}/>
               <Route path='/test' element={<LogoutTest />}/>
               <Route path='/mypost' element={<MyPost />}/>

@@ -12,10 +12,10 @@ import { devtools, persist } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 // eslint-disable-next-line import/no-cycle
 import { signIn } from '../api/sendCode';
-import Logo from '../components/common/Logo';
+import { ReactComponent as DaengPoo } from '../assets/images/DaengPoo.svg';
+import { ReactComponent as Logo } from '../assets/images/Poodaeng.svg';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 import useInput from '../hooks/useInput';
-// import { errorMsg } from '../data/inputs';
 
 const initialState = {
   authenticated: false,
@@ -77,14 +77,10 @@ function SignInPage() {
     shallow,
   );
 
-  // eslint-disable-next-line no-unused-vars
   const [inputs, onChangeInputs, onClearInputs, onValidator] = useInput({
     phoneNumber: '',
     password: '',
   });
-  // const dispatch = useDispatch();
-
-  // const isError = true;
   const navigate = useNavigate();
   const onClose = () => {
     setIsError(false);
@@ -113,19 +109,14 @@ function SignInPage() {
       // const expireDate = new Date(AC_EXP * 1000); // 날짜단위로 변환해서 넣기.(ms 단위로 변환해서 넣기)
       const acExpireDate = AC_EXP * 1000; // ms 단위로 변환(?)해서 넣기
       console.log('expireDate type 확인', typeof acExpireDate);
-      // setAccessToken(accessToken);
-      // localStorage.setItem('accessToken', JSON.stringify(accessToken));
-      // localStorage.setItem('userId', JSON.stringify(userId));
       setToken(userId, accessToken, acExpireDate);
-      // dispatch(SET_TOKEN({ userId, accessToken, acExpireDate }));
 
       onClearInputs();
       navigate('/');
-      // navigate('/signincomplete')
     },
     onError: err => {
       console.log(err);
-      /* 콘솔 확인해서 토스트 띄워야 함. */
+      setIsError(true);
     },
   });
 
@@ -134,9 +125,6 @@ function SignInPage() {
     console.log('onSubmitHandler activated');
     console.log('location >>> ', location);
     console.log('error >>> ', error);
-    // onClearInputs();
-    // const { location, error } = getCurrentLocation();
-    // const { location, error } = getCurrentLocation();
     if (error) {
       toast.error(error, {
         position: toast.POSITION.TOP_CENTER,
@@ -149,7 +137,6 @@ function SignInPage() {
       setMessage(true);
       toast.error(`유효하지 않은 전화번호 혹은 비밀번호!`, {
         position: toast.POSITION.TOP_CENTER,
-        // toastId: 'sign-up-error-toast',
         toastId: 'empty-comment-toast',
       });
       return;
@@ -170,18 +157,13 @@ function SignInPage() {
     navigate('/signup');
   };
 
-  // useEffect(() => {
-  //   /* 맨 처음 null 갱신, 갱신 안해놓으면 batch update때문에 null가져옴 */
-  //   getCurrentLocation();
-  // }, []);
-
   return (
     <>
       <IoIosArrowBack
-        className='absolute left-4 top-16 cursor-pointer'
+        className='absolute left-4 top-16 text-4xl cursor-pointer'
         onClick={() => navigate('/loginsocial')}
       />
-      {message && <ToastContainer />}
+      {message && <ToastContainer className='absolute top-5' />}
       <div className={`fixed z-30 inset-0 ${isError ? '' : 'hidden'}`}>
         <div
           role='none'
@@ -191,10 +173,11 @@ function SignInPage() {
         <div className='fixed flex flex-col justify-center items-center gap-7 bg-white rounded-lg shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-[72px] py-12'>
           <div className='flex flex-col gap-3'>
             <div className='flex justify-center items-center'>
-              <BsFillExclamationCircleFill className=' text-[#449AFF] text-5xl ' />
+              <BsFillExclamationCircleFill className=' text-mainColor text-5xl ' />
             </div>
             <div className='flex justify-center items-center text-center text-sm font-bold w-[107px]'>
-              존재하지 않는 회원 정보입니다.
+              {/* 존재하지 않는 회원 정보입니다. */}
+              미등록 전화번호 혹은 비밀번호 불일치
             </div>
           </div>
           <button
@@ -208,9 +191,9 @@ function SignInPage() {
       </div>
       <div className='flex flex-col h-full justify-center items-center mb-7 '>
         <div className='flex flex-col items-center mb-[78px] '>
-          <Logo st='w-[169px] h-[31px] bg-contain bg-no-repeat mb-2' />
-          <div className='text-base font-medium '>
-            반려견 배변 처리 위치 정보
+          <div className='f-fc-ic gap-3'>
+            <DaengPoo className='w-24 h-16 translate-x-2' />
+            <Logo className='w-28 h-14 mb-2' />
           </div>
         </div>
         <form
@@ -226,7 +209,7 @@ function SignInPage() {
                 name='phoneNumber'
                 value={inputs.phoneNumber}
                 onChange={onChangeInputs}
-                className='w-60 text-base font-bold border-b border-[#CACACA]'
+                className='w-60 text-base font-bold placeholder:text-[#CACACA] py-1 border-b border-[#CACACA]'
                 placeholder='휴대폰 번호'
               />
               {/* {!onValidator('phoneNumber') && (
@@ -240,7 +223,7 @@ function SignInPage() {
                 autoComplete='true'
                 value={inputs.password}
                 onChange={onChangeInputs}
-                className='w-60 text-base font-bold border-b border-[#CACACA]'
+                className='w-60 text-base font-bold placeholder:text-[#CACACA] py-1 border-b border-[#CACACA]'
                 placeholder='비밀번호'
               />
               {/* {!onValidator('password') && (
@@ -249,7 +232,7 @@ function SignInPage() {
             </div>
           </div>
           <button
-            className='w-[240px] h-12 bg-[#449AFF] text-[#FFFFFF] text-base font-bold rounded-md'
+            className='w-[240px] h-12 bg-mainColor text-[#FFFFFF] text-base font-bold rounded-md'
             type='submit'
           >
             로그인
@@ -257,20 +240,15 @@ function SignInPage() {
         </form>
         <div className='flex flex-row  justify-center gap-2 mb-11'>
           <button type='button' className='text-[#959595]'>
-            아이디 찾기
-          </button>
-          <p className='text-[#959595]'>|</p>
-          <button type='button' className='text-[#959595]'>
             비밀번호 찾기
           </button>
-        </div>
-        <div className='w-full flex justify-center items-center'>
+          <p className='text-[#959595]'>|</p>
           <button
             type='button'
-            className=' px-2 text-sm font-bold border-b border-[#CACACA]'
+            className='text-[#959595]'
             onClick={moveToSignUp}
           >
-            전화번호 회원가입
+            회원가입 하기
           </button>
         </div>
       </div>
