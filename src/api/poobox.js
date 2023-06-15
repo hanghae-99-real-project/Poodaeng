@@ -18,7 +18,6 @@ const addPooBox = async (data) => {
   formData.append("content", data.content);
   formData.append("pooLatitude", data.pooLongitude);
   formData.append("pooLongitude", data.pooLatitude);
-  
   // 폼데이터 조회 코드
   // for (const [key, value] of formData.entries()) { console.log(`${key}:`, value); }
   

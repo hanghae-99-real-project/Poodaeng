@@ -10,10 +10,9 @@ import 'swiper/css/pagination';
 
 // import required modules
 import { useQuery } from 'react-query';
-import { Autoplay, Pagination } from 'swiper'; // Navigation 모듈은 제거합니다.
 import { useNavigate } from 'react-router-dom';
+import { Autoplay, Pagination } from 'swiper'; // Navigation 모듈은 제거합니다.
 import getDaengMain from '../api/main';
-import Loading from './common/Loading';
 
 export default function Slidecomponent() {
   const navigate = useNavigate('');
@@ -21,12 +20,12 @@ export default function Slidecomponent() {
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center items-center'>
-        <Loading />
+        {/* <Loading /> */} 로딩중 입니다.
       </div>
     );
   }
   if (isError) {
-    return <div>오류가 발생했습니다.</div>;
+    return <div>실종 정보가 없습니다</div>;
   }
 
   const daengData = data.data.lostPostsData;
