@@ -1,5 +1,5 @@
-import React from 'react';
 import Lottie from 'lottie-react';
+import React from 'react';
 import WelcomeConfetti from '../../../assets/images/Welcome.json';
 
 const Welcome = () => {

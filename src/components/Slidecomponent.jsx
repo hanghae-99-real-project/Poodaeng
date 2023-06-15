@@ -30,7 +30,7 @@ export default function Slidecomponent() {
   }
 
   const daengData = data.data.lostPostsData;
-
+  console.log('main>>>>>>>>>', daengData);
   const pooDetailHandler = postId => {
     navigate(`/daengfinder/detail/${postId}`);
   };
@@ -45,7 +45,7 @@ export default function Slidecomponent() {
         disableOnInteraction: false,
       }}
       modules={[Autoplay, Pagination]}
-      className='mySwiper w-80 h-40 border object-cover'
+      className='mySwiper w-80 h-40 object-cover'
     >
       {daengData.map(item => {
         return (
@@ -57,7 +57,7 @@ export default function Slidecomponent() {
             <img
               src={item.lostPhotoUrl[0]}
               alt='사진'
-              className='w-40 h-28 border object-cover'
+              className='w-40 h-28 object-cover'
             />
             <div className='font-bold text-xs'>{item.address}</div>
           </SwiperSlide>

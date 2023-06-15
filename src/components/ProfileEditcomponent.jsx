@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { getMypageCount } from '../api/myPage';
+import { getMypageCount, newPutImage } from '../api/myPage';
 import { ReactComponent as Edit } from '../assets/images/Edit.svg';
 import useInput from '../hooks/useInput';
 import FileUploader from './FileUploader';
@@ -13,7 +13,8 @@ function ProfileEditcomponent() {
   const navigate = useNavigate();
   const [uploadedFile, setUploadedFile] = useState(null);
   const [nickEdit, setNickEdit] = useState(false);
-  const [newNickname, setNewNickname] = useState('');
+  const [imgEdit, setImgEdit] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   const [inputs, onChangeInputs, onClearInputs, onValidator] = useInput({
     nickname: '',
     password: '',
@@ -39,23 +40,16 @@ function ProfileEditcomponent() {
     console.log(file);
   };
 
+  // 닉네임 변경
   const nickEditHandler = () => {
-    setNickEdit(!nickEdit);
+    setNickEdit(true);
+    console.log('nickname edit', nickEdit);
   };
-
   if (!uploadedFile) {
     console.log('이미지없음');
   }
 
-  const newNickNameHandler = e => {
-    const pattern = /^[가-힣a-zA-Zㄱ-ㅎㅏ-ㅣ]*$/;
-    if (!pattern.test(e.target.value)) {
-      setNewNickname('');
-    } else {
-      setNewNickname(e.target.value);
-    }
-  };
-
+  // 닉네임 유효성 검사
   const onValidatorNickName = e => {
     const { name } = e.target;
     console.log('name>>>', name);
@@ -63,11 +57,61 @@ function ProfileEditcomponent() {
     console.log('nickname>>>>>', result);
   };
 
+  // 비밀번호 유효성 검사
   const onValidatorPassword = e => {
     const { name } = e.target;
     console.log('PWname>>>', name);
     const result = onValidator(name);
     console.log('PWnickname>>>>>', result);
+  };
+
+  const handleInputChange = e => {
+    setInputValue(e.target.value);
+  };
+
+  const closeModal = () => {
+    setNickEdit(false);
+    setImgEdit(false);
+    setInputValue('');
+    console.log('Modal closed');
+  };
+  const [image, setImage] = useState(null);
+  const setThumbnail = event => {
+    const file = event.target.files[0];
+    if (file) {
+      setImage(URL.createObjectURL(file));
+    }
+  };
+
+  const deleteImage = () => {
+    setImage(null);
+  };
+
+  // 이미지 변경
+  const imgEditHandler = () => {
+    setImgEdit(true);
+    console.log('nickname edit', nickEdit);
+  };
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(newPutImage, {
+    onSuccess: postData => {
+      console.log('query success response >>> ', postData);
+      queryClient.invalidateQueries('poobox');
+      navigate('/map');
+    },
+    onError: error => {
+      console.log(error);
+    },
+  });
+
+  const formData = new FormData();
+  formData.append('pooPhotoUrl', uploadedFile);
+
+  const handleComplete = () => {
+    console.log('Input value:', inputValue);
+    mutation.mutate(formData);
+    closeModal();
   };
 
   return (
@@ -76,16 +120,84 @@ function ProfileEditcomponent() {
         프로필 수정
       </Headers>
       <div className='flex flex-col items-center my-8 gap-3'>
-        <div className='flex border rounded-full'>
-          <FileUploader onFileUpload={handleFileUpload} />
-        </div>
-        {nickEdit ? (
-          <input className='w-20' onChange={newNickNameHandler} />
+        {imgEdit ? (
+          <>
+            <div className='flex rounded-full'>
+              <div
+                className='flex items-center justify-center border w-36 h-36 bg-[#D9D9D9] rounded-full'
+                onClick={imgEditHandler}
+              >
+                +
+              </div>
+            </div>
+            <div
+              className='fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black bg-opacity-50'
+              onClick={closeModal}
+            >
+              <div className='absolute bottom-5 rounded'>
+                <div className='flex items-center mb-4'>
+                  <input
+                    type='text'
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    className='w-full py-2 rounded-lg rounded-r-none shadow'
+                    onClick={e => e.stopPropagation()} // 클릭 이벤트 전파 중단
+                  />
+                  <button
+                    onClick={handleComplete}
+                    className='bg-blue-500 text-white w-20 py-2 rounded-lg rounded-l-none'
+                  >
+                    완료
+                  </button>
+                </div>
+                <div className='flex justify-end' />
+              </div>
+            </div>
+          </>
         ) : (
-          <div className='font-bold text-[20px]'>
-            {newNickname || getMyInfoData.nickname}
+          <div className='flex rounded-full'>
+            <div
+              className='flex items-center justify-center border w-36 h-36 bg-[#D9D9D9] rounded-full'
+              onClick={imgEditHandler}
+            >
+              +
+            </div>
           </div>
         )}
+
+        {nickEdit ? (
+          <>
+            <div className='w-20 font-bold text-lg'>
+              {getMyInfoData.nickname}
+            </div>
+            <div
+              className='fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black bg-opacity-50'
+              onClick={closeModal}
+            >
+              <div className='absolute bottom-5 rounded'>
+                <div className='flex items-center mb-4'>
+                  <input
+                    type='text'
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    className='w-full py-2 rounded-lg rounded-r-none shadow'
+                    onClick={e => e.stopPropagation()} // 클릭 이벤트 전파 중단
+                  />
+                  <button
+                    onClick={handleComplete}
+                    className='bg-blue-500 text-white w-20 py-2 rounded-lg rounded-l-none'
+                  >
+                    완료
+                  </button>
+                </div>
+                <div className='flex justify-end' />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className='w-20 font-bold text-lg'>{getMyInfoData.nickname}</div>
+        )}
+
         <Edit className='cursor-pointer' onClick={nickEditHandler} />
       </div>
       <div className='border' />
