@@ -46,7 +46,6 @@ function Router() {
           <Route path='/auth' element={<KakaoAuthCheck />}/>
           <Route path='/signup' element={<SignUpPage />}/>
           <Route path='/signin' element={<SignInPage />}/>
-          <Route path='/signincomplete' element={<SignInCompletePage />}/>
           <Route path='/test' element={<LogoutTest />}/>
           <Route path='/tmap/:pooId' element={<TmapPage />} />
           <Route path='/map/:pooId' element={<PooDetail />} />
@@ -57,6 +56,7 @@ function Router() {
           nothing yet
         </Route>
         <Route element={<LinkFooterLayout />}>
+          <Route path='/signincomplete' element={<SignInCompletePage />}/>
           <Route path='/daengfinder/detail/:postId' element={<DaengFinderDetail/>}/>
           <Route path='/daengfinder/detail/:postOwnerId/comment/:postId' element={<DaengFinderCommentPage />}/>
           <Route path='/daengfinder/write' element={<DaengFinderWritePage />}/>

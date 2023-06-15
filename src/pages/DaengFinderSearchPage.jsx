@@ -149,20 +149,6 @@ function DaengFinderSearchPage() {
               ) : null}
             </div>
           )}
-          {/* <div
-            className={`${
-              (word || searchList.length || showSearchList) && 'hidden'
-            } h-full w-full f-ic-jc absolute top-1/2 left-1/2 -translate-x-[45%] -translate-y-[60%]`}
-          >
-            <NoRecentResult />
-          </div>
-          <div
-            className={`${
-              (showRecent || data?.data?.posts?.length) && 'hidden'
-            } h-full w-full f-ic-jc absolute top-1/2 left-1/2 -translate-x-[45%] -translate-y-[60%]`}
-          >
-            <NoSearchResult />
-          </div> */}
         </div>
         {showSearchList && (
           <div

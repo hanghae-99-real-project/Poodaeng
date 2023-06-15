@@ -141,6 +141,9 @@ function DaengFinderDetail() {
   };
   useEffect(() => {
     SwitchFooter(true);
+    return () => {
+      SwitchFooter(false);
+    };
   }, []);
 
   useEffect(() => {

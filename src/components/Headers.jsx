@@ -10,7 +10,7 @@ function Headers({ children, text, icon, destination }) {
         {icon && (
           <IoIosArrowBack
             onClick={() => navigate(`/${destination}`)}
-            className='cursor-pointer'
+            className='text-2xl cursor-pointer'
           />
         )}
       </div>

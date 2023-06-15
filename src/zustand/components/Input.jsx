@@ -85,7 +85,6 @@ function Input({ searchDaengFinderPost }) {
     <div className='pl-2'>
       <input
         autoFocus
-        // onClick={() => setShowRecent(true)}
         onChange={e => onWordChanger(e.target.value)}
         placeholder='검색내용을 입력하세요'
         className='w-64 py-2'
