@@ -105,7 +105,7 @@ function DaengFinderDetail() {
       console.log('deleteMutation parameter >>>', variables);
       queryClient.removeQueries(['daengFinderDetail', postId]);
       navigate(reDirection || '/daengfinder', {
-        state: '게시글 삭제 완료',
+        state: { deleteComplete: '게시글 삭제 완료' },
       });
     },
     onError: error => {
@@ -211,6 +211,7 @@ function DaengFinderDetail() {
           navigate(reDirection ? '/mypost' : '/daengfinder', {
             state: {
               BookmarkMode: reDirection === '/mybookmark',
+              isScroll: true,
             },
             preventScrollReset: true,
           })
@@ -243,7 +244,7 @@ function DaengFinderDetail() {
                     // eslint-disable-next-line react/no-array-index-key
                     key={idx}
                     type='button'
-                    className={`w-2 h-2 rounded-full ${
+                    className={`w-2 h-2 rounded-full border-[#B3B3B3] ${
                       activeBtn === idx ? 'bg-[#FFFFFF]' : 'bg-[#B3B3B3]'
                     } cursor-pointer transition duration-150 `}
                     onClick={() => imageHandler(idx)}

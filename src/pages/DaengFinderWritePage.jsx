@@ -35,7 +35,6 @@ function DaengFinderWritePage() {
   const [target, onChangeHandler, onClearHandler] = useInput({
     dogname,
     title,
-    // content,
   });
   const [image, setImage] = useState({ photo: [], preview: [] });
   const [alertMsg, setAlertMsg] = useState(false);
@@ -106,7 +105,6 @@ function DaengFinderWritePage() {
   const editMutation = useMutation(editMyPost, {
     onSuccess: data => {
       console.log('daengFinderWrite data>>> ', data);
-      // queryClient.invalidateQueries('getPostLost');
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
@@ -161,22 +159,13 @@ function DaengFinderWritePage() {
     let inputs;
     const formData = new FormData();
     formData.append('title', target.title);
-    // formData.append('content', target.content);
     formData.append('content', quillValue);
 
     formData.append('dogname', target.dogname);
     if (image.photo.length > 0) {
       image.photo.forEach(img => {
-        // const jsonImg = JSON.stringify(img);
-        // const blobImg = new Blob([img], { type: img.type });
-        // formData.append('image', blobImg, img.name);
-        if (checkPostId) {
-          const blobImg = new Blob([img], { type: img.type || 'image/*' });
-          formData.append('image', blobImg, img.name || img);
-        } else {
-          const blobImg = new Blob([img], { type: img.type });
-          formData.append('image', blobImg, img.name);
-        }
+        const blobImg = new Blob([img], { type: img.type || '' });
+        formData.append('image', blobImg, img.name || img);
       });
     }
     console.log('최종 위도 경도 >>>', latlng);
@@ -187,10 +176,6 @@ function DaengFinderWritePage() {
       inputs = {
         postId: checkPostId,
         formData,
-        // formData: {
-        //   title: target.title,
-        //   content: quillValue,
-        // },
       };
       editMutation.mutate(inputs);
       return;
@@ -312,6 +297,7 @@ function DaengFinderWritePage() {
       }
     };
   }, []);
+  console.log('image', image.photo);
 
   return (
     <div className='w-full max-h-[812px]'>

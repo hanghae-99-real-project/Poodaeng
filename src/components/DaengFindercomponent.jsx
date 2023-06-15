@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
-// import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
 import { useQuery } from 'react-query';
@@ -11,18 +10,17 @@ import { shallow } from 'zustand/shallow';
 import { getPostLost } from '../api/daengFinder';
 import { ReactComponent as DaengFinderButton } from '../assets/images/DaengFinderMenu.svg';
 import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
-// import { areaList } from '../data/Areas';
 import useCurrentLocation from '../hooks/useCurrentLocation';
+import useScroll from '../hooks/useScroll';
 import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useLocationStore } from '../zustand/example/zustandAPI';
 import Card from './DaengFinder/Card';
 import Loading from './common/Loading';
 
 function DaengFindercomponent() {
-  // const [selectedArea, setSelectedArea] = useState('마포구 연남동');
-  // const [isShow, setIsShow] = useState(false);
   const [isDetail, setIsDetail] = useState(true);
   const [alertMsg, setAlertMsg] = useState(false);
+  // useScroll('scroller', true);
   const { setLocation } = useLocationStore(
     prev => ({
       setLocation: prev.setLocation,
@@ -72,10 +70,12 @@ function DaengFindercomponent() {
     },
   );
 
+  useScroll('scroller', loc.state?.isScroll, data);
+
   useEffect(() => {
-    if (loc.state) {
+    if (loc.state?.deleteComplete) {
       setAlertMsg(true);
-      toastSuccess(loc.state);
+      toastSuccess(loc.state.deleteComplete);
     }
   }, []);
 
@@ -110,44 +110,7 @@ function DaengFindercomponent() {
       </div>
       <div className='w-full flex flex-row justify-between px-5 mb-3'>
         <div role='none' />
-        {/* <div
-          className={`flex flex-col justify-center relative w-40 h-9  border border-[#ACACAC] shadow-md rounded-md
-          after:content-[${(
-            <RiArrowUpSFill className='text-amber-300 after:text-sm ' />
-          )}] 
-          cursor-pointer`}
-          onClick={selectOpenHandler}
-        >
-          {isShow ? (
-            <RiArrowUpSFill className='absolute top-1/2 right-1 -translate-y-1/2 text-2xl text-[#ACACAC]' />
-          ) : (
-            <RiArrowDownSFill className='absolute top-1/2 right-1 -translate-y-1/2 text-2xl text-[#ACACAC]' />
-          )}
-          <label className='pl-3 text-left cursor-pointer'>
-            {selectedArea}
-          </label>
-          <ul
-            className={`${
-              isShow ? '' : 'hidden'
-            } absolute top-9  text-left z-20 w-full rounded-md bg-white border border-[#ACACAC] shadow-md ${
-              isShow ? 'max-h-[350px]' : 'max-h-0'
-            } overflow-hidden flex flex-col cursor-pointer`}
-          >
-            {areaList.map(area => {
-              return (
-                <li
-                  role='none'
-                  key={area}
-                  value={area}
-                  onClick={selectAreaHandler}
-                  className='pl-3 z-20 w-full focus:bg-[#ACACAC] hover:bg-[#ACACAC] active:bg-[#ACACAC] '
-                >
-                  {area}
-                </li>
-              );
-            })}
-          </ul>
-        </div> */}
+
         <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
           <div
             className={`p-1  ${
@@ -179,6 +142,7 @@ function DaengFindercomponent() {
       {data?.data?.lostPostsData?.length ? (
         <div
           // 46.6875rem
+          id='scroller'
           className={`${
             isDetail
               ? 'flex flex-col gap-3  w-full'

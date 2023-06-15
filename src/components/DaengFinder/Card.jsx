@@ -5,6 +5,7 @@ import { dateConvert2, getDateDiff } from '../../utils/DateConvert';
 
 function Card({ isDetail, data, linkAddress, justSearch }) {
   const navigate = useNavigate();
+
   return (
     <div
       className={`flex ${
@@ -17,6 +18,7 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
           state: {
             destination: linkAddress || '',
           },
+          preventScrollReset: true,
         })
       }
     >

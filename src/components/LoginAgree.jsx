@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Map } from '../assets/images/AgreeScreen.svg';
 import { ReactComponent as LogoText } from '../assets/images/Poodaeng.svg';
 import { ReactComponent as Poo } from '../assets/images/PurplePoo.svg';
 import Loading from './common/Loading';
+import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 
 function LoginAgree() {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ function LoginAgree() {
     navigate('/loginsocial');
   };
   const isLoading = false;
+
+  useEffect(() => {
+    resetUserInfoLog();
+  }, []);
 
   return (
     <div className='flex flex-col items-center gap-5'>
