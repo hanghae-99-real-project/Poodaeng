@@ -15,7 +15,6 @@ module.exports = {
       colors: {
         mainColor: '#8722ED',
         testColor: {
-          /* 100, 200 같은 것은 단위를 내가 더 잘게 쪼갠 것 */
           100: '#FF8A3D',
           200: '#9da832',
         },
@@ -24,6 +23,15 @@ module.exports = {
           black: '#D9D9D9',
         }
       },
+      keyframes: {
+        emerge: {
+          from: { transfrom: 'translateY(200px)'},
+          to: { transfrom: 'translateY(0px)'}
+        }
+      },
+      animation: {
+        emerge:'emerge 1s ease-in-out',
+      }
     },
   },
   variants: {

@@ -16,11 +16,12 @@ import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useLocationStore } from '../zustand/example/zustandAPI';
 import Card from './DaengFinder/Card';
 import Loading from './common/Loading';
+import { ReactComponent as CheckBoxDaengFinder } from '../assets/images/CheckedPurple.svg';
 
 function DaengFindercomponent() {
   const [isDetail, setIsDetail] = useState(true);
   const [alertMsg, setAlertMsg] = useState(false);
-  // useScroll('scroller', true);
+  const [total, setTotal] = useState(true);
   const { setLocation } = useLocationStore(
     prev => ({
       setLocation: prev.setLocation,
@@ -36,13 +37,6 @@ function DaengFindercomponent() {
   setLocation(latitude, longitude);
 
   const navigate = useNavigate();
-  // const selectAreaHandler = e => {
-  //   const { innerText } = e.target;
-  //   setSelectedArea(innerText);
-  // };
-  // const selectOpenHandler = () => {
-  //   setIsShow(prev => !prev);
-  // };
 
   const moveToDaengFinderWrite = () => {
     if (!checkRefreshToken) {
@@ -69,13 +63,11 @@ function DaengFindercomponent() {
       refetchOnWindowFocus: false,
     },
   );
-
   useScroll('scroller', loc.state?.isScroll, data);
-
   useEffect(() => {
     if (loc.state?.deleteComplete) {
       setAlertMsg(true);
-      toastSuccess(loc.state.deleteComplete);
+      toastSuccess(loc.state?.deleteComplete);
     }
   }, []);
 
@@ -96,6 +88,10 @@ function DaengFindercomponent() {
 
   console.log('daengFindercomponent >>> ', data);
   console.log('data.data>>> ', data.data);
+  const ListAll = data?.data?.lostPostsData;
+  const ListMissing = data?.data?.lostPostsData?.filter(
+    card => card.status === false,
+  );
 
   return (
     <>
@@ -109,8 +105,23 @@ function DaengFindercomponent() {
         />
       </div>
       <div className='w-full flex flex-row justify-between px-5 mb-3'>
-        <div role='none' />
-
+        <div
+          className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
+            total && 'text-[#A3A3A3] transition duration-300'
+          }`}
+        >
+          <div
+            className='rounded-sm cursor-pointer overflow-hidden hover:scale-110 transition duration-300'
+            onClick={() => setTotal(!total)}
+          >
+            <CheckBoxDaengFinder
+              className={`${
+                total ? 'bg-[#A3A3A3]' : 'bg-mainColor'
+              } hover:text-[#BD88F3] transition duration-300`}
+            />
+          </div>
+          &nbsp;찾은 강아지 빼고 보기
+        </div>
         <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
           <div
             className={`p-1  ${
@@ -120,7 +131,7 @@ function DaengFindercomponent() {
           >
             <BiCategory
               className={`text-xl  ${
-                !isDetail ? 'text-[#0A0A0A]' : 'text-[#CDCDCD]'
+                !isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
               } cursor-pointer transition duration-150`}
             />
           </div>
@@ -132,7 +143,7 @@ function DaengFindercomponent() {
           >
             <SlMenu
               className={`text-xl  ${
-                isDetail ? 'text-[#0A0A0A]' : 'text-[#CDCDCD]'
+                isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
               } cursor-pointer transition duration-150`}
             />
           </div>
@@ -147,12 +158,20 @@ function DaengFindercomponent() {
             isDetail
               ? 'flex flex-col gap-3  w-full'
               : 'grid grid-cols-2 gap-3 auto-cols-auto'
-          } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll `}
+          } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll transition duration-300 ease-in-out`}
           // } min-h-[35.5rem] overflow-y-scroll `}
         >
-          {data?.data?.lostPostsData?.map(card => {
-            return <Card key={card.postId} isDetail={isDetail} data={card} />;
-          })}
+          {total
+            ? ListAll.map(card => {
+                return (
+                  <Card key={card.postId} isDetail={isDetail} data={card} />
+                );
+              })
+            : ListMissing.map(card => {
+                return (
+                  <Card key={card.postId} isDetail={isDetail} data={card} />
+                );
+              })}
         </div>
       ) : (
         <div className='h-full w-full f-ic-jc relative top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2'>

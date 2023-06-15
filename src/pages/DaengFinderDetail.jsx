@@ -9,7 +9,11 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { shallow } from 'zustand/shallow';
-import { deleteMyPost, searchPostLostDetail } from '../api/daengFinder';
+import {
+  deleteMyPost,
+  editToFoundPost,
+  searchPostLostDetail,
+} from '../api/daengFinder';
 import { ReactComponent as Badge } from '../assets/images/Badge1.svg';
 import { ReactComponent as CheckedPurple } from '../assets/images/CheckedPurple.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
@@ -31,6 +35,7 @@ function DaengFinderDetail() {
   const [activeBtn, setActiveBtn] = useState(0);
   const [editModal, setEditModal] = useState(false);
   const [passPostId, setPassPostId] = useState('');
+  const [isFound, setIsFound] = useState(false);
   const [moreInfo, setMoreInfo] = useState({
     createdAt: '',
     address: '',
@@ -113,6 +118,21 @@ function DaengFinderDetail() {
     },
   });
 
+  const editToFoundMutation = useMutation(editToFoundPost, {
+    onMutate: () => {
+      console.log('editToFoundPost started');
+    },
+    onSuccess: data => {
+      setIsFound(true);
+      setEditModal(prev => !prev);
+      console.log('editToFoundMutation success >>>', data);
+      queryClient.invalidateQueries(['daengFinderDetail', postId]);
+    },
+    onError: error => {
+      console.log('editToFoundMutation error >>>', error);
+    },
+  });
+
   const { isLoading, data, isError, error } = useQuery(
     ['daengFinderDetail', postId],
     () => searchPostLostDetail(postId),
@@ -124,6 +144,11 @@ function DaengFinderDetail() {
       },
     },
   );
+
+  const editToFound = () => {
+    editToFoundMutation.mutate(postId);
+  };
+
   const moveToPostEditPage = () => {
     navigate('/daengfinder/write', {
       state: {
@@ -319,13 +344,23 @@ function DaengFinderDetail() {
         </div>
       </div>
       {editModal && (
-        <div className='absolute z-50 inset-0'>
+        <div className='absolute z-20 inset-0'>
           <div role='none' className='absolute inset-0 bg-black opacity-30' />
           <div className='absolute f-fc justify-end bottom-0 left-0 right-0 rounded-t-xl bg-[#FFFFFF]'>
-            <div className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'>
-              <CheckedPurple />
+            <button
+              className={`f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 overflow-hidden cursor-pointer ${
+                isFound && 'text-[#D9D9D9]'
+              } `}
+              onClick={editToFound}
+              disabled={deepData?.status}
+            >
+              <CheckedPurple
+                className={`${
+                  isFound ? 'bg-[#D9D9D9]' : 'bg-mainColor'
+                } hover:scale-110 transition duration-300 rounded-sm`}
+              />
               &nbsp;찾았어요
-            </div>
+            </button>
             <div
               className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'
               onClick={moveToPostEditPage}
