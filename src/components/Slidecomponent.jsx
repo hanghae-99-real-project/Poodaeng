@@ -30,7 +30,7 @@ export default function Slidecomponent() {
   }
 
   const daengData = data.data.lostPostsData;
-
+  console.log('main>>>>>>>>>', daengData);
   const pooDetailHandler = postId => {
     navigate(`/daengfinder/detail/${postId}`);
   };
