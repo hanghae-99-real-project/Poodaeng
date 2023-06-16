@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
@@ -64,7 +64,13 @@ function DaengFindercomponent() {
       refetchOnWindowFocus: false,
     },
   );
-  const [ScrollUpTop] = useScroll('scroller', loc.state?.isScroll, data);
+  const scrollRef = useRef();
+  const [ScrollUpTop] = useScroll(
+    scrollRef,
+    loc.state?.isScroll,
+    'scroller',
+    data,
+  );
 
   useEffect(() => {
     if (loc.state?.deleteComplete) {
@@ -155,7 +161,7 @@ function DaengFindercomponent() {
       {data?.data?.lostPostsData?.length ? (
         <div
           // 46.6875rem
-          id='scroller'
+          ref={scrollRef}
           className={`${
             isDetail
               ? 'flex flex-col gap-3  w-full'
@@ -180,7 +186,7 @@ function DaengFindercomponent() {
           <NoResult />
         </div>
       )}
-      <ScrollUpTop useOrNot />
+      <ScrollUpTop useScrollTop />
       <div className='relative w-full bottom-16 '>
         <DaengFinderButton
           className='absolute bottom-4 right-4 cursor-pointer'
