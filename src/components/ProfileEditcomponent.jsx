@@ -3,15 +3,18 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { getMypageCount, newPutImage, newPutNickname } from '../api/myPage';
+import {
+  getMypageCount,
+  newPutImage,
+  newPutNickname,
+  newPutPassword,
+} from '../api/myPage';
 import { ReactComponent as Edit } from '../assets/images/Edit.svg';
 import { ReactComponent as 프로필1 } from '../assets/images/프로필1.svg';
 import { ReactComponent as 프로필2 } from '../assets/images/프로필2.svg';
 import { ReactComponent as 프로필3 } from '../assets/images/프로필3.svg';
 import { ReactComponent as 프로필4 } from '../assets/images/프로필4.svg';
 import { ReactComponent as 프로필5 } from '../assets/images/프로필5.svg';
-import { ReactComponent as 사진기 } from '../assets/images/사진기.svg';
-import useInput from '../hooks/useInput';
 import Headers from './Headers';
 import ProfileUploader from './ProfileUploader';
 
@@ -20,10 +23,12 @@ function ProfileEditcomponent() {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [nickEdit, setNickEdit] = useState(false);
   const [imgEdit, setImgEdit] = useState(false);
+  const [passEdit, setPassEdit] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState(null);
   // const [inputValue, setInputValue] = useState('');
-  const [formData, setFormData] = useState(null);
   const [newNickname, setNewNickname] = useState('');
+  const [newPassword1, setNewPassword1] = useState('');
+  const [newPassword2, setNewPassword2] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   const { isLoading, isError, data } = useQuery('profile', getMypageCount);
@@ -45,27 +50,19 @@ function ProfileEditcomponent() {
     console.log('nickname edit', nickEdit);
   };
 
-  // // 닉네임 유효성 검사
-  // const onValidatorNickName = e => {
-  //   const { name } = e.target;
-  //   console.log('name>>>', name);
-  //   const result = onValidator(name);
-  //   console.log('nickname>>>>>', result);
-  // };
-
-  // // 비밀번호 유효성 검사
-  // const onValidatorPassword = e => {
-  //   const { name } = e.target;
-  //   console.log('PWname>>>', name);
-  //   const result = onValidator(name);
-  //   console.log('PWnickname>>>>>', result);
-  // };
+  // 비밀번호 변경 모달
+  const passwordEditHandler = () => {
+    setPassEdit(true);
+    console.log('password edit', passEdit);
+  };
 
   const closeModal = () => {
     setNickEdit(false);
     setImgEdit(false);
+    setPassEdit(false);
     console.log('Modal closed');
   };
+
   const [image, setImage] = useState(null);
   const setThumbnail = event => {
     const file = event.target.files[0];
@@ -74,7 +71,7 @@ function ProfileEditcomponent() {
     }
   };
 
-  // 이미지 변경
+  // 이미지 변경 모달
   const imgEditHandler = () => {
     setImgEdit(true);
     console.log('nickname edit', nickEdit);
@@ -93,34 +90,31 @@ function ProfileEditcomponent() {
     },
   });
 
+  // 파일 업로드
   const handleFileUpload = file => {
-    const newFormData = new FormData();
-    newFormData.append('pooPhotoUrl', file);
-    setFormData(newFormData);
-
     setUploadedFile(file);
-    if (newFormData) {
+    const formData = new FormData();
+    formData.append('imagePhotoUrl', uploadedFile);
+    if (uploadedFile) {
       setSelectedIcon(null);
     }
   };
 
-  const handleProfileClick = file => {
-    const newFormData = new FormData();
-    newFormData.append('pooPhotoUrl', file);
-    setFormData(newFormData);
-
-    if (selectedIcon === file) {
-      setSelectedIcon(null); // Unselect the clicked icon
+  const handleProfileClick = index => {
+    console.log('클릭된 인덱스', index);
+    if (selectedIcon === index) {
+      setSelectedIcon(null);
     } else {
-      setSelectedIcon(file); // Select the clicked icon
+      setSelectedIcon(index);
     }
   };
 
   const handleComplete = () => {
-    if (formData) {
-      mutation.mutate(formData);
+    const index = selectedIcon === null ? 5 : selectedIcon;
+    if (index < 5) {
+      mutation.mutate({ index });
     } else {
-      console.log('이미지 없음');
+      mutation.mutate({ userPhoto: uploadedFile, index });
     }
   };
 
@@ -136,12 +130,32 @@ function ProfileEditcomponent() {
     },
   });
 
+  // 닉네임 변경
+  const passwordMutation = useMutation(newPutPassword, {
+    onSuccess: putData => {
+      queryClient.invalidateQueries('profile');
+      console.log('query success response >>> ', putData);
+      closeModal();
+    },
+    onError: errors => {
+      console.log(errors);
+    },
+  });
+
   const nicknameChangeHandler = e => {
-    setNewNickname(e.target.value); // Fix the typo here
+    setNewNickname(e.target.value);
     console.log(newNickname);
   };
 
-  const msg = '';
+  const passwordChangeHandler = event => {
+    const { value, name } = event.target;
+
+    if (name === 'password1') {
+      setNewPassword1(value);
+    } else if (name === 'password2') {
+      setNewPassword2(value);
+    }
+  };
 
   const newNicknameSubmit = () => {
     if (!newNickname) {
@@ -150,6 +164,25 @@ function ProfileEditcomponent() {
       nickNameMutation.mutate(newNickname);
     }
   };
+
+  const newPasswordSubmit = () => {
+    if (
+      !/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/.test(
+        newPassword1,
+      )
+    ) {
+      setErrorMsg(
+        '비밀번호는 영문자, 숫자, 특수문자를 포함한 8~15자여야 합니다',
+      );
+    } else if (!newPassword1 || !newPassword2) {
+      setErrorMsg('비밀번호를 입력해주세요');
+    } else if (newPassword1 !== newPassword2) {
+      setErrorMsg('비밀번호가 일치하지 않습니다');
+    } else {
+      passwordMutation.mutate(newPassword1);
+    }
+  };
+
   return (
     <div>
       <Headers text icon destination='mypage'>
@@ -182,41 +215,30 @@ function ProfileEditcomponent() {
                     </h2>
                     <div className='flex flex-wrap gap-3 bg-white'>
                       <프로필1
-                        onClick={() => handleProfileClick(프로필1)}
-                        className={
-                          selectedIcon === 프로필1 ? 'selected-icon' : ''
-                        }
+                        onClick={() => handleProfileClick(0)}
+                        className={selectedIcon === 0 ? 'selected-icon' : ''}
                       />
                       <프로필2
-                        onClick={() => handleProfileClick(프로필2)}
-                        className={
-                          selectedIcon === 프로필2 ? 'selected-icon' : ''
-                        }
+                        onClick={() => handleProfileClick(1)}
+                        className={selectedIcon === 1 ? 'selected-icon' : ''}
                       />
                       <프로필3
-                        onClick={() => handleProfileClick(프로필3)}
-                        className={
-                          selectedIcon === 프로필3 ? 'selected-icon' : ''
-                        }
+                        onClick={() => handleProfileClick(2)}
+                        className={selectedIcon === 2 ? 'selected-icon' : ''}
                       />
                       <프로필4
-                        onClick={() => handleProfileClick(프로필4)}
-                        className={
-                          selectedIcon === 프로필4 ? 'selected-icon' : ''
-                        }
+                        onClick={() => handleProfileClick(3)}
+                        className={selectedIcon === 3 ? 'selected-icon' : ''}
                       />
                       <프로필5
-                        onClick={() => handleProfileClick(프로필5)}
-                        className={
-                          selectedIcon === 프로필5 ? 'selected-icon' : ''
-                        }
+                        onClick={() => handleProfileClick(4)}
+                        className={selectedIcon === 4 ? 'selected-icon' : ''}
                       />
+
                       <ProfileUploader
+                        className={selectedIcon === null ? 'selected-icon' : ''}
                         onFileUpload={handleFileUpload}
                         onClick={() => handleProfileClick(null)}
-                        className={
-                          selectedIcon === null ? null : 'selected-icon'
-                        }
                       />
                     </div>
                     <div
@@ -291,11 +313,61 @@ function ProfileEditcomponent() {
           <div className='font-bold text-sm'>
             아이디
             <span className='ml-2 text-[#AEAEAE] text-xs font-sans'>
-              {getMyInfoData?.phoneNumber}
+              {getMyInfoData.phoneNumber}
             </span>
           </div>
-          <div className='font-bold text-sm'>비밀번호</div>
-          <div className='font-bold text-sm'>비밀번호 확인</div>
+          <div className='flex items-center'>
+            <div className='font-bold text-sm'>비밀번호</div>
+            <div
+              className='text-xs border-b ml-2 text-[#C7C7C7]'
+              onClick={passwordEditHandler}
+            >
+              변경하기
+            </div>
+            {passEdit ? (
+              <>
+                <div className='flex items-center justify-center w-full font-bold text-lg'>
+                  {}
+                </div>
+                <div
+                  className='fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black bg-opacity-50'
+                  onClick={closeModal}
+                >
+                  <div
+                    className='absolute bottom-50% rounded'
+                    onClick={e => e.stopPropagation()}
+                  >
+                    <div className='flex flex-col gap-5 items-center'>
+                      <input
+                        type='password'
+                        onChange={passwordChangeHandler}
+                        className='w-full py-2 rounded-lg shadow'
+                        placeholder=' 비밀번호 입력1 '
+                        name='password1'
+                      />
+                      <input
+                        type='password'
+                        onChange={passwordChangeHandler}
+                        className='w-full py-2 rounded-lg shadow '
+                        placeholder=' 비밀번호 입력2 '
+                        name='password2'
+                      />
+                      <button
+                        onClick={newPasswordSubmit}
+                        className='bg-mainColor text-white w-20 py-2 rounded-lg '
+                      >
+                        완료
+                      </button>
+                    </div>
+                    <div className='fixed flex justify-center left-16 w-72 text-red-500 font-bold mt-5'>
+                      {errorMsg}
+                    </div>
+                    <div className='flex justify-end' />
+                  </div>
+                </div>
+              </>
+            ) : null}
+          </div>
           <div
             className='large-button bg-mainColor text-white flex justify-center items-center mt-44'
             onClick={() => navigate('/mypage')}

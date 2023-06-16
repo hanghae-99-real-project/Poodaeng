@@ -51,7 +51,7 @@ function Mypagecomponent() {
   //   2:갯수 ]
   const myInfo = data?.data?.getMyInfoData;
 
-  console.log('mypage', myInfo.userPhoto[0]);
+  console.log('mypage', myInfo);
 
   // const pooData = data?.data?.getMyPooData;
   // if (!pooData) {
@@ -66,7 +66,7 @@ function Mypagecomponent() {
           <div className='flex'>
             <div>
               <img
-                className='w-24 h-24 rounded-full object-contain bg-cover'
+                className='w-24 h-24 rounded-full object-cover bg-cover'
                 src={myInfo.userPhoto[0]}
                 alt='profile img'
               />
