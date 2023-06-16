@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -63,13 +63,13 @@ function ProfileEditcomponent() {
     console.log('Modal closed');
   };
 
-  const [image, setImage] = useState(null);
-  const setThumbnail = event => {
-    const file = event.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
-  };
+  // const [image, setImage] = useState(null);
+  // const setThumbnail = event => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     setImage(URL.createObjectURL(file));
+  //   }
+  // };
 
   // 이미지 변경 모달
   const imgEditHandler = () => {
@@ -89,17 +89,6 @@ function ProfileEditcomponent() {
       console.log(errors);
     },
   });
-
-  // 파일 업로드
-  const handleFileUpload = file => {
-    setUploadedFile(file);
-    const formData = new FormData();
-    formData.append('imagePhotoUrl', uploadedFile);
-    if (uploadedFile) {
-      setSelectedIcon(null);
-    }
-  };
-
   const handleProfileClick = index => {
     console.log('클릭된 인덱스', index);
     if (selectedIcon === index) {
@@ -109,6 +98,19 @@ function ProfileEditcomponent() {
     }
   };
 
+  const handleFileUpload = file => {
+    setUploadedFile(file);
+    const formData = new FormData();
+    formData.append('imagePhotoUrl', uploadedFile);
+  };
+
+  useEffect(() => {
+    if (uploadedFile) {
+      setSelectedIcon(null);
+    }
+  }, [uploadedFile]);
+
+  // 이미지 or 인덱스 보내기
   const handleComplete = () => {
     const index = selectedIcon === null ? 5 : selectedIcon;
     if (index < 5) {
