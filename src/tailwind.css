@@ -112,6 +112,10 @@
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
   }
+
+  .selected-icon {
+    @apply border-4 border-[#8722ED] rounded-full;
+  }
 }
 /* footer 가 있다면 */
 /* height: calc(var(--vh, 1vh) * 100 + [footer의 높이]);

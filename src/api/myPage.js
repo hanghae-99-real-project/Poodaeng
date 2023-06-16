@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import axiosToken from "./axiosToken"
 
 const getMyPost = async() => {
@@ -16,31 +17,40 @@ const getMypageCount = async() => {
 }
 
 const newPutImage = async (data) => {
+  // 이미지 데이터를 직접 Blob 객체로 변환
+  // const imageBlob = new Blob([data], { type: "image/jpeg" });
+  // console.log('imageBlob:', imageBlob);
+  // Blob 객체를 파일로 저장
+  // const file = new File([imageBlob], "image.jpg", { type: "image/jpeg" });
+  // console.log('file:', file);
 
-  const formData = new FormData();
-  formData.append("userPhoto", data.pooPhotoUrl);
-  
-  // 폼데이터 조회 코드
-  // for (const [key, value] of formData.entries()) { console.log(`${key}:`, value); }
-  
+  // const formData = new FormData();
+  // formData.append("userPhoto", file);
+  console.log('apidata',data)
+  const putData = {imageIndex: data.index, userPhoto: data.userPhoto}
+
   const config = {
     headers: { 
-      "content-type" : "multipart/form-data"
+      "Content-Type": "multipart/form-data"
     }
   };
-  const response = await axiosToken.put('/api/auth/image', formData, config);
-  console.log(response)
+
+  const response = await axiosToken.put(`/api/auth/image/${data.index}`, putData, config);
+  console.log('이미지 수정 요청>>>>>>>>',response);
   return response;
 };
 
+
 const newPutNickname = async (data) => {
-  const response = await axiosToken.put('/api/auth/nickname', data);
+  const config = {nickname: data}
+  const response = await axiosToken.put('/api/auth/nickname', config);
   console.log(response)
   return response;
 };
 
 const newPutPassword = async (data) => {
-  const response = await axiosToken.put('/api/auth/pass', data);
+  const config = {password: data}
+  const response = await axiosToken.put('/api/auth/pass', config);
   console.log(response)
   return response;
 };
