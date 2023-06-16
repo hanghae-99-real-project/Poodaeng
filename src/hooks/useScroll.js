@@ -1,5 +1,6 @@
 import { debounce } from 'lodash';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Uptop from '../components/DaengFinder/Uptop';
 
 /**
  * 
@@ -8,13 +9,23 @@ import { useEffect } from 'react';
  * @param {StringArray} dependOn  useEffect dependency array
  * 
  */
+
+
+
 const useScroll = (targetElementId, isScroll, ...dependOn) => {
+  const [checkScrollTop, setCheckScrollTop] = useState(0)
+  /**
+   * @이거 Ref 로 넘겨보자
+   */
+  /**
+   * @checkpoint 클로저?
+   */
+  const scroller = document.querySelector(`#${targetElementId}`);
   useEffect(()=>{
     if(!isScroll){
       // sessionStorage.setItem(targetElementId, 0)
       sessionStorage.removeItem(targetElementId)
     }
-    const scroller = document.querySelector(`#${targetElementId}`);
     const currentScrollY = Number(
       JSON.parse(sessionStorage.getItem(targetElementId)),
     );
@@ -22,6 +33,7 @@ const useScroll = (targetElementId, isScroll, ...dependOn) => {
     
     const saveScrollTop = debounce(() => {
       const scrollYRecord = JSON.stringify(scroller?.scrollTop);
+      setCheckScrollTop(Number(scroller?.scrollTop))
       sessionStorage.setItem(targetElementId, scrollYRecord);
     }, 200);
     
@@ -32,6 +44,14 @@ const useScroll = (targetElementId, isScroll, ...dependOn) => {
     };
   }, dependOn);
 
+  /**
+   * 
+   * @param {Boolean} useOrNot 
+   * @returns 
+   */
+  const ScrollTopComponent = ({useOrNot}) => <Uptop useOrNot={useOrNot} checkScrollTop={checkScrollTop} scroller={scroller}/>;
+
+  return [ScrollTopComponent]
 }
 
 export default useScroll

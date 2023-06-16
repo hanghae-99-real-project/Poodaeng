@@ -11,12 +11,13 @@ import { getPostLost } from '../api/daengFinder';
 import { ReactComponent as DaengFinderButton } from '../assets/images/DaengFinderMenu.svg';
 import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
 import useCurrentLocation from '../hooks/useCurrentLocation';
-import useScroll from '../hooks/useScroll';
+// eslint-disable-next-line import/no-useless-path-segments, import/no-cycle
 import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useLocationStore } from '../zustand/example/zustandAPI';
 import Card from './DaengFinder/Card';
 import Loading from './common/Loading';
 import { ReactComponent as CheckBoxDaengFinder } from '../assets/images/CheckedPurple.svg';
+import useScroll from '../hooks/useScroll';
 
 function DaengFindercomponent() {
   const [isDetail, setIsDetail] = useState(true);
@@ -63,11 +64,8 @@ function DaengFindercomponent() {
       refetchOnWindowFocus: false,
     },
   );
-  useScroll('scroller', loc.state?.isScroll, data);
-  const scroller = Number(JSON.parse(sessionStorage.getItem('scroller')));
-  useEffect(() => {
-    console.log('스크롤 위치가 달라졌습니다.');
-  }, [scroller]);
+  const [ScrollUpTop] = useScroll('scroller', loc.state?.isScroll, data);
+
   useEffect(() => {
     if (loc.state?.deleteComplete) {
       setAlertMsg(true);
@@ -182,6 +180,7 @@ function DaengFindercomponent() {
           <NoResult />
         </div>
       )}
+      <ScrollUpTop useOrNot />
       <div className='relative w-full bottom-16 '>
         <DaengFinderButton
           className='absolute bottom-4 right-4 cursor-pointer'
