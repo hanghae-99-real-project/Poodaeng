@@ -12,7 +12,7 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
         isDetail
           ? 'flex-row gap-3 pb-3 border-b border-[#ECECEC]'
           : 'flex-col gap-2'
-      } `}
+      } transition duration-300 ease-in-out`}
       onClick={() =>
         navigate(`/daengfinder/detail/${data.postId}`, {
           state: {
@@ -23,10 +23,15 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
       }
     >
       <div
-        className={`f-ic-jc ${
+        className={`f-ic-jc relative ${
           isDetail ? 'w-24 h-24' : 'w-40 h-40'
-        }  border border-[#9E9E9E] overflow-hidden`}
+        } rounded-lg border border-[#9E9E9E] overflow-hidden`}
       >
+        {data.status && (
+          <div className='f-ic-jc text-center absolute left-[0.375rem] top-[0.375rem] py-[0.3875em] px-[0.5375em] text-[0.5rem] font-extrabold leading-[0.62375rem] text-mainColor bg-[#FFFFFF] rounded-xl shadow-lg'>
+            찾았어요
+          </div>
+        )}
         <img
           // src={`${process.env.PUBLIC_URL}/images/DoggyExample.png`}
           src={data.lostPhotoUrl[0]}

@@ -117,5 +117,10 @@ const deleteMyPost = async(postId) => {
   return response
 }
 
-export { writePostLost, getPostLost, searchPostLost, searchPostLostDetail, bookMarkLostPost, getPostComment, getPostReply, writePostComment, writePostReply, editPostComment, deletePostComment, deletePostReply, editMyPost, deleteMyPost };
+const editToFoundPost = async(postId) => {
+  const response = await axiosToken.post(`/api/lostposts/end/${postId}`)
+  return response
+}
+
+export { writePostLost, getPostLost, searchPostLost, searchPostLostDetail, bookMarkLostPost, getPostComment, getPostReply, writePostComment, writePostReply, editPostComment, deletePostComment, deletePostReply, editMyPost, deleteMyPost, editToFoundPost };
 
