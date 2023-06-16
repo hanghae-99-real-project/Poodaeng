@@ -32,9 +32,6 @@ const useScroll = (targetElementId, isScroll, ...dependOn) => {
     };
   }, dependOn);
 
-  return (
-    
-  )
 }
 
 export default useScroll

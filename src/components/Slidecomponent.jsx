@@ -46,22 +46,24 @@ export default function Slidecomponent() {
       modules={[Autoplay, Pagination]}
       className='mySwiper w-80 h-40 object-cover'
     >
-      {daengData?.map(item => {
-        return (
-          <SwiperSlide
-            key={item.id}
-            onClick={() => pooDetailHandler(item.postId)}
-            className='cursor-pointer'
-          >
-            <img
-              src={item.lostPhotoUrl[0]}
-              alt='사진'
-              className='w-40 h-28 object-cover'
-            />
-            <div className='font-bold text-xs'>{item.address}</div>
-          </SwiperSlide>
-        );
-      })}
+      {daengData?.length > 0
+        ? daengData?.map(item => {
+            return (
+              <SwiperSlide
+                key={item.id}
+                onClick={() => pooDetailHandler(item.postId)}
+                className='cursor-pointer'
+              >
+                <img
+                  src={item.lostPhotoUrl[0]}
+                  alt='사진'
+                  className='w-40 h-28 object-cover'
+                />
+                <div className='font-bold text-xs'>{item.address}</div>
+              </SwiperSlide>
+            );
+          })
+        : null}
     </Swiper>
   );
 }
