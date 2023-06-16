@@ -76,8 +76,13 @@ function KakaoAuthCheck() {
       }, 1000);
     },
   });
-  const getKakaoToken = () => {
-    mutation.mutate(code);
+  const getKakaoToken = async () => {
+    const agreed = localStorage.getItem('agreed') === 'true';
+    const inputs = {
+      code,
+      position: agreed,
+    };
+    mutation.mutate(inputs);
   };
 
   useEffect(() => {

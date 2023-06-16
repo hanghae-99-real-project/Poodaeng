@@ -72,6 +72,10 @@
     @apply f-fr-ic justify-between;
   }
 
+  .f-fr-ic-js {
+    @apply f-fr-ic justify-start;
+  }
+
   .image {
     @apply object-cover w-full h-full;
   }

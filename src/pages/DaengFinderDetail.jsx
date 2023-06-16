@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { shallow } from 'zustand/shallow';
 import {
@@ -81,13 +82,15 @@ function DaengFinderDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   const reDirection = location.state?.destination || null;
+  const editSuccess = location.state?.success || null;
   const params = useParams();
   /**
    * @description {postId} 얘 문자형 숫자임.
    */
   let { postId } = params;
   postId = parseInt(postId, 10);
-  console.log('postId 살아있는지 확인 >>>', postId);
+  // console.log('success 살아있는지 확인 >>>', editSuccess);
+  // console.log('postId 살아있는지 확인 >>>', postId);
 
   const imageHandler = idx => {
     setDaeng(daengList[idx]);
@@ -166,6 +169,10 @@ function DaengFinderDetail() {
   };
   useEffect(() => {
     SwitchFooter(true);
+    if (editSuccess) {
+      setErrorMsg(true);
+      toastSuccess(editSuccess);
+    }
     return () => {
       SwitchFooter(false);
     };

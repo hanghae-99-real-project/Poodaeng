@@ -34,9 +34,10 @@ const signIn = async (inputs) => {
   return response
 }
 
-const kakaoSignIn = async(code) => {
+const kakaoSignIn = async(inputs) => {
+  const {code, position} = inputs;
   const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/kakao/signin`,
-  {},
+  {position},
   {
     headers: {
       authorization: `Bearer ${code}`,

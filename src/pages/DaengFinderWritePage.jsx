@@ -1,27 +1,26 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { AiOutlinePlusSquare } from 'react-icons/ai';
 import { SlMagnifier } from 'react-icons/sl';
 import { useMutation, useQueryClient } from 'react-query';
-// import { useSelector } from 'react-redux';
 import 'react-quill/dist/quill.snow.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
 import { editMyPost, writePostLost } from '../api/daengFinder';
 import DaengFinderMap from '../components/DaengFinder/DaengFinderWrite/DaengFinderMap';
+import DaengFinderPhotoBox from '../components/DaengFinder/DaengFinderWrite/DaengFinderPhotoBox';
 import useInput from '../hooks/useInput';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import LinkHeader from '../shared/LinkHeader';
 import QuillEditor from '../utils/QuillEditor';
 import { useLocationStore, useQuillStore } from '../zustand/example/zustandAPI';
-import { toastSuccess } from '../utils/ToastFreeSetting';
+import Calender from '../utils/Calender';
 
 function DaengFinderWritePage() {
   const pageLocation = useLocation();
   const Ps = pageLocation.state;
-  console.log('넘어온 navigate state >>>', Ps);
+  // console.log('넘어온 navigate state >>>', Ps);
 
   const checkPostId = Ps?.passPostId ?? '';
   const daengList = Ps?.daengList ?? [];
@@ -44,6 +43,7 @@ function DaengFinderWritePage() {
     lostLatitude: '',
   });
   const [afterfirstSearch, setAfterFirstSearch] = useState(false);
+  const [calender, setCalender] = useState(new Date());
   const { quillValue, setQuillValue, clearQuillValue } = useQuillStore(
     state => ({
       quillValue: state.quillValue,
@@ -63,6 +63,7 @@ function DaengFinderWritePage() {
     }),
     shallow,
   );
+  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
   const mutation = useMutation(writePostLost, {
@@ -73,6 +74,10 @@ function DaengFinderWritePage() {
       clearQuillValue();
       clearRoadAddresss();
       setAlertMsg(true);
+      setImage({ photo: [], preview: [] });
+      for (let i = 0; i < image.preview.length; i++) {
+        URL.revokeObjectURL(image.preview[i]);
+      }
       toast.success('게시글 작성 완료', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 5000,
@@ -82,10 +87,6 @@ function DaengFinderWritePage() {
         draggable: true,
         progress: undefined,
       });
-      for (let i = 0; i < image.preview.length; i++) {
-        URL.revokeObjectURL(image.preview[i]);
-      }
-      setImage({ photo: [], preview: [] });
     },
     onError: error => {
       console.log('daengFinderWrite error>>> ', error);
@@ -105,15 +106,20 @@ function DaengFinderWritePage() {
   const editMutation = useMutation(editMyPost, {
     onSuccess: data => {
       console.log('daengFinderWrite data>>> ', data);
+      const postId = parseInt(checkPostId, 10);
+      queryClient.invalidateQueries(['daengFinderDetail', postId]);
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
-      setAlertMsg(true);
-      toastSuccess('게시글 수정 완료');
+      setImage({ photo: [], preview: [] });
       for (let i = 0; i < image.preview.length; i++) {
         URL.revokeObjectURL(image.preview[i]);
       }
-      setImage({ photo: [], preview: [] });
+      navigate(`/daengfinder/detail/${checkPostId}`, {
+        state: {
+          success: '게시글 수정 완료',
+        },
+      });
     },
     onError: error => {
       console.log('daengFinderWrite error>>> ', error);
@@ -160,6 +166,7 @@ function DaengFinderWritePage() {
     const formData = new FormData();
     formData.append('title', target.title);
     formData.append('content', quillValue);
+    formData.append('losttime', calender.$d || calender);
 
     formData.append('dogname', target.dogname);
     if (image.photo.length > 0) {
@@ -200,21 +207,6 @@ function DaengFinderWritePage() {
     const uploadList = [];
     const previewList = [];
 
-    /** @description 이건 제출할 때 필요. 여기서는 불필요. 나중에 옮기셈. */
-    // if (fileList.length < 1) {
-    //   setAlertMsg(true);
-    //   toast.error('이미지 1개이상 5개이하 필요', {
-    //     position: toast.POSITION.TOP_CENTER,
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //   });
-    //   return;
-    // }
-
     for (let i = 0; i < fileList.length; i++) {
       const fileType = fileList[i].type.split('/')[0];
       if (fileType !== 'image') {
@@ -248,7 +240,14 @@ function DaengFinderWritePage() {
       /* 새로운 이미지를 올리면 createObjectURL()을 통해 생성한 기존 URL을 revoke로 메모리상에서 폐기 => 메모리 누수 방지 */
       /* 주의할 점은 [i]를 붙여줘야 하는 것. 왜냐면 (현재시점) 직전에 올려둔 이미지를 지울 수도 있기 때문임. */
       /* 근데 나는 이미지 거꾸로 넣어주고 있음! 그래서 at을 써서 뒤에부터 지워줘야 함. */
-      if (fileList[i]) URL.revokeObjectURL(image.preview.at(-(i + 1)));
+      // const key = fileList[i].lastModified
+      /**
+       * @description 기존 preview를 revoke 할 필요가 없음. 기존 것을 갈아 끼우는 게 아니라 추가 되는 것이므로.
+       * 1. 근데 중간에 골라서 지울 수 있는 게 생김.
+       * 2. 고유한 키의 필요성.(한 번 인덱스로 오류 시도를 해보자.)
+       */
+      // if (fileList[i]) URL.revokeObjectURL(image.preview.at(-(i + 1)));
+      // if (fileList[i]) URL.revokeObjectURL(image.preview[i]);
       const url = URL.createObjectURL(fileList[i]);
 
       /* 얘도 배열임. */
@@ -261,10 +260,23 @@ function DaengFinderWritePage() {
     setImage(prev => ({
       // photo: [...prev.photo, ...photoList].reverse().slice(0, 5),
       // preview: [...prev.photo, ...photoList].reverse().slice(0, 5),
+      //  0 0(x) 1
       photo: [...uploadList, ...prev.photo].slice(0, 5),
       preview: [...previewList, ...prev.preview].slice(0, 5),
     }));
   };
+
+  const deleteImage = index => {
+    const photoFiltered = image.photo.filter((_, idx) => idx !== index);
+    const previewFiltered = image.preview.filter((_, idx) => idx !== index);
+    URL.revokeObjectURL(image.preview[index]);
+    setImage(() => ({
+      photo: [...photoFiltered],
+      preview: [...previewFiltered],
+    }));
+  };
+  console.log('image photo >>>', image.photo);
+  console.log('image preview >>>', image.preview);
 
   useEffect(() => {
     SwitchFooter(false);
@@ -297,7 +309,6 @@ function DaengFinderWritePage() {
       }
     };
   }, []);
-  console.log('image', image.photo);
 
   return (
     <div className='w-full max-h-[812px]'>
@@ -348,10 +359,11 @@ function DaengFinderWritePage() {
                 placeholder='반려견 이름'
                 className='w-full pb-3 font-medium text-sm leading-4 placeholder:text-[#C7C7C7] border-b'
               />
-              <input
-                placeholder='실종 시간'
+              <Calender setCalender={setCalender} calender={calender} />
+              {/* <input
+                type='button'
                 className='w-full pb-3 font-medium text-sm leading-4 placeholder:text-[#C7C7C7] border-b'
-              />
+              /> */}
             </div>
             <div
               className='f-fr-ic gap-1 px-3 py-2 border border-solid rounded-md cursor-pointer'
@@ -377,52 +389,11 @@ function DaengFinderWritePage() {
                 </span>
                 /5
               </div>
-              {/* x-scroll 방법 알아오기 */}
-              <div className='f-fr-ic  relative border'>
-                {/* <div className='f-fr-ic w-[20.4375rem] h-fit relative'> */}
-                <label
-                  htmlFor='image-adder'
-                  title='사진등록은 최소 1개이상!
-                밑으로 스크롤 해보세요!'
-                  // inset-0
-                  className={`z-40 cursor-pointer ${
-                    image.preview.length
-                      ? // ? 'f-fr-ic w-56 h-28'
-                        'f-fr-ic w-full h-28'
-                      : 'f-fr-ic-jc w-28 h-28'
-                    // : 'f-fr-ic-jc w-28 h-28'
-                  } overflow-x-scroll border`}
-                >
-                  <AiOutlinePlusSquare
-                    className={`${image.preview.length && 'hidden'}`}
-                  />
-                  <input
-                    type='file'
-                    multiple
-                    id='image-adder'
-                    accept='image/*'
-                    className='hidden z-30'
-                    // // 클릭할 때 마다 file input의 value를 초기화 하지 않으면 버그가 발생할 수 있다
-                    // // 사진 등록을 두개 띄우고 첫번째에 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!
-                    onClick={e => {
-                      e.target.value = null;
-                    }}
-                    onChange={imageHandler}
-                  />
-                  {image.preview.length > 0
-                    ? image.preview.map(prv => {
-                        return (
-                          <img
-                            key={prv}
-                            src={prv}
-                            alt='photoThumb'
-                            className='image w-28 h-28 border'
-                          />
-                        );
-                      })
-                    : null}
-                </label>
-              </div>
+              <DaengFinderPhotoBox
+                imageHandler={imageHandler}
+                preview={image.preview}
+                deleteImage={deleteImage}
+              />
             </div>
           </form>
           <div className='px-6 py-6 h-[35%]'>
