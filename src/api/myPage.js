@@ -18,8 +18,6 @@ const getMypageCount = async() => {
 
 const newPutImage = async (data) => {
   // 이미지 데이터를 직접 Blob 객체로 변환
-  console.log('api imgdata>>>>>>>>>>>>',data)
-  console.log('api length>>>>>',data.length)
   // const imageBlob = new Blob([data], { type: "image/jpeg" });
   // console.log('imageBlob:', imageBlob);
   // Blob 객체를 파일로 저장
@@ -28,10 +26,8 @@ const newPutImage = async (data) => {
 
   // const formData = new FormData();
   // formData.append("userPhoto", file);
-  
-    const putData = {imageIndex: data.index, userPhoto: data.userPhoto}
-  
-  
+  console.log('apidata',data)
+  const putData = {imageIndex: data.index, userPhoto: data.userPhoto}
 
   const config = {
     headers: { 
