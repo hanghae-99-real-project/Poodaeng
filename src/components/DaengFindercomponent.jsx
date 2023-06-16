@@ -64,6 +64,10 @@ function DaengFindercomponent() {
     },
   );
   useScroll('scroller', loc.state?.isScroll, data);
+  const scroller = Number(JSON.parse(sessionStorage.getItem('scroller')));
+  useEffect(() => {
+    console.log('스크롤 위치가 달라졌습니다.');
+  }, [scroller]);
   useEffect(() => {
     if (loc.state?.deleteComplete) {
       setAlertMsg(true);
