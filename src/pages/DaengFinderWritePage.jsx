@@ -84,15 +84,6 @@ function DaengFinderWritePage() {
           writeComplete: '게시글 작성 완료',
         },
       });
-      toast.success('게시글 작성 완료', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
     },
     onError: error => {
       console.log('daengFinderWrite error>>> ', error);
