@@ -60,7 +60,7 @@ function Mypagecomponent() {
 
   return (
     <div>
-      <div className='flex flex-col'>
+      <div className='flex flex-col justify-between'>
         <Headers text>마이페이지</Headers>
         <div className='flex flex-col ml-5 mt-5'>
           <div className='flex'>
@@ -143,8 +143,8 @@ function Mypagecomponent() {
             로그아웃
           </div>
         </div>
-        <div className='mt-40'>
-          <Tabbar />
+        <div className='mt-3.5'>
+          <div className='mt-52' />
         </div>
       </div>
     </div>
