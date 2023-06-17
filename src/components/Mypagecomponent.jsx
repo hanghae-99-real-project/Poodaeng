@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -15,10 +16,10 @@ function Mypagecomponent() {
   const mutation = useMutation(signOut, {
     onSuccess: datas => {
       resetUserInfoLog();
-      console.log('logout query success response >>> ', datas);
+      // console.log('logout query success response >>> ', datas);
     },
     onError: error => {
-      console.log(error);
+      // console.log(error);
     },
   });
 
@@ -27,10 +28,7 @@ function Mypagecomponent() {
     navigate('/login');
   };
 
-  const { isLoading, isError, data, error } = useQuery(
-    'profile',
-    getMypageCount,
-  );
+  const { isLoading, isError, data } = useQuery('profile', getMypageCount);
 
   if (isLoading) {
     return (
@@ -41,18 +39,18 @@ function Mypagecomponent() {
   }
 
   if (isError) {
-    console.log('Mypagecom>>>>>>', error);
+    // console.log('Mypagecom>>>>>>', error);
     // return navigate('/unknown');
   }
 
   const mypageContent = data?.data?.mypageContent;
-  console.log('mypageContent', mypageContent);
+  // console.log('mypageContent', mypageContent);
   // [ 0:갯수,
   //   1:갯수,
   //   2:갯수 ]
   const myInfo = data?.data?.getMyInfoData;
 
-  console.log('mypage', myInfo);
+  // console.log('mypage', myInfo);
 
   // const pooData = data?.data?.getMyPooData;
   // if (!pooData) {

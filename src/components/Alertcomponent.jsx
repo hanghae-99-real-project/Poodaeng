@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Headers from './Headers';
-import Tabbar from './Tabbar';
 
 function Alertcomponent() {
-  const [backColor, setBackColor] = useState(false);
+  // const [backColor, setBackColor] = useState(false);
 
-  const onClickHandler = () => {
-    setBackColor(true);
-  };
+  // const onClickHandler = () => {
+  //   setBackColor(true);
+  // };
 
   return (
     <div className='h-[812px]'>
       <Headers text icon destination=''>
         알림
       </Headers>
-      <div className='h-5/6'>
+      {/* <div className='h-5/6'>
         <div
           className={`flex border ml-3 my-3 mr-3 p-5 rounded-md 
         ${backColor ? 'bg-[#FFFFFF]' : 'bg-[#D9D9D9]'}`}
@@ -35,7 +34,7 @@ function Alertcomponent() {
       </div>
       <div className=''>
         <Tabbar />
-      </div>
+      </div> */}
     </div>
   );
 }

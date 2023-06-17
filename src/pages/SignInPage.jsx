@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
@@ -29,7 +30,7 @@ const store = set => ({
   /** @description tokenState가 변경되면 initialState도 변경이 되는가? get()으로 접근이 가능한가? */
   tokenState: initialState,
   setToken: (userId, accessToken, acExpireDate) => {
-    console.log('값 체크. 초기화 값은 절대 변경되면 안 됨. >>>', initialState);
+    // console.log('값 체크. 초기화 값은 절대 변경되면 안 됨. >>>', initialState);
     set(
       () => ({
         tokenState: {
@@ -44,7 +45,7 @@ const store = set => ({
     );
   },
   deleteToken: () => {
-    console.log('초기화 값인지 체크 >>>', initialState);
+    // console.log('초기화 값인지 체크 >>>', initialState);
     set(() => ({
       tokenState: { ...initialState, userId: null },
     }));
@@ -88,41 +89,41 @@ function SignInPage() {
 
   const mutation = useMutation(signIn, {
     onSuccess: async data => {
-      console.log('login 성공 시 data >>>', data);
+      // console.log('login 성공 시 data >>>', data);
       const { accessToken, refreshToken } = data.data;
       const decodedAcToken = await jwtDecode(accessToken);
       const decodedRfToken = await jwtDecode(refreshToken);
 
-      console.log('decodedAcToken >>>', decodedAcToken);
-      console.log('decodedRfToken >>>', decodedRfToken);
+      // console.log('decodedAcToken >>>', decodedAcToken);
+      // console.log('decodedRfToken >>>', decodedRfToken);
 
       const { exp: RF_EXP } = decodedRfToken;
       const rfExpireDate = new Date(RF_EXP * 1000);
-      console.log('rfExpireDate >>>', rfExpireDate);
+      // console.log('rfExpireDate >>>', rfExpireDate);
       Cookies.set('refreshToken', refreshToken, {
         expires: rfExpireDate,
       });
       const { exp: AC_EXP, userId } = decodedAcToken;
-      console.log('이거 초 단위인가?  >>> ', AC_EXP);
+      // console.log('이거 초 단위인가?  >>> ', AC_EXP);
       // const expireDate = new Date(AC_EXP * 1000); // 날짜단위로 변환해서 넣기.(ms 단위로 변환해서 넣기)
       const acExpireDate = AC_EXP * 1000; // ms 단위로 변환(?)해서 넣기
-      console.log('expireDate type 확인', typeof acExpireDate);
+      // console.log('expireDate type 확인', typeof acExpireDate);
       setToken(userId, accessToken, acExpireDate);
 
       onClearInputs();
       navigate('/');
     },
     onError: err => {
-      console.log(err);
+      // console.log(err);
       setIsError(true);
     },
   });
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    console.log('onSubmitHandler activated');
-    console.log('location >>> ', location);
-    console.log('error >>> ', error);
+    // console.log('onSubmitHandler activated');
+    // console.log('location >>> ', location);
+    // console.log('error >>> ', error);
     if (error) {
       toast.error(error, {
         position: toast.POSITION.TOP_CENTER,
@@ -139,8 +140,8 @@ function SignInPage() {
       });
       return;
     }
-    console.log('latitude >>>', location.latitude);
-    console.log('longitude >>>', location.longitude);
+    // console.log('latitude >>>', location.latitude);
+    // console.log('longitude >>>', location.longitude);
     const agreeCheck = localStorage.getItem('agreed') === 'true';
     mutation.mutate({
       phoneNumber: inputs.phoneNumber,

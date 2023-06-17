@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -17,7 +18,7 @@ function PooDetailComponent() {
   const content = params.get('content'); // address
   const imageUrl = params.get('imageUrl'); // content
   const pooId = params.get('pooId'); // pooId
-  const UserId = params.get('UserId'); // createdAT
+  // const UserId = params.get('UserId'); // createdAT
   const createdAt = params.get('createdAt'); // imgage
   const pooLatitude = params.get('pooLatitude');
   const pooLongitude = params.get('pooLongitude');
@@ -27,14 +28,14 @@ function PooDetailComponent() {
   const [contents, setContents] = useState('');
   // const { accessToken } = useSelector(store => store.auth);
 
-  console.log('address', address);
-  console.log('content', content);
-  console.log('imageUrl', imageUrl);
-  console.log('pooId', pooId);
-  console.log('UserId', UserId);
-  console.log('createdAt', createdAt);
-  console.log('pooLatitude', pooLatitude);
-  console.log('pooLongitude', pooLongitude);
+  // console.log('address', address);
+  // console.log('content', content);
+  // console.log('imageUrl', imageUrl);
+  // console.log('pooId', pooId);
+  // console.log('UserId', UserId);
+  // console.log('createdAt', createdAt);
+  // console.log('pooLatitude', pooLatitude);
+  // console.log('pooLongitude', pooLongitude);
 
   const reportContent = {
     reportContent: contents,
@@ -50,10 +51,10 @@ function PooDetailComponent() {
   const mutation = useMutation(reportPooBox, {
     onSuccess: () => {
       queryClient.invalidateQueries('poobox');
-      console.log('신고 완료');
+      // console.log('신고 완료');
     },
     onError: error => {
-      console.log(error);
+      // console.log(error);
     },
   });
 

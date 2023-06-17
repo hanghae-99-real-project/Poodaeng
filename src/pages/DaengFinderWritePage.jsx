@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { SlMagnifier } from 'react-icons/sl';
@@ -68,7 +69,7 @@ function DaengFinderWritePage() {
   const queryClient = useQueryClient();
   const mutation = useMutation(writePostLost, {
     onSuccess: data => {
-      console.log('daengFinderWrite data>>> ', data);
+      // console.log('daengFinderWrite data>>> ', data);
       queryClient.invalidateQueries('getPostLost');
       onClearHandler();
       clearQuillValue();
@@ -89,7 +90,7 @@ function DaengFinderWritePage() {
       });
     },
     onError: error => {
-      console.log('daengFinderWrite error>>> ', error);
+      // console.log('daengFinderWrite error>>> ', error);
       setAlertMsg(true);
       toast.error('게시글 작성 실패', {
         position: toast.POSITION.TOP_CENTER,
@@ -105,7 +106,7 @@ function DaengFinderWritePage() {
 
   const editMutation = useMutation(editMyPost, {
     onSuccess: data => {
-      console.log('daengFinderWrite data>>> ', data);
+      // console.log('daengFinderWrite data>>> ', data);
       const postId = parseInt(checkPostId, 10);
       queryClient.invalidateQueries(['daengFinderDetail', postId]);
       onClearHandler();
@@ -122,7 +123,7 @@ function DaengFinderWritePage() {
       });
     },
     onError: error => {
-      console.log('daengFinderWrite error>>> ', error);
+      // console.log('daengFinderWrite error>>> ', error);
       setAlertMsg(true);
       toast.error('게시글 수정 실패', {
         position: toast.POSITION.TOP_CENTER,
@@ -175,10 +176,10 @@ function DaengFinderWritePage() {
         formData.append('image', blobImg, img.name || img);
       });
     }
-    console.log('최종 위도 경도 >>>', latlng);
+    // console.log('최종 위도 경도 >>>', latlng);
     formData.append('lostLatitude', parseFloat(latlng.lostLatitude));
     formData.append('lostLongitude', parseFloat(latlng.lostLongitude));
-    console.log('daengFinderWrite formData before transfer >>> ', ...formData);
+    // console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     if (checkPostId) {
       inputs = {
         postId: checkPostId,
@@ -198,9 +199,9 @@ function DaengFinderWritePage() {
     /* 1. 이미지가 5개보다 적을 때는 하나씩 추가되도록 짜고 */
     /* 2. 한꺼번에 많이 추가할 수 있는 것도 해줘야 함 */
     /* 3. 5개보다 많아지면 다 지우기 */
-    console.log(e);
-    console.log(e.target.files);
-    console.log(Array.from(e.target.files));
+    // console.log(e);
+    // console.log(e.target.files);
+    // console.log(Array.from(e.target.files));
 
     const maxSize = 1024 * 1024 * 25;
     const fileList = Array.from(e.target.files);
@@ -275,8 +276,8 @@ function DaengFinderWritePage() {
       preview: [...previewFiltered],
     }));
   };
-  console.log('image photo >>>', image.photo);
-  console.log('image preview >>>', image.preview);
+  // console.log('image photo >>>', image.photo);
+  // console.log('image preview >>>', image.preview);
 
   useEffect(() => {
     SwitchFooter(false);

@@ -29,7 +29,7 @@ const searchPostLost = async(word) => {
 }
 
 const searchPostLostDetail = async(id) => {
-  console.log('api postid >>>', id)
+  // console.log('api postid >>>', id)
   const postId = parseInt(id, 10);
   const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/lostposts/${postId}`)
   return response
@@ -80,9 +80,9 @@ const writePostReply = async(inputs) => {
 
 const editPostComment = async(inputs) => {
   const { postId, commentId, comment } = inputs;
-  console.log('postId >>> ', postId)
-  console.log('commentId >>> ', commentId)
-  console.log('comment>>> ', comment)
+  // console.log('postId >>> ', postId)
+  // console.log('commentId >>> ', commentId)
+  // console.log('comment>>> ', comment)
   const response = await axiosToken.put(`/api/lostposts/${postId}/comments/${commentId}`, comment)
   return response
 }
@@ -101,8 +101,8 @@ const deletePostReply = async(inputs) => {
 
 const editMyPost = async(inputs) => {
   const { postId, formData } = inputs;
-  console.log('postId Type',typeof postId)
-  console.log('formData >>>', ...formData)
+  // console.log('postId Type',typeof postId)
+  // console.log('formData >>>', ...formData)
   const config = {
     headers: {
       'content-type': 'multipart/form-data'

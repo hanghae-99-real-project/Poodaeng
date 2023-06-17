@@ -40,7 +40,7 @@ const locationStore = subscribeWithSelector((set, get)=> ({
           roadAddress:rdAd || ad
         }))
       })
-      .catch(err => console.log(err));
+      // .catch(err => console.log(err));
     } catch (error) {
       set((prev)=>({
         ...prev,
@@ -87,8 +87,8 @@ const store = (set)=> ({
   pureText: initialValue,
   quillValue: initialValue,
   setQuillValue: (pureText, htmlText) =>{
-    console.log('순수 텍스트', pureText)
-    console.log('htmlText', htmlText)
+    // console.log('순수 텍스트', pureText)
+    // console.log('htmlText', htmlText)
     set(()=> ({pureText ,quillValue: htmlText}))
   },
   clearQuillValue: () => set(()=>({pureText:initialValue ,quillValue: initialValue}))

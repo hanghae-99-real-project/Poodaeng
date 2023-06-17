@@ -83,7 +83,7 @@ function Selector({ selectedOptions, setSelectedOptions }) {
   /* setValue 길이가 3이상 증가 안되게 막음 */
   const handleChange = selected => {
     if (selected.length > 3) {
-      console.log('you already chose 3 options.');
+      // console.log('you already chose 3 options.');
       return;
     }
     setSelectedOptions(selected);

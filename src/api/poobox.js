@@ -30,7 +30,7 @@ const addPooBox = async (data) => {
   };
   // const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/map/poo`, formData, config);
   const response = await axiosToken.post('/api/map/poo', formData, config);
-  console.log(response)
+  // console.log(response)
   return response;
 };
 
@@ -44,10 +44,10 @@ const getPooBox = async () => {
 const reportPooBox = async (data) => {
   const pooId = parseInt(data.pooId, 10);
   const {reportContent} = data;
-  console.log(pooId)
-  console.log(reportContent)
+  // console.log(pooId)
+  // console.log(reportContent)
   const response = await axiosToken.put(`/api/report/${pooId}`, reportContent);
-  console.log(response)
+  // console.log(response)
   return response
 }
 

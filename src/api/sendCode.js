@@ -9,7 +9,7 @@ const sendCodeNumber = async (inputs) => {
     const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/authCodeSend`, inputs)
     return response
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     return error
   }
 }

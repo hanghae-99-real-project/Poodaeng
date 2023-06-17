@@ -11,7 +11,7 @@ function useCurrentLocation(options = {
 
   const handleSuccess = (props) => {
     const {latitude, longitude} = props.coords;
-    console.log(latitude, longitude)
+    // console.log(latitude, longitude)
 
     setLocation({
       latitude,

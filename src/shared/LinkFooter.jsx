@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { useQueryClient } from 'react-query';
@@ -72,7 +73,7 @@ const store = (set, get) => ({
     };
     try {
       const response = await bookMarkLostPost(inputs);
-      console.log('onBookMark response >>>', response);
+      // console.log('onBookMark response >>>', response);
       set(() => ({
         modalComment: get().isBookmark
           ? '북마크를 취소했어요!'
@@ -94,7 +95,7 @@ const store = (set, get) => ({
         1000,
       );
     } catch (error) {
-      console.log(error);
+      // console.log(error);
 
       set(() => ({
         isBookmark: false,
