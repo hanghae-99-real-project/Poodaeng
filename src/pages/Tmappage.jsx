@@ -256,12 +256,12 @@ function TmapPage() {
     <div className='absolute'>
       <div className='absolute  my-5 top-0 z-30 w-full h-36 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
         <div className='flex'>
-          <div className='flex my-1'>
+          <div className='relative top-0 -left-1 flex my-1'>
             <Arrow className='mt-1 mr-2' />
             푸박스 위치: <div className='font-bold ml-1'>{targetAddress}</div>
           </div>
         </div>
-        <div className='flex justify-start pr-2'>
+        <div className='relative flex justify-start '>
           <Clock className='mt-1 mr-2' />
           <span id='result' className='pr-32' />
         </div>
