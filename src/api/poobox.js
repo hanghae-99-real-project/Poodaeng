@@ -36,12 +36,8 @@ const addPooBox = async (data) => {
 
 // 푸박스 조회
 const getPooBox = async () => {
-  try {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/map/poo`)
     return response
-  } catch (error) {
-    return Promise.reject(error.data)
-  }
 };
 
 // 푸박스 신고

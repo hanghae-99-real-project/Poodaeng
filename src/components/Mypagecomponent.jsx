@@ -13,9 +13,9 @@ function Mypagecomponent() {
   const navigate = useNavigate();
 
   const mutation = useMutation(signOut, {
-    onSuccess: data => {
+    onSuccess: datas => {
       resetUserInfoLog();
-      console.log('logout query success response >>> ', data);
+      console.log('logout query success response >>> ', datas);
     },
     onError: error => {
       console.log(error);
@@ -46,6 +46,7 @@ function Mypagecomponent() {
   }
 
   const mypageContent = data?.data?.mypageContent;
+  console.log('mypageContent', mypageContent);
   // [ 0:갯수,
   //   1:갯수,
   //   2:갯수 ]
@@ -67,7 +68,7 @@ function Mypagecomponent() {
             <div>
               <img
                 className='w-24 h-24 rounded-full object-cover bg-cover'
-                src={myInfo?.userPhoto && myInfo?.userPhoto[0]}
+                src={myInfo?.userPhoto[0] || myInfo?.userPhoto}
                 alt='profile img'
               />
             </div>
@@ -132,7 +133,7 @@ function Mypagecomponent() {
         <div className='ml-5 h-52 mb-1.5'>
           <div
             className='large-button flex items-center text-lg cursor-pointer'
-            onClick={() => navigate('/profileedit')}
+            onClick={() => navigate(`/profileedit?data=${data}`)}
           >
             프로필 설정하기
           </div>

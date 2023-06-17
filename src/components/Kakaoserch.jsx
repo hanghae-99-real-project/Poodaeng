@@ -4,45 +4,58 @@
 /* eslint-disable func-names */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-use-before-define */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPooBox } from '../api/poobox';
 import { ReactComponent as MyGeo } from '../assets/images/MyGeo.svg';
 
 function Kakaoserch() {
-  const navigate = useNavigate();
-  const mapContainer = useRef(null);
-  const location = useLocation();
-  const isMapPage = location.pathname === '/map';
   const { isLoading, isError, data } = useQuery('poobox', getPooBox);
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
-        {/* <Loading /> */} 로딩중 입니다
+        /api/map/poo 로딩중 입니다
+        {console.log('로딩시도')}
       </div>
     );
   }
   if (isError) {
-    return <div>오류가 발생했습니다.</div>;
+    return (
+      <div>
+        /api/map/poo 오류가 발생했습니다.
+        {console.log('에러')}
+      </div>
+    );
   }
+  const navigate = useNavigate();
+  const mapContainer = useRef(null);
+  const location = useLocation();
+  const isMapPage = location.pathname === '/map';
+
   console.log('map>>>>>>>>>', data);
 
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
-  const script = document.createElement('script');
-  script.src = process.env.REACT_APP_KAKAO_KEY;
-  script.async = true;
-  // 스크립트 로드된 이후 지도 초기화
-  script.onload = () => {
-    const { kakao } = window;
-    if (mapContainer.current !== null) {
-      kakao.maps.load(() => {
-        initializeMap();
-      });
-    }
-  };
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = process.env.REACT_APP_KAKAO_KEY;
+    script.async = true;
+    script.onload = () => {
+      const { kakao } = window;
+      if (mapContainer.current !== null) {
+        kakao.maps.load(() => {
+          initializeMap();
+        });
+      }
+    };
 
-  document.head.appendChild(script);
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
   // 지도를 초기화하는 함수
   function initializeMap() {
     // 지도 옵션 설정 (중심 좌표)
@@ -64,10 +77,12 @@ function Kakaoserch() {
     );
     // 지도 영역 설정을 위한 경계 객체 생성
     const bounds = new kakao.maps.LatLngBounds();
+
     // 지도에 표시할 마커의 좌표 배열
     const points = data?.data?.getPooAll?.map(
       item => new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude),
-    );
+    ) || [new kakao.maps.LatLng(37.5652352, 127.0284288)];
+
     // 마커를 지도에 표시하고 경계 객체에 추가
     let i;
     let marker;
@@ -88,6 +103,7 @@ function Kakaoserch() {
       marker.createdAt = data.data.getPooAll[i].createdAt;
       marker.pooLatitude = data.data.getPooAll[i].pooLatitude;
       marker.pooLongitude = data.data.getPooAll[i].pooLongitude;
+
       // 각 마커에 클릭 이벤트를 등록합니다
       kakao.maps.event.addListener(
         marker,
@@ -176,6 +192,7 @@ function Kakaoserch() {
     window.pooDetailHandler = pooDetailHandler;
     window.loadFindHandler = loadFindHandler;
     setBounds();
+
     // 브라우저의 위치 정보 사용 가능한 경우 마커와 정보창 표시
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -201,7 +218,7 @@ function Kakaoserch() {
       imageSize,
       imageOption,
     );
-    // // 위치에 마커 객체 생성
+    // 위치에 마커 객체 생성
     const marker = new kakao.maps.Marker({
       map,
       position: locPosition,
