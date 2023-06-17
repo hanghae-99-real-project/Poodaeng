@@ -68,7 +68,11 @@ function Mypagecomponent() {
             <div>
               <img
                 className='w-24 h-24 rounded-full object-cover bg-cover'
-                src={data?.data?.getMyInfoData?.userPhoto[0]}
+                src={
+                  data?.data?.getMyInfoData?.userPhoto
+                    ? data.data.getMyInfoData.userPhoto[0]
+                    : null
+                }
                 alt='profile img'
               />
             </div>
