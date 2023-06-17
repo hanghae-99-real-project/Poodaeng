@@ -47,7 +47,7 @@ const kakaoSignIn = async(inputs) => {
       authorization: `Bearer ${code}`,
     },
     timeout: 5000 /* 5초 */,
-    timeoutErrorMessage: 'Request timed out',
+    timeoutErrorMessage: 'Request time out',
   },)
   return response
 }
@@ -60,4 +60,9 @@ const signOut = async () => {
   return response
 }
 
-export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut, kakaoSignIn}
+const findPassword = async(phoneNumber) => {
+  const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/auth/newpass`, phoneNumber)
+  return response;
+}
+
+export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut, kakaoSignIn, findPassword}

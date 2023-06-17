@@ -241,14 +241,14 @@ function SignInPage() {
           </button>
         </form>
         <div className='flex flex-row  justify-center gap-2 mb-11'>
-          {/* <button
+          <button
             type='button'
             className='text-[#959595]'
             onClick={moveTofindPassword}
           >
             비밀번호 찾기
           </button>
-          <p className='text-[#959595]'>|</p> */}
+          <p className='text-[#959595]'>|</p>
           <button
             type='button'
             className='text-[#959595]'

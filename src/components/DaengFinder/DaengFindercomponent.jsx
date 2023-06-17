@@ -7,17 +7,17 @@ import { useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { shallow } from 'zustand/shallow';
-import { getPostLost } from '../api/daengFinder';
-import { ReactComponent as DaengFinderButton } from '../assets/images/DaengFinderMenu.svg';
-import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
-import useCurrentLocation from '../hooks/useCurrentLocation';
+import { getPostLost } from '../../api/daengFinder';
+import { ReactComponent as DaengFinderButton } from '../../assets/images/DaengFinderMenu.svg';
+import { ReactComponent as NoResult } from '../../assets/images/NoResult.svg';
+import useCurrentLocation from '../../hooks/useCurrentLocation';
 // eslint-disable-next-line import/no-useless-path-segments, import/no-cycle
-import { toastSuccess } from '../utils/ToastFreeSetting';
-import { useLocationStore } from '../zustand/example/zustandAPI';
-import Card from './DaengFinder/Card';
-import Loading from './common/Loading';
-import { ReactComponent as CheckBoxDaengFinder } from '../assets/images/CheckedPurple.svg';
-import useScroll from '../hooks/useScroll';
+import { toastSuccess } from '../../utils/ToastFreeSetting';
+import { useLocationStore } from '../../zustand/example/zustandAPI';
+import Card from './Card';
+import Loading from '../common/Loading';
+import { ReactComponent as CheckBoxDaengFinder } from '../../assets/images/CheckedPurple.svg';
+import useScroll from '../../hooks/useScroll';
 
 function DaengFindercomponent() {
   const [isDetail, setIsDetail] = useState(true);
