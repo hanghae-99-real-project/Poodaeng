@@ -4,9 +4,9 @@ import ScrollFooter from '../components/ScrollFooter'
 
 function ScrollLayout() {
   return (
-    // <div className=' w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-yellow-400'>
-      // <div className='w-screen h-[calc(var(--vh,1vh)*100)+65px] flex justify-center items-center bg-yellow-400'>
-      <div className='w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-yellow-400'>
+    // <div className=' w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-white'>
+      // <div className='w-screen h-[calc(var(--vh,1vh)*100)+65px] flex justify-center items-center bg-white'>
+      <div className='w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-white'>
         {/* <div className='test-canvas'>  */}
         <div className='canvas pt-0'> 
           <Outlet />
