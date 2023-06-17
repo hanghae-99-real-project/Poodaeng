@@ -187,7 +187,7 @@ function DaengFindercomponent() {
         </div>
       )}
       <ScrollUpTop useScrollTop />
-      <div className='relative w-full bottom-16 '>
+      <div className='sticky w-full bottom-16 '>
         <DaengFinderButton
           className='absolute bottom-4 right-4 cursor-pointer'
           onClick={moveToDaengFinderWrite}
