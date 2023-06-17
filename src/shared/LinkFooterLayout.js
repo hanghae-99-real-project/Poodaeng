@@ -64,10 +64,12 @@ function LinkFooterLayout() {
   }), shallow);
 
   return (
-      <div className='w-screen h-screen flex justify-center items-center bg-yellow-400'>
-        <div className='canvas h-[calc(var(--vh,1vh)*100 + 96px)] pt-0 '> 
+      <div className='w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-yellow-400'>
+        <div className='canvas pt-0 '> 
           {/* {willUseHeader && <LinkHeader />} */}
-          <Outlet />
+          <div className={`w-full ${willUseFooter && 'h-[90%]'}`}>
+            <Outlet />
+          </div>
           {willUseFooter && <LinkFooter/>}
         </div>
       </div>
