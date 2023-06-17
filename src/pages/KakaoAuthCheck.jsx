@@ -85,8 +85,8 @@ function KakaoAuthCheck() {
     const inputs = {
       code,
       position: agreed,
-      userLatitude: agreed ? parseFloat(location.latitude) : null,
-      userLongitude: agreed ? parseFloat(location.longitude) : null,
+      userLatitude: agreed ? parseFloat(location?.latitude) : null,
+      userLongitude: agreed ? parseFloat(location?.longitude) : null,
     };
     mutation.mutate(inputs);
   };
