@@ -41,7 +41,8 @@ function Mypagecomponent() {
 
   if (isError) {
     // console.log('Mypagecom>>>>>>', error);
-    // return navigate('/unknown');
+    mutation.mutate();
+    return navigate('/unknown');
   }
 
   const mypageContent = data?.data?.mypageContent;
