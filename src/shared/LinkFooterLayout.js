@@ -67,7 +67,7 @@ function LinkFooterLayout() {
       <div className='w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-yellow-400'>
         <div className='canvas pt-0 '> 
           {/* {willUseHeader && <LinkHeader />} */}
-          <div className={`w-full ${willUseFooter && 'h-[90%]'}`}>
+          <div className={`relative w-full ${willUseFooter && 'h-[80%]'}`}>
             <Outlet />
           </div>
           {willUseFooter && <LinkFooter/>}
