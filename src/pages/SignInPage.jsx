@@ -89,8 +89,6 @@ function SignInPage() {
   const mutation = useMutation(signIn, {
     onSuccess: async data => {
       console.log('login 성공 시 data >>>', data);
-      /* Bearer 실종사건 */
-      // const token = data.data.split(' ')[1];
       const { accessToken, refreshToken } = data.data;
       const decodedAcToken = await jwtDecode(accessToken);
       const decodedRfToken = await jwtDecode(refreshToken);
@@ -155,6 +153,9 @@ function SignInPage() {
 
   const moveToSignUp = () => {
     navigate('/signup');
+  };
+  const moveTofindPassword = () => {
+    navigate('/findpassword');
   };
 
   return (
@@ -239,7 +240,11 @@ function SignInPage() {
           </button>
         </form>
         <div className='flex flex-row  justify-center gap-2 mb-11'>
-          <button type='button' className='text-[#959595]'>
+          <button
+            type='button'
+            className='text-[#959595]'
+            onClick={moveTofindPassword}
+          >
             비밀번호 찾기
           </button>
           <p className='text-[#959595]'>|</p>

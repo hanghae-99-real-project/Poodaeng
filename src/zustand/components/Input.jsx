@@ -16,7 +16,6 @@ const input = (set, get) => ({
     set(() => ({
       searchWordSnapshot: search,
     }));
-    /** @description 중복 처리 로직 생각해보기 */
     const prevSearchList = get().searchList;
     const filterResult = prevSearchList.find(list => list.item === search);
     if (filterResult) {
