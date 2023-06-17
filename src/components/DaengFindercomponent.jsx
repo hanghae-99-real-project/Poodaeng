@@ -104,7 +104,7 @@ function DaengFindercomponent() {
   return (
     <>
       {alertMsg && <ToastContainer />}
-      <div className='flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] pb-5 mb-7 border-b shadow-md'>
+      <div className='sticky top-0 flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md'>
         <div className='w-[30px]' />
         <div className='font-bold text-xl '>댕 finder</div>
         <RxMagnifyingGlass
