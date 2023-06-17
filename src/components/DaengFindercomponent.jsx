@@ -104,54 +104,56 @@ function DaengFindercomponent() {
   return (
     <>
       {alertMsg && <ToastContainer />}
-      <div className='sticky top-0 flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md'>
-        <div className='w-[30px]' />
-        <div className='font-bold text-xl '>댕 finder</div>
-        <RxMagnifyingGlass
-          className='text-3xl cursor-pointer transition duration-300 ease-in-out hover:scale-110'
-          onClick={() => navigate('/daengfinder/search')}
-        />
-      </div>
-      <div className='w-full flex flex-row justify-between px-5 mb-3'>
-        <div
-          className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
-            total && 'text-[#A3A3A3] transition duration-300'
-          }`}
-          onClick={() => setTotal(!total)}
-        >
-          <div className='rounded-sm cursor-pointer overflow-hidden hover:scale-110 transition duration-300'>
-            <CheckBoxDaengFinder
-              className={`${
-                total ? 'bg-[#A3A3A3]' : 'bg-mainColor'
-              } hover:text-[#BD88F3] transition duration-300`}
-            />
-          </div>
-          &nbsp;찾은 강아지 빼고 보기
+      <div className='sticky top-0'>
+        <div className='flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md z-50'>
+          <div className='w-[30px]' />
+          <div className='font-bold text-xl '>댕 finder</div>
+          <RxMagnifyingGlass
+            className='text-3xl cursor-pointer transition duration-300 ease-in-out hover:scale-110'
+            onClick={() => navigate('/daengfinder/search')}
+          />
         </div>
-        <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
+        <div className='w-full flex flex-row justify-between px-5 mb-3'>
           <div
-            className={`p-1  ${
-              !isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
-            } cursor-pointer transition duration-150`}
-            onClick={() => setIsDetail(false)}
+            className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
+              total && 'text-[#A3A3A3] transition duration-300'
+            }`}
+            onClick={() => setTotal(!total)}
           >
-            <BiCategory
-              className={`text-xl  ${
-                !isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
-              } cursor-pointer transition duration-150`}
-            />
+            <div className='rounded-sm cursor-pointer overflow-hidden hover:scale-110 transition duration-300'>
+              <CheckBoxDaengFinder
+                className={`${
+                  total ? 'bg-[#A3A3A3]' : 'bg-mainColor'
+                } hover:text-[#BD88F3] transition duration-300`}
+              />
+            </div>
+            &nbsp;찾은 강아지 빼고 보기
           </div>
-          <div
-            className={`p-1  ${
-              isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
-            } cursor-pointer transition duration-150`}
-            onClick={() => setIsDetail(true)}
-          >
-            <SlMenu
-              className={`text-xl  ${
-                isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
+          <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
+            <div
+              className={`p-1  ${
+                !isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
               } cursor-pointer transition duration-150`}
-            />
+              onClick={() => setIsDetail(false)}
+            >
+              <BiCategory
+                className={`text-xl  ${
+                  !isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
+                } cursor-pointer transition duration-150`}
+              />
+            </div>
+            <div
+              className={`p-1  ${
+                isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
+              } cursor-pointer transition duration-150`}
+              onClick={() => setIsDetail(true)}
+            >
+              <SlMenu
+                className={`text-xl  ${
+                  isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
+                } cursor-pointer transition duration-150`}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -185,7 +187,7 @@ function DaengFindercomponent() {
         </div>
       )}
       <ScrollUpTop useScrollTop />
-      <div className='relative w-full bottom-16 '>
+      <div className='sticky w-full bottom-16 '>
         <DaengFinderButton
           className='absolute bottom-4 right-4 cursor-pointer'
           onClick={moveToDaengFinderWrite}
