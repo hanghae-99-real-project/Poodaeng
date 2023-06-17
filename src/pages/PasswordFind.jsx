@@ -1,41 +1,47 @@
+/* eslint-disable no-unused-vars */
 import { debounce } from 'lodash';
-import React, { useState } from 'react';
-import { BsCheckLg } from 'react-icons/bs';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { sendCodeNumber, signUp, validateCodeNumber } from '../api/sendCode';
-import Headers from '../components/Headers';
-import { errorMsg, inputContents } from '../data/inputs';
+import { toast } from 'react-toastify';
+import { shallow } from 'zustand/shallow';
+import { sendCodeNumber, validateCodeNumber } from '../api/sendCode';
 import useInput from '../hooks/useInput';
 import { SET_TIMER } from '../redux/modules/timerSlice';
+import { useFooterLayout } from '../shared/LinkFooterLayout';
+import LinkHeader from '../shared/LinkHeader';
 import AuthTimer from '../utils/AuthTimer';
 import { toastError } from '../utils/ToastFreeSetting';
 
-function SignUpPage() {
+const PasswordFind = () => {
+  const [inputs, onChangeInputs, ClearInputs, onValidator] = useInput({
+    phoneNumber: '',
+    code: '',
+  });
   const [getAuthMode, setGetAuthMode] = useState(false);
   const [checkTimeMode, setCheckTimeMode] = useState(false);
   const [isAuthNumber, setIsAuthNumber] = useState(false);
   const [message, setMessage] = useState(false);
-  const [inputs, onChangeInputs, onClearInputs, onValidator] = useInput({
-    phoneNumber: '',
-    nickname: '',
-    password: '',
-    passwordConfirm: '',
-    code: '',
-  });
-  console.log('render occured');
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { SwitchFooter } = useFooterLayout(
+    state => ({
+      SwitchFooter: state.SwitchFooter,
+    }),
+    shallow,
+  );
 
+  /**
+   * @description 여기 api 바꾸셈!!!!!
+   */
+  const dispatch = useDispatch();
   /* get 인증하기 동시에 모달 진입하면서 */
   const getAuthHandler = async () => {
     console.log(
       'phoneNumber type check opening number form modal >>> ',
       typeof inputs.phoneNumber,
     );
+    /**
+     * @description 여기 api 바꾸셈!!!!!
+     */
     const response = await sendCodeNumber({ phoneNumber: inputs.phoneNumber });
     console.log('send code response >>> ', response);
     return response;
@@ -95,6 +101,22 @@ function SignUpPage() {
       );
     }
   }, 200);
+
+  const closeModal = () => {
+    const event = {
+      target: {
+        name: 'phoneNumber',
+        value: '',
+      },
+    };
+    setCheckTimeMode(false);
+    setGetAuthMode(false);
+    onChangeInputs(event);
+  };
+
+  /**
+   * @description 여기 api 바꾸셈!!!!!
+   */
   /* CodeNumber Validation */
   const codeMutation = useMutation(validateCodeNumber, {
     onSuccess: data => {
@@ -119,74 +141,15 @@ function SignUpPage() {
     });
   };
 
-  /* register form */
-  const mutation = useMutation(signUp, {
-    onSuccess: data => {
-      console.log('회원가입 제출 res >> ', data);
-      onClearInputs();
-      navigate('/signincomplete');
-    },
-    onError: error => {
-      console.log('회원가입 제출 error >> ', error);
-      setMessage(true);
-      if (error.response?.data?.errorMessage) {
-        toastError(error.response?.data?.errorMessage);
-      } else {
-        toastError('회원가입 실패');
-      }
-    },
-  });
-
-  const closeModal = () => {
-    const event = {
-      target: {
-        name: 'phoneNumber',
-        value: '',
-      },
-    };
-    setCheckTimeMode(false);
-    setGetAuthMode(false);
-    onChangeInputs(event);
-  };
-
-  const registerHandler = e => {
-    e.preventDefault();
-    if (!isAuthNumber) {
-      setMessage(true);
-      toastError('휴대폰 번호를 인증받으세요!');
-      return;
-    }
-    if (inputs.nickname.trim() === '') {
-      setMessage(true);
-      toastError('공백은 입력할 수 없습니다.');
-      return;
-    }
-    if (!onValidator('password')) {
-      setMessage(true);
-      toastError('비밀번호 형식이 맞지 않습니다.');
-      return;
-    }
-    if (!onValidator('passwordConfirm')) {
-      setMessage(true);
-      toastError('비밀번호가 일치하지 않습니다.');
-      return;
-    }
-    const agreeCheck = localStorage.getItem('agreed') === 'true';
-    console.log('position Boolean인지 확인 >>>', typeof agreeCheck);
-    const result = {
-      phoneNumber: inputs.phoneNumber,
-      password: inputs.password,
-      nickname: inputs.nickname,
-      userPhoto: null,
-      // position: agreeCheck,
-    };
-    mutation.mutate(result);
-  };
-
+  useEffect(() => {
+    SwitchFooter(false);
+  }, []);
   return (
-    <div>
+    <div className='w-full h-full'>
+      <LinkHeader icon destination='/signin'>
+        비밀번호 찾기
+      </LinkHeader>
       <div className={`fixed z-30 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
-        {message && <ToastContainer />}
         <div
           role='none'
           className='absolute inset-0 bg-black opacity-30 '
@@ -231,19 +194,13 @@ function SignUpPage() {
           </button>
         </div>
       </div>
-      <div className='mb-[61px]'>
-        <Headers text icon destination='signin'>
-          회원가입
-        </Headers>
-      </div>
-      <div className='flex flex-col px-[22px] font-bold text-xl mb-11'>
-        <p>푸댕과 함께 </p>
-        <p>더 편리한 산책을 시작해볼까요?</p>
-      </div>
-      <form className='flex flex-col items-center' onSubmit={registerHandler}>
-        <div className='flex flex-col items-center gap-10 '>
-          {/* <div className='relative flex flex-col after:content-["Goodbye"] after:text-amber-300 after:text-2xl'> */}
-          <div className='relative flex flex-col '>
+      <div className='px-6'>
+        <div className='flex flex-col gap-10 pt-14'>
+          <p className='w-4/5 text-base leading-5'>
+            가입시 입력한 휴대번호를 통해{' '}
+            <span className='block'>가입하신 아이디를 확인할 수 있습니다.</span>
+          </p>
+          <div className='relative f-fr-ic'>
             <input
               autoFocus
               type='number'
@@ -252,63 +209,23 @@ function SignUpPage() {
               onChange={onChangeInputs}
               placeholder='휴대폰 번호'
               className='w-80 pb-2  text-xl font-medium border-b border-[#DBDBDB] placeholder:text-[#DBDBDB
-              ] placeholder:font-bold '
+                ] placeholder:font-bold '
             />
             <button
               type='button'
-              className='absolute top-0 right-0 px-4 py-1 border border-[#777777] rounded-2xl font-semibold text-sm '
+              className='absolute top-0 right-2 px-4 py-1 border border-[#777777] rounded-2xl font-semibold text-sm '
               onClick={checkNumberForm}
             >
               인증하기
             </button>
-            {!onValidator('phoneNumber') && (
-              <span className='error-msg'>{errorMsg[0]}</span>
-            )}
             {isAuthNumber && (
               <span className='error-msg text-green-500'>번호 인증완료!</span>
             )}
           </div>
-          {inputContents.map((contents, idx) => {
-            return (
-              <div className='relative flex flex-col ' key={contents.name}>
-                <input
-                  type={contents.type}
-                  name={contents.name}
-                  value={inputs[contents.value]}
-                  onChange={onChangeInputs}
-                  placeholder={contents.placeholder}
-                  className='w-80 pb-2 font-medium text-xl border-b border-[#DBDBDB] placeholder:text-[#DBDBDB
-                ] placeholder:font-bold'
-                />
-                {contents.name === 'passwordConfirm'
-                  ? inputs.passwordConfirm &&
-                    onValidator('passwordConfirm') && (
-                      <BsCheckLg className='absolute top-0 right-5 text-3xl text-[#76B5FF]' />
-                    )
-                  : onValidator(contents.name) && (
-                      <BsCheckLg className='absolute top-0 right-5 text-3xl text-[#76B5FF]' />
-                    )}
-                {!onValidator(contents.name) && (
-                  <span className='error-msg'>{errorMsg[idx + 1]}</span>
-                )}
-              </div>
-            );
-          })}
         </div>
-        <div className='absolute bottom-[52px]'>
-          <button
-            disabled={!isAuthNumber}
-            type='submit'
-            className={`large-button cursor-pointer ${
-              isAuthNumber ? 'bg-mainColor' : 'bg-[#C2C2C2]'
-            } text-white `}
-          >
-            다음
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   );
-}
+};
 
-export default SignUpPage;
+export default PasswordFind;

@@ -30,6 +30,8 @@ import TmapPage from '../pages/Tmappage';
 import TabbarsOutlet from './TabbarsOutlet';
 import MyPooboxcomponent from '../components/MyPooboxcomponent';
 import Unknown from '../pages/Unknown';
+import PasswordFind from '../pages/PasswordFind';
+import RouteChangeTracker from '../google/RouteChangeTracker';
 
 
 // import TokenCheck from '../utils/TokenCheck';
@@ -38,8 +40,9 @@ function Router() {
   console.log("Router 렌더링 발생하였습니다.")
   return (
     <BrowserRouter>
+      <RouteChangeTracker />
       <Routes>
-      <Route element={<Layout/>}>
+        <Route element={<Layout/>}>
           <Route path="/poopost" element={<PooPost />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/loginsocial' element={<LoginSocial />} />
@@ -56,6 +59,7 @@ function Router() {
           nothing yet
         </Route>
         <Route element={<LinkFooterLayout />}>
+          <Route path='/findpassword' element={<PasswordFind />}/>
           <Route path='/signincomplete' element={<SignInCompletePage />}/>
           <Route path='/daengfinder/detail/:postId' element={<DaengFinderDetail/>}/>
           <Route path='/daengfinder/detail/:postOwnerId/comment/:postId' element={<DaengFinderCommentPage />}/>

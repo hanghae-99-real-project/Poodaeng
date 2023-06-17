@@ -40,19 +40,11 @@ axiosToken.interceptors.request.use(
     config.headers.refreshtoken = refreshtoken;
     config.headers.accesstoken = `Bearer ${accesstoken}`;
     // config.data = // request body 를 의미함
-
-    // if(config.headers.postId){
-    //   config.headers.postId = 
-    // }
     return config;
   },
   (error) => {
-    // do something with request error before error reporting
     console.log('axios interceptor request error >>>', error);
     return Promise.reject(error);
-    // await Promise.reject(error);
-    // throw Error(error);
-    // throw error;
   }
 )
 
@@ -99,14 +91,10 @@ axiosToken.interceptors.response.use(
     /**
      * @description 리프래쉬 토큰도 만료되고 [액세스 토큰도] 만료되는 경우의 로직을 짜야 함.
      */
-    
     if(error.code === 'ECONNABORTED'){
       error.config.message = "로그인 후 이용해 주세요."
     }
     return Promise.reject(error);
-    //  Promise.reject(error);
-    // throw Error(error);
-    // throw error;
   }
 )
 

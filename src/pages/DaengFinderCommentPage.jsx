@@ -632,7 +632,6 @@ function DaengFinderCommentPage() {
     <div className='w-full max-h-[812px]'>
       {alertMsg && <ToastContainer />}
       <LinkHeader icon destination={`/daengfinder/detail/${postId}`}>
-        {/* 댓글&nbsp;{commentCount}{' '} */}
         <div className='f-fr'>
           댓글&nbsp;
           <p className='text-[#DB00FF]'>
