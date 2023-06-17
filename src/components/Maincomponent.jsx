@@ -3,7 +3,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { useQuery } from 'react-query';
-import Tabbar from './Tabbar';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
 import Kakaoserch from './Kakaoserch';
@@ -22,15 +21,15 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='flex flex-row justify-between w-96'>
+      <div className='flex flex-row justify-between w-96 mt-4 mb-2'>
         <img
           className='ml-5 mb-2 object-contain'
           src='./images/Logo.png'
           alt='PooDaeng.png'
         />
         <img
-          className='mr-5 mb-5 object-contain cursor-pointer'
-          src='./images//Group 120.png'
+          className='mr-5 mb-2 object-contain cursor-pointer'
+          src='./images/Group 120.png'
           alt='Alert.png'
           onClick={AlertNavigateHander}
         />
@@ -76,10 +75,8 @@ function Maincomponent() {
           <Slidecomponent />
         </div>
       </div>
-      <div className='-mt-0.5'>
-        <div className='mt-14'>
-          <Tabbar />
-        </div>
+      <div className='mt-1'>
+        <div className='mt-24' />
       </div>
     </>
   );
