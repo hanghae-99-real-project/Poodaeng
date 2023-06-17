@@ -83,7 +83,7 @@
   .canvas {
     /* @apply overflow-hidden flex flex-col items-center relative w-[375px] h-[812px]  bg-[#FFFFFF]; */
     /* @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF]; */
-    @apply overflow-hidden flex flex-col items-center relative pt-[61px] w-full h-full max-w-[375px] max-h-[812px] bg-[#FFFFFF];
+    @apply overflow-y-scroll flex flex-col items-center relative pt-5 w-full h-full max-w-[375px] max-h-[812px] bg-[#FFFFFF];
   }
 
   .logo-div {

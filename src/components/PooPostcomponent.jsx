@@ -43,11 +43,6 @@ function PooPostcomponent() {
     setContent(e.target.value);
   };
 
-  // const handleFileChange = e => {
-  //   const { name, files } = e.target;
-  //   setForm({ ...form, [name]: files[0] });
-  // };
-
   // post formdata
   const pooBoxSubmitHandler = () => {
     if (!latlng || !latlng.La || !latlng.Ma) {
@@ -62,9 +57,6 @@ function PooPostcomponent() {
     // const data = {};
     const formData = new FormData();
     formData.append('pooPhotoUrl', uploadedFile);
-    // formData.append('content', content);
-    // formData.append('pooLatitude', latlng.La);
-    // formData.append('pooLongitude', latlng.Ma);
 
     const postData = {
       pooPhotoUrl: uploadedFile,
@@ -73,35 +65,6 @@ function PooPostcomponent() {
       content,
     };
 
-    // formData.append('content', JSON.stringify(content));
-    // console.log(content);
-    // formData.append('pooLatitude', latlng.La);
-    // console.log(latlng.La);
-    // formData.append('pooLongitude', latlng.Ma);
-    // console.log(latlng.Ma);
-
-    // formData.append(
-    //   'pooPhotoUrl',
-    //   new Blob([JSON.stringify([uploadedFile])], { type: 'image/jpeg' }),
-    // );
-    // formData.append(
-    //   'pooPhotoUrl',
-    //   new Blob([JSON.stringify(uploadedFile)], { type: 'application/json' }),
-    // );
-    // formData.append(
-    //   'content',
-    //   new Blob([JSON.stringify(content)], { type: 'application/json' }),
-    // );
-    // formData.append(
-    //   'pooLatitude',
-    //   new Blob([JSON.stringify(latlng.La)], { type: 'application/json' }),
-    // );
-    // formData.append(
-    //   'pooLongitude',
-    //   new Blob([JSON.stringify(latlng.Ma)], { type: 'application/json' }),
-    // );
-    // data.formData = formData;
-    // data.accessToken = accessToken;
     mutation.mutate(postData);
   };
 
@@ -110,36 +73,41 @@ function PooPostcomponent() {
       <Headers text icon destination=''>
         푸박스 등록
       </Headers>
-      <div className='ml-[23px] mt-[31px]'>
-        <div className='font-[600] text-[15px]'>푸박스 위치</div>
-        <KakaoClickMap onMapClick={handleMapClick} />
-      </div>
-      <div className='ml-[23px] mt-[20px]'>
-        <div className='font-[600] text-[15px]'>사진 등록</div>
-        <div className='flex justify-center'>
-          <FileUploader onFileUpload={handleFileUpload} />
-        </div>
-      </div>
-      <div className='ml-[23px] mt-[20px]'>
-        <div className='font-[600] text-[15px]'>푸박스 특이사항 설명</div>
-        <input
-          className='border-none font-[400] text-[15px] pb-[8px] my-[13px] w-[330px]'
-          placeholder='특이사항 입력'
-          onChange={handleContentChange}
-        />
-        <Buttons
-          type='button'
-          bgColor='#8722ED'
-          textColor='#FFFFFF'
-          onClick={pooBoxSubmitHandler}
-        >
-          등록하기
-        </Buttons>
-        <div className='flex justify-center text-sm text-[#FF4444]'>
-          {errormsg}
+      <div className='h-[812px]'>
+        <div className='overflow-y-scroll'>
+          <div className='ml-6 mt-8'>
+            <div className='font-[600] text-[15px]'>푸박스 위치</div>
+            <KakaoClickMap onMapClick={handleMapClick} />
+          </div>
+          <div className='ml-6 mt-4'>
+            <div className='font-[600] text-base'>사진 등록</div>
+            <div className='flex justify-center'>
+              <FileUploader onFileUpload={handleFileUpload} />
+            </div>
+          </div>
+          <div className='ml-6 mt-4'>
+            <div className='font-[600] text-base'>푸박스 특이사항 설명</div>
+            <input
+              className='border-none font-[400] text-base pb-2 my-3 w-80'
+              placeholder='특이사항 입력'
+              onChange={handleContentChange}
+            />
+            <Buttons
+              type='button'
+              bgColor='#8722ED'
+              textColor='#FFFFFF'
+              onClick={pooBoxSubmitHandler}
+            >
+              등록하기
+            </Buttons>
+            <div className='flex justify-center text-sm text-[#FF4444]'>
+              {errormsg}
+            </div>
+          </div>
         </div>
       </div>
     </form>
   );
 }
+
 export default PooPostcomponent;
