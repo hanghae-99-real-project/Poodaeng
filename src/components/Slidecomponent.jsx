@@ -28,7 +28,7 @@ export default function Slidecomponent() {
     return <div>실종 정보가 없습니다</div>;
   }
 
-  const daengData = data.data.lostPostsData;
+  const daengData = data?.data?.lostPostsData;
   console.log('main>>>>>>>>>', daengData);
   const pooDetailHandler = postId => {
     navigate(`/daengfinder/detail/${postId}`);
