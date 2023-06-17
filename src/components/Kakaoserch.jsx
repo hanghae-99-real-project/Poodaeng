@@ -11,6 +11,11 @@ import { getPooBox } from '../api/poobox';
 import { ReactComponent as MyGeo } from '../assets/images/MyGeo.svg';
 
 function Kakaoserch() {
+  const navigate = useNavigate();
+  const mapContainer = useRef(null);
+  const location = useLocation();
+  const isMapPage = location.pathname === '/map';
+
   const { isLoading, isError, data } = useQuery('poobox', getPooBox);
   if (isLoading) {
     return (
@@ -28,11 +33,6 @@ function Kakaoserch() {
       </div>
     );
   }
-  const navigate = useNavigate();
-  const mapContainer = useRef(null);
-  const location = useLocation();
-  const isMapPage = location.pathname === '/map';
-
   console.log('map>>>>>>>>>', data);
 
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
