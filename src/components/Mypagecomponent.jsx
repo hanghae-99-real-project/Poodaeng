@@ -52,7 +52,7 @@ function Mypagecomponent() {
   //   2:갯수 ]
   // const myInfo = data?.data?.getMyInfoData;
 
-  // console.log('mypage', myInfo);
+  console.log('mypage', data?.data?.getMyInfoData);
 
   // const pooData = data?.data?.getMyPooData;
   // if (!pooData) {
@@ -71,9 +71,9 @@ function Mypagecomponent() {
                 src={
                   data?.data?.getMyInfoData?.userPhoto
                     ? data.data.getMyInfoData.userPhoto[0]
-                    : null
+                    : './images/프로필5.png'
                 }
-                alt='profile img'
+                alt=''
               />
             </div>
             <div className='flex flex-col justify-center gap-2 ml-3'>
