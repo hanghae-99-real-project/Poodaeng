@@ -88,14 +88,14 @@ function DaengFindercomponent() {
   }
 
   if (isError) {
-    console.log('error >>>', error);
+    // console.log('error >>>', error);
     navigate('/', {
       state: error,
     });
   }
 
-  console.log('daengFindercomponent >>> ', data);
-  console.log('data.data>>> ', data.data);
+  // console.log('daengFindercomponent >>> ', data);
+  // console.log('data.data>>> ', data.data);
   const ListAll = data?.data?.lostPostsData;
   const ListMissing = data?.data?.lostPostsData?.filter(
     card => card.status === false,

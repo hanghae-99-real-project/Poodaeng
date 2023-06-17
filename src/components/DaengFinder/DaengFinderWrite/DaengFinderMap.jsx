@@ -17,15 +17,17 @@ function DaengFinderMap({ latlng, setLatLng }) {
   useEffect(() => {
     if (latlng.lostLongitude && latlng.lostLatitude) {
       const something = async () => {
-        await convertCoordinates(latlng.lostLongitude, latlng.lostLatitude)
-          .then(d => {
-            console.log(d);
-            const rdAd = d.data?.documents[0]?.road_address?.address_name;
-            const ad = d.data?.documents[0]?.address?.address_name;
-            setAdrs(rdAd || ad);
-            setRoadAddress(rdAd || ad);
-          })
-          .catch(err => console.log(err));
+        await convertCoordinates(
+          latlng.lostLongitude,
+          latlng.lostLatitude,
+        ).then(d => {
+          // console.log(d);
+          const rdAd = d.data?.documents[0]?.road_address?.address_name;
+          const ad = d.data?.documents[0]?.address?.address_name;
+          setAdrs(rdAd || ad);
+          setRoadAddress(rdAd || ad);
+        });
+        // .catch(err => console.log(err));
       };
       something();
     }

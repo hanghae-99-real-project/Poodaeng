@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { debounce } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -37,7 +38,7 @@ function DaengFinderSearchPage() {
     shallow,
   );
   // const matchResult = [];
-  console.log('render occured');
+  // console.log('render occured');
   const searchDaengFinderPost = useCallback(
     debounce(() => {
       setShowRecent(false);
@@ -78,12 +79,12 @@ function DaengFinderSearchPage() {
   }, []);
 
   if (isLoading) {
-    console.log('is loading');
+    // console.log('is loading');
   }
   if (isError) {
-    console.log('error 발생 >>>', error);
+    // console.log('error 발생 >>>', error);
   }
-  console.log('가져온 데이터 >>>', data);
+  // console.log('가져온 데이터 >>>', data);
 
   /* 812px - 40px 하고 시작했어야 했는데... 이미 375로 다 잡고 하고 있으니까 어쩔 수 없네 */
   /**

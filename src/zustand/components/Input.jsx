@@ -10,7 +10,7 @@ const input = (set, get) => ({
   setSearchList: () => {
     const search = get().word.trim();
     if (search === '') {
-      console.log('empty search');
+      // console.log('empty search');
       return;
     }
     set(() => ({
@@ -19,7 +19,7 @@ const input = (set, get) => ({
     const prevSearchList = get().searchList;
     const filterResult = prevSearchList.find(list => list.item === search);
     if (filterResult) {
-      console.log('duplication of search');
+      // console.log('duplication of search');
     } else {
       set(prev => ({
         searchList: [

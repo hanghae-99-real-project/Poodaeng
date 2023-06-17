@@ -10,11 +10,11 @@ function AuthTimer() {
     if(time > 0){
       Counter = setInterval(()=>{
         const timeGap = Math.floor((new Date(expireAt).getTime() - new Date().getTime()) / 1000);
-        console.log("timeGap type check >>>" , timeGap)
+        // console.log("timeGap type check >>>" , timeGap)
         setTime(timeGap);
       }, 1000)
     } else {
-      console.log('timeout')
+      // console.log('timeout')
       clearInterval(Counter);
       setTime('시간초과')
     }

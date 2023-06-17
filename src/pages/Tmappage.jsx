@@ -74,7 +74,7 @@ function TmapPage() {
       // var startY = location.latitude.toString();
       // var startX = location.longitude.toString();
 
-      console.log('>>>>>>>>>>>>', startY, startX);
+      // console.log('>>>>>>>>>>>>', startY, startX);
 
       if (!map) {
         map = new Tmapv2.Map('map_div', {
@@ -217,16 +217,16 @@ function TmapPage() {
           drawLine(drawInfoArr);
         },
         error: function (request, status, error) {
-          console.log(
-            'code:' +
-              request.status +
-              '\n' +
-              'message:' +
-              request.responseText +
-              '\n' +
-              'error:' +
-              error,
-          );
+          // console.log(
+          //   'code:' +
+          //     request.status +
+          //     '\n' +
+          //     'message:' +
+          //     request.responseText +
+          //     '\n' +
+          //     'error:' +
+          //     error,
+          // );
         },
       });
     });

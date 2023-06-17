@@ -40,27 +40,27 @@ function ProfileEditcomponent() {
     );
   }
   if (isError) {
-    console.log('geterror', isError);
+    // console.log('geterror', isError);
   }
   const getMyInfoData = data?.data?.getMyInfoData;
 
   // 닉네임 변경 모달
   const nickEditHandler = () => {
     setNickEdit(true);
-    console.log('nickname edit', nickEdit);
+    // console.log('nickname edit', nickEdit);
   };
 
   // 비밀번호 변경 모달
   const passwordEditHandler = () => {
     setPassEdit(true);
-    console.log('password edit', passEdit);
+    // console.log('password edit', passEdit);
   };
 
   const closeModal = () => {
     setNickEdit(false);
     setImgEdit(false);
     setPassEdit(false);
-    console.log('Modal closed');
+    // console.log('Modal closed');
   };
 
   // const [image, setImage] = useState(null);
@@ -74,23 +74,23 @@ function ProfileEditcomponent() {
   // 이미지 변경 모달
   const imgEditHandler = () => {
     setImgEdit(true);
-    console.log('nickname edit', nickEdit);
+    // console.log('nickname edit', nickEdit);
   };
 
   const queryClient = useQueryClient();
   const mutation = useMutation(newPutImage, {
     onSuccess: postData => {
-      console.log('query success response >>> ', postData);
+      // console.log('query success response >>> ', postData);
       queryClient.invalidateQueries('profile');
       closeModal();
       navigate('/mypage');
     },
     onError: errors => {
-      console.log(errors);
+      // console.log(errors);
     },
   });
   const handleProfileClick = index => {
-    console.log('클릭된 인덱스', index);
+    // console.log('클릭된 인덱스', index);
     if (selectedIcon === index) {
       setSelectedIcon(null);
     } else {
@@ -124,11 +124,11 @@ function ProfileEditcomponent() {
   const nickNameMutation = useMutation(newPutNickname, {
     onSuccess: putData => {
       queryClient.invalidateQueries('profile');
-      console.log('query success response >>> ', putData);
+      // console.log('query success response >>> ', putData);
       closeModal();
     },
     onError: errors => {
-      console.log(errors);
+      // console.log(errors);
     },
   });
 
@@ -136,17 +136,17 @@ function ProfileEditcomponent() {
   const passwordMutation = useMutation(newPutPassword, {
     onSuccess: putData => {
       queryClient.invalidateQueries('profile');
-      console.log('query success response >>> ', putData);
+      // console.log('query success response >>> ', putData);
       closeModal();
     },
     onError: errors => {
-      console.log(errors);
+      // console.log(errors);
     },
   });
 
   const nicknameChangeHandler = e => {
     setNewNickname(e.target.value);
-    console.log(newNickname);
+    // console.log(newNickname);
   };
 
   const passwordChangeHandler = event => {

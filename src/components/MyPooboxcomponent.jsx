@@ -24,7 +24,7 @@ function MyPooboxcomponent() {
   if (!pooData) {
     return <Loading />;
   }
-  console.log('mypoobox', data.data.getMyPooData);
+  // console.log('mypoobox', data.data.getMyPooData);
 
   const pooDetailHandler = (
     pooId,
