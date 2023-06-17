@@ -254,7 +254,7 @@ function TmapPage() {
 
   return (
     <div className='absolute'>
-      <div className='absolute my-5 -top-20 right-0 z-30 w-full h-36 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
+      <div className='absolute  my-5 top-0 z-30 w-full h-36 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
         <div className='flex'>
           <div className='flex my-1'>
             <Arrow className='mt-1 mr-2' />
