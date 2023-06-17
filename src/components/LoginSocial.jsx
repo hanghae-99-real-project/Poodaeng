@@ -34,12 +34,12 @@ function LoginSocial() {
           </div>
           <div className='flex flex-col gap-4'>
             <KakaoLogin />
-            <button
+            {/* <button
               type='button'
               className='large-button bg-[#000000] text-[#fff]'
             >
               구글 계정으로 시작하기
-            </button>
+            </button> */}
           </div>
           <div className='flex flex-row  justify-center gap-2'>
             <button
