@@ -92,8 +92,10 @@ function KakaoAuthCheck() {
   };
 
   useEffect(() => {
-    getKakaoToken();
-  }, []);
+    if (location?.latitude && location?.longitude) {
+      getKakaoToken();
+    }
+  }, [location]);
 
   return isLoading && <Loading />;
 }
