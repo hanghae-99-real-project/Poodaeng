@@ -235,7 +235,7 @@ function DaengFinderDetail() {
   const createdAt = deepData?.createdAt;
 
   return (
-    <div className='h-full w-full'>
+    <div className='relative h-full w-full'>
       {errorMsg && <ToastContainer />}
       <IoIosArrowBack
         className='absolute z-30 top-7 left-4 text-xl cursor-pointer'
