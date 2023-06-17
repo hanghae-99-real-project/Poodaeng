@@ -49,7 +49,7 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
   }
 
   // console.log('reply data >>>>', data);
-  // console.log('reply data depth >>>', data.data?.childCommentsData);
+  console.log('reply data depth >>>', data.data?.childCommentsData);
   // const isPrivate = data.data?.childCommentsData?.isPrivate;
   // const UserId = data.data?.childCommentsData?.UserId;
   // const userPhoto = data.data?.childCommentsData?.userPhoto;

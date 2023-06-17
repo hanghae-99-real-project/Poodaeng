@@ -13,7 +13,7 @@ const DaengFinderSearchBar = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div className='w-full relative z-30 f-fr items-center justify-between px-4 shadow-md pb-3'>
+    <div className='w-full relative top-3 z-30 f-fr items-center justify-between px-4 shadow-md pb-3 bg-white'>
       <IoIosArrowBack
         className='text-3xl cursor-pointer transition duration-300 ease-in-out hover:scale-110'
         onClick={() => navigate('/daengfinder')}

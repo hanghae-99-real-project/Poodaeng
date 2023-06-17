@@ -104,7 +104,7 @@ function DaengFinderSearchPage() {
       <div className='h-full px-7 py-4'>
         <div className='relative'>
           {(showRecent || showSearchList) && (
-            <div className='w-full absolute z-40'>
+            <div className='w-full absolute top-4 z-40'>
               <div className='f-fr-ic-jb pb-4 leading-5'>
                 <label className='block text-sm font-bold'>
                   {showSearchList && !showRecent ? (

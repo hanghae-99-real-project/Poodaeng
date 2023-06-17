@@ -34,7 +34,7 @@ function DaengFinderMap({ latlng, setLatLng }) {
   }, [latlng]);
 
   return (
-    <div className='relative w-full h-[45.6875rem]'>
+    <div className='relative w-full h-[47.6875rem]'>
       {adrs && (
         <div className='absolute f-fr-ic-jc w-full z-50 top-2'>
           <div className='f-fr-ic gap-2 px-5 py-3 font-medium text-base leading-4 bg-white rounded-md'>

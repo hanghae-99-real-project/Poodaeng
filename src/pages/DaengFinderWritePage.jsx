@@ -340,11 +340,13 @@ function DaengFinderWritePage() {
         &nbsp;
       </LinkHeader>
       {mapMode ? (
-        <DaengFinderMap latlng={latlng} setLatLng={setLatLng} />
+        <div className='w-full h-full'>
+          <DaengFinderMap latlng={latlng} setLatLng={setLatLng} />
+        </div>
       ) : (
         // <DaengFinderMap />
         <div className='h-full'>
-          <form className='py-9 px-6 border-b border-solid border-[#ECECEC]'>
+          <form className='py-6 px-6 border-b border-solid border-[#ECECEC]'>
             <div className='f-fc gap-3 mb-4'>
               <input
                 name='title'
@@ -397,7 +399,7 @@ function DaengFinderWritePage() {
               />
             </div>
           </form>
-          <div className='px-6 py-6 h-[35%]'>
+          <div className='p-6 h-[35%]'>
             <QuillEditor />
           </div>
         </div>
