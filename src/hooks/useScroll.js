@@ -1,28 +1,35 @@
 import { debounce } from 'lodash';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Uptop from '../components/DaengFinder/Uptop';
 
 /**
  * 
- * @param {String} targetElementId  element id that can be storage name
+ * @param {RefObject} targetElementId  element id that can be storage name
  * @param {Boolean} isScroll  true or false
- * @param {StringArray} dependOn  useEffect dependency array
+ * @param {String} storageName storage name
+ * @param {String[]} dependOn  useEffect dependency array
  * 
  */
-const useScroll = (targetElementId, isScroll, ...dependOn) => {
+const useScroll = (targetRef, isScroll, storageName,...dependOn) => {
+  const [checkScrollTop, setCheckScrollTop] = useState(0)
   useEffect(()=>{
+    /**
+     * @description data 의존성 배열값에 따라서 targetRef가 존재할 수도 있고 undefined일수도 있어서 useEffect 안에 있어야 함.
+     */
+    const scroller = targetRef.current;
     if(!isScroll){
-      // sessionStorage.setItem(targetElementId, 0)
-      sessionStorage.removeItem(targetElementId)
+      // sessionStorage.setItem(storageName, 0)
+      sessionStorage.removeItem(storageName)
     }
-    const scroller = document.querySelector(`#${targetElementId}`);
     const currentScrollY = Number(
-      JSON.parse(sessionStorage.getItem(targetElementId)),
+      JSON.parse(sessionStorage.getItem(storageName)),
     );
     if(currentScrollY) scroller?.scrollTo(0, currentScrollY);
     
     const saveScrollTop = debounce(() => {
       const scrollYRecord = JSON.stringify(scroller?.scrollTop);
-      sessionStorage.setItem(targetElementId, scrollYRecord);
+      setCheckScrollTop(Number(scroller?.scrollTop))
+      sessionStorage.setItem(storageName, scrollYRecord);
     }, 200);
     
     scroller?.addEventListener('scroll', saveScrollTop)
@@ -31,6 +38,15 @@ const useScroll = (targetElementId, isScroll, ...dependOn) => {
       scroller?.removeEventListener('scroll', saveScrollTop);
     };
   }, dependOn);
+
+  /**
+   * 
+   * @param {Boolean} useScrollTop 
+   * @returns 
+   */
+  const ScrollTopComponent = ({useScrollTop}) => <Uptop useScrollTop={useScrollTop} checkScrollTop={checkScrollTop} scroller={targetRef}/>;
+
+  return [ScrollTopComponent]
 }
 
 export default useScroll

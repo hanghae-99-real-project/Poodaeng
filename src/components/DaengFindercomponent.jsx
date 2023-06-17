@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
@@ -11,12 +11,13 @@ import { getPostLost } from '../api/daengFinder';
 import { ReactComponent as DaengFinderButton } from '../assets/images/DaengFinderMenu.svg';
 import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
 import useCurrentLocation from '../hooks/useCurrentLocation';
-import useScroll from '../hooks/useScroll';
+// eslint-disable-next-line import/no-useless-path-segments, import/no-cycle
 import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useLocationStore } from '../zustand/example/zustandAPI';
 import Card from './DaengFinder/Card';
 import Loading from './common/Loading';
 import { ReactComponent as CheckBoxDaengFinder } from '../assets/images/CheckedPurple.svg';
+import useScroll from '../hooks/useScroll';
 
 function DaengFindercomponent() {
   const [isDetail, setIsDetail] = useState(true);
@@ -63,7 +64,14 @@ function DaengFindercomponent() {
       refetchOnWindowFocus: false,
     },
   );
-  useScroll('scroller', loc.state?.isScroll, data);
+  const scrollRef = useRef();
+  const [ScrollUpTop] = useScroll(
+    scrollRef,
+    loc.state?.isScroll,
+    'scroller',
+    data,
+  );
+
   useEffect(() => {
     if (loc.state?.deleteComplete) {
       setAlertMsg(true);
@@ -153,7 +161,7 @@ function DaengFindercomponent() {
       {data?.data?.lostPostsData?.length ? (
         <div
           // 46.6875rem
-          id='scroller'
+          ref={scrollRef}
           className={`${
             isDetail
               ? 'flex flex-col gap-3  w-full'
@@ -178,6 +186,7 @@ function DaengFindercomponent() {
           <NoResult />
         </div>
       )}
+      <ScrollUpTop useScrollTop />
       <div className='relative w-full bottom-16 '>
         <DaengFinderButton
           className='absolute bottom-4 right-4 cursor-pointer'
