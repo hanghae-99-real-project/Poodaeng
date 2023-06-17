@@ -46,7 +46,7 @@ const kakaoSignIn = async(inputs) => {
     headers: {
       authorization: `Bearer ${code}`,
     },
-    timeout: 3000 /* 3초 */,
+    timeout: 5000 /* 5초 */,
     timeoutErrorMessage: 'Request timed out',
   },)
   return response
