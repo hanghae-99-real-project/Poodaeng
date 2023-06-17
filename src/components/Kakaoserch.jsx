@@ -4,7 +4,7 @@
 /* eslint-disable func-names */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-use-before-define */
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPooBox } from '../api/poobox';
@@ -36,25 +36,25 @@ function Kakaoserch() {
   console.log('map>>>>>>>>>', data);
 
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = process.env.REACT_APP_KAKAO_KEY;
-    script.async = true;
-    script.onload = () => {
-      const { kakao } = window;
-      if (mapContainer.current !== null) {
-        kakao.maps.load(() => {
-          initializeMap();
-        });
-      }
-    };
+  // useEffect(() => {
+  const script = document.createElement('script');
+  script.src = process.env.REACT_APP_KAKAO_KEY;
+  script.async = true;
+  script.onload = () => {
+    const { kakao } = window;
+    if (mapContainer.current !== null) {
+      kakao.maps.load(() => {
+        initializeMap();
+      });
+    }
+  };
 
-    document.head.appendChild(script);
+  document.head.appendChild(script);
 
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []);
+  //   return () => {
+  //     document.head.removeChild(script);
+  //   };
+  // }, []);
 
   // 지도를 초기화하는 함수
   function initializeMap() {
