@@ -17,6 +17,7 @@ import { ReactComponent as 프로필4 } from '../assets/images/프로필4.svg';
 import { ReactComponent as 프로필5 } from '../assets/images/프로필5.svg';
 import Headers from './Headers';
 import ProfileUploader from './ProfileUploader';
+import Loading from './common/Loading';
 
 function ProfileEditcomponent() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ function ProfileEditcomponent() {
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
-        {/* <Loading /> */} 로딩중
+        <Loading />
       </div>
     );
   }

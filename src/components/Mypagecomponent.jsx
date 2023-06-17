@@ -8,6 +8,7 @@ import { signOut } from '../api/sendCode';
 import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 import Headers from './Headers';
 import Tabbar from './Tabbar';
+import Loading from './common/Loading';
 
 function Mypagecomponent() {
   // const refreshToken = Cookies.get('refreshToken');
@@ -33,7 +34,7 @@ function Mypagecomponent() {
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
-        {/* <Loading /> */} 로딩중 mypagecomponent
+        <Loading />
       </div>
     );
   }
