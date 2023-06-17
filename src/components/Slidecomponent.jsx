@@ -67,8 +67,8 @@ export default function Slidecomponent() {
                   alt='사진'
                   className='w-80 h-44 object-cover'
                 />
-                <div className='flex justify-center items-center font-bold text-sm mt-1'>
-                  {item.address}
+                <div className='flex items-center font-bold text-sm mt-1 ml-1'>
+                  실종 위치 : {item.address}
                 </div>
               </SwiperSlide>
             );
