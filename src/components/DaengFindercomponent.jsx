@@ -117,11 +117,9 @@ function DaengFindercomponent() {
           className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
             total && 'text-[#A3A3A3] transition duration-300'
           }`}
+          onClick={() => setTotal(!total)}
         >
-          <div
-            className='rounded-sm cursor-pointer overflow-hidden hover:scale-110 transition duration-300'
-            onClick={() => setTotal(!total)}
-          >
+          <div className='rounded-sm cursor-pointer overflow-hidden hover:scale-110 transition duration-300'>
             <CheckBoxDaengFinder
               className={`${
                 total ? 'bg-[#A3A3A3]' : 'bg-mainColor'
