@@ -13,10 +13,18 @@ import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { Autoplay, Pagination } from 'swiper'; // Navigation 모듈은 제거합니다.
 import getDaengMain from '../api/main';
+import { resetUserInfoLog } from '../zustand/example/zustandAPI';
+// import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 
 export default function Slidecomponent() {
   const navigate = useNavigate('');
-  const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain);
+  const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain, {
+    onError: error => {
+      if (error.response.status === 403) {
+        resetUserInfoLog();
+      }
+    },
+  });
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center items-center'>
