@@ -182,8 +182,8 @@ function DaengFinderWritePage() {
       });
     }
     // console.log('최종 위도 경도 >>>', latlng);
-    formData.append('lostLatitude', parseFloat(latlng.lostLatitude));
-    formData.append('lostLongitude', parseFloat(latlng.lostLongitude));
+    formData.append('lostLatitude', parseFloat(latlng?.lostLatitude));
+    formData.append('lostLongitude', parseFloat(latlng?.lostLongitude));
     // console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     if (checkPostId) {
       inputs = {
