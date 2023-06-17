@@ -112,7 +112,7 @@ function DaengFindercomponent() {
           onClick={() => navigate('/daengfinder/search')}
         />
       </div>
-      <div className='w-full flex flex-row justify-between px-5 mb-3'>
+      <div className='relative w-full flex flex-row justify-between px-5 mb-3'>
         <div
           className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
             total && 'text-[#A3A3A3] transition duration-300'
