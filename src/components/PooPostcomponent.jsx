@@ -24,7 +24,10 @@ function PooPostcomponent() {
       navigate('/map');
     },
     onError: error => {
-      // console.log(error);
+      if (error.response?.status === 403) {
+        setErrormsg('등록하려는 푸박스가 이미 등록된 푸박스인지 확인해주세요.');
+      }
+      // console.log('error', error);
     },
   });
 

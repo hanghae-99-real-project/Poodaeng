@@ -71,7 +71,7 @@ function Maincomponent() {
         <div className='ml-7 mt-1 font-[500] text-xs text-[#808080] mb-1'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='flex gap-3 w-auto justify-center h-40 overflow-x-auto flex-wrap'>
+        <div className='flex gap-3 w-auto justify-center h-52 overflow-x-auto flex-wrap'>
           <Slidecomponent />
         </div>
       </div>

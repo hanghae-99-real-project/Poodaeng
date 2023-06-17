@@ -44,7 +44,7 @@ export default function Slidecomponent() {
 
   return (
     <Swiper
-      slidesPerView={3}
+      slidesPerView={1}
       spaceBetween={10}
       centeredSlides
       autoplay={{
@@ -52,7 +52,7 @@ export default function Slidecomponent() {
         disableOnInteraction: false,
       }}
       modules={[Autoplay, Pagination]}
-      className='mySwiper w-80 h-40 object-cover'
+      className='mySwiper w-80 h-52 object-cover'
     >
       {daengData?.length > 0
         ? daengData?.map(item => {
@@ -65,9 +65,11 @@ export default function Slidecomponent() {
                 <img
                   src={item.lostPhotoUrl[0]}
                   alt='사진'
-                  className='w-40 h-28 object-cover'
+                  className='w-80 h-44 object-cover'
                 />
-                <div className='font-bold text-xs'>{item.address}</div>
+                <div className='flex items-center font-bold text-sm mt-1 ml-1'>
+                  실종 위치 : {item.address}
+                </div>
               </SwiperSlide>
             );
           })
