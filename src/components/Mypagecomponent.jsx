@@ -3,33 +3,28 @@ import React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 import { getMypageCount } from '../api/myPage';
 import { signOut } from '../api/sendCode';
 import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 import Headers from './Headers';
-import Tabbar from './Tabbar';
 import Loading from './common/Loading';
 
 function Mypagecomponent() {
   // const refreshToken = Cookies.get('refreshToken');
+
   const navigate = useNavigate();
 
+  const { isLoading, isError, data } = useQuery('profile', getMypageCount);
   const mutation = useMutation(signOut, {
-    onSuccess: datas => {
+    onSuccess: success => {
       resetUserInfoLog();
-      // console.log('logout query success response >>> ', datas);
+      // console.log('logout query success response >>> ', success);
     },
     onError: error => {
       // console.log(error);
     },
   });
-
-  const logoutHandler = () => {
-    mutation.mutate();
-    navigate('/login');
-  };
-
-  const { isLoading, isError, data } = useQuery('profile', getMypageCount);
 
   if (isLoading) {
     return (
@@ -45,12 +40,17 @@ function Mypagecomponent() {
     return navigate('/unknown');
   }
 
+  const logoutHandler = () => {
+    mutation.mutate();
+    navigate('/login');
+  };
+
   const mypageContent = data?.data?.mypageContent;
   // console.log('mypageContent', mypageContent);
   // [ 0:갯수,
   //   1:갯수,
   //   2:갯수 ]
-  const myInfo = data?.data?.getMyInfoData;
+  // const myInfo = data?.data?.getMyInfoData;
 
   // console.log('mypage', myInfo);
 
@@ -68,17 +68,17 @@ function Mypagecomponent() {
             <div>
               <img
                 className='w-24 h-24 rounded-full object-cover bg-cover'
-                src={myInfo?.userPhoto[0]}
+                src={data?.data?.getMyInfoData?.userPhoto[0]}
                 alt='profile img'
               />
             </div>
             <div className='flex flex-col justify-center gap-2 ml-3'>
               <div className='font-bold text-2xl '>
-                {myInfo?.nickname}
+                {data?.data?.getMyInfoData?.nickname}
                 <span className='text-[#A4A4A4] ml-1'>님</span>
               </div>
               <div className='w-32 h-4 text-sm text-[#AEAEAE]'>
-                {myInfo?.phoneNumber}
+                {data?.data?.getMyInfoData?.phoneNumber}
               </div>
             </div>
           </div>
