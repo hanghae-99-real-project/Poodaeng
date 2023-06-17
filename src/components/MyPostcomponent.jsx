@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -60,10 +61,10 @@ function MyPostcomponent({ BookmarkMode }) {
     error,
   } = useQuery(['getMyPost', userId], getMyPost, {
     onSuccess: successData => {
-      console.log('successData >>>', successData);
+      // console.log('successData >>>', successData);
     },
     onError: errorData => {
-      console.log('errorData >>>', errorData);
+      // console.log('errorData >>>', errorData);
       setErrorMsg(true);
       toastError('데이터를 불러오는 데 실패 했습니다.');
     },
@@ -78,10 +79,10 @@ function MyPostcomponent({ BookmarkMode }) {
     error: bookmarkError,
   } = useQuery(['getMyBookMark', userId], getMyBookMark, {
     onSuccess: successData => {
-      console.log('successData >>>', successData);
+      // console.log('successData >>>', successData);
     },
     onError: errorData => {
-      console.log('errorData >>>', errorData);
+      // console.log('errorData >>>', errorData);
       setErrorMsg(true);
       toastError('데이터를 불러오는 데 실패 했습니다.');
     },
@@ -102,8 +103,8 @@ function MyPostcomponent({ BookmarkMode }) {
       state: error || bookmarkError,
     });
   }
-  console.log('data depth myPostData check >>>', postData);
-  console.log('data depth myBookmarkData check >>>', bookmarkData);
+  // console.log('data depth myPostData check >>>', postData);
+  // console.log('data depth myBookmarkData check >>>', bookmarkData);
   const data = BookmarkMode ? bookmarkData : postData;
   const dataDeep = BookmarkMode
     ? data?.data?.getMyBookmarkData

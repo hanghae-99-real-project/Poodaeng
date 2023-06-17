@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -18,12 +19,12 @@ function PooPostcomponent() {
   const queryClient = useQueryClient();
   const mutation = useMutation(addPooBox, {
     onSuccess: data => {
-      console.log('query success response >>> ', data);
+      // console.log('query success response >>> ', data);
       queryClient.invalidateQueries('poobox');
       navigate('/map');
     },
     onError: error => {
-      console.log(error);
+      // console.log(error);
     },
   });
 

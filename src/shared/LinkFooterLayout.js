@@ -19,12 +19,12 @@ const store = (set, get) => ({
     willUseFooter: boolean,
   })),
   ConsoleHeaderState: () => {
-    console.log("Header 사용유무 확인 >>> ", get().willUserHeader);
+    // console.log("Header 사용유무 확인 >>> ", get().willUserHeader);
     const reply = get().willUseHeader;
     return reply
   },
   ConsoleFooterState: () => {
-    console.log("Footer 사용유무 확인 >>> ", get().willUseFooter);
+    // console.log("Footer 사용유무 확인 >>> ", get().willUseFooter);
     const reply = get().willUseFooter;
     return reply
   },

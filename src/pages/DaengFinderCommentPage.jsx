@@ -115,10 +115,10 @@ function DaengFinderCommentPage() {
   // const myId = 2;
   const postId = parseInt(params?.postId, 10); // string -> number
   const postOwnerId = parseInt(params?.postOwnerId, 10); // string -> number
-  console.log(
-    '새로고침 하고 local storage에서 꺼낸 게 아닌데도 id를 기억하려나? >>>',
-    userId,
-  );
+  // console.log(
+  //   '새로고침 하고 local storage에서 꺼낸 게 아닌데도 id를 기억하려나? >>>',
+  //   userId,
+  // );
   // console.log('postId >>>', postId, 'postOwnerId >>>', postOwnerId);
 
   /**
@@ -161,7 +161,7 @@ function DaengFinderCommentPage() {
       enabled: !!postId,
       refetchOnWindowFocus: false,
       onError: err => {
-        console.log('useQuery Error >>>', err);
+        // console.log('useQuery Error >>>', err);
       },
     },
   );
@@ -190,7 +190,7 @@ function DaengFinderCommentPage() {
       });
     },
     onError: err => {
-      console.log('writePostComment mutation error >>>', err);
+      // console.log('writePostComment mutation error >>>', err);
       resetFunc();
       setAlertMsg(true);
       toast.error(
@@ -231,7 +231,7 @@ function DaengFinderCommentPage() {
       });
     },
     onError: err => {
-      console.log('writePostReply error >>>', err);
+      // console.log('writePostReply error >>>', err);
       resetFunc();
       const errSegrement = userId
         ? '다시 로그인 해주세요'
@@ -263,7 +263,7 @@ function DaengFinderCommentPage() {
       toastSuccess('댓글 수정 완료');
     },
     onError: err => {
-      console.log('editPostCommentMutation error >>>', err);
+      // console.log('editPostCommentMutation error >>>', err);
       resetFunc();
       const errSegrement = userId
         ? '다시 로그인 해주세요'
@@ -293,7 +293,7 @@ function DaengFinderCommentPage() {
       queryClient.invalidateQueries(['getComment', postId]);
     },
     onError: err => {
-      console.log('deleteCommentMutation error >>>', err);
+      // console.log('deleteCommentMutation error >>>', err);
       resetFunc();
       const errSegrement = userId
         ? '다시 로그인 해주세요'
@@ -322,7 +322,7 @@ function DaengFinderCommentPage() {
       resetFunc();
     },
     onError: err => {
-      console.log('deleteReplyMutation error >>>', err);
+      // console.log('deleteReplyMutation error >>>', err);
       resetFunc();
       const errSegrement = userId
         ? '다시 로그인 해주세요'
@@ -490,11 +490,11 @@ function DaengFinderCommentPage() {
     }
   };
 
-  console.log(
-    'isCommentMode private Final check >>>',
-    isCommentMode.absolutePrivate,
-  );
-  console.log('private Final check >>>', privateComment);
+  // console.log(
+  //   'isCommentMode private Final check >>>',
+  //   isCommentMode.absolutePrivate,
+  // );
+  // console.log('private Final check >>>', privateComment);
   const saveInputHandler = () => {
     /* 댓글 저장 로직 */
     // setImage((prev)=> ({...prev, preview: ''}));
@@ -592,7 +592,7 @@ function DaengFinderCommentPage() {
   }
 
   if (isError) {
-    console.log('comment page error >>>', error);
+    // console.log('comment page error >>>', error);
     setAlertMsg(true);
     toast.error('Error occured while Loading', {
       position: toast.POSITION.TOP_CENTER,

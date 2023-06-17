@@ -44,12 +44,12 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
     return <div>Loading...</div>;
   }
   if (isError) {
-    console.log('isError >>>', error);
+    // console.log('isError >>>', error);
     return <div>{error.message}</div>;
   }
 
-  console.log('reply data >>>>', data);
-  console.log('reply data depth >>>', data.data?.childCommentsData);
+  // console.log('reply data >>>>', data);
+  // console.log('reply data depth >>>', data.data?.childCommentsData);
   // const isPrivate = data.data?.childCommentsData?.isPrivate;
   // const UserId = data.data?.childCommentsData?.UserId;
   // const userPhoto = data.data?.childCommentsData?.userPhoto;
@@ -57,7 +57,7 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
   // const createdAt = data.data?.childCommentsData?.createdAt;
 
   const openEditMode = (childCommentId, UserId, isPrivate) => {
-    console.log('type check', typeof childCommentId);
+    // console.log('type check', typeof childCommentId);
     setEditMode(prev => ({
       ...prev,
       editMode: true,

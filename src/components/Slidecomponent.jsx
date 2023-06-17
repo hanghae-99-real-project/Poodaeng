@@ -37,7 +37,7 @@ export default function Slidecomponent() {
   }
 
   const daengData = data?.data?.lostPostsData;
-  console.log('main>>>>>>>>>', daengData);
+  // console.log('main>>>>>>>>>', data.data.lostPostsData);
   const pooDetailHandler = postId => {
     navigate(`/daengfinder/detail/${postId}`);
   };
@@ -58,7 +58,7 @@ export default function Slidecomponent() {
         ? daengData?.map(item => {
             return (
               <SwiperSlide
-                key={item.id}
+                key={item.postId}
                 onClick={() => pooDetailHandler(item.postId)}
                 className='cursor-pointer'
               >

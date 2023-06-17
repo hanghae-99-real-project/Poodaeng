@@ -41,7 +41,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
     isPrivate,
     commentId,
   } = cmt;
-  console.log('안쪽 isPrivate 상태 체크', isPrivate);
+  // console.log('안쪽 isPrivate 상태 체크', isPrivate);
 
   const params = useParams();
   const postId = parseInt(params?.postId, 10); // string -> number
@@ -55,7 +55,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
 
   /** @description 누르면 답글 모드 */
   const onReplyMode = () => {
-    console.log('답글 모드 private check >>>', isPrivate);
+    // console.log('답글 모드 private check >>>', isPrivate);
     setIsCommentMode(prev => ({
       ...prev,
       inputMode: true,

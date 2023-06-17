@@ -35,15 +35,15 @@ const PasswordFind = () => {
   const dispatch = useDispatch();
   /* get 인증하기 동시에 모달 진입하면서 */
   const getAuthHandler = async () => {
-    console.log(
-      'phoneNumber type check opening number form modal >>> ',
-      typeof inputs.phoneNumber,
-    );
+    // console.log(
+    //   'phoneNumber type check opening number form modal >>> ',
+    //   typeof inputs.phoneNumber,
+    // );
     /**
      * @description 여기 api 바꾸셈!!!!!
      */
     const response = await sendCodeNumber({ phoneNumber: inputs.phoneNumber });
-    console.log('send code response >>> ', response);
+    // console.log('send code response >>> ', response);
     return response;
   };
 
@@ -60,11 +60,11 @@ const PasswordFind = () => {
         setGetAuthMode(true);
         setCheckTimeMode(true);
       } else {
-        console.log('error response opening number form >>> ', response);
-        console.log(
-          'error Message opening number form >>>',
-          response.errorMessage,
-        );
+        // console.log('error response opening number form >>> ', response);
+        // console.log(
+        //   'error Message opening number form >>>',
+        //   response.errorMessage,
+        // );
         setMessage(true);
         toast.error(`휴대폰 인증번호 발송 에러 발생`, {
           position: toast.POSITION.TOP_CENTER,
@@ -91,14 +91,14 @@ const PasswordFind = () => {
       const currentTime = new Date();
       const expireDate = new Date(currentTime.getTime() + 1000 * 60 * 3);
       dispatch(SET_TIMER({ expireAt: expireDate }));
-      console.log('send code response >>> ', response);
+      // console.log('send code response >>> ', response);
       /* 다시 카운트 */
     } else {
-      console.log('send code error >>> ', response);
-      console.log(
-        'send code error response.errorMessage>>> ',
-        response.errorMessage,
-      );
+      // console.log('send code error >>> ', response);
+      // console.log(
+      //   'send code error response.errorMessage>>> ',
+      //   response.errorMessage,
+      // );
     }
   }, 200);
 
@@ -120,16 +120,16 @@ const PasswordFind = () => {
   /* CodeNumber Validation */
   const codeMutation = useMutation(validateCodeNumber, {
     onSuccess: data => {
-      console.log('code number validate success');
-      console.log('인증 번호 확인 성공 결과 message>>>', data);
-      console.log('인증 번호 확인 성공 결과 >>>', data);
+      // console.log('code number validate success');
+      // console.log('인증 번호 확인 성공 결과 message>>>', data);
+      // console.log('인증 번호 확인 성공 결과 >>>', data);
       setCheckTimeMode(false);
       setIsAuthNumber(true);
       setGetAuthMode(false);
     },
     onError: error => {
-      console.log('code number validate error');
-      console.log('인증 번호 확인 실패 결과 >>>', error);
+      // console.log('code number validate error');
+      // console.log('인증 번호 확인 실패 결과 >>>', error);
       setMessage(true);
       toastError(`인증번호 불일치!`);
     },

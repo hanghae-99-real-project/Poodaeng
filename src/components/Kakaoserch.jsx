@@ -21,7 +21,7 @@ function Kakaoserch() {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
         /api/map/poo 로딩중 입니다
-        {console.log('로딩시도')}
+        {/* {console.log('로딩시도')} */}
       </div>
     );
   }
@@ -29,11 +29,11 @@ function Kakaoserch() {
     return (
       <div>
         /api/map/poo 오류가 발생했습니다.
-        {console.log('에러')}
+        {/* {console.log('에러')} */}
       </div>
     );
   }
-  console.log('map>>>>>>>>>', data);
+  // console.log('map>>>>>>>>>', data);
 
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
   // useEffect(() => {
