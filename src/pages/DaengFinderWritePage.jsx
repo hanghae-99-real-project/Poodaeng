@@ -79,6 +79,11 @@ function DaengFinderWritePage() {
       for (let i = 0; i < image.preview.length; i++) {
         URL.revokeObjectURL(image.preview[i]);
       }
+      navigate('/daengfinder', {
+        state: {
+          writeComplete: '게시글 작성 완료',
+        },
+      });
       toast.success('게시글 작성 완료', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 5000,
@@ -90,7 +95,7 @@ function DaengFinderWritePage() {
       });
     },
     onError: error => {
-      // console.log('daengFinderWrite error>>> ', error);
+      console.log('daengFinderWrite error>>> ', error);
       setAlertMsg(true);
       toast.error('게시글 작성 실패', {
         position: toast.POSITION.TOP_CENTER,
@@ -340,11 +345,10 @@ function DaengFinderWritePage() {
         &nbsp;
       </LinkHeader>
       {mapMode ? (
-        <div className='w-full h-full'>
-          <DaengFinderMap latlng={latlng} setLatLng={setLatLng} />
-        </div>
+        // <div className='w-full h-full'>
+        <DaengFinderMap latlng={latlng} setLatLng={setLatLng} />
       ) : (
-        // <DaengFinderMap />
+        // </div>
         <div className='h-full'>
           <form className='py-6 px-6 border-b border-solid border-[#ECECEC]'>
             <div className='f-fc gap-3 mb-4'>

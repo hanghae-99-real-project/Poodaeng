@@ -11,12 +11,13 @@ import { shallow } from 'zustand/shallow';
 import { kakaoSignIn } from '../api/sendCode';
 import Loading from '../components/common/Loading';
 import { tokenStore } from './SignInPage';
+import useCurrentLocation from '../hooks/useCurrentLocation';
 // import Loading from '../components/Loading';
 
 function KakaoAuthCheck() {
   const [isLoading, setIsLoading] = useState(true);
 
-  const location = useLocation();
+  const loc = useLocation();
   const navigate = useNavigate();
   // console.log('location >>>', location);
   // const code = new URLSearchParams(location.search).get('code');
@@ -32,6 +33,7 @@ function KakaoAuthCheck() {
     }),
     shallow,
   );
+  const { location } = useCurrentLocation();
 
   const mutation = useMutation(kakaoSignIn, {
     onSuccess: async data => {
@@ -83,6 +85,8 @@ function KakaoAuthCheck() {
     const inputs = {
       code,
       position: agreed,
+      userLatitude: agreed ? parseFloat(location.latitude) : null,
+      userLongitude: agreed ? parseFloat(location.longitude) : null,
     };
     mutation.mutate(inputs);
   };

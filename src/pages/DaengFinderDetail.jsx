@@ -143,7 +143,7 @@ function DaengFinderDetail() {
       enabled: !daeng,
       refetchOnWindowFocus: false,
       onSuccess: successData => {
-        // console.log('useQuery >>>', successData);
+        console.log('useQuery >>>', successData);
       },
     },
   );

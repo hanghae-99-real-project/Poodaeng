@@ -77,6 +77,10 @@ function DaengFindercomponent() {
       setAlertMsg(true);
       toastSuccess(loc.state?.deleteComplete);
     }
+    if (loc.state?.writeComplete) {
+      setAlertMsg(true);
+      toastSuccess(loc.state?.writeComplete);
+    }
   }, []);
 
   if (isLoading) {
