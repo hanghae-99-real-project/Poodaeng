@@ -219,7 +219,7 @@ function DaengFinderWritePage() {
         });
         return;
       }
-      if (fileList[i].size > maxSize) {
+      if (Number(fileList[i].size) > maxSize) {
         setAlertMsg(true);
         toast.error('이미지 크기는 최대 25mb입니다.', {
           position: toast.POSITION.TOP_CENTER,
@@ -263,7 +263,9 @@ function DaengFinderWritePage() {
     }));
   };
 
-  const deleteImage = index => {
+  const deleteImage = (e, index) => {
+    e.stopPropagation();
+    console.log('delete 발생');
     const photoFiltered = image.photo.filter((_, idx) => idx !== index);
     const previewFiltered = image.preview.filter((_, idx) => idx !== index);
     URL.revokeObjectURL(image.preview[index]);
