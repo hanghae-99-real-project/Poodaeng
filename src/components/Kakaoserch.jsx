@@ -9,6 +9,7 @@ import { useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPooBox } from '../api/poobox';
 import { ReactComponent as MyGeo } from '../assets/images/MyGeo.svg';
+import Loading from './common/Loading';
 
 function Kakaoserch() {
   const navigate = useNavigate();
@@ -20,18 +21,12 @@ function Kakaoserch() {
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
-        /api/map/poo 로딩중 입니다
-        {/* {console.log('로딩시도')} */}
+        <Loading />
       </div>
     );
   }
   if (isError) {
-    return (
-      <div>
-        /api/map/poo 오류가 발생했습니다.
-        {/* {console.log('에러')} */}
-      </div>
-    );
+    return <div>오류가 발생했습니다.</div>;
   }
   // console.log('map>>>>>>>>>', data);
 
