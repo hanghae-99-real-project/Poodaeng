@@ -50,7 +50,6 @@ function DaengFinderMap({ latlng, setLatLng }) {
         getMarkerPosition={setLatLng}
         clickable
       />
-      ;
     </div>
   );
 }
