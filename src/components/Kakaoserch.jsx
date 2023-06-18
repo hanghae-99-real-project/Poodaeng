@@ -243,7 +243,7 @@ function Kakaoserch() {
         <MyGeo
           role='none'
           onClick={initializeMap}
-          className='absolute z-10 w-12 h-12 right-1 bottom-20 cursor-pointer'
+          className='absolute z-10 w-12 h-12 right-3 bottom-3 cursor-pointer'
         />
       )}
     </div>
