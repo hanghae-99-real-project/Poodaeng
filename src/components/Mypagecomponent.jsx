@@ -36,7 +36,7 @@ function Mypagecomponent() {
 
   if (isError) {
     // console.log('Mypagecom>>>>>>', error);
-    mutation.mutate();
+    // mutation.mutate();
     return navigate('/unknown');
   }
 
