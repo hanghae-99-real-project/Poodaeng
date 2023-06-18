@@ -56,7 +56,7 @@ function MyPooboxcomponent() {
       <Headers text icon destination='mypage'>
         등록한 푸박스
       </Headers>
-      <div className='flex gap-3 overflow-y-scroll p-5 w-96 flex-wrap'>
+      <div className='flex gap-3 overflow-y-scroll p-5 w-96 h-screen flex-wrap'>
         {pooData.map(item => {
           return (
             <div
