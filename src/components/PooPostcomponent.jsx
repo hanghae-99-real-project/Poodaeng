@@ -94,6 +94,7 @@ function PooPostcomponent() {
               className='border-none font-[400] text-base pb-2 my-3 w-80'
               placeholder='특이사항 입력'
               onChange={handleContentChange}
+              maxLength={60}
             />
             <Buttons
               type='button'
