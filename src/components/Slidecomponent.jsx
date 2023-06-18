@@ -20,6 +20,7 @@ export default function Slidecomponent() {
   const navigate = useNavigate('');
   const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain, {
     onError: error => {
+      console.log('error >>>', error);
       if (error.response.status === 403) {
         resetUserInfoLog();
       }
