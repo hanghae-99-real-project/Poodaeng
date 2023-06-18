@@ -629,7 +629,7 @@ function DaengFinderCommentPage() {
 
   // });
   return (
-    <div className='w-full max-h-[812px]'>
+    <div className='max-w-[375px] max-h-[812px]'>
       {alertMsg && <ToastContainer />}
       <LinkHeader icon destination={`/daengfinder/detail/${postId}`}>
         <div className='f-fr'>
@@ -656,7 +656,7 @@ function DaengFinderCommentPage() {
         </div>
       </div>
       {/* 문제점 반만 잘려서 보인다. pb주는 건 임시방편 방법인가... => 바로 고침 */}
-      <div className='h-[90.0246%] pb-8 box-border overflow-y-scroll'>
+      <div className='h-[90.0246%] w-full pb-8 box-border overflow-y-scroll'>
         {data.data?.commentsData?.length > 0
           ? data.data?.commentsData.map(comment => {
               return (
