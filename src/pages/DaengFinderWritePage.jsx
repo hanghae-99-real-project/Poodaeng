@@ -32,6 +32,7 @@ function DaengFinderWritePage() {
   const title = Ps?.title ?? '';
   const content = Ps?.content ?? '';
   const address = Ps?.address ?? '';
+  const lostTime = Ps?.lostTime ?? '';
   const [target, onChangeHandler, onClearHandler] = useInput({
     dogname,
     title,
@@ -300,6 +301,9 @@ function DaengFinderWritePage() {
         photo: [...prev.photo, ...daengList].slice(0, 5),
         preview: [...prev.preview, ...daengList].slice(0, 5),
       }));
+    }
+    if (lostTime) {
+      setCalender(lostTime);
     }
     return () => {
       clearQuillValue();

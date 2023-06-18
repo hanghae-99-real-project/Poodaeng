@@ -13,6 +13,7 @@ const dateConvert1 = (date) => {
 };
 
 const dateConvert2 = (date) => {
+  console.log('date >>>', date)
   const createdDate = new Date(date);
   const year = createdDate.getFullYear();
   const month = createdDate.getMonth() + 1;

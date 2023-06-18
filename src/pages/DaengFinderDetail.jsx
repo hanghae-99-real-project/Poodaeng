@@ -44,6 +44,7 @@ function DaengFinderDetail() {
     title: '',
     content: '',
     dogname: '',
+    lostTime: '',
   });
   const [markerPotision, setMarkerPosition] = useState({
     lostLatitude: 0,
@@ -165,6 +166,7 @@ function DaengFinderDetail() {
         title: moreInfo.title,
         content: moreInfo.content,
         address: moreInfo.address,
+        lostTime: moreInfo.lostTime,
       },
     });
   };
@@ -200,6 +202,7 @@ function DaengFinderDetail() {
       title: deepData?.title,
       content: deepData?.content,
       dogname: deepData?.dogname,
+      lostTime: deepData?.losttime,
     });
   }, [data]);
 
@@ -237,6 +240,7 @@ function DaengFinderDetail() {
   const lostLongitude = deepData?.lostLongitude;
   const nickname = deepData?.nickname;
   const createdAt = deepData?.createdAt;
+  const lostTime = deepData?.losttime;
 
   return (
     <div className='h-[812px] w-full'>
@@ -326,7 +330,7 @@ function DaengFinderDetail() {
               <p className='text-xs font-bold'>
                 실종 시각{' '}
                 <span className='pl-2 font-medium text-xs text-[#515151]'>
-                  {dateConvert2(deepData?.createdAt)[1]}
+                  {dateConvert2(lostTime)[1]}
                 </span>
               </p>
             </div>
@@ -354,6 +358,7 @@ function DaengFinderDetail() {
               />
               <div className='pt-5 f-fr gap-2 parent font-medium text-xs text-[#969696]'>
                 {/* <span>2023.05.03</span> */}
+                {/* <span>{dateConvert2(createdAt)[2]}</span> */}
                 <span>{dateConvert2(createdAt)[2]}</span>
                 <span>|</span>
                 <span>{deepData?.views}&nbsp;회</span>
