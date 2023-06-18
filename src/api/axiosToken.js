@@ -21,7 +21,7 @@ const axiosToken = axios.create({
 
 
 axiosToken.interceptors.request.use(
-  async(config) => {
+  (config) => {
     // console.log('보낼 때 config headers >>> ', config.headers)
     /**
      * @description refresh token 이 null 이니까 아예 액세스 토큰을 못 받아오네.
@@ -63,14 +63,10 @@ axiosToken.interceptors.response.use(
       // console.log('axios interceptor response data depth check >>> ', response);
       const {setToken} = tokenStore.getState()
       const acToken = await response.data.newAccessToken;
-      // const newAccessToken = JSON.stringify(acToken);
-      // localStorage.setItem("accessToken", newAccessToken);
       const decodedAcToken = await jwtDecode(acToken);
-      // console.log('받아온 access token >>>',acToken);
       const { userId, exp } = decodedAcToken;
       const AC_EXP = await exp*1000
       setToken(userId, acToken, AC_EXP)
-      // localStorage.setItem('userId', JSON.stringify(userId));
       // accesstoken = await acToken;
       /**
        * @description should approach[attach] 'config' manually if you're retrying.

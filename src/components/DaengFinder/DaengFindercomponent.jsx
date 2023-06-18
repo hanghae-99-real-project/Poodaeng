@@ -108,8 +108,8 @@ function DaengFindercomponent() {
   return (
     <>
       {alertMsg && <ToastContainer />}
-      <div className='sticky top-0'>
-        <div className='flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md z-50'>
+      <div className='relative top-4'>
+        <div className='sticky bottom-0 flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md z-50'>
           <div className='w-[30px]' />
           <div className='font-bold text-xl '>댕 finder</div>
           <RxMagnifyingGlass
@@ -117,50 +117,51 @@ function DaengFindercomponent() {
             onClick={() => navigate('/daengfinder/search')}
           />
         </div>
-        <div className='w-full flex flex-row justify-between px-5 mb-3'>
-          <div
-            className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
-              total && 'text-[#A3A3A3] transition duration-300 cursor-pointer'
-            }`}
-            onClick={() => setTotal(!total)}
-          >
-            <div className='rounded-sm cursor-pointer overflow-hidden hover:scale-110 transition duration-300'>
-              <CheckBoxDaengFinder
-                className={`${
-                  total ? 'bg-[#A3A3A3]' : 'bg-mainColor'
-                } hover:text-[#BD88F3] transition duration-300`}
-              />
-            </div>
-            &nbsp;찾은 강아지 빼고 보기
+      </div>
+      <div className='w-full flex flex-row justify-between px-5 mb-3'>
+        <div
+          className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
+            total && 'text-[#A3A3A3]'
+          } transition duration-300 cursor-pointer`}
+          onClick={() => setTotal(!total)}
+        >
+          <div className='rounded-sm cursor-pointer overflow-hidden hover:scale-110 transition duration-300'>
+            <CheckBoxDaengFinder
+              className={`${
+                total ? 'bg-[#A3A3A3]' : 'bg-mainColor'
+              } hover:text-[#BD88F3] transition duration-300`}
+            />
           </div>
-          <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
-            <div
-              className={`p-1  ${
-                !isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
+          &nbsp;찾은 강아지 빼고 보기
+        </div>
+        <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
+          <div
+            className={`p-1  ${
+              !isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
+            } cursor-pointer transition duration-150`}
+            onClick={() => setIsDetail(false)}
+          >
+            <BiCategory
+              className={`text-xl  ${
+                !isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
               } cursor-pointer transition duration-150`}
-              onClick={() => setIsDetail(false)}
-            >
-              <BiCategory
-                className={`text-xl  ${
-                  !isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
-                } cursor-pointer transition duration-150`}
-              />
-            </div>
-            <div
-              className={`p-1  ${
-                isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
+            />
+          </div>
+          <div
+            className={`p-1  ${
+              isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
+            } cursor-pointer transition duration-150`}
+            onClick={() => setIsDetail(true)}
+          >
+            <SlMenu
+              className={`text-xl  ${
+                isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
               } cursor-pointer transition duration-150`}
-              onClick={() => setIsDetail(true)}
-            >
-              <SlMenu
-                className={`text-xl  ${
-                  isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
-                } cursor-pointer transition duration-150`}
-              />
-            </div>
+            />
           </div>
         </div>
       </div>
+
       {data?.data?.lostPostsData?.length ? (
         <div
           // 46.6875rem
@@ -169,7 +170,8 @@ function DaengFindercomponent() {
             isDetail
               ? 'flex flex-col gap-3  w-full'
               : 'grid grid-cols-2 gap-3 auto-cols-auto'
-          } sticky px-6 min-h-[75%] pb-[5rem] overflow-y-scroll transition duration-300 ease-in-out`}
+          } px-6 min-h-[75%]  overflow-y-scroll transition duration-300 ease-in-out`}
+          // } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll transition duration-300 ease-in-out`}
           // } min-h-[35.5rem] overflow-y-scroll `}
         >
           {total
@@ -195,6 +197,95 @@ function DaengFindercomponent() {
         onClick={moveToDaengFinderWrite}
       />
     </>
+    // <>
+    //   {alertMsg && <ToastContainer />}
+    //   <div className='sticky top-0'>
+    //     <div className='flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md z-50'>
+    //       <div className='w-[30px]' />
+    //       <div className='font-bold text-xl '>댕 finder</div>
+    //       <RxMagnifyingGlass
+    //         className='text-3xl cursor-pointer transition duration-300 ease-in-out hover:scale-110'
+    //         onClick={() => navigate('/daengfinder/search')}
+    //       />
+    //     </div>
+    //     <div className='w-full flex flex-row justify-between px-5 mb-3'>
+    //       <div
+    //         className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
+    //           total && 'text-[#A3A3A3]'
+    //         } transition duration-300 cursor-pointer`}
+    //         onClick={() => setTotal(!total)}
+    //       >
+    //         <div className='rounded-sm cursor-pointer overflow-hidden hover:scale-110 transition duration-300'>
+    //           <CheckBoxDaengFinder
+    //             className={`${
+    //               total ? 'bg-[#A3A3A3]' : 'bg-mainColor'
+    //             } hover:text-[#BD88F3] transition duration-300`}
+    //           />
+    //         </div>
+    //         &nbsp;찾은 강아지 빼고 보기
+    //       </div>
+    //       <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
+    //         <div
+    //           className={`p-1  ${
+    //             !isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
+    //           } cursor-pointer transition duration-150`}
+    //           onClick={() => setIsDetail(false)}
+    //         >
+    //           <BiCategory
+    //             className={`text-xl  ${
+    //               !isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
+    //             } cursor-pointer transition duration-150`}
+    //           />
+    //         </div>
+    //         <div
+    //           className={`p-1  ${
+    //             isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
+    //           } cursor-pointer transition duration-150`}
+    //           onClick={() => setIsDetail(true)}
+    //         >
+    //           <SlMenu
+    //             className={`text-xl  ${
+    //               isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
+    //             } cursor-pointer transition duration-150`}
+    //           />
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    //   {data?.data?.lostPostsData?.length ? (
+    //     <div
+    //       // 46.6875rem
+    //       ref={scrollRef}
+    //       className={`${
+    //         isDetail
+    //           ? 'flex flex-col gap-3  w-full'
+    //           : 'grid grid-cols-2 gap-3 auto-cols-auto'
+    //       } sticky px-6 min-h-[75%] pb-[5rem] overflow-y-scroll transition duration-300 ease-in-out`}
+    //       // } min-h-[35.5rem] overflow-y-scroll `}
+    //     >
+    //       {total
+    //         ? ListAll.map(card => {
+    //             return (
+    //               <Card key={card.postId} isDetail={isDetail} data={card} />
+    //             );
+    //           })
+    //         : ListMissing.map(card => {
+    //             return (
+    //               <Card key={card.postId} isDetail={isDetail} data={card} />
+    //             );
+    //           })}
+    //     </div>
+    //   ) : (
+    //     <div className='h-full w-full f-ic-jc relative top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+    //       <NoResult />
+    //     </div>
+    //   )}
+    //   <ScrollUpTop useScrollTop />
+    //   <DaengFinderButton
+    //     className='absolute bottom-20 right-4 cursor-pointer'
+    //     onClick={moveToDaengFinderWrite}
+    //   />
+    // </>
   );
 }
 

@@ -100,6 +100,7 @@ export const useQuillStore = create(subscribeWithSelector(store))
 export const resetUserInfoLog = () => {
   const { deleteToken } = tokenStore.getState()
   const { clearSearchWordAll } = searchListStore.getState()
+  sessionStorage.setItem('scroller', JSON.stringify(0))
   Cookies.remove('refreshToken')
   deleteToken()
   clearSearchWordAll()
