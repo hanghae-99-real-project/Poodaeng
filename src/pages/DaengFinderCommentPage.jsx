@@ -609,7 +609,7 @@ function DaengFinderCommentPage() {
     }, 1000);
   }
   // console.log('getComment data >>>', data);
-  console.log('dataList >>>', data.data?.commentsData);
+  // console.log('dataList >>>', data.data?.commentsData);
 
   // console.log(
   //   '상태 체크 >>>',

@@ -87,7 +87,7 @@ function DaengFinderWritePage() {
       });
     },
     onError: error => {
-      console.log('daengFinderWrite error>>> ', error);
+      // console.log('daengFinderWrite error>>> ', error);
       setAlertMsg(true);
       toast.error('게시글 작성 실패', {
         position: toast.POSITION.TOP_CENTER,
@@ -266,7 +266,7 @@ function DaengFinderWritePage() {
 
   const deleteImage = (e, index) => {
     e.stopPropagation();
-    console.log('delete 발생');
+    // console.log('delete 발생');
     const photoFiltered = image.photo.filter((_, idx) => idx !== index);
     const previewFiltered = image.preview.filter((_, idx) => idx !== index);
     URL.revokeObjectURL(image.preview[index]);
