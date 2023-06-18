@@ -120,7 +120,7 @@ function DaengFindercomponent() {
       </div>
       <div className='w-full flex flex-row justify-between px-5 mb-3'>
         <div
-          className={`f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
+          className={`z-10 f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
             total && 'text-[#A3A3A3]'
           } transition duration-300 cursor-pointer`}
           onClick={() => setTotal(!total)}
@@ -134,7 +134,7 @@ function DaengFindercomponent() {
           </div>
           &nbsp;찾은 강아지 빼고 보기
         </div>
-        <div className='flex flex-row bg-[#F2F2F2] gap-1 p-1'>
+        <div className='z-10 flex flex-row bg-[#F2F2F2] gap-1 p-1'>
           <div
             className={`p-1  ${
               !isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''

@@ -788,7 +788,7 @@ function DaengFinderCommentPage() {
         >
           <QuillEditor
             placeholder='댓글을 입력해주세요'
-            className={`w-full max-h-36 overflow-y-scroll outline-none border-y border-l rounded-tl-lg  placeholder:text-sm ${
+            className={`w-full max-h-36 overflow-y-scroll outline-none border-y border-l rounded-tl-lg rounded-bl-lg   placeholder:text-sm ${
               isCommentMode.inputMode && 'bg-white'
             } ${!isCommentMode.inputMode && 'bg-white'} !important`}
           />
