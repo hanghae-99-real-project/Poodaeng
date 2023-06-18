@@ -71,7 +71,9 @@ axiosToken.interceptors.response.use(
       /**
        * @description should approach[attach] 'config' manually if you're retrying.
        */
+      refreshtoken = Cookies.get("refreshToken") ?? null;
       response.config.headers.accesstoken = `Bearer ${acToken}`;
+      response.config.headers.refreshtoken = refreshtoken;
       try{
         const retryResponse = await axios.request(response.config);
         return retryResponse;
