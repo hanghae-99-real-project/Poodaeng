@@ -176,10 +176,11 @@ function LinkFooter() {
             }
           />
         </div>
-        <Bookmark
+        <div />
+        {/* <Bookmark
           className={`${isBookmark && 'fill-[#C699F4]'} cursor-pointer`}
           onClick={bookmarkHandler}
-        />
+        /> */}
       </div>
     </div>
   );
