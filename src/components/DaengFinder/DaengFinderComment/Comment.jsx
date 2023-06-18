@@ -109,7 +109,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
           <div className='f-fr-ic justify-between'>
             <div className='f-fr-ic gap-2'>
               <div className='f-ic-jc rounded-full w-8 h-auto overflow-hidden'>
-                <img className='image' src={userPhoto || Badge} alt='' />
+                <img className='image' src={userPhoto[0] || Badge} alt='' />
               </div>
               <h1
                 className={`f-fr-ic font-semibold ${

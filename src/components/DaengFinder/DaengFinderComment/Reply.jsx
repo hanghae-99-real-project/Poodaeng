@@ -115,7 +115,7 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
                     <div className='f-ic-jc rounded-full overflow-hidden w-6 h-auto'>
                       <img
                         className='image'
-                        src={reply.userPhoto || Badge}
+                        src={reply.userPhoto[0] || Badge}
                         alt='photoThumb'
                       />
                     </div>
