@@ -90,14 +90,14 @@ function Kakaoserch() {
       marker.setMap(map);
       bounds.extend(points[i]);
       // 주소, 콘텐츠, pooId를 마커 객체에 추가
-      marker.address = data.data.getPooAll[i].address;
-      marker.content = data.data.getPooAll[i].content;
-      marker.pooId = data.data.getPooAll[i].pooId;
-      marker.UserId = data.data.getPooAll[i].UserId;
-      marker.imageUrl = data.data.getPooAll[i].pooPhotoUrl;
-      marker.createdAt = data.data.getPooAll[i].createdAt;
-      marker.pooLatitude = data.data.getPooAll[i].pooLatitude;
-      marker.pooLongitude = data.data.getPooAll[i].pooLongitude;
+      marker.address = data?.data?.getPooAll[i].address;
+      marker.content = data?.data?.getPooAll[i].content;
+      marker.pooId = data?.data?.getPooAll[i].pooId;
+      marker.UserId = data?.data?.getPooAll[i].UserId;
+      marker.imageUrl = data?.data?.getPooAll[i].pooPhotoUrl;
+      marker.createdAt = data?.data?.getPooAll[i].createdAt;
+      marker.pooLatitude = data?.data?.getPooAll[i].pooLatitude;
+      marker.pooLongitude = data?.data?.getPooAll[i].pooLongitude;
 
       // 각 마커에 클릭 이벤트를 등록합니다
       kakao.maps.event.addListener(
