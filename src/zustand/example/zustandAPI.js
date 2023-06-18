@@ -86,10 +86,13 @@ const initialValue = ""
 const store = (set)=> ({
   pureText: initialValue,
   quillValue: initialValue,
-  setQuillValue: (pureText, htmlText) =>{
+  setQuillValue: (htmlText) =>{
     // console.log('순수 텍스트', pureText)
     // console.log('htmlText', htmlText)
-    set(()=> ({pureText ,quillValue: htmlText}))
+    set(()=> ({quillValue: htmlText}))
+  },
+  setPureText: (pureText)=>{
+    set(()=>({pureText}))
   },
   clearQuillValue: () => set(()=>({pureText:initialValue ,quillValue: initialValue}))
 })

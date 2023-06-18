@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import { IoMdLock } from 'react-icons/io';
 // import { create } from 'zustand';
+import DOMPurify from 'dompurify';
 import { useParams } from 'react-router-dom';
 import Badge from '../../../assets/images/Badge1.svg';
 import { ReactComponent as CommentLocker } from '../../../assets/images/CommentLocker.svg';
 import { ReactComponent as Ddaeng } from '../../../assets/images/Ddaeng.svg';
-import { ReactComponent as Cancel } from '../../../assets/images/XSmallButton.svg';
-import { dateConvert2 } from '../../../utils/DateConvert';
 import { tokenStore } from '../../../pages/SignInPage';
+import { dateConvert2 } from '../../../utils/DateConvert';
 
 // const modalStore = create(set => ({
 //   closModal: () => set(() => ({})),
@@ -134,9 +134,18 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
                 />
               </div>
             )}
-            <div className='w-full font-medium text-sm whitespace-pre-wrap'>
+            <p
+              // className='w-full font-medium text-sm whitespace-pre-wrap'
+              className='w-full font-medium text-sm'
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(comment, {
+                  ALLOWED_TAGS: ['p'],
+                }),
+              }}
+            />
+            {/* <div className='w-full font-medium text-sm whitespace-pre-wrap'>
               {comment}
-            </div>
+            </div> */}
             <div className='f-fr-ic-jb'>
               <span className='font-medium text-sm text-[#A8A8A8]'>
                 {dateConvert2(createdAt)[0]}

@@ -294,7 +294,7 @@ function DaengFinderWritePage() {
       });
     }
     if (content) {
-      setQuillValue('', content);
+      setQuillValue(content);
     }
     if (daengList.length > 0) {
       setImage(prev => ({
@@ -401,7 +401,11 @@ function DaengFinderWritePage() {
             </div>
           </form>
           <div className='p-6 h-[35%]'>
-            <QuillEditor />
+            <QuillEditor
+              placeholder='내용을 적어주세요'
+              useModule
+              className='w-full h-full placeholder:text-sm'
+            />
           </div>
         </div>
       )}
