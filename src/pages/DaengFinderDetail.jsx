@@ -113,9 +113,14 @@ function DaengFinderDetail() {
     onSuccess: (data, variables) => {
       // console.log('deleteMutation success >>>', data);
       // console.log('deleteMutation parameter >>>', variables);
-      queryClient.removeQueries(['daengFinderDetail', postId]);
-      navigate(reDirection || '/daengfinder', {
-        state: { deleteComplete: '게시글 삭제 완료' },
+      // queryClient.removeQueries(['getPostLost', 'detail', postId]);
+      // queryClient.invalidateQueries(['getMyBookMark']);
+      const fetchKey =
+        reDirection === '/mybookmark' ? 'getMyBookMark' : 'getMyPost';
+      queryClient.setQueryData(['getPostLost', Number(myId), fetchKey], () => {
+        navigate(reDirection || '/daengfinder', {
+          state: { deleteComplete: '게시글 삭제 완료' },
+        });
       });
     },
     onError: error => {
@@ -131,7 +136,7 @@ function DaengFinderDetail() {
       setIsFound(true);
       setEditModal(prev => !prev);
       // console.log('editToFoundMutation success >>>', data);
-      queryClient.invalidateQueries(['daengFinderDetail', postId]);
+      queryClient.invalidateQueries(['getPostLost', 'detail', postId]);
     },
     onError: error => {
       // console.log('editToFoundMutation error >>>', error);
@@ -139,7 +144,7 @@ function DaengFinderDetail() {
   });
 
   const { isLoading, data, isError, error } = useQuery(
-    ['daengFinderDetail', postId],
+    ['getPostLost', 'detail', postId],
     () => searchPostLostDetail(postId),
     {
       enabled: !daeng,
@@ -151,7 +156,11 @@ function DaengFinderDetail() {
   );
 
   const editToFound = () => {
-    editToFoundMutation.mutate(postId);
+    editToFoundMutation.mutateAsync(postId);
+  };
+
+  const deletePost = async () => {
+    await deleteMutation.mutateAsync(postId);
   };
 
   const moveToPostEditPage = () => {
@@ -394,7 +403,7 @@ function DaengFinderDetail() {
 
             <div
               className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'
-              onClick={() => deleteMutation.mutate(postId)}
+              onClick={deletePost}
             >
               삭제하기
             </div>

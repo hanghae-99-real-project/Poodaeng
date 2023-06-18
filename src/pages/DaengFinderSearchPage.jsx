@@ -2,20 +2,24 @@
 import { debounce } from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
 import { searchPostLost } from '../api/daengFinder';
-import { ReactComponent as Xbutton } from '../assets/images/Xbutton.svg';
-// import Loading from '../components/common/Loading';
-// import Loading2 from '../components/common/Loading2';
 import { ReactComponent as NoRecentResult } from '../assets/images/NoRecentResult.svg';
 import { ReactComponent as NoSearchResult } from '../assets/images/NoSearchResult.svg';
+import { ReactComponent as Xbutton } from '../assets/images/Xbutton.svg';
 import Card from '../components/DaengFinder/Card';
 import DaengFinderSearchBar from '../components/DaengFinder/DaengFinderSearch/DaengFinderSearchBar';
+import { toastError } from '../utils/ToastFreeSetting';
 import { searchListStore } from '../zustand/components/Input';
+// import Loading from '../components/common/Loading';
+// import Loading2 from '../components/common/Loading2';
 
 function DaengFinderSearchPage() {
   const [searchQueryStart, setSearchQueryStart] = useState(false);
   const [showRecent, setShowRecent] = useState(true);
+  const [errMsg, setErrMsg] = useState(false);
   const [showSearchList, setShowSearchList] = useState(false);
   const {
     word,
@@ -41,11 +45,16 @@ function DaengFinderSearchPage() {
   // console.log('render occured');
   const searchDaengFinderPost = useCallback(
     debounce(() => {
+      if (word.length === 0) {
+        setErrMsg(true);
+        toastError('검색어의 형식이 올바르지 않습니다.');
+        return;
+      }
       setShowRecent(false);
       setSearchList();
       setSearchQueryStart(true);
     }, 200),
-    [],
+    [word],
   );
 
   const searchCancelHandler = () => {
@@ -95,6 +104,7 @@ function DaengFinderSearchPage() {
    */
   return (
     <div className='w-full h-full'>
+      {errMsg && <ToastContainer />}
       <DaengFinderSearchBar
         setShowRecent={setShowRecent}
         searchDaengFinderPost={searchDaengFinderPost}

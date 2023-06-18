@@ -71,7 +71,7 @@ function DaengFinderWritePage() {
   const mutation = useMutation(writePostLost, {
     onSuccess: data => {
       // console.log('daengFinderWrite data>>> ', data);
-      queryClient.invalidateQueries('getPostLost');
+      queryClient.invalidateQueries(['getPostLost']);
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
@@ -105,7 +105,8 @@ function DaengFinderWritePage() {
     onSuccess: data => {
       // console.log('daengFinderWrite data>>> ', data);
       const postId = parseInt(checkPostId, 10);
-      queryClient.invalidateQueries(['daengFinderDetail', postId]);
+      // queryClient.invalidateQueries(['daengFinderDetail', postId]);
+      queryClient.invalidateQueries(['getPostLost', 'detail', postId]);
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();

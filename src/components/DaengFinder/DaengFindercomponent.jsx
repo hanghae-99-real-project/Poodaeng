@@ -58,7 +58,7 @@ function DaengFindercomponent() {
   };
 
   const { data, isLoading, error, isError } = useQuery(
-    'getPostLost',
+    ['getPostLost'],
     getPostLost,
     {
       refetchOnWindowFocus: false,
