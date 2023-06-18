@@ -90,6 +90,7 @@ function Kakaoserch() {
       marker.setMap(map);
       bounds.extend(points[i]);
       // 주소, 콘텐츠, pooId를 마커 객체에 추가
+      console.log(data.data.getPooAll);
       marker.address = data?.data?.getPooAll[i].address;
       marker.content = data?.data?.getPooAll[i].content;
       marker.pooId = data?.data?.getPooAll[i].pooId;
