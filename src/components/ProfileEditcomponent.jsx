@@ -192,7 +192,7 @@ function ProfileEditcomponent() {
         프로필 수정
       </Headers>
       {/* 이미지 업로드 */}
-      <div className='flex flex-col items-center my-8 gap-3'>
+      <div className='flex flex-col items-center my-8 gap-3 z-60'>
         {imgEdit ? (
           <>
             <div className='flex rounded-full'>
@@ -310,7 +310,7 @@ function ProfileEditcomponent() {
       </div>
       {/* 여기부터 비밀번호 */}
       <div className='border' />
-      <div className='flex flex-col'>
+      <div className='flex flex-col z-60'>
         <div className='font-bold m-5'>기본 정보</div>
         <div className='flex flex-col ml-5 gap-3'>
           <div className='font-bold text-sm'>
