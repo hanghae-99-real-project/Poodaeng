@@ -153,8 +153,7 @@ function LinkFooter() {
     // onBookmark();
   };
 
-  const clipHandler = e => {
-    console.log(e);
+  const clipHandler = () => {
     onClipBoard();
   };
 
@@ -163,7 +162,7 @@ function LinkFooter() {
     <div className='sticky bottom-0 z-10 w-full h-18 py-5 px-5 border-t border-solid shadow-md bg-white'>
       <div className='f-fr-ic justify-between flex-wrap'>
         <div className='f-fr gap-6 w-fit flex-wrap h-5'>
-          <CopyToClipboard text={url} onCopy={e => clipHandler(e)}>
+          <CopyToClipboard text={url} onCopy={clipHandler}>
             <Clip className='cursor-pointer' />
             {/* <Clip onClick={clipHandler} className='cursor-pointer' /> */}
           </CopyToClipboard>

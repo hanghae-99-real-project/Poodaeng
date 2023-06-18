@@ -184,7 +184,7 @@ function SignUpPage() {
 
   return (
     <div>
-      <div className={`fixed z-30 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
+      <div className={`fixed z-50 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
         {message && <ToastContainer />}
         <div
           role='none'
