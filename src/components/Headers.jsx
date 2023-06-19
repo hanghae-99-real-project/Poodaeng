@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function Headers({ children, text, icon, destination }) {
   const navigate = useNavigate();
   return (
-    <div className='sticky top-0 flex flex-row z-40 items-center justify-between h-7 w-[375px] px-5 shadow-md py-7 bg-white'>
+    <div className='sticky top-0 flex flex-row z-0 items-center justify-between h-7 w-[375px] px-5 shadow-md py-7 bg-white'>
       <div className='w-3'>
         {icon && (
           <IoIosArrowBack
