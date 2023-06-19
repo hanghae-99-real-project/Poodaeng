@@ -16,11 +16,11 @@ import { resetUserInfoLog } from '../../zustand/example/zustandAPI';
 // import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 
 export default function Slidecomponent() {
-  const navigate = useNavigate('');
+  const navigate = useNavigate();
   const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain, {
     onError: error => {
       console.log('error 여기 에러로그 처리!>>>', error);
-      if (error?.response?.status === 403) {
+      if (error?.response?.request?.status === 403) {
         resetUserInfoLog();
       }
     },
