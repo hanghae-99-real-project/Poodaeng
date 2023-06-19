@@ -12,7 +12,7 @@ function MypageUnknown() {
       <div className='my-64 flex flex-col items-center justify-center'>
         <div className='flex flex-col items-center justify-center font-bold text-lg'>
           <div>회원 가입하고 </div>
-          <div>푸댕의 서비스를 이용하세용!</div>
+          <div>푸댕의 서비스를 이용하세요!</div>
         </div>
         <button
           className='large-button bg-mainColor text-white mt-6 mb-3'
