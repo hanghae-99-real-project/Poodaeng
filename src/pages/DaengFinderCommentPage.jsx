@@ -22,9 +22,10 @@ import Reply from '../components/DaengFinder/DaengFinderComment/Reply';
 import Loading from '../components/common/Loading2';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import LinkHeader from '../shared/LinkHeader';
-import { InputStore } from '../zustand/example/zustandAPI';
-import { tokenStore } from './SignInPage';
+import QuillEditor from '../utils/QuillEditor';
 import { toastSuccess } from '../utils/ToastFreeSetting';
+import { useQuillStore } from '../zustand/example/zustandAPI';
+import { tokenStore } from './SignInPage';
 
 function DaengFinderCommentPage() {
   const [alertMsg, setAlertMsg] = useState(false);
@@ -83,11 +84,19 @@ function DaengFinderCommentPage() {
     photo: '',
     preview: '',
   });
-  const { initialComment, changeInitialVal, onClearInitialVal } = InputStore(
+  // const { initialComment, changeInitialVal, onClearInitialVal } = InputStore(
+  //   state => ({
+  //     initialComment: state.initialComment,
+  //     changeInitialVal: state.changeInitialVal,
+  //     onClearInitialVal: state.onClearInitialVal,
+  //   }),
+  //   shallow,
+  // );
+  const { quillValue, setQuillValue, clearQuillValue } = useQuillStore(
     state => ({
-      initialComment: state.initialComment,
-      changeInitialVal: state.changeInitialVal,
-      onClearInitialVal: state.onClearInitialVal,
+      quillValue: state.quillValue,
+      setQuillValue: state.setQuillValue,
+      clearQuillValue: state.clearQuillValue,
     }),
     shallow,
   );
@@ -126,13 +135,15 @@ function DaengFinderCommentPage() {
    *  @description 이미지 제외하고 다 초기화
    * */
   const resetFunc = () => {
-    setIsCommentMode({
+    setIsCommentMode(prev => ({
+      ...prev,
       inputMode: false,
       commentId: null,
       targetComment: true, // true면 댓글 false면 답글
       absolutePrivate: false, // true 면 private 모드 못 풀게 해야 함.
-    });
-    setEditMode({
+    }));
+    setEditMode(prev => ({
+      ...prev,
       editMode: false,
       editModal: false,
       targetComment: true,
@@ -141,8 +152,9 @@ function DaengFinderCommentPage() {
       childCommentId: null,
       contents: '',
       absolutePrivate: false,
-    });
-    onClearInitialVal();
+    }));
+    // onClearInitialVal();
+    clearQuillValue();
     setPrivateComment(false);
   };
 
@@ -168,13 +180,10 @@ function DaengFinderCommentPage() {
 
   const queryClient = useQueryClient();
   const mutation = useMutation(writePostComment, {
-    // variables는 { postId: 123, formData: { ... } }와 같은 값
     // onSuccess: (dt, variables) => {
     onSuccess: dt => {
-      // console.log('writePostComment mutation success >>>', dt);
       resetFunc();
       queryClient.invalidateQueries(['getComment', postId]);
-      // queryClient.invalidateQueries(['getComment', variables.postId]);
       if (image.preview) URL.revokeObjectURL(image.preview);
       setImage({ photo: '', preview: '' });
       setAlertMsg(true);
@@ -190,7 +199,6 @@ function DaengFinderCommentPage() {
       });
     },
     onError: err => {
-      // console.log('writePostComment mutation error >>>', err);
       resetFunc();
       setAlertMsg(true);
       toast.error(
@@ -214,7 +222,6 @@ function DaengFinderCommentPage() {
 
   const mutation2 = useMutation(writePostReply, {
     onSuccess: dt => {
-      // console.log('writePostReply mutation success >>>', dt);
       // queryClient.invalidateQueries(['getReply', postId]);
       resetFunc();
       queryClient.invalidateQueries(['getReply', isCommentMode.commentId]);
@@ -231,7 +238,6 @@ function DaengFinderCommentPage() {
       });
     },
     onError: err => {
-      // console.log('writePostReply error >>>', err);
       resetFunc();
       const errSegrement = userId
         ? '다시 로그인 해주세요'
@@ -256,7 +262,6 @@ function DaengFinderCommentPage() {
 
   const editPostCommentMutation = useMutation(editPostComment, {
     onSuccess: dt => {
-      // console.log('editPostCommentMutation success >>>', dt);
       resetFunc();
       queryClient.invalidateQueries(['getComment', postId]);
       setAlertMsg(true);
@@ -291,6 +296,8 @@ function DaengFinderCommentPage() {
       // console.log('deleteCommentMutation success >>>', dt);
       resetFunc();
       queryClient.invalidateQueries(['getComment', postId]);
+      setAlertMsg(true);
+      toastSuccess('삭제 완료');
     },
     onError: err => {
       // console.log('deleteCommentMutation error >>>', err);
@@ -474,11 +481,12 @@ function DaengFinderCommentPage() {
     }));
 
     if (
-      isEditMode.editMode &&
-      isEditMode.targetComment &&
-      isEditMode.contents
+      isEditMode?.editMode &&
+      isEditMode?.targetComment &&
+      isEditMode?.contents
     ) {
-      changeInitialVal(isEditMode.contents);
+      // changeInitialVal(isEditMode.contents);
+      setQuillValue(isEditMode?.contents);
     }
   };
 
@@ -505,9 +513,11 @@ function DaengFinderCommentPage() {
     // formData.append('commentPhotoUrl', blobImg, image.photo.name);
     // // formData.append('commentPhotoUrl', image.photo ? image.photo : null);
     // console.log('multipart 모드 인가요? >>>', image.photo);
+
     let inputs;
 
-    if (initialComment.trim() === '') {
+    // if (initialComment.trim() === '') {
+    if (quillValue?.trim() === '') {
       setAlertMsg(true);
       toast.error('공백은 불가능합니다.', {
         position: toast.POSITION.TOP_CENTER,
@@ -527,7 +537,7 @@ function DaengFinderCommentPage() {
         inputs = {
           postId,
           commentId: isEditMode.commentId,
-          comment: { comment: initialComment },
+          comment: { comment: quillValue },
         };
         editPostCommentMutation.mutate(inputs);
         return;
@@ -537,7 +547,7 @@ function DaengFinderCommentPage() {
     if (isCommentMode.targetComment) {
       inputs = {
         formData: {
-          comment: initialComment,
+          comment: quillValue,
           isPrivate: privateComment,
           commentPhotoUrl: image.photo ? image.photo : null,
         },
@@ -547,7 +557,7 @@ function DaengFinderCommentPage() {
     } else if (!isCommentMode.targetComment) {
       inputs = {
         formData: {
-          childComment: initialComment,
+          childComment: quillValue,
           isPrivate: isCommentMode.absolutePrivate,
         },
         commentId: isCommentMode.commentId,
@@ -579,7 +589,8 @@ function DaengFinderCommentPage() {
     SwitchFooter(false);
 
     return () => {
-      onClearInitialVal();
+      // onClearInitialVal();
+      clearQuillValue();
     };
   }, []);
 
@@ -656,7 +667,7 @@ function DaengFinderCommentPage() {
         </div>
       </div>
       {/* 문제점 반만 잘려서 보인다. pb주는 건 임시방편 방법인가... => 바로 고침 */}
-      <div className='h-[90.0246%] pb-8 box-border overflow-y-scroll'>
+      <div className='h-[90.0246%] w-full pb-8 box-border overflow-y-scroll'>
         {data.data?.commentsData?.length > 0
           ? data.data?.commentsData.map(comment => {
               return (
@@ -767,22 +778,23 @@ function DaengFinderCommentPage() {
           // input 모드가 아니거나 edit 모드가 아니면 불투명
           // 만약 input 모드가 true면
           // editMode는 상태 전달만 하고 사실상 input 을 띄울지 말지는 inputMode가 정한다. 세부적인 조건은 Editmode 이용.
-          className={`f-fr-ic-jb overflow-hidden ${
-            !isCommentMode.inputMode && 'border opacity-60'
-          }  ${isEditMode.editModal && 'hidden'} rounded-lg shadow-md`}
+          //  h-fit overflow-hidden
+          className={`f-fr-ic-jb ${isCommentMode.inputMode && 'bg-mainColor'} ${
+            !isCommentMode.inputMode && 'bg-[#E2CAFB] opacity-60'
+          }  ${
+            isEditMode.editModal && 'hidden'
+          } border border-[#D7D7D7] rounded-lg shadow-md `}
           onFocus={event => onCommentMode(event)}
         >
-          <textarea
-            className='h-fit max-h-12 px-4 w-full text-base placeholder:text-sm font-medium leading-6 '
-            // placeholder={`${modeInfo}을 입력해주세요`}
+          <QuillEditor
             placeholder='댓글을 입력해주세요'
-            name='comment'
-            value={initialComment}
-            onChange={e => changeInitialVal(e.target.value)}
+            className={`w-full max-h-36 overflow-y-scroll outline-none border-y border-l rounded-tl-lg rounded-bl-lg   placeholder:text-sm ${
+              isCommentMode.inputMode && 'bg-white'
+            } ${!isCommentMode.inputMode && 'bg-white'} !important`}
           />
           <button
-            className={`w-16 px-3 py-3 font-bold text-base  text-white ${
-              isCommentMode.inputMode ? 'bg-mainColor' : 'bg-[#E2CAFB]'
+            className={`w-16 px-3 h-full font-bold text-base  text-white ${
+              !isCommentMode.inputMode && 'bg-[#E2CAFB]'
             }`}
             disabled={!isCommentMode.inputMode}
             onClick={saveInputHandler}

@@ -51,7 +51,7 @@ const store = (set, get) => ({
   },
   setClipAddress: clipAddress => {
     set(() => ({
-      url: `https://front-end-fork-vegatality.vercel.app${clipAddress}`,
+      url: `https://poodaeng.vercel.app${clipAddress}`,
     }));
   },
   onClipBoard: () => {
@@ -176,10 +176,11 @@ function LinkFooter() {
             }
           />
         </div>
-        <Bookmark
+        <div />
+        {/* <Bookmark
           className={`${isBookmark && 'fill-[#C699F4]'} cursor-pointer`}
           onClick={bookmarkHandler}
-        />
+        /> */}
       </div>
     </div>
   );

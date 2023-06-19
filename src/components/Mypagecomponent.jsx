@@ -3,7 +3,6 @@ import React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import Cookies from 'js-cookie';
 import { getMypageCount } from '../api/myPage';
 import { signOut } from '../api/sendCode';
 import { resetUserInfoLog } from '../zustand/example/zustandAPI';

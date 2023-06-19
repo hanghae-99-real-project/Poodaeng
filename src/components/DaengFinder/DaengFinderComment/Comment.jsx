@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import { IoMdLock } from 'react-icons/io';
 // import { create } from 'zustand';
+import DOMPurify from 'dompurify';
 import { useParams } from 'react-router-dom';
 import Badge from '../../../assets/images/Badge1.svg';
 import { ReactComponent as CommentLocker } from '../../../assets/images/CommentLocker.svg';
 import { ReactComponent as Ddaeng } from '../../../assets/images/Ddaeng.svg';
-import { ReactComponent as Cancel } from '../../../assets/images/XSmallButton.svg';
-import { dateConvert2 } from '../../../utils/DateConvert';
 import { tokenStore } from '../../../pages/SignInPage';
+import { dateConvert2 } from '../../../utils/DateConvert';
 
 // const modalStore = create(set => ({
 //   closModal: () => set(() => ({})),
@@ -92,7 +92,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
   // };
 
   return (
-    <div>
+    <div className='w-full'>
       {isPrivate && userId !== myId && postOwnerId !== myId ? (
         <div className='relative f-fr-ic gap-4 px-10 py-6 border-b border-solid bg-[#F6F6F6] text-xl text-[#525252] leading-6 font-medium'>
           <CommentLocker className='-translate-y-[0.1rem]' />
@@ -102,14 +102,14 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
         /** @description isPrivate일 때 제3자의 경우는 userId !== myId니까 위에서 다 걸러짐. */
         /* 아 근데 비회원은 버튼...은 보여야겠지? 누르면 로그인으로 이동시켜야 하니까? */
         <div
-          className={`relative f-fc gap-4 py-6 px-6 border-b border-solid ${
+          className={`relative w-full f-fc gap-4 py-6 px-6 border-b border-solid ${
             isPrivate ? 'bg-[#F6F6F6]' : ''
           }`}
         >
           <div className='f-fr-ic justify-between'>
             <div className='f-fr-ic gap-2'>
               <div className='f-ic-jc rounded-full w-8 h-auto overflow-hidden'>
-                <img className='image' src={userPhoto || Badge} alt='' />
+                <img className='image' src={userPhoto[0] || Badge} alt='' />
               </div>
               <h1
                 className={`f-fr-ic font-semibold ${
@@ -122,7 +122,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
             </div>
             <Ddaeng className='w-2 h-5 cursor-pointer' onClick={openEditMode} />
           </div>
-          <div className='f-fc gap-1 pl-10'>
+          <div className='w-full f-fc gap-1 pl-10'>
             {commentPhotoUrl && (
               <div className='f-ic-jc w-28 h-28 mb-3'>
                 <img
@@ -134,7 +134,18 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
                 />
               </div>
             )}
-            <div className='pr-12 font-medium text-sm'>{comment}</div>
+            <p
+              // className='w-full font-medium text-sm whitespace-pre-wrap'
+              className='w-full font-medium text-sm'
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(comment, {
+                  ALLOWED_TAGS: ['p'],
+                }),
+              }}
+            />
+            {/* <div className='w-full font-medium text-sm whitespace-pre-wrap'>
+              {comment}
+            </div> */}
             <div className='f-fr-ic-jb'>
               <span className='font-medium text-sm text-[#A8A8A8]'>
                 {dateConvert2(createdAt)[0]}

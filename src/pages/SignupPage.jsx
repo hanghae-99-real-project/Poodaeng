@@ -128,12 +128,10 @@ function SignUpPage() {
       navigate('/signincomplete');
     },
     onError: error => {
-      // console.log('회원가입 제출 error >> ', error);
-      setMessage(true);
+      console.log('회원가입 제출 error >> ', error);
       if (error.response?.data?.errorMessage) {
+        setMessage(true);
         toastError(error.response?.data?.errorMessage);
-      } else {
-        toastError('회원가입 실패');
       }
     },
   });
@@ -186,7 +184,7 @@ function SignUpPage() {
 
   return (
     <div>
-      <div className={`fixed z-30 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
+      <div className={`fixed z-50 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
         {message && <ToastContainer />}
         <div
           role='none'

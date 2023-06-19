@@ -32,6 +32,7 @@ function DaengFinderWritePage() {
   const title = Ps?.title ?? '';
   const content = Ps?.content ?? '';
   const address = Ps?.address ?? '';
+  const lostTime = Ps?.lostTime ?? '';
   const [target, onChangeHandler, onClearHandler] = useInput({
     dogname,
     title,
@@ -70,7 +71,7 @@ function DaengFinderWritePage() {
   const mutation = useMutation(writePostLost, {
     onSuccess: data => {
       // console.log('daengFinderWrite data>>> ', data);
-      queryClient.invalidateQueries('getPostLost');
+      queryClient.invalidateQueries(['getPostLost']);
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
@@ -79,14 +80,10 @@ function DaengFinderWritePage() {
       for (let i = 0; i < image.preview.length; i++) {
         URL.revokeObjectURL(image.preview[i]);
       }
-      toast.success('게시글 작성 완료', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      navigate('/daengfinder', {
+        state: {
+          writeComplete: '게시글 작성 완료',
+        },
       });
     },
     onError: error => {
@@ -108,7 +105,8 @@ function DaengFinderWritePage() {
     onSuccess: data => {
       // console.log('daengFinderWrite data>>> ', data);
       const postId = parseInt(checkPostId, 10);
-      queryClient.invalidateQueries(['daengFinderDetail', postId]);
+      // queryClient.invalidateQueries(['daengFinderDetail', postId]);
+      queryClient.invalidateQueries(['getPostLost', 'detail', postId]);
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
@@ -177,8 +175,8 @@ function DaengFinderWritePage() {
       });
     }
     // console.log('최종 위도 경도 >>>', latlng);
-    formData.append('lostLatitude', parseFloat(latlng.lostLatitude));
-    formData.append('lostLongitude', parseFloat(latlng.lostLongitude));
+    formData.append('lostLatitude', parseFloat(latlng?.lostLatitude));
+    formData.append('lostLongitude', parseFloat(latlng?.lostLongitude));
     // console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     if (checkPostId) {
       inputs = {
@@ -223,7 +221,7 @@ function DaengFinderWritePage() {
         });
         return;
       }
-      if (fileList[i].size > maxSize) {
+      if (Number(fileList[i].size) > maxSize) {
         setAlertMsg(true);
         toast.error('이미지 크기는 최대 25mb입니다.', {
           position: toast.POSITION.TOP_CENTER,
@@ -267,7 +265,9 @@ function DaengFinderWritePage() {
     }));
   };
 
-  const deleteImage = index => {
+  const deleteImage = (e, index) => {
+    e.stopPropagation();
+    // console.log('delete 발생');
     const photoFiltered = image.photo.filter((_, idx) => idx !== index);
     const previewFiltered = image.preview.filter((_, idx) => idx !== index);
     URL.revokeObjectURL(image.preview[index]);
@@ -295,13 +295,16 @@ function DaengFinderWritePage() {
       });
     }
     if (content) {
-      setQuillValue('', content);
+      setQuillValue(content);
     }
     if (daengList.length > 0) {
       setImage(prev => ({
         photo: [...prev.photo, ...daengList].slice(0, 5),
         preview: [...prev.preview, ...daengList].slice(0, 5),
       }));
+    }
+    if (lostTime) {
+      setCalender(lostTime);
     }
     return () => {
       clearQuillValue();
@@ -340,11 +343,12 @@ function DaengFinderWritePage() {
         &nbsp;
       </LinkHeader>
       {mapMode ? (
+        // <div className='w-full h-full'>
         <DaengFinderMap latlng={latlng} setLatLng={setLatLng} />
       ) : (
-        // <DaengFinderMap />
+        // </div>
         <div className='h-full'>
-          <form className='py-9 px-6 border-b border-solid border-[#ECECEC]'>
+          <form className='py-6 px-6 border-b border-solid border-[#ECECEC]'>
             <div className='f-fc gap-3 mb-4'>
               <input
                 name='title'
@@ -397,8 +401,12 @@ function DaengFinderWritePage() {
               />
             </div>
           </form>
-          <div className='px-6 py-6 h-[35%]'>
-            <QuillEditor />
+          <div className='p-6 h-[35%]'>
+            <QuillEditor
+              placeholder='내용을 적어주세요'
+              useModule
+              className='w-full h-full placeholder:text-sm'
+            />
           </div>
         </div>
       )}
