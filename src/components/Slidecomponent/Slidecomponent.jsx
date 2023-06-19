@@ -72,7 +72,7 @@ export default function Slidecomponent() {
               <img
                 src={item.lostPhotoUrl[0]}
                 alt='사진'
-                className='w-[97%] h-44 object-cover rounded-xl'
+                className='w-full h-44 object-cover rounded-xl'
               />
               <div className='flex items-center font-bold text-sm mt-1 ml-1'>
                 실종 위치 : <span className='font-normal'>{item.address}</span>
