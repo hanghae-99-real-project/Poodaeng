@@ -147,10 +147,8 @@ const PasswordFind = () => {
       <div className='px-6'>
         <div className='flex flex-col gap-10 pt-14'>
           <p className='w-4/5 text-base leading-5'>
-            가입시 입력한 휴대번호를 통해{' '}
-            <span className='block'>
-              임시 비밀번호를 발급 받을 수 있습니다.
-            </span>
+            가입 시 입력한 휴대번호를 통해{' '}
+            <span className='block'>임시 비밀번호를 발급받을 수 있습니다.</span>
           </p>
           <div className='relative f-fr-ic'>
             <input

@@ -29,15 +29,17 @@ function DaengFindercomponent() {
     }),
     shallow,
   );
+  const navigate = useNavigate();
   const response = useCurrentLocation();
   const loc = useLocation();
   const location = response?.location;
   const latitude = location?.latitude;
   const longitude = location?.longitude;
   const checkRefreshToken = Cookies.get('refreshToken');
-  setLocation(latitude, longitude);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    setLocation(latitude, longitude);
+  }, [latitude, longitude]);
 
   const moveToDaengFinderWrite = () => {
     if (!checkRefreshToken) {
@@ -45,7 +47,7 @@ function DaengFindercomponent() {
       toast.error('로그인 후 이용해 주세요', {
         position: toast.POSITION.TOP_CENTER,
         toastId: 'empty-comment-toast',
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -58,7 +60,7 @@ function DaengFindercomponent() {
   };
 
   const { data, isLoading, error, isError } = useQuery(
-    ['getPostLost'],
+    'getPostLost',
     getPostLost,
     {
       refetchOnWindowFocus: false,
@@ -92,7 +94,6 @@ function DaengFindercomponent() {
   }
 
   if (isError) {
-    // console.log('error >>>', error);
     navigate('/', {
       state: error,
     });

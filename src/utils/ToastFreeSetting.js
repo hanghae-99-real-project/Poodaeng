@@ -5,7 +5,7 @@ const toastSuccess = (successMsg) => {
   toast.success(successMsg, {
     position: toast.POSITION.TOP_CENTER,
     toastId: 'empty-comment-toast',
-    autoClose: 5000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -19,7 +19,7 @@ const toastError = (errorMsg) => {
   toast.error(errorMsg, {
     position: toast.POSITION.TOP_CENTER,
     toastId: 'empty-comment-toast',
-    autoClose: 5000,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

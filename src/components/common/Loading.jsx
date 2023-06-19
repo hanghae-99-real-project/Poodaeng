@@ -3,7 +3,7 @@ import React from 'react';
 
 function Loading() {
   return (
-    <div className='absolute inset-0 flex flex-col items-center justify-between bg-gradient-to-r from-mainColor from-[20.87%] to-purple-600 to-[100%] default:transition duration-150'>
+    <div className='absolute inset-0 flex flex-col items-center justify-between bg-gradient-to-r from-mainColor from-[20.87%] to-purple-600 to-[100%] default:transition duration-150 rounded-2xl'>
       {/* <div
         className='logo-div'
         style={{ backgroundImage: `url(/images/PooDaeng.svg)` }}

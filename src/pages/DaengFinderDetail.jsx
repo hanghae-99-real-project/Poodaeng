@@ -119,7 +119,10 @@ function DaengFinderDetail() {
         reDirection === '/mybookmark' ? 'getMyBookMark' : 'getMyPost';
       queryClient.setQueryData(['getPostLost', Number(myId), fetchKey], () => {
         navigate(reDirection || '/daengfinder', {
-          state: { deleteComplete: '게시글 삭제 완료' },
+          state: {
+            deleteComplete: '게시글 삭제 완료',
+            BookmarkMode: reDirection === '/mybookmark',
+          },
         });
       });
     },
@@ -226,7 +229,6 @@ function DaengFinderDetail() {
   }
 
   if (isError) {
-    // console.log('error >>> ', error);
     setErrorMsg(true);
     toast.error('Error occured while Loading', {
       position: toast.POSITION.TOP_CENTER,

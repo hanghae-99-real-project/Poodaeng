@@ -260,7 +260,7 @@ function SignUpPage() {
             >
               인증하기
             </button>
-            {!onValidator('phoneNumber') && (
+            {!onValidator('phoneNumber') && inputs.phoneNumber.length > 0 && (
               <span className='error-msg'>{errorMsg[0]}</span>
             )}
             {isAuthNumber && (
@@ -287,7 +287,7 @@ function SignUpPage() {
                   : onValidator(contents.name) && (
                       <BsCheckLg className='absolute top-0 right-5 text-3xl text-[#76B5FF]' />
                     )}
-                {!onValidator(contents.name) && (
+                {!onValidator(contents.name) && contents.length && (
                   <span className='error-msg'>{errorMsg[idx + 1]}</span>
                 )}
               </div>
