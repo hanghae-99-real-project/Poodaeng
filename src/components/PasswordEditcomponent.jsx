@@ -112,7 +112,7 @@ function PasswordEditcomponent() {
                 name='password2'
               />
               {isPasswordValid2 && (
-                <div className='absolute right-4 top-14 '>
+                <div className='absolute right-4 top-16 '>
                   <SuccessMarker />
                 </div>
               )}
