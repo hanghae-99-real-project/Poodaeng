@@ -113,7 +113,7 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
                 <div className='f-fr-ic justify-between'>
                   <div className='f-fr-ic gap-2'>
                     <Arrow className='w-3 h-4' />
-                    <div className='f-ic-jc rounded-full overflow-hidden w-6 h-auto'>
+                    <div className='f-ic-jc rounded-full overflow-hidden w-6 h-6'>
                       <img
                         className='image'
                         src={reply.userPhoto[0] || Badge}
