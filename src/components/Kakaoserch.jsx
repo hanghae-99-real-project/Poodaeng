@@ -81,24 +81,40 @@ function Kakaoserch() {
     // 마커를 지도에 표시하고 경계 객체에 추가
     let i;
     let marker;
+
     const infowindow = new kakao.maps.InfoWindow(); // infowindow 변수 선언 및 초기화
     for (i = 0; i < points?.length; i++) {
       marker = new kakao.maps.Marker({
         position: points[i],
         image: pointsMarkerImage,
       });
+      // 주소, 콘텐츠, pooId를 마커 객체에 추가
+      marker.address =
+        data?.data?.getPooAll[i]?.address ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.content =
+        data?.data?.getPooAll[i]?.content ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.pooId =
+        data?.data?.getPooAll[i]?.pooId ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.UserId =
+        data?.data?.getPooAll[i]?.UserId ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.imageUrl =
+        data?.data?.getPooAll[i]?.pooPhotoUrl ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.createdAt =
+        data?.data?.getPooAll[i]?.createdAt ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.pooLatitude =
+        data?.data?.getPooAll[i]?.pooLatitude ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.pooLongitude =
+        data?.data?.getPooAll[i]?.pooLongitude ||
+        '서버에서 데이터를 불러오지 못했습니다.';
       marker.setMap(map);
       bounds.extend(points[i]);
-      // 주소, 콘텐츠, pooId를 마커 객체에 추가
-      console.log(data.data.getPooAll);
-      marker.address = data?.data?.getPooAll[i].address;
-      marker.content = data?.data?.getPooAll[i].content;
-      marker.pooId = data?.data?.getPooAll[i].pooId;
-      marker.UserId = data?.data?.getPooAll[i].UserId;
-      marker.imageUrl = data?.data?.getPooAll[i].pooPhotoUrl;
-      marker.createdAt = data?.data?.getPooAll[i].createdAt;
-      marker.pooLatitude = data?.data?.getPooAll[i].pooLatitude;
-      marker.pooLongitude = data?.data?.getPooAll[i].pooLongitude;
 
       // 각 마커에 클릭 이벤트를 등록합니다
       kakao.maps.event.addListener(

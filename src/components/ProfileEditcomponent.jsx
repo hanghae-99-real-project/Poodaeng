@@ -15,6 +15,7 @@ import { ReactComponent as 프로필2 } from '../assets/images/프로필2.svg';
 import { ReactComponent as 프로필3 } from '../assets/images/프로필3.svg';
 import { ReactComponent as 프로필4 } from '../assets/images/프로필4.svg';
 import { ReactComponent as 프로필5 } from '../assets/images/프로필5.svg';
+import { ReactComponent as 사진기 } from '../assets/images/사진기.svg';
 import Headers from './Headers';
 import ProfileUploader from './ProfileUploader';
 import Loading from './common/Loading';
@@ -197,10 +198,10 @@ function ProfileEditcomponent() {
           <>
             <div className='flex rounded-full'>
               <div
-                className='flex items-center justify-center border w-36 h-36 bg-[#D9D9D9] rounded-full'
+                className='flex items-center justify-center border w-28 h-28 bg-[#D9D9D9] rounded-full'
                 onClick={imgEditHandler}
               >
-                +
+                <사진기 />
               </div>
             </div>
             <div
@@ -258,10 +259,10 @@ function ProfileEditcomponent() {
         ) : (
           <div className='flex rounded-full'>
             <div
-              className='flex items-center justify-center border w-36 h-36 bg-[#D9D9D9] rounded-full'
+              className='flex items-center justify-center border w-28 h-28 bg-[#D9D9D9] rounded-full'
               onClick={imgEditHandler}
             >
-              +
+              <사진기 />
             </div>
           </div>
         )}

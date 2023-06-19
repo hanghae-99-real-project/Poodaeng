@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-pascal-case */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { ReactComponent as 사진기 } from '../assets/images/사진기.svg';
 
 function FileUploader({ onFileUpload }) {
   const [image, setImage] = useState(null);
@@ -16,16 +18,16 @@ function FileUploader({ onFileUpload }) {
   };
 
   return (
-    <div className='w-36 h-36'>
+    <div className='w-32 h-32'>
       {!image ? (
         <>
           <label className='fileImg-label' htmlFor='fileImg'>
-            <div className='absolute flex items-center justify-center border w-36 h-36 bg-[#D9D9D9] rounded-full'>
-              +
+            <div className='absolute flex items-center justify-center border w-32 h-32 bg-[#A5A5A5] rounded-xl font-sans font-bold text-xl'>
+              <사진기 />
             </div>
           </label>
           <input
-            className='fileImg-label relative hidden z-50 object-fill'
+            className='fileImg-label relative hidden z-10 object-fill'
             type='file'
             id='fileImg'
             accept='image/*'
@@ -37,7 +39,7 @@ function FileUploader({ onFileUpload }) {
           {image && (
             <img
               role='none'
-              className='w-36 h-36 object-cover rounded-full'
+              className='w-32 h-32 object-cover rounded-full'
               src={image}
               alt='Thumbnail'
               onClick={deleteImage}
