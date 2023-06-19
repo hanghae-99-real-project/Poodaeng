@@ -65,7 +65,7 @@ function Maincomponent() {
               <NextBt className='ml-1' />
             </div>
           </div>
-          <div className=' mt-3 w-full' />
+          <div className=' mt-3 w-full border' />
         </div>
         <div className='ml-2 font-[700] text-xl mt-2'>내 주변 실종신고</div>
         <div className='ml-2 font-[500] text-xs text-[#808080] mt-1'>
