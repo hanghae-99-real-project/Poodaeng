@@ -94,14 +94,13 @@ function SignInPage() {
       const decodedAcToken = await jwtDecode(accessToken);
       const decodedRfToken = await jwtDecode(refreshToken);
 
-      // console.log('decodedAcToken >>>', decodedAcToken);
-      // console.log('decodedRfToken >>>', decodedRfToken);
-
       const { exp: RF_EXP } = decodedRfToken;
       const rfExpireDate = new Date(RF_EXP * 1000);
       // console.log('rfExpireDate >>>', rfExpireDate);
       Cookies.set('refreshToken', refreshToken, {
         expires: rfExpireDate,
+        secure: true,
+        sameSite: 'Lax',
       });
       const { exp: AC_EXP, userId } = decodedAcToken;
       // console.log('이거 초 단위인가?  >>> ', AC_EXP);

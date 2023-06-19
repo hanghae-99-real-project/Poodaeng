@@ -111,7 +111,7 @@ function DaengFinderSearchPage() {
         showSearchList={showSearchList}
         searchCancelHandler={searchCancelHandler}
       />
-      <div className='h-full px-7 py-4'>
+      <div className='h-full px-7 py-6'>
         <div className='relative'>
           {(showRecent || showSearchList) && (
             <div className='w-full absolute top-4 z-40'>
@@ -165,7 +165,7 @@ function DaengFinderSearchPage() {
           <div
             // 46.6875rem
             // min-h-[70%] pb-[2%]
-            className='relative top-9 flex flex-col gap-3  w-full
+            className='relative top-14 flex flex-col gap-3  w-full
             h-[80%] overflow-y-scroll'
           >
             {data?.data?.posts?.map(card => {

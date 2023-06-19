@@ -208,7 +208,7 @@ function SignUpPage() {
                 {checkTimeMode && <AuthTimer />}
                 <button
                   type='button'
-                  className='w-16 py-1 border border-[#777777] rounded-md font-semibold text-xs '
+                  className='w-16 py-1 border border-[#777777] rounded-2xl font-semibold text-xs '
                   onClick={getReAuthHandler}
                 >
                   재요청
