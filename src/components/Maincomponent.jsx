@@ -49,16 +49,16 @@ function Maincomponent() {
           </div>
         </div>
         <div className='relative'>
-          <div className='ml-5 mt-2 font-[700] text-xl '>
+          <div className='ml-2 mt-2 font-[700] text-xl '>
             내 주변 푸박스 찾기
           </div>
-          <div className='ml-5 mt-1 font-[500] text-xs text-[#808080] mb-2'>
+          <div className='ml-2 mt-1 font-[500] text-xs text-[#808080] mb-2'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
-          <div className='relative w-[95%] h-40 border ml-3 overflow-hidden rounded-xl'>
+          <div className='relative w-[360px] h-40 border ml-2 overflow-hidden rounded-xl'>
             <Kakaoserch />
             <div
-              className='relative left-3/4 bottom-10 flex items-center justify-center z-10 bg-white w-20 h-7 rounded-md text-xs text-mainColor font-bold shadow-xl'
+              className='relative left-3/4 bottom-10 flex items-center justify-center z-10 bg-white w-20 h-7 rounded-md text-xs text-mainColor font-bold shadow-xl cursor-pointer'
               onClick={() => navigate('/map')}
             >
               <div>지도 보기</div>
@@ -67,11 +67,11 @@ function Maincomponent() {
           </div>
           <div className='border mt-3 w-full' />
         </div>
-        <div className='ml-5 font-[700] text-xl mt-2'>내 주변 실종신고</div>
-        <div className='ml-5 font-[500] text-xs text-[#808080] mt-1'>
+        <div className='ml-2 font-[700] text-xl mt-2'>내 주변 실종신고</div>
+        <div className='ml-2 font-[500] text-xs text-[#808080] mt-1'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='flex justify-center w-full h-56 flex-wrap mt-2 ml-2 '>
+        <div className='flex justify-center w-[360px] h-56 flex-wrap mt-2 ml-2 border rounded-xl'>
           <Slidecomponent />
         </div>
       </div>

@@ -44,7 +44,7 @@ export default function Slidecomponent() {
   const pagination = {
     clickable: true,
     renderBullet(index, className) {
-      return `<span class="${className} bg-red-500"></span>`;
+      return `<span class="${className}" style="background-color: #8722ED;"></span>`;
     },
   };
 
@@ -72,7 +72,7 @@ export default function Slidecomponent() {
               <img
                 src={item.lostPhotoUrl[0]}
                 alt='사진'
-                className='w-[95%] h-44 object-cover rounded-xl'
+                className='w-[97%] h-44 object-cover rounded-xl'
               />
               <div className='flex items-center font-bold text-sm mt-1 ml-1'>
                 실종 위치 : <span className='font-normal'>{item.address}</span>

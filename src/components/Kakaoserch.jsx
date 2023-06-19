@@ -122,7 +122,7 @@ function Kakaoserch() {
         'click',
         (function (currMarker) {
           return function () {
-            const iwContent = `<div style="padding:15px 24px 15px 24px; width: 300px; height: 210px; display: flex; flex-direction: column; gap: 10px; border-radius: 10px; ">
+            const iwContent = `<div style="padding:15px 24px 15px 24px; width: 300px; height: 218px; display: flex; flex-direction: column; gap: 10px; border-radius: 10px; ">
             <div>
               <div style="display: flex; justify-content: center; justify-content: space-between;">
                 <div style="display: flex; gap: 5px; bord">
@@ -146,9 +146,9 @@ function Kakaoserch() {
                 </div>
               </div>
             </div>
-            <div style="display:flex; gap:10px; margin-bottom:20px; justify-content:center;">
-              <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}','${currMarker.pooLatitude}','${currMarker.pooLongitude}')">상세 보기</div>
-              <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;" onclick="window.loadFindHandler('${currMarker.pooId}', '${currMarker.pooLatitude}','${currMarker.pooLongitude}','${currMarker.address}')">길 찾기</div>
+            <div style="display:flex; gap:15px; margin-top: 4px; justify-content:center;">
+              <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 41px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}','${currMarker.pooLatitude}','${currMarker.pooLongitude}')">상세 보기</div>
+              <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 41px; background-color: #8722ED; color: white; font-weight: bold;" onclick="window.loadFindHandler('${currMarker.pooId}', '${currMarker.pooLatitude}','${currMarker.pooLongitude}','${currMarker.address}')">길 찾기</div>
             </div>
           </div>`;
             infowindow.setContent(iwContent);

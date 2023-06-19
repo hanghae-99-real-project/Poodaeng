@@ -33,6 +33,7 @@ import MyPooboxcomponent from '../components/MyPooboxcomponent';
 import Unknown from '../pages/Unknown';
 import PasswordFind from '../pages/PasswordFind';
 import RouteChangeTracker from '../google/RouteChangeTracker';
+import PasswordEdit from '../pages/PasswordEdit';
 
 
 // import TokenCheck from '../utils/TokenCheck';
@@ -55,6 +56,7 @@ function Router() {
           <Route path='/map/:pooId' element={<PooDetail />} />
           <Route path='/unknown' element={<Unknown />} />
           <Route path='/profileedit' element={<ProfileEdit />}/>
+          <Route path='/passwordedit' element={<PasswordEdit />}/>
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet
