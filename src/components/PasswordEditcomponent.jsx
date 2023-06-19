@@ -89,17 +89,17 @@ function PasswordEditcomponent() {
       <Headers text icon destination='mypage'>
         비밀번호 변경
       </Headers>
-      <div className=''>
+      <div className='h-full'>
         <div className='flex flex-col gap-5 h-full'>
           <div className='font-bold w-32 mt-10'>
             새로운 비밀번호를 입력해주세요
           </div>
-          <div className='flex flex-col gap-5 items-center'>
+          <div className='flex flex-col items-center'>
             <div className='relative w-80'>
               <input
                 type='password'
                 onChange={passwordChangeHandler}
-                className='w-full py-2 rounded-lg border-b'
+                className='w-full py-2 rounded-lg border-b mb-2'
                 placeholder=' 새 비밀번호 '
                 name='password1'
               />
@@ -124,8 +124,8 @@ function PasswordEditcomponent() {
             </div>
           </div>
         </div>
-        <div className='sticky bottom-0 w-full h-36 '>
-          <div className='flex justify-center w-72 h-12 text-red-500 font-bold mt-5'>
+        <div className='sticky bottom-10 w-full h-36 '>
+          <div className='flex justify-center w-72 h-12 text-red-500 font-bold'>
             {errorMsg ? (
               <div className='border-box'>{errorMsg}</div>
             ) : (
