@@ -21,9 +21,7 @@ function PasswordEditcomponent() {
       queryClient.invalidateQueries('profile');
       navigate('/mypage');
     },
-    onError: errors => {
-      // console.log(errors);
-    },
+    onError: errors => {},
   });
 
   useEffect(() => {
@@ -34,7 +32,6 @@ function PasswordEditcomponent() {
       } else {
         setIsPasswordValid2(true);
         setErrorMsg('');
-        console.log('pw2!!!', isPasswordValid2);
       }
     }
   }, [
@@ -50,7 +47,6 @@ function PasswordEditcomponent() {
 
     if (name === 'password1') {
       setNewPassword1(value);
-      console.log('pw1', value);
 
       if (
         !/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/.test(value)
@@ -66,7 +62,6 @@ function PasswordEditcomponent() {
     }
     if (name === 'password2') {
       setNewPassword2(value);
-      console.log('pw2', value);
     }
   };
 
