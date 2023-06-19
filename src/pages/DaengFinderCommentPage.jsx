@@ -544,6 +544,13 @@ function DaengFinderCommentPage() {
       }
     }
 
+    console.log(
+      'isCommentMode.absolutePrivate >>>',
+      isCommentMode.absolutePrivate,
+    );
+    console.log('privateComment >>>', privateComment);
+
+    console.log('isEditMode.absolutePrivate >>>', isEditMode.absolutePrivate);
     if (isCommentMode.targetComment) {
       inputs = {
         formData: {
@@ -558,7 +565,8 @@ function DaengFinderCommentPage() {
       inputs = {
         formData: {
           childComment: quillValue,
-          isPrivate: isCommentMode.absolutePrivate,
+          // isPrivate: isCommentMode.absolutePrivate,
+          isPrivate: privateComment || isCommentMode.absolutePrivate,
         },
         commentId: isCommentMode.commentId,
         postId,
@@ -720,29 +728,31 @@ function DaengFinderCommentPage() {
             !isCommentMode.inputMode && 'hidden'
           }`}
         >
-          <div
-            className={`w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white ${
-              (privateComment ||
-                isCommentMode.absolutePrivate ||
-                isEditMode.absolutePrivate) &&
-              'bg-[#F1E2FF]'
-            } shadow-md cursor-pointer`}
-            onClick={controllLockButton}
-          >
-            {/* 내 화면상에서 구분해주려고 설정하는 거. 댓글 작성 때 절대 비밀, 수정 때 댓글 절대 비밀 */}
-            {isCommentMode.absolutePrivate || isEditMode.absolutePrivate ? (
-              <Lock
-                className='object-contain w-3 h-auto  
+          {isEditMode.editMode && !isEditMode.absolutePrivate ? null : (
+            <div
+              className={`w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white ${
+                (privateComment ||
+                  isCommentMode.absolutePrivate ||
+                  isEditMode.absolutePrivate) &&
+                'bg-[#F1E2FF]'
+              } shadow-md cursor-pointer`}
+              onClick={controllLockButton}
+            >
+              {/* 내 화면상에서 구분해주려고 설정하는 거. 댓글 작성 때 절대 비밀, 수정 때 댓글 절대 비밀 */}
+              {isCommentMode.absolutePrivate || isEditMode.absolutePrivate ? (
+                <Lock
+                  className='object-contain w-3 h-auto  
                 fill-[#A54BFF]'
-              />
-            ) : (
-              <Lock
-                className={`object-contain w-3 h-auto  ${
-                  privateComment ? 'fill-[#A54BFF]' : 'fill-[#747474]'
-                }`}
-              />
-            )}
-          </div>
+                />
+              ) : (
+                <Lock
+                  className={`object-contain w-3 h-auto  ${
+                    privateComment ? 'fill-[#A54BFF]' : 'fill-[#747474]'
+                  }`}
+                />
+              )}
+            </div>
+          )}
           {isCommentMode.inputMode &&
             isCommentMode.targetComment &&
             !isEditMode.editMode && (
