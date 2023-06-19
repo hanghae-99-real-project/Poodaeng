@@ -20,7 +20,7 @@ export default function Slidecomponent() {
   const { isLoading, isError, data } = useQuery('getDaengMain', getDaengMain, {
     onError: error => {
       console.log('error 여기 에러로그 처리!>>>', error);
-      if (error?.response?.request?.status === 403) {
+      if (error?.response?.status === 403) {
         resetUserInfoLog();
       }
     },
