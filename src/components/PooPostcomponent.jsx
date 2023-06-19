@@ -92,9 +92,9 @@ function PooPostcomponent() {
             <div className='font-[600] text-base'>푸박스 특이사항 설명</div>
             <input
               className='border-none font-[400] text-base pb-2 my-3 w-80'
-              placeholder='특이사항 입력'
+              placeholder='15자 이내로 입력해주세요'
               onChange={handleContentChange}
-              maxLength={60}
+              maxLength={15}
             />
             <Buttons
               type='button'

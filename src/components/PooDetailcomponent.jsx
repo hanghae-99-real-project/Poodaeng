@@ -131,7 +131,7 @@ function PooDetailComponent() {
 
       {isModalOpen && (
         <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='bg-white w-80 p-4 rounded-lg'>
+          <div className='bg-white w-80 p-10 rounded-lg'>
             <div className='flex justify-between'>
               <div />
               <div className='text-xl font-bold mb-4'>신고 사유</div>
@@ -169,7 +169,7 @@ function PooDetailComponent() {
               </ul>
 
               <button
-                className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                className='bg-mainColor text-white font-bold py-3 px-4 rounded-lg'
                 onClick={reportHandler}
               >
                 신고하기
