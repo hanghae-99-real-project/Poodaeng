@@ -10,6 +10,7 @@ const DaengFinderSearchBar = ({
   searchDaengFinderPost,
   showSearchList,
   searchCancelHandler,
+  searchBarRef,
 }) => {
   const navigate = useNavigate();
   return (
@@ -21,6 +22,7 @@ const DaengFinderSearchBar = ({
       <Input
         setShowRecent={setShowRecent}
         searchDaengFinderPost={searchDaengFinderPost}
+        searchBarRef={searchBarRef}
       />
       {showSearchList && (
         <div onClick={searchCancelHandler} className='absolute right-12 pr-2'>

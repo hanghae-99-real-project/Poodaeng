@@ -129,7 +129,7 @@ function Comment({ cmt, enlargePhoto, setIsCommentMode, setEditMode }) {
                   role='none'
                   src={`${commentPhotoUrl}`}
                   alt='photoThumb'
-                  className='image rounded-xl shadow-md cursor-pointer'
+                  className='image rounded-xl shadow cursor-pointer'
                   onClick={enlargePhoto}
                 />
               </div>

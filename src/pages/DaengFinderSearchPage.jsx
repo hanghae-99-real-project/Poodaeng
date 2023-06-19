@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { debounce } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,6 +17,7 @@ import { searchListStore } from '../zustand/components/Input';
 // import Loading2 from '../components/common/Loading2';
 
 function DaengFinderSearchPage() {
+  const searchBarRef = useRef();
   const [searchQueryStart, setSearchQueryStart] = useState(false);
   const [showRecent, setShowRecent] = useState(true);
   const [errMsg, setErrMsg] = useState(false);
@@ -64,6 +65,12 @@ function DaengFinderSearchPage() {
     setShowSearchList(false);
     setShowRecent(true);
     clearWord();
+    searchBarRef.current.focus();
+  };
+
+  const recentSearchFocus = item => {
+    onWordChanger(item);
+    searchBarRef.current.focus();
   };
 
   const { data, isLoading, error, isError, remove } = useQuery(
@@ -110,6 +117,7 @@ function DaengFinderSearchPage() {
         searchDaengFinderPost={searchDaengFinderPost}
         showSearchList={showSearchList}
         searchCancelHandler={searchCancelHandler}
+        searchBarRef={searchBarRef}
       />
       <div className='h-full px-7 py-6'>
         <div className='relative'>
@@ -143,7 +151,7 @@ function DaengFinderSearchPage() {
                         <li
                           role='none'
                           className='font-medium leading-4 text-[#424242] cursor-pointer'
-                          onClick={() => onWordChanger(ele.item)}
+                          onClick={() => recentSearchFocus(ele.item)}
                         >
                           {ele.item}
                         </li>

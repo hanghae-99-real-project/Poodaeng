@@ -66,7 +66,7 @@ export const searchListStore = create(
 );
 
 // function Input({ setShowRecent }) {
-function Input({ searchDaengFinderPost }) {
+function Input({ searchDaengFinderPost, searchBarRef }) {
   const { word, onWordChanger } = searchListStore(
     state => ({
       word: state.word,
@@ -86,6 +86,7 @@ function Input({ searchDaengFinderPost }) {
     <div className='pl-2'>
       <input
         autoFocus
+        ref={searchBarRef}
         onChange={e => onWordChanger(e.target.value)}
         placeholder='검색내용을 입력하세요'
         className='w-64 py-2'
