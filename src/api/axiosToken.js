@@ -72,7 +72,7 @@ axiosToken.interceptors.response.use(
       console.log('exp >>>', exp)
       const AC_EXP = await exp*1000
       setToken(userId, acToken, AC_EXP)
-      // accesstoken = await acToken;
+      accesstoken = await acToken;
       /**
        * @description should approach[attach] 'config' manually if you're retrying.
        */
