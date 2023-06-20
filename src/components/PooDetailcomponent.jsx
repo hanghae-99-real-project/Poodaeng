@@ -10,6 +10,7 @@ import { reportPooBox } from '../api/poobox';
 import { ReactComponent as Report } from '../assets/images/report.svg';
 import { dateConvert2 } from '../utils/DateConvert';
 import Headers from './Headers';
+import { ReactComponent as Exit } from '../assets/images/Exit.svg';
 
 function PooDetailComponent() {
   const location = useLocation();
@@ -134,9 +135,9 @@ function PooDetailComponent() {
           <div className='bg-white w-80 p-10 rounded-lg'>
             <div className='flex justify-between'>
               <div />
-              <div className='text-xl font-bold mb-4'>신고 사유</div>
+              <div className='text-xl font-bold mb-5'>신고 사유</div>
               <div className='cursor-pointer' onClick={closeModal}>
-                X
+                <Exit className='mt-1.5' />
               </div>
             </div>
             <div className='flex flex-col gap-5'>
@@ -163,7 +164,7 @@ function PooDetailComponent() {
                 </li>
                 기타
                 <input
-                  className='w-full h-10 border'
+                  className='w-full h-10 border pl-3'
                   onChange={e => contentsClick(e.target.value)}
                 />
               </ul>
