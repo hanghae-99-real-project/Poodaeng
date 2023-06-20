@@ -171,7 +171,8 @@ function DaengFindercomponent() {
             isDetail
               ? 'flex flex-col gap-3  w-full'
               : 'grid grid-cols-2 gap-3 auto-rows-min auto-cols-min'
-          } px-6 min-h-[75%]  overflow-y-scroll transition duration-300 ease-in-out`}
+          } px-6 h-[38.0625rem] overflow-y-scroll transition duration-300 ease-in-out`}
+          // } px-6 min-h-[75%]  overflow-y-scroll transition duration-300 ease-in-out`}
           // } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll transition duration-300 ease-in-out`}
           // } min-h-[35.5rem] overflow-y-scroll `}
         >
@@ -193,10 +194,12 @@ function DaengFindercomponent() {
         </div>
       )}
       <ScrollUpTop useScrollTop />
+      {/* <div className='h-full w-full'> */}
       <DaengFinderButton
         className='absolute bottom-20 right-4 cursor-pointer'
         onClick={moveToDaengFinderWrite}
       />
+      {/* </div> */}
     </>
     // <>
     //   {alertMsg && <ToastContainer />}

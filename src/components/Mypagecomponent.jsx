@@ -85,7 +85,7 @@ function Mypagecomponent() {
           </div>
           <div className='flex justify-evenly mt-4 mr-5 mb-5 h-24 text-sm border rounded-lg p-2 bg-[#F3F3F3]'>
             <div
-              className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer'
+              className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer font-semibold'
               onClick={() =>
                 navigate('/mypost', {
                   state: {
@@ -102,7 +102,7 @@ function Mypagecomponent() {
             </div>
             <div className='border' />
             <div
-              className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer'
+              className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer font-semibold'
               onClick={() => navigate('/mypoobox')}
             >
               <div> 등록한 푸박스</div>
@@ -113,7 +113,7 @@ function Mypagecomponent() {
             </div>
             <div className='border' />
             <div
-              className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer'
+              className='flex flex-col items-center justify-center w-20 gap-2 cursor-pointer font-semibold'
               onClick={() =>
                 navigate('/mybookmark', {
                   state: {
