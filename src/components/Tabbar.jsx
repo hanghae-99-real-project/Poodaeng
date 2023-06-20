@@ -56,7 +56,7 @@ function Tabbar({ isActive, setIsActive }) {
   };
 
   return (
-    <div className='fixed bottom-0 border bg-[#FFFFFF] z-20'>
+    <div className='sticky bottom-0 border bg-[#FFFFFF] z-20'>
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
         <HomeIcon
           className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${

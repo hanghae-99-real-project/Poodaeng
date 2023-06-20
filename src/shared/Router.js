@@ -34,6 +34,7 @@ import Unknown from '../pages/Unknown';
 import PasswordFind from '../pages/PasswordFind';
 import RouteChangeTracker from '../google/RouteChangeTracker';
 import PasswordEdit from '../pages/PasswordEdit';
+import LoadingTestPage from '../pages/LoadingTestPage';
 
 
 // import TokenCheck from '../utils/TokenCheck';
@@ -69,6 +70,7 @@ function Router() {
           <Route path='/daengfinder/write' element={<DaengFinderWritePage />}/>
         </Route>
         <Route element={<TabbarsOutlet />}>
+          <Route path='/loadingtest' element={<LoadingTestPage />} />
           <Route path="/" element={<Home />} />
           <Route path="/alert" element={<Alert />} /> 
           <Route path="/events" element={<Events />} />

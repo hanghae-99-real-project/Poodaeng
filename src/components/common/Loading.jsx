@@ -1,10 +1,11 @@
 import React from 'react';
-import Loading3 from './Loading3';
+// import Loading3 from './Loading3';
 // import Logo from './common/Logo';
 
 function Loading() {
   return (
-    <div className='absolute inset-0 flex flex-col items-center justify-between bg-gradient-to-r from-mainColor from-[20.87%] to-purple-600 to-[100%] default:transition duration-150 rounded-2xl'>
+    // <div className='relative inset-0 flex flex-col items-center justify-between bg-gradient-to-r from-mainColor from-[20.87%] to-purple-600 to-[100%] default:transition duration-150 rounded-2xl'>
+    <div className='w-full h-full flex flex-col items-center justify-between bg-gradient-to-r from-mainColor from-[20.87%] to-purple-600 to-[100%] default:transition duration-150 rounded-2xl'>
       {/* <div
         className='logo-div'
         style={{ backgroundImage: `url(/images/PooDaeng.svg)` }}
@@ -14,7 +15,7 @@ function Loading() {
         src={`${process.env.PUBLIC_URL}/images/LoadingText.svg`}
         alt='photoThumb'
       />
-      <Loading3 />
+      {/* <Loading3 /> */}
       <div className='relative bottom-0 f-fc-ic w-full h-fit'>
         <img
           className='absolute pb-28 z-20 animate-bounce motion '

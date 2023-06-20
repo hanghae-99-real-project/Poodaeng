@@ -62,10 +62,14 @@ axiosToken.interceptors.response.use(
     if(response.status === 203){
       console.log('axios interceptor 203 data depth check >>> ', response);
       const {setToken} = tokenStore.getState()
-      const acToken = await response.data.newAccessToken;
+      // const newGeneratedToken = await response.data.newAccessToken;
+      // const acToken = await newGeneratedToken.split('.')[1]
+      const acToken = await response.data?.newAccessToken;
       // const acToken = await response.data;
       const decodedAcToken = await jwtDecode(acToken);
       const { userId, exp } = decodedAcToken;
+      console.log('userId >>>', userId)
+      console.log('exp >>>', exp)
       const AC_EXP = await exp*1000
       setToken(userId, acToken, AC_EXP)
       // accesstoken = await acToken;

@@ -24,6 +24,7 @@ export default function Slidecomponent() {
         resetUserInfoLog();
       }
     },
+    refetchOnWindowFocus: false,
   });
   if (isLoading) {
     return (

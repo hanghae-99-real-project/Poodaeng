@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import Cookies from 'js-cookie';
+import { debounce, throttle } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
+import { useInView } from 'react-intersection-observer';
 import { useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,17 +15,22 @@ import { ReactComponent as DaengFinderButton } from '../../assets/images/DaengFi
 import { ReactComponent as NoResult } from '../../assets/images/NoResult.svg';
 import useCurrentLocation from '../../hooks/useCurrentLocation';
 // eslint-disable-next-line import/no-useless-path-segments, import/no-cycle
-import { toastSuccess } from '../../utils/ToastFreeSetting';
-import { useLocationStore } from '../../zustand/example/zustandAPI';
-import Card from './Card';
-import Loading from '../common/Loading';
 import { ReactComponent as CheckBoxDaengFinder } from '../../assets/images/CheckedPurple.svg';
 import useScroll from '../../hooks/useScroll';
+import { toastSuccess } from '../../utils/ToastFreeSetting';
+import { useLocationStore } from '../../zustand/example/zustandAPI';
+import Loading from '../common/Loading';
+import Card from './Card';
 
 function DaengFindercomponent() {
+  const [getNewPage, setGetNewPage] = useState(true);
+  const [totalData, setTotalData] = useState([]);
+
+  const [page, setPage] = useState(1);
   const [isDetail, setIsDetail] = useState(true);
   const [alertMsg, setAlertMsg] = useState(false);
   const [total, setTotal] = useState(true);
+  const [nextPageElements, setNextPageElements] = useState(true);
   const { setLocation } = useLocationStore(
     prev => ({
       setLocation: prev.setLocation,
@@ -59,13 +67,75 @@ function DaengFindercomponent() {
     navigate('/daengfinder/write');
   };
 
+  // const getPostLostList = async () => {
+  //   try {
+  //     const res = await getPostLost(page);
+  //     console.log('response >>>', res);
+  //     totalData.push(...res?.data?.lostPostsData);
+  //     setTotalData([...totalData]);
+  //     setPage(prevPage => prevPage + 1);
+  //     // setGetNewPage(false)
+  //   } catch (err) {
+  //     console.log('err >>>', err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getPostLostList();
+  // }, []);
+
+  // const [ref, inview] = useInView();
+  // const scrollRef = useRef();
+  // const [ScrollUpTop] = useScroll(
+  //   scrollRef,
+  //   loc.state?.isScroll,
+  //   'scroller',
+  //   totalData,
+  // );
+
+  // useEffect(() => {
+  //   console.log('inView start >>>', inview);
+  //   if (inview) {
+  //     console.log('page >>>', page);
+  //     // setGetNewPage(true);
+  //     getPostLostList();
+  //   }
+  // }, [inview]);
+
+  // const ListAll = totalData;
+  // const ListMissing = totalData?.filter(card => card.status === false);
+
   const { data, isLoading, error, isError } = useQuery(
+    // ['getPostLost', page],
+    // ['getPostLost', { page }],
     'getPostLost',
-    getPostLost,
+    () => getPostLost(page),
     {
+      enabled: nextPageElements && getNewPage,
+      retry: false,
       refetchOnWindowFocus: false,
+      onSuccess: dt => {
+        setGetNewPage(false);
+        setPage(prevPage => prevPage + 1);
+        console.log('getPostLost success >>>', dt);
+        if (dt?.data?.lostPostsData?.length > 0) {
+          totalData.push(...dt?.data?.lostPostsData);
+          // const sumData = [...totalData, ...data?.data?.lostPostsData];
+          // const sumData = totalData.push(...data?.data?.lostPostsData);
+          setTotalData([...totalData]);
+        }
+        if (dt?.data?.lostPostsData?.length < 10) {
+          setNextPageElements(false);
+        }
+      },
+      onError: err => {
+        // setGetNewPage(false);
+        console.log('getPostLost err >>>', err);
+      },
     },
   );
+
+  const [ref, inview] = useInView();
   const scrollRef = useRef();
   const [ScrollUpTop] = useScroll(
     scrollRef,
@@ -73,6 +143,24 @@ function DaengFindercomponent() {
     'scroller',
     data,
   );
+
+  useEffect(() => {
+    console.log('inView start >>>', inview);
+    if (inview) {
+      console.log('이전 page >>>', page);
+      setGetNewPage(true);
+    }
+  }, [inview]);
+
+  // useEffect(() => {
+  //   console.log('data >>>', data);
+  //   if (data?.data?.lostPostsData?.length > 0) {
+  //     totalData.push(...data?.data?.lostPostsData);
+  //     // const sumData = [...totalData, ...data?.data?.lostPostsData];
+  //     // const sumData = totalData.push(...data?.data?.lostPostsData);
+  //     setTotalData([...totalData]);
+  //   }
+  // }, [data]);
 
   useEffect(() => {
     if (loc.state?.deleteComplete) {
@@ -85,11 +173,12 @@ function DaengFindercomponent() {
     }
   }, []);
 
-  if (isLoading) {
+  if (isLoading && !totalData.length) {
     return (
-      <div className='w-full h-full flex flex-col justify-center  items-center'>
-        <Loading />
-      </div>
+      // <div className='w-full h-full flex flex-col justify-center  items-center'>
+      //   <Loading />
+      // </div>
+      <Loading />
     );
   }
 
@@ -98,19 +187,21 @@ function DaengFindercomponent() {
       state: error,
     });
   }
-
   // console.log('daengFindercomponent >>> ', data);
-  // console.log('data.data>>> ', data.data);
-  const ListAll = data?.data?.lostPostsData;
-  const ListMissing = data?.data?.lostPostsData?.filter(
-    card => card.status === false,
-  );
+  // console.log('data.data>>> ', data?.data);
+  // const ListAll = data?.data?.lostPostsData;
+  // const ListMissing = data?.data?.lostPostsData?.filter(
+  //   card => card.status === false,
+  // );
+
+  const ListAll = totalData;
+  const ListMissing = totalData?.filter(card => card.status === false);
 
   return (
     <>
       {alertMsg && <ToastContainer />}
-      <div className='relative top-4'>
-        <div className='sticky bottom-0 flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md z-50'>
+      <div className='relative top-0'>
+        <div className='sticky top-0 flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md z-50'>
           <div className='w-[30px]' />
           <div className='font-bold text-xl '>댕 finder</div>
           <RxMagnifyingGlass
@@ -163,30 +254,40 @@ function DaengFindercomponent() {
         </div>
       </div>
 
-      {data?.data?.lostPostsData?.length ? (
+      {/* {data?.data?.lostPostsData?.length ? ( */}
+      {totalData?.length ? (
         <div
           // 46.6875rem
           ref={scrollRef}
+          inview={inview}
           className={`${
             isDetail
               ? 'flex flex-col gap-3  w-full'
               : 'grid grid-cols-2 gap-3 auto-rows-min auto-cols-min'
             // } px-6 h-[38.0625rem] overflow-y-scroll transition duration-300 ease-in-out`}
           } px-6 min-h-[75%]  overflow-y-scroll transition duration-300 ease-in-out`}
+          // } px-6 min-h-[75%]  overflow-y-scroll transition duration-300 ease-in-out`}
           // } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll transition duration-300 ease-in-out`}
           // } min-h-[35.5rem] overflow-y-scroll `}
         >
           {total
-            ? ListAll.map(card => {
+            ? ListAll?.map((card, idx) => {
                 return (
-                  <Card key={card.postId} isDetail={isDetail} data={card} />
+                  <>
+                    <Card key={card.postId} isDetail={isDetail} data={card} />
+                    {idx === ListAll.length - 1 && <div ref={ref} />}
+                  </>
                 );
               })
-            : ListMissing.map(card => {
+            : ListMissing?.map((card, idx) => {
                 return (
-                  <Card key={card.postId} isDetail={isDetail} data={card} />
+                  <>
+                    <Card key={card.postId} isDetail={isDetail} data={card} />
+                    {idx === ListAll.length - 1 && <div ref={ref} />}
+                  </>
                 );
               })}
+          {/* <div ref={ref} /> */}
         </div>
       ) : (
         <div className='h-full w-full f-ic-jc relative top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2'>
