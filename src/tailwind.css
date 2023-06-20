@@ -11,9 +11,9 @@
     transform: translateY(0);
   }
 }
-:root {
+/* :root {
   --vh: 100%;
-}
+} */
 
 @layer components {
   .clickableTextStyle {
@@ -85,6 +85,10 @@
     /* @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF]; */
     /* @apply overflow-y-scroll flex flex-col items-center relative w-full h-full max-w-[375px] max-h-[812px] bg-[#FFFFFF]; */
     @apply overflow-y-scroll flex flex-col items-center relative w-full h-full max-w-[375px] bg-[#FFFFFF];
+  }
+
+  .body-canvas {
+    @apply overflow-y-scroll flex flex-col items-center relative w-[375px] h-full bg-[#FFFFFF];
   }
 
   .logo-div {

@@ -85,17 +85,17 @@ function DaengFindercomponent() {
 
   if (isLoading) {
     return (
-      <div className='flex flex-col h-[812px] justify-center  items-center'>
+      <div className='w-full h-full flex flex-col justify-center  items-center'>
         <Loading />
       </div>
     );
   }
 
   if (isError) {
-    // console.log('error >>>', error);
-    navigate('/', {
-      state: error,
-    });
+    console.log('error >>>', error);
+    // navigate('/', {
+    //   state: error,
+    // });
   }
 
   // console.log('daengFindercomponent >>> ', data);
