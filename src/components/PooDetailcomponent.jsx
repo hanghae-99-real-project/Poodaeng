@@ -164,8 +164,9 @@ function PooDetailComponent() {
                 </li>
                 기타
                 <input
-                  className='w-full h-10 border pl-3'
+                  className='w-full h-10 border-b pl-3'
                   onChange={e => contentsClick(e.target.value)}
+                  placeholder='내용을 입력해주세요'
                 />
               </ul>
 
