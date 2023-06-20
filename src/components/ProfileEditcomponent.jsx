@@ -273,26 +273,27 @@ function ProfileEditcomponent() {
                 type='text'
                 value={newNickname}
                 onChange={nicknameChangeHandler}
-                className='flex justify-center items-center w-full py-1 px-2 rounded-lg shadow border-none mb-1'
+                className='flex justify-center items-center w-full py-1 pb-2 px-2 border-b mb-1'
                 placeholder=' 닉네임 입력 '
               />
               <button
                 onClick={newNicknameSubmit}
-                className='flex items-center justify-center bg-mainColor text-white w-9 h-5 rounded-xl text-xs'
+                className='flex items-center justify-center bg-mainColor text-white w-9 h-5 my-2 rounded-xl text-xs'
               >
                 완료
               </button>
             </div>
             <div className='flex justify-center ml-2 w-auto text-red-500 font-bold'>
-              {errorMsg}
+              {errorMsg || <div> &nbsp; </div>}
             </div>
           </div>
         ) : (
           <>
-            <div className='flex items-center justify-center w-full font-bold text-lg'>
+            <div className='flex items-center justify-center w-full font-bold text-lg my-1'>
               {getMyInfoData.nickname}
             </div>
             <Edit className='cursor-pointer' onClick={nickEditHandler} />
+            <div> &nbsp; </div>
           </>
         )}
       </div>
