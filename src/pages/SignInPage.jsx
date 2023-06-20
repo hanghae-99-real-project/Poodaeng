@@ -28,7 +28,7 @@ const initialState = {
 };
 const store = set => ({
   /** @description tokenState가 변경되면 initialState도 변경이 되는가? get()으로 접근이 가능한가? */
-  tokenState: initialState,
+  tokenState: { ...initialState },
   setToken: (userId, accessToken, acExpireDate) => {
     // console.log('값 체크. 초기화 값은 절대 변경되면 안 됨. >>>', initialState);
     set(
