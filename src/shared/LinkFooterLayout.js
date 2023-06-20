@@ -19,12 +19,12 @@ const store = (set, get) => ({
     willUseFooter: boolean,
   })),
   ConsoleHeaderState: () => {
-    console.log("Header 사용유무 확인 >>> ", get().willUserHeader);
+    // console.log("Header 사용유무 확인 >>> ", get().willUserHeader);
     const reply = get().willUseHeader;
     return reply
   },
   ConsoleFooterState: () => {
-    console.log("Footer 사용유무 확인 >>> ", get().willUseFooter);
+    // console.log("Footer 사용유무 확인 >>> ", get().willUseFooter);
     const reply = get().willUseFooter;
     return reply
   },
@@ -64,10 +64,10 @@ function LinkFooterLayout() {
   }), shallow);
 
   return (
-      <div className='w-screen h-screen flex justify-center items-center bg-yellow-400'>
-        <div className='canvas h-[calc(var(--vh,1vh)*100 + 96px)] pt-0 '> 
+      <div className='w-screen h-[calc(var(--vh,1vh)*100)] flex justify-center items-center bg-white'>
+        <div className='canvas pt-0 '> 
           {/* {willUseHeader && <LinkHeader />} */}
-          <Outlet />
+            <Outlet />
           {willUseFooter && <LinkFooter/>}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import DaengFindercomponent from '../components/DaengFindercomponent';
+import DaengFindercomponent from '../components/DaengFinder/DaengFindercomponent';
 
 function DaengFinder() {
   return <DaengFindercomponent />;

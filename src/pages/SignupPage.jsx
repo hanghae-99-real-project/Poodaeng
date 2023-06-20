@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { debounce } from 'lodash';
 import React, { useState } from 'react';
 import { BsCheckLg } from 'react-icons/bs';
@@ -26,18 +27,18 @@ function SignUpPage() {
     passwordConfirm: '',
     code: '',
   });
-  console.log('render occured');
+  // console.log('render occured');
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   /* get 인증하기 동시에 모달 진입하면서 */
   const getAuthHandler = async () => {
-    console.log(
-      'phoneNumber type check opening number form modal >>> ',
-      typeof inputs.phoneNumber,
-    );
+    // console.log(
+    //   'phoneNumber type check opening number form modal >>> ',
+    //   typeof inputs.phoneNumber,
+    // );
     const response = await sendCodeNumber({ phoneNumber: inputs.phoneNumber });
-    console.log('send code response >>> ', response);
+    // console.log('send code response >>> ', response);
     return response;
   };
 
@@ -54,11 +55,11 @@ function SignUpPage() {
         setGetAuthMode(true);
         setCheckTimeMode(true);
       } else {
-        console.log('error response opening number form >>> ', response);
-        console.log(
-          'error Message opening number form >>>',
-          response.errorMessage,
-        );
+        // console.log('error response opening number form >>> ', response);
+        // console.log(
+        //   'error Message opening number form >>>',
+        //   response.errorMessage,
+        // );
         setMessage(true);
         toast.error(`휴대폰 인증번호 발송 에러 발생`, {
           position: toast.POSITION.TOP_CENTER,
@@ -85,29 +86,29 @@ function SignUpPage() {
       const currentTime = new Date();
       const expireDate = new Date(currentTime.getTime() + 1000 * 60 * 3);
       dispatch(SET_TIMER({ expireAt: expireDate }));
-      console.log('send code response >>> ', response);
+      // console.log('send code response >>> ', response);
       /* 다시 카운트 */
     } else {
-      console.log('send code error >>> ', response);
-      console.log(
-        'send code error response.errorMessage>>> ',
-        response.errorMessage,
-      );
+      // console.log('send code error >>> ', response);
+      // console.log(
+      // 'send code error response.errorMessage>>> ',
+      //   response.errorMessage,
+      // );
     }
   }, 200);
   /* CodeNumber Validation */
   const codeMutation = useMutation(validateCodeNumber, {
     onSuccess: data => {
-      console.log('code number validate success');
-      console.log('인증 번호 확인 성공 결과 message>>>', data);
-      console.log('인증 번호 확인 성공 결과 >>>', data);
+      // console.log('code number validate success');
+      // console.log('인증 번호 확인 성공 결과 message>>>', data);
+      // console.log('인증 번호 확인 성공 결과 >>>', data);
       setCheckTimeMode(false);
       setIsAuthNumber(true);
       setGetAuthMode(false);
     },
     onError: error => {
-      console.log('code number validate error');
-      console.log('인증 번호 확인 실패 결과 >>>', error);
+      // console.log('code number validate error');
+      // console.log('인증 번호 확인 실패 결과 >>>', error);
       setMessage(true);
       toastError(`인증번호 불일치!`);
     },
@@ -122,17 +123,15 @@ function SignUpPage() {
   /* register form */
   const mutation = useMutation(signUp, {
     onSuccess: data => {
-      console.log('회원가입 제출 res >> ', data);
+      // console.log('회원가입 제출 res >> ', data);
       onClearInputs();
       navigate('/signincomplete');
     },
     onError: error => {
       console.log('회원가입 제출 error >> ', error);
-      setMessage(true);
       if (error.response?.data?.errorMessage) {
+        setMessage(true);
         toastError(error.response?.data?.errorMessage);
-      } else {
-        toastError('회원가입 실패');
       }
     },
   });
@@ -172,7 +171,7 @@ function SignUpPage() {
       return;
     }
     const agreeCheck = localStorage.getItem('agreed') === 'true';
-    console.log('position Boolean인지 확인 >>>', typeof agreeCheck);
+    // console.log('position Boolean인지 확인 >>>', typeof agreeCheck);
     const result = {
       phoneNumber: inputs.phoneNumber,
       password: inputs.password,
@@ -185,7 +184,7 @@ function SignUpPage() {
 
   return (
     <div>
-      <div className={`fixed z-30 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
+      <div className={`fixed z-50 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
         {message && <ToastContainer />}
         <div
           role='none'

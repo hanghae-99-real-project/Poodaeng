@@ -37,7 +37,7 @@ function ProfileUploader({ onFileUpload }) {
           {image && (
             <img
               role='none'
-              className='w-[102px] h-[102px] object-cover rounded-full'
+              className='w-[102px] h-[102px] object-cover rounded-full selected-icon'
               src={image}
               alt='Thumbnail'
               onClick={deleteImage}

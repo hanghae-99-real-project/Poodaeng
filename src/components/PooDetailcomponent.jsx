@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -17,7 +18,7 @@ function PooDetailComponent() {
   const content = params.get('content'); // address
   const imageUrl = params.get('imageUrl'); // content
   const pooId = params.get('pooId'); // pooId
-  const UserId = params.get('UserId'); // createdAT
+  // const UserId = params.get('UserId'); // createdAT
   const createdAt = params.get('createdAt'); // imgage
   const pooLatitude = params.get('pooLatitude');
   const pooLongitude = params.get('pooLongitude');
@@ -27,14 +28,14 @@ function PooDetailComponent() {
   const [contents, setContents] = useState('');
   // const { accessToken } = useSelector(store => store.auth);
 
-  console.log('address', address);
-  console.log('content', content);
-  console.log('imageUrl', imageUrl);
-  console.log('pooId', pooId);
-  console.log('UserId', UserId);
-  console.log('createdAt', createdAt);
-  console.log('pooLatitude', pooLatitude);
-  console.log('pooLongitude', pooLongitude);
+  // console.log('address', address);
+  // console.log('content', content);
+  // console.log('imageUrl', imageUrl);
+  // console.log('pooId', pooId);
+  // console.log('UserId', UserId);
+  // console.log('createdAt', createdAt);
+  // console.log('pooLatitude', pooLatitude);
+  // console.log('pooLongitude', pooLongitude);
 
   const reportContent = {
     reportContent: contents,
@@ -50,10 +51,10 @@ function PooDetailComponent() {
   const mutation = useMutation(reportPooBox, {
     onSuccess: () => {
       queryClient.invalidateQueries('poobox');
-      console.log('신고 완료');
+      // console.log('신고 완료');
     },
     onError: error => {
-      console.log(error);
+      // console.log(error);
     },
   });
 
@@ -129,8 +130,8 @@ function PooDetailComponent() {
       </div>
 
       {isModalOpen && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='bg-white w-80 p-4 rounded-lg'>
+        <div className='fixed inset-0 flex z-10 items-center justify-center bg-black bg-opacity-50'>
+          <div className='bg-white w-80 p-10 rounded-lg'>
             <div className='flex justify-between'>
               <div />
               <div className='text-xl font-bold mb-4'>신고 사유</div>
@@ -148,7 +149,7 @@ function PooDetailComponent() {
                   <input
                     type='radio'
                     checked={contents === '해당 위치에 푸박스가 없어졌어요.'}
-                    className='mr-2'
+                    className='mr-2 bg-mainColor'
                   />
                   해당 위치에 푸박스가 없어졌어요.
                 </li>
@@ -156,7 +157,7 @@ function PooDetailComponent() {
                   <input
                     type='radio'
                     checked={contents === '푸박스가 설명과 달라요.'}
-                    className='mr-2'
+                    className='mr-2 bg-mainColor'
                   />
                   푸박스가 설명과 달라요.
                 </li>
@@ -168,7 +169,7 @@ function PooDetailComponent() {
               </ul>
 
               <button
-                className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                className='bg-mainColor text-white font-bold py-3 px-4 rounded-lg'
                 onClick={reportHandler}
               >
                 신고하기

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { useQueryClient } from 'react-query';
@@ -50,7 +51,7 @@ const store = (set, get) => ({
   },
   setClipAddress: clipAddress => {
     set(() => ({
-      url: `https://front-end-fork-vegatality.vercel.app${clipAddress}`,
+      url: `https://poodaeng.vercel.app${clipAddress}`,
     }));
   },
   onClipBoard: () => {
@@ -72,7 +73,7 @@ const store = (set, get) => ({
     };
     try {
       const response = await bookMarkLostPost(inputs);
-      console.log('onBookMark response >>>', response);
+      // console.log('onBookMark response >>>', response);
       set(() => ({
         modalComment: get().isBookmark
           ? '북마크를 취소했어요!'
@@ -94,7 +95,7 @@ const store = (set, get) => ({
         1000,
       );
     } catch (error) {
-      console.log(error);
+      // console.log(error);
 
       set(() => ({
         isBookmark: false,
@@ -158,7 +159,7 @@ function LinkFooter() {
 
   /* 여기 나중에 zustand나 redux로 전역으로 관리해서 게시글 눌렀을 때 그 인덱스 여기로 넘겨줘야 함. */
   return (
-    <div className='absolute bottom-0 z-10 w-full h-24 pt-3 px-5 border-t border-solid shadow-md'>
+    <div className='sticky bottom-0 z-10 w-full h-18 py-5 px-5 border-t border-solid shadow-md bg-white'>
       <div className='f-fr-ic justify-between flex-wrap'>
         <div className='f-fr gap-6 w-fit flex-wrap h-5'>
           <CopyToClipboard text={url} onCopy={clipHandler}>
@@ -175,10 +176,11 @@ function LinkFooter() {
             }
           />
         </div>
-        <Bookmark
+        <div />
+        {/* <Bookmark
           className={`${isBookmark && 'fill-[#C699F4]'} cursor-pointer`}
           onClick={bookmarkHandler}
-        />
+        /> */}
       </div>
     </div>
   );

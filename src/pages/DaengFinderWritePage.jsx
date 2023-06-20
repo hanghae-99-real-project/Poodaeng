@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { SlMagnifier } from 'react-icons/sl';
@@ -31,6 +32,7 @@ function DaengFinderWritePage() {
   const title = Ps?.title ?? '';
   const content = Ps?.content ?? '';
   const address = Ps?.address ?? '';
+  const lostTime = Ps?.lostTime ?? '';
   const [target, onChangeHandler, onClearHandler] = useInput({
     dogname,
     title,
@@ -68,8 +70,8 @@ function DaengFinderWritePage() {
   const queryClient = useQueryClient();
   const mutation = useMutation(writePostLost, {
     onSuccess: data => {
-      console.log('daengFinderWrite data>>> ', data);
-      queryClient.invalidateQueries('getPostLost');
+      // console.log('daengFinderWrite data>>> ', data);
+      queryClient.invalidateQueries(['getPostLost']);
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
@@ -78,18 +80,14 @@ function DaengFinderWritePage() {
       for (let i = 0; i < image.preview.length; i++) {
         URL.revokeObjectURL(image.preview[i]);
       }
-      toast.success('게시글 작성 완료', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
+      navigate('/daengfinder', {
+        state: {
+          writeComplete: '게시글 작성 완료',
+        },
       });
     },
     onError: error => {
-      console.log('daengFinderWrite error>>> ', error);
+      // console.log('daengFinderWrite error>>> ', error);
       setAlertMsg(true);
       toast.error('게시글 작성 실패', {
         position: toast.POSITION.TOP_CENTER,
@@ -105,9 +103,10 @@ function DaengFinderWritePage() {
 
   const editMutation = useMutation(editMyPost, {
     onSuccess: data => {
-      console.log('daengFinderWrite data>>> ', data);
+      // console.log('daengFinderWrite data>>> ', data);
       const postId = parseInt(checkPostId, 10);
-      queryClient.invalidateQueries(['daengFinderDetail', postId]);
+      // queryClient.invalidateQueries(['daengFinderDetail', postId]);
+      queryClient.invalidateQueries(['getPostLost', 'detail', postId]);
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
@@ -122,7 +121,7 @@ function DaengFinderWritePage() {
       });
     },
     onError: error => {
-      console.log('daengFinderWrite error>>> ', error);
+      // console.log('daengFinderWrite error>>> ', error);
       setAlertMsg(true);
       toast.error('게시글 수정 실패', {
         position: toast.POSITION.TOP_CENTER,
@@ -175,10 +174,10 @@ function DaengFinderWritePage() {
         formData.append('image', blobImg, img.name || img);
       });
     }
-    console.log('최종 위도 경도 >>>', latlng);
-    formData.append('lostLatitude', parseFloat(latlng.lostLatitude));
-    formData.append('lostLongitude', parseFloat(latlng.lostLongitude));
-    console.log('daengFinderWrite formData before transfer >>> ', ...formData);
+    // console.log('최종 위도 경도 >>>', latlng);
+    formData.append('lostLatitude', parseFloat(latlng?.lostLatitude));
+    formData.append('lostLongitude', parseFloat(latlng?.lostLongitude));
+    // console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     if (checkPostId) {
       inputs = {
         postId: checkPostId,
@@ -198,9 +197,9 @@ function DaengFinderWritePage() {
     /* 1. 이미지가 5개보다 적을 때는 하나씩 추가되도록 짜고 */
     /* 2. 한꺼번에 많이 추가할 수 있는 것도 해줘야 함 */
     /* 3. 5개보다 많아지면 다 지우기 */
-    console.log(e);
-    console.log(e.target.files);
-    console.log(Array.from(e.target.files));
+    // console.log(e);
+    // console.log(e.target.files);
+    // console.log(Array.from(e.target.files));
 
     const maxSize = 1024 * 1024 * 25;
     const fileList = Array.from(e.target.files);
@@ -222,7 +221,7 @@ function DaengFinderWritePage() {
         });
         return;
       }
-      if (fileList[i].size > maxSize) {
+      if (Number(fileList[i].size) > maxSize) {
         setAlertMsg(true);
         toast.error('이미지 크기는 최대 25mb입니다.', {
           position: toast.POSITION.TOP_CENTER,
@@ -266,7 +265,9 @@ function DaengFinderWritePage() {
     }));
   };
 
-  const deleteImage = index => {
+  const deleteImage = (e, index) => {
+    e.stopPropagation();
+    // console.log('delete 발생');
     const photoFiltered = image.photo.filter((_, idx) => idx !== index);
     const previewFiltered = image.preview.filter((_, idx) => idx !== index);
     URL.revokeObjectURL(image.preview[index]);
@@ -275,8 +276,8 @@ function DaengFinderWritePage() {
       preview: [...previewFiltered],
     }));
   };
-  console.log('image photo >>>', image.photo);
-  console.log('image preview >>>', image.preview);
+  // console.log('image photo >>>', image.photo);
+  // console.log('image preview >>>', image.preview);
 
   useEffect(() => {
     SwitchFooter(false);
@@ -294,13 +295,16 @@ function DaengFinderWritePage() {
       });
     }
     if (content) {
-      setQuillValue('', content);
+      setQuillValue(content);
     }
     if (daengList.length > 0) {
       setImage(prev => ({
         photo: [...prev.photo, ...daengList].slice(0, 5),
         preview: [...prev.preview, ...daengList].slice(0, 5),
       }));
+    }
+    if (lostTime) {
+      setCalender(lostTime);
     }
     return () => {
       clearQuillValue();
@@ -339,11 +343,12 @@ function DaengFinderWritePage() {
         &nbsp;
       </LinkHeader>
       {mapMode ? (
+        // <div className='w-full h-full'>
         <DaengFinderMap latlng={latlng} setLatLng={setLatLng} />
       ) : (
-        // <DaengFinderMap />
+        // </div>
         <div className='h-full'>
-          <form className='py-9 px-6 border-b border-solid border-[#ECECEC]'>
+          <form className='py-6 px-6 border-b border-solid border-[#ECECEC]'>
             <div className='f-fc gap-3 mb-4'>
               <input
                 name='title'
@@ -396,8 +401,12 @@ function DaengFinderWritePage() {
               />
             </div>
           </form>
-          <div className='px-6 py-6 h-[35%]'>
-            <QuillEditor />
+          <div className='p-6 h-[35%]'>
+            <QuillEditor
+              placeholder='내용을 적어주세요'
+              useModule
+              className='w-full h-full placeholder:text-sm'
+            />
           </div>
         </div>
       )}

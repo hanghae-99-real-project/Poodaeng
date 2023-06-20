@@ -1,15 +1,16 @@
 /* eslint-disable no-unused-vars */
+import DOMPurify from 'dompurify';
 import React from 'react';
 import { IoMdLock } from 'react-icons/io';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { getPostReply } from '../../../api/daengFinder';
 import { ReactComponent as Arrow } from '../../../assets/images/ArrowCurve.svg';
+import Badge from '../../../assets/images/Badge1.svg';
 import { ReactComponent as CommentLocker } from '../../../assets/images/CommentLocker.svg';
 import { ReactComponent as Ddaeng } from '../../../assets/images/Ddaeng.svg';
-import Badge from '../../../assets/images/Badge1.svg';
-import { dateConvert2 } from '../../../utils/DateConvert';
 import { tokenStore } from '../../../pages/SignInPage';
+import { dateConvert2 } from '../../../utils/DateConvert';
 
 function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
   // const [editMode, setEditMode] = useState(false);
@@ -44,12 +45,12 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
     return <div>Loading...</div>;
   }
   if (isError) {
-    console.log('isError >>>', error);
+    // console.log('isError >>>', error);
     return <div>{error.message}</div>;
   }
 
-  console.log('reply data >>>>', data);
-  console.log('reply data depth >>>', data.data?.childCommentsData);
+  // console.log('reply data >>>>', data);
+  // console.log('reply data depth >>>', data.data?.childCommentsData);
   // const isPrivate = data.data?.childCommentsData?.isPrivate;
   // const UserId = data.data?.childCommentsData?.UserId;
   // const userPhoto = data.data?.childCommentsData?.userPhoto;
@@ -57,7 +58,7 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
   // const createdAt = data.data?.childCommentsData?.createdAt;
 
   const openEditMode = (childCommentId, UserId, isPrivate) => {
-    console.log('type check', typeof childCommentId);
+    // console.log('type check', typeof childCommentId);
     setEditMode(prev => ({
       ...prev,
       editMode: true,
@@ -115,7 +116,7 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
                     <div className='f-ic-jc rounded-full overflow-hidden w-6 h-auto'>
                       <img
                         className='image'
-                        src={reply.userPhoto || Badge}
+                        src={reply.userPhoto[0] || Badge}
                         alt='photoThumb'
                       />
                     </div>
@@ -155,9 +156,17 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
                   />
                 </div>
                 <div className='f-fc gap-1 pl-10'>
-                  <div className='pr-12 font-medium text-sm'>
+                  <p
+                    className='pr-12 font-medium text-sm'
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(reply.childComment, {
+                        ALLOWED_TAGS: ['p'],
+                      }),
+                    }}
+                  />
+                  {/* <div className='pr-12 font-medium text-sm'>
                     {reply.childComment}
-                  </div>
+                  </div> */}
                   <div className='f-fr-ic-jb'>
                     <span className='font-medium text-sm text-[#A8A8A8]'>
                       {dateConvert2(reply.createdAt)[0]}

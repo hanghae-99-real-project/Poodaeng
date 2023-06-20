@@ -74,7 +74,7 @@ function TmapPage() {
       // var startY = location.latitude.toString();
       // var startX = location.longitude.toString();
 
-      console.log('>>>>>>>>>>>>', startY, startX);
+      // console.log('>>>>>>>>>>>>', startY, startX);
 
       if (!map) {
         map = new Tmapv2.Map('map_div', {
@@ -134,8 +134,8 @@ function TmapPage() {
           // 시작
           marker_s = new Tmapv2.Marker({
             position: new Tmapv2.LatLng(parseFloat(startY), parseFloat(startX)),
-            icon: 'https://i.ibb.co/9tBNj38/mappoint.png',
-            iconSize: new Tmapv2.Size(32, 40),
+            icon: 'https://i.ibb.co/WydSt9Y/Group-199.png',
+            iconSize: new Tmapv2.Size(32, 32),
             map: map,
           });
 
@@ -217,16 +217,16 @@ function TmapPage() {
           drawLine(drawInfoArr);
         },
         error: function (request, status, error) {
-          console.log(
-            'code:' +
-              request.status +
-              '\n' +
-              'message:' +
-              request.responseText +
-              '\n' +
-              'error:' +
-              error,
-          );
+          // console.log(
+          //   'code:' +
+          //     request.status +
+          //     '\n' +
+          //     'message:' +
+          //     request.responseText +
+          //     '\n' +
+          //     'error:' +
+          //     error,
+          // );
         },
       });
     });
@@ -254,19 +254,19 @@ function TmapPage() {
 
   return (
     <div className='absolute'>
-      <div className='absolute my-5 -top-20 right-0 z-30 w-full h-36 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
-        <div className='flex'>
-          <div className='flex my-1'>
+      <div className='absolute  my-5 top-0 z-30 w-full h-36 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
+        <div className='flex flex-col w-80 justify-start '>
+          <div className='relative top-0 left-0 flex my-1'>
             <Arrow className='mt-1 mr-2' />
             푸박스 위치: <div className='font-bold ml-1'>{targetAddress}</div>
           </div>
-        </div>
-        <div className='flex justify-start pr-2'>
-          <Clock className='mt-1 mr-2' />
-          <span id='result' className='pr-32' />
+
+          <div className='relative flex justify-start '>
+            <Clock className='mt-1 mr-2' />
+            <span id='result' className='pr-32' />
+          </div>
         </div>
         <div className='flex justify-between'>
-          <div></div>
           <div
             className='border rounded-lg bg-[#8722ED] text-white px-7 py-2 mt-3'
             onClick={() => navigate('/map')}

@@ -26,7 +26,7 @@ const newPutImage = async (data) => {
 
   // const formData = new FormData();
   // formData.append("userPhoto", file);
-  console.log('apidata',data)
+  // console.log('apidata',data)
   const putData = {imageIndex: data.index, userPhoto: data.userPhoto}
 
   const config = {
@@ -36,7 +36,7 @@ const newPutImage = async (data) => {
   };
 
   const response = await axiosToken.put(`/api/auth/image/${data.index}`, putData, config);
-  console.log('이미지 수정 요청>>>>>>>>',response);
+  // console.log('이미지 수정 요청>>>>>>>>',response);
   return response;
 };
 
@@ -44,14 +44,14 @@ const newPutImage = async (data) => {
 const newPutNickname = async (data) => {
   const config = {nickname: data}
   const response = await axiosToken.put('/api/auth/nickname', config);
-  console.log(response)
+  // console.log(response)
   return response;
 };
 
 const newPutPassword = async (data) => {
   const config = {password: data}
   const response = await axiosToken.put('/api/auth/pass', config);
-  console.log(response)
+  // console.log(response)
   return response;
 };
 

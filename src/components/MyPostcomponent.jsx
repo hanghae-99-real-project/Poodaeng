@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -6,12 +7,13 @@ import { shallow } from 'zustand/shallow';
 import { getMyBookMark, getMyPost } from '../api/myPage';
 import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
 import { tokenStore } from '../pages/SignInPage';
-import { toastError } from '../utils/ToastFreeSetting';
+import { toastError, toastSuccess } from '../utils/ToastFreeSetting';
 import Card from './DaengFinder/Card';
 import Headers from './Headers';
 import Loading from './common/Loading';
+import 'react-toastify/dist/ReactToastify.css';
 
-function MyPostcomponent({ BookmarkMode }) {
+function MyPostcomponent({ BookmarkMode, deleteComplete }) {
   const [errorMsg, setErrorMsg] = useState(false);
   const { userId } = tokenStore(
     state => ({
@@ -53,17 +55,27 @@ function MyPostcomponent({ BookmarkMode }) {
   // ]);
   // result.some(result => result.isLoading);
 
+  // useEffect(() => {
+  //   if (deleteComplete) {
+  //     setErrorMsg(true);
+  //     toastSuccess(deleteComplete);
+  //   }
+  // }, [deleteComplete]);
+
   const {
     isLoading,
     data: postData,
     isError,
     error,
-  } = useQuery(['getMyPost', userId], getMyPost, {
+  } = useQuery(['getPostLost', Number(userId), 'getMyPost'], getMyPost, {
     onSuccess: successData => {
-      console.log('successData >>>', successData);
+      if (deleteComplete) {
+        setErrorMsg(true);
+        toastSuccess(deleteComplete);
+      }
     },
     onError: errorData => {
-      console.log('errorData >>>', errorData);
+      // console.log('errorData >>>', errorData);
       setErrorMsg(true);
       toastError('데이터를 불러오는 데 실패 했습니다.');
     },
@@ -76,18 +88,25 @@ function MyPostcomponent({ BookmarkMode }) {
     data: bookmarkData,
     isError: bookmarkIsError,
     error: bookmarkError,
-  } = useQuery(['getMyBookMark', userId], getMyBookMark, {
-    onSuccess: successData => {
-      console.log('successData >>>', successData);
+  } = useQuery(
+    ['getPostLost', Number(userId), 'getMyBookMark'],
+    getMyBookMark,
+    {
+      onSuccess: successData => {
+        if (deleteComplete) {
+          setErrorMsg(true);
+          toastSuccess(deleteComplete);
+        }
+      },
+      onError: errorData => {
+        // console.log('errorData >>>', errorData);
+        setErrorMsg(true);
+        toastError('데이터를 불러오는 데 실패 했습니다.');
+      },
+      refetchOnWindowFocus: false,
+      enabled: BookmarkMode === true,
     },
-    onError: errorData => {
-      console.log('errorData >>>', errorData);
-      setErrorMsg(true);
-      toastError('데이터를 불러오는 데 실패 했습니다.');
-    },
-    refetchOnWindowFocus: false,
-    enabled: BookmarkMode === true,
-  });
+  );
 
   if (isLoading || bookMarkIsLoading) {
     return (

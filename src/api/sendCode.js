@@ -9,7 +9,7 @@ const sendCodeNumber = async (inputs) => {
     const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/authCodeSend`, inputs)
     return response
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     return error
   }
 }
@@ -35,15 +35,19 @@ const signIn = async (inputs) => {
 }
 
 const kakaoSignIn = async(inputs) => {
-  const {code, position} = inputs;
+  const {code, position, userLatitude, userLongitude} = inputs;
+  console.log('code >>>', code)
+  console.log('position >>>', position)
+  console.log('userLatitude >>>', userLatitude) 
+  console.log('userLongitude >>>', userLongitude)
   const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/kakao/signin`,
-  {position},
+  {position, userLatitude, userLongitude},
   {
     headers: {
       authorization: `Bearer ${code}`,
     },
-    timeout: 3000 /* 3초 */,
-    timeoutErrorMessage: 'Request timed out',
+    timeout: 5000 /* 5초 */,
+    timeoutErrorMessage: 'Request time out',
   },)
   return response
 }
@@ -56,4 +60,9 @@ const signOut = async () => {
   return response
 }
 
-export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut, kakaoSignIn}
+const findPassword = async(phoneNumber) => {
+  const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/auth/newpass`, phoneNumber)
+  return response;
+}
+
+export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut, kakaoSignIn, findPassword}

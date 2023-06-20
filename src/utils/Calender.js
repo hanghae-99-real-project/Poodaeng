@@ -18,6 +18,7 @@ const Calender = ({setCalender, calender}) => {
         ]}
       >
         <DemoItem label="실종 시간"  >
+          {/* <MobileDateTimePicker localeText={koKR.components.MuiLocalizationProvider.defaultProps.localeText} value={dayjs(calender)} onChange={(date)=>setCalender(dayjs(date.$d))}  /> */}
           <MobileDateTimePicker localeText={koKR.components.MuiLocalizationProvider.defaultProps.localeText} value={dayjs(calender)} onChange={(date)=>setCalender(dayjs(date.$d))}  />
         </DemoItem>
       </DemoContainer>

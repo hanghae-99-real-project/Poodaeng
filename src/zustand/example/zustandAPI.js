@@ -40,7 +40,7 @@ const locationStore = subscribeWithSelector((set, get)=> ({
           roadAddress:rdAd || ad
         }))
       })
-      .catch(err => console.log(err));
+      // .catch(err => console.log(err));
     } catch (error) {
       set((prev)=>({
         ...prev,
@@ -86,10 +86,13 @@ const initialValue = ""
 const store = (set)=> ({
   pureText: initialValue,
   quillValue: initialValue,
-  setQuillValue: (pureText, htmlText) =>{
-    console.log('순수 텍스트', pureText)
-    console.log('htmlText', htmlText)
-    set(()=> ({pureText ,quillValue: htmlText}))
+  setQuillValue: (htmlText) =>{
+    // console.log('순수 텍스트', pureText)
+    // console.log('htmlText', htmlText)
+    set(()=> ({quillValue: htmlText}))
+  },
+  setPureText: (pureText)=>{
+    set(()=>({pureText}))
   },
   clearQuillValue: () => set(()=>({pureText:initialValue ,quillValue: initialValue}))
 })
@@ -100,6 +103,7 @@ export const useQuillStore = create(subscribeWithSelector(store))
 export const resetUserInfoLog = () => {
   const { deleteToken } = tokenStore.getState()
   const { clearSearchWordAll } = searchListStore.getState()
+  sessionStorage.setItem('scroller', JSON.stringify(0))
   Cookies.remove('refreshToken')
   deleteToken()
   clearSearchWordAll()

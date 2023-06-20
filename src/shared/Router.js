@@ -1,8 +1,9 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginSocial from '../components/LoginSocial';
-import LogoutTest from '../components/LogoutTest';
 import Alert from '../pages/Alert';
 import KakaoAuthCheck from '../pages/KakaoAuthCheck';
 import SignInCompletePage from '../pages/SignInCompletePage';
@@ -32,12 +33,13 @@ import MyPooboxcomponent from '../components/MyPooboxcomponent';
 import Unknown from '../pages/Unknown';
 import PasswordFind from '../pages/PasswordFind';
 import RouteChangeTracker from '../google/RouteChangeTracker';
+import PasswordEdit from '../pages/PasswordEdit';
 
 
 // import TokenCheck from '../utils/TokenCheck';
 /* Token 체크를 작성 업로드, 삭제, 수정 시에만 토큰을 보내서 확인하도록 구성하자. */
 function Router() {
-  console.log("Router 렌더링 발생하였습니다.")
+  // console.log("Router 렌더링 발생하였습니다.")
   return (
     <BrowserRouter>
       <RouteChangeTracker />
@@ -49,11 +51,12 @@ function Router() {
           <Route path='/auth' element={<KakaoAuthCheck />}/>
           <Route path='/signup' element={<SignUpPage />}/>
           <Route path='/signin' element={<SignInPage />}/>
-          <Route path='/test' element={<LogoutTest />}/>
+          {/* <Route path='/test' element={<LogoutTest />}/> */}
           <Route path='/tmap/:pooId' element={<TmapPage />} />
           <Route path='/map/:pooId' element={<PooDetail />} />
           <Route path='/unknown' element={<Unknown />} />
           <Route path='/profileedit' element={<ProfileEdit />}/>
+          <Route path='/passwordedit' element={<PasswordEdit />}/>
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet

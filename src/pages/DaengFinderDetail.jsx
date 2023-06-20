@@ -16,6 +16,7 @@ import {
   searchPostLostDetail,
 } from '../api/daengFinder';
 import { ReactComponent as Badge } from '../assets/images/Badge1.svg';
+// import Badge from '../assets/images/Badge1.svg';
 import { ReactComponent as CheckedPurple } from '../assets/images/CheckedPurple.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import { ReactComponent as WhiteDdaeng } from '../assets/images/WhiteDdaeng.svg';
@@ -43,6 +44,7 @@ function DaengFinderDetail() {
     title: '',
     content: '',
     dogname: '',
+    lostTime: '',
   });
   const [markerPotision, setMarkerPosition] = useState({
     lostLatitude: 0,
@@ -104,52 +106,61 @@ function DaengFinderDetail() {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation(deleteMyPost, {
     onMutate: (variables, context) => {
-      console.log('Mutation about to start >>>', variables);
+      // console.log('Mutation about to start >>>', variables);
       const previous = context;
-      console.log('previous >>>', previous);
+      // console.log('previous >>>', previous);
     },
     onSuccess: (data, variables) => {
-      console.log('deleteMutation success >>>', data);
-      console.log('deleteMutation parameter >>>', variables);
-      queryClient.removeQueries(['daengFinderDetail', postId]);
-      navigate(reDirection || '/daengfinder', {
-        state: { deleteComplete: '게시글 삭제 완료' },
+      // console.log('deleteMutation success >>>', data);
+      // console.log('deleteMutation parameter >>>', variables);
+      // queryClient.removeQueries(['getPostLost', 'detail', postId]);
+      // queryClient.invalidateQueries(['getMyBookMark']);
+      const fetchKey =
+        reDirection === '/mybookmark' ? 'getMyBookMark' : 'getMyPost';
+      queryClient.setQueryData(['getPostLost', Number(myId), fetchKey], () => {
+        navigate(reDirection || '/daengfinder', {
+          state: { deleteComplete: '게시글 삭제 완료' },
+        });
       });
     },
     onError: error => {
-      console.log('deleteMutation error >>>', error);
+      // console.log('deleteMutation error >>>', error);
     },
   });
 
   const editToFoundMutation = useMutation(editToFoundPost, {
     onMutate: () => {
-      console.log('editToFoundPost started');
+      // console.log('editToFoundPost started');
     },
     onSuccess: data => {
       setIsFound(true);
       setEditModal(prev => !prev);
-      console.log('editToFoundMutation success >>>', data);
-      queryClient.invalidateQueries(['daengFinderDetail', postId]);
+      // console.log('editToFoundMutation success >>>', data);
+      queryClient.invalidateQueries(['getPostLost', 'detail', postId]);
     },
     onError: error => {
-      console.log('editToFoundMutation error >>>', error);
+      // console.log('editToFoundMutation error >>>', error);
     },
   });
 
   const { isLoading, data, isError, error } = useQuery(
-    ['daengFinderDetail', postId],
+    ['getPostLost', 'detail', postId],
     () => searchPostLostDetail(postId),
     {
       enabled: !daeng,
       refetchOnWindowFocus: false,
       onSuccess: successData => {
-        console.log('useQuery >>>', successData);
+        // console.log('useQuery >>>', successData);
       },
     },
   );
 
   const editToFound = () => {
-    editToFoundMutation.mutate(postId);
+    editToFoundMutation.mutateAsync(postId);
+  };
+
+  const deletePost = async () => {
+    await deleteMutation.mutateAsync(postId);
   };
 
   const moveToPostEditPage = () => {
@@ -164,6 +175,7 @@ function DaengFinderDetail() {
         title: moreInfo.title,
         content: moreInfo.content,
         address: moreInfo.address,
+        lostTime: moreInfo.lostTime,
       },
     });
   };
@@ -183,11 +195,13 @@ function DaengFinderDetail() {
   }, [location, navigate]);
 
   useEffect(() => {
-    console.log('useEffect processed');
-    const deepData = data?.data;
+    // console.log('useEffect processed');
+    const deepData = data?.data ? data?.data[0] : null;
     getBookmarkState(deepData?.BookMarks);
     setDaengList(deepData?.lostPhotoUrl || []);
-    setDaeng(deepData?.lostPhotoUrl[0] || null);
+    setDaeng(
+      deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
+    );
     setPassPostId(deepData?.postId);
     getPostId(deepData?.postId);
     getUserId(deepData?.UserId);
@@ -197,12 +211,13 @@ function DaengFinderDetail() {
       title: deepData?.title,
       content: deepData?.content,
       dogname: deepData?.dogname,
+      lostTime: deepData?.losttime,
     });
   }, [data]);
 
   /** @checkPoint return문 없어도(순차적인 렌더링 없이) query 적용되는지 확인해보자. */
   if (isLoading) {
-    console.log('isLoading >>> ');
+    // console.log('isLoading >>> ');
     return (
       <div className='f-ic-jc w-full h-full'>
         <Loading />
@@ -211,7 +226,7 @@ function DaengFinderDetail() {
   }
 
   if (isError) {
-    console.log('error >>> ', error);
+    // console.log('error >>> ', error);
     setErrorMsg(true);
     toast.error('Error occured while Loading', {
       position: toast.POSITION.TOP_CENTER,
@@ -226,16 +241,18 @@ function DaengFinderDetail() {
   }
 
   /** @camelCase 아닌 게 많다. 조심. */
-  console.log('data 깊다 >>>', data?.data);
-  const deepData = data?.data;
+  // console.log('data 깊다 >>>', data?.data);
+  const deepData = data?.data ? data?.data[0] : null;
+  const userPhotoData = data?.data[1]?.length ? data?.data[1][0] : null;
   const imageList = deepData?.lostPhotoUrl;
   const lostLatitude = deepData?.lostLatitude;
   const lostLongitude = deepData?.lostLongitude;
   const nickname = deepData?.nickname;
   const createdAt = deepData?.createdAt;
+  const lostTime = deepData?.losttime;
 
   return (
-    <div className='h-full w-full'>
+    <div className='h-[812px] w-full'>
       {errorMsg && <ToastContainer />}
       <IoIosArrowBack
         className='absolute z-30 top-7 left-4 text-xl cursor-pointer'
@@ -293,7 +310,15 @@ function DaengFinderDetail() {
         {/* <div className='bg-[#FFFFFF] px-5 h-[25rem] overflow-y-scroll'> */}
         <div className='bg-[#FFFFFF] px-5 '>
           <div className='f-fr text-xl font-semibold gap-2 border-b border-solid border-[#ECECEC] py-5'>
-            <Badge />
+            {userPhotoData ? (
+              <img
+                src={userPhotoData}
+                alt='photoThumb'
+                className='rounded-full image w-8 h-8'
+              />
+            ) : (
+              <Badge />
+            )}
             {nickname}
           </div>
           <div className='py-4'>
@@ -314,7 +339,7 @@ function DaengFinderDetail() {
               <p className='text-xs font-bold'>
                 실종 시각{' '}
                 <span className='pl-2 font-medium text-xs text-[#515151]'>
-                  {dateConvert2(deepData?.createdAt)[1]}
+                  {dateConvert2(lostTime)[1]}
                 </span>
               </p>
             </div>
@@ -342,6 +367,7 @@ function DaengFinderDetail() {
               />
               <div className='pt-5 f-fr gap-2 parent font-medium text-xs text-[#969696]'>
                 {/* <span>2023.05.03</span> */}
+                {/* <span>{dateConvert2(createdAt)[2]}</span> */}
                 <span>{dateConvert2(createdAt)[2]}</span>
                 <span>|</span>
                 <span>{deepData?.views}&nbsp;회</span>
@@ -377,7 +403,7 @@ function DaengFinderDetail() {
 
             <div
               className='f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 cursor-pointer'
-              onClick={() => deleteMutation.mutate(postId)}
+              onClick={deletePost}
             >
               삭제하기
             </div>

@@ -9,6 +9,7 @@ import { useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPooBox } from '../api/poobox';
 import { ReactComponent as MyGeo } from '../assets/images/MyGeo.svg';
+import Loading from './common/Loading';
 
 function Kakaoserch() {
   const navigate = useNavigate();
@@ -20,20 +21,14 @@ function Kakaoserch() {
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
-        /api/map/poo 로딩중 입니다
-        {console.log('로딩시도')}
+        <Loading />
       </div>
     );
   }
   if (isError) {
-    return (
-      <div>
-        /api/map/poo 오류가 발생했습니다.
-        {console.log('에러')}
-      </div>
-    );
+    return <div>오류가 발생했습니다.</div>;
   }
-  console.log('map>>>>>>>>>', data);
+  // console.log('map>>>>>>>>>', data);
 
   // 카카오 맵 API를 로드하는 스크립트를 동적으로 추가
   // useEffect(() => {
@@ -86,23 +81,40 @@ function Kakaoserch() {
     // 마커를 지도에 표시하고 경계 객체에 추가
     let i;
     let marker;
+
     const infowindow = new kakao.maps.InfoWindow(); // infowindow 변수 선언 및 초기화
     for (i = 0; i < points?.length; i++) {
       marker = new kakao.maps.Marker({
         position: points[i],
         image: pointsMarkerImage,
       });
+      // 주소, 콘텐츠, pooId를 마커 객체에 추가
+      marker.address =
+        data?.data?.getPooAll[i]?.address ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.content =
+        data?.data?.getPooAll[i]?.content ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.pooId =
+        data?.data?.getPooAll[i]?.pooId ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.UserId =
+        data?.data?.getPooAll[i]?.UserId ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.imageUrl =
+        data?.data?.getPooAll[i]?.pooPhotoUrl ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.createdAt =
+        data?.data?.getPooAll[i]?.createdAt ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.pooLatitude =
+        data?.data?.getPooAll[i]?.pooLatitude ||
+        '서버에서 데이터를 불러오지 못했습니다.';
+      marker.pooLongitude =
+        data?.data?.getPooAll[i]?.pooLongitude ||
+        '서버에서 데이터를 불러오지 못했습니다.';
       marker.setMap(map);
       bounds.extend(points[i]);
-      // 주소, 콘텐츠, pooId를 마커 객체에 추가
-      marker.address = data.data.getPooAll[i].address;
-      marker.content = data.data.getPooAll[i].content;
-      marker.pooId = data.data.getPooAll[i].pooId;
-      marker.UserId = data.data.getPooAll[i].UserId;
-      marker.imageUrl = data.data.getPooAll[i].pooPhotoUrl;
-      marker.createdAt = data.data.getPooAll[i].createdAt;
-      marker.pooLatitude = data.data.getPooAll[i].pooLatitude;
-      marker.pooLongitude = data.data.getPooAll[i].pooLongitude;
 
       // 각 마커에 클릭 이벤트를 등록합니다
       kakao.maps.event.addListener(
@@ -110,7 +122,7 @@ function Kakaoserch() {
         'click',
         (function (currMarker) {
           return function () {
-            const iwContent = `<div style="padding:15px 24px 15px 24px; width: 300px; height: 210px; display: flex; flex-direction: column; gap: 10px; border-radius: 10px; ">
+            const iwContent = `<div style="padding:15px 24px 15px 24px; width: 300px; height: 218px; display: flex; flex-direction: column; gap: 10px; border-radius: 10px; ">
             <div>
               <div style="display: flex; justify-content: center; justify-content: space-between;">
                 <div style="display: flex; gap: 5px; bord">
@@ -134,9 +146,9 @@ function Kakaoserch() {
                 </div>
               </div>
             </div>
-            <div style="display:flex; gap:10px; margin-bottom:20px; justify-content:center;">
-              <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}','${currMarker.pooLatitude}','${currMarker.pooLongitude}')">상세 보기</div>
-              <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 30px; background-color: #8722ED; color: white; font-weight: bold;" onclick="window.loadFindHandler('${currMarker.pooId}', '${currMarker.pooLatitude}','${currMarker.pooLongitude}','${currMarker.address}')">길 찾기</div>
+            <div style="display:flex; gap:15px; margin-top: 4px; justify-content:center;">
+              <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 41px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}','${currMarker.pooLatitude}','${currMarker.pooLongitude}')">상세 보기</div>
+              <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 41px; background-color: #8722ED; color: white; font-weight: bold;" onclick="window.loadFindHandler('${currMarker.pooId}', '${currMarker.pooLatitude}','${currMarker.pooLongitude}','${currMarker.address}')">길 찾기</div>
             </div>
           </div>`;
             infowindow.setContent(iwContent);
@@ -248,7 +260,7 @@ function Kakaoserch() {
         <MyGeo
           role='none'
           onClick={initializeMap}
-          className='absolute z-10 w-12 h-12 right-1 bottom-20 cursor-pointer'
+          className='absolute z-10 w-12 h-12 right-3 bottom-3 cursor-pointer'
         />
       )}
     </div>

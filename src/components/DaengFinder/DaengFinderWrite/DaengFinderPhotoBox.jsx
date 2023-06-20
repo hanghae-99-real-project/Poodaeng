@@ -53,7 +53,7 @@ const DaengFinderPhotoBox = ({ imageHandler, preview, deleteImage }) => {
           </label>
           <DaengFinderWriteCancelPhoto
             className='absolute z-10 right-0 top-0 cursor-pointer shadow-sm'
-            onClick={() => deleteImage(index)}
+            onClick={e => deleteImage(e, index)}
           />
         </div>
       </SwiperSlide>

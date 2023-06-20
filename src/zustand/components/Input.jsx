@@ -8,8 +8,10 @@ const input = (set, get) => ({
   word: '',
   searchWordSnapshot: '',
   setSearchList: () => {
-    const search = get().word.trim();
-    if (search === '') {
+    // const search = get().word.trim();
+    const search = get().word;
+    const searchWordLength = get().word.length;
+    if (searchWordLength === 0) {
       console.log('empty search');
       return;
     }
@@ -19,7 +21,7 @@ const input = (set, get) => ({
     const prevSearchList = get().searchList;
     const filterResult = prevSearchList.find(list => list.item === search);
     if (filterResult) {
-      console.log('duplication of search');
+      // console.log('duplication of search');
     } else {
       set(prev => ({
         searchList: [

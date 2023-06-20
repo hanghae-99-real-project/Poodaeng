@@ -17,22 +17,24 @@ function DaengFinderMap({ latlng, setLatLng }) {
   useEffect(() => {
     if (latlng.lostLongitude && latlng.lostLatitude) {
       const something = async () => {
-        await convertCoordinates(latlng.lostLongitude, latlng.lostLatitude)
-          .then(d => {
-            console.log(d);
-            const rdAd = d.data?.documents[0]?.road_address?.address_name;
-            const ad = d.data?.documents[0]?.address?.address_name;
-            setAdrs(rdAd || ad);
-            setRoadAddress(rdAd || ad);
-          })
-          .catch(err => console.log(err));
+        await convertCoordinates(
+          latlng.lostLongitude,
+          latlng.lostLatitude,
+        ).then(d => {
+          // console.log(d);
+          const rdAd = d.data?.documents[0]?.road_address?.address_name;
+          const ad = d.data?.documents[0]?.address?.address_name;
+          setAdrs(rdAd || ad);
+          setRoadAddress(rdAd || ad);
+        });
+        // .catch(err => console.log(err));
       };
       something();
     }
   }, [latlng]);
 
   return (
-    <div className='relative w-full h-[45.6875rem]'>
+    <div className='relative w-full h-[47.6875rem]'>
       {adrs && (
         <div className='absolute f-fr-ic-jc w-full z-50 top-2'>
           <div className='f-fr-ic gap-2 px-5 py-3 font-medium text-base leading-4 bg-white rounded-md'>
@@ -48,7 +50,6 @@ function DaengFinderMap({ latlng, setLatLng }) {
         getMarkerPosition={setLatLng}
         clickable
       />
-      ;
     </div>
   );
 }

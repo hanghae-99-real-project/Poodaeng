@@ -4,9 +4,14 @@ import MyPostcomponent from '../components/MyPostcomponent';
 
 function MyPost() {
   const location = useLocation();
-  const { BookmarkMode } = location.state;
+  const { BookmarkMode, deleteComplete = false } = location.state;
 
-  return <MyPostcomponent BookmarkMode={BookmarkMode} />;
+  return (
+    <MyPostcomponent
+      BookmarkMode={BookmarkMode}
+      deleteComplete={deleteComplete}
+    />
+  );
 }
 
 export default MyPost;

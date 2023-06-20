@@ -1,3 +1,6 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-named-as-default */
 
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
@@ -31,7 +34,7 @@ const Alert = lazy(() => import('../pages/Alert'));
 // import TokenCheck from '../utils/TokenCheck';
 /* Token 체크를 작성 업로드, 삭제, 수정 시에만 토큰을 보내서 확인하도록 구성하자. */
 function LazyRouter() {
-  console.log("렌더링 발생하였습니다.")
+  // console.log("렌더링 발생하였습니다.")
   return (
     <BrowserRouter>
       <Router>
