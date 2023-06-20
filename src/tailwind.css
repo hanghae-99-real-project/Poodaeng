@@ -11,9 +11,9 @@
     transform: translateY(0);
   }
 }
-/* :root {
+:root {
   --vh: 100%;
-} */
+}
 
 @layer components {
   .clickableTextStyle {

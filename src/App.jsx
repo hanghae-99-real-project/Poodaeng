@@ -4,8 +4,7 @@
 //   // isBrowser,
 //   // isMobile,
 // } from 'react-device-detect';
-// import React, { useEffect } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Router from './shared/Router';
 // import Something from './Something';
@@ -23,13 +22,13 @@ function App() {
   // });
 
   /* viewport 100vh adjustment */
-  // function setScreenSize() {
-  //   const vh = window.innerHeight * 0.01;
-  //   document.documentElement.style.setProperty('--vh', `${vh}px`);
-  // }
-  // useEffect(() => {
-  //   setScreenSize();
-  // });
+  function setScreenSize() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  useEffect(() => {
+    setScreenSize();
+  });
 
   return (
     <>
