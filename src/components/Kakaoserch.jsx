@@ -133,14 +133,14 @@ function Kakaoserch() {
                 </div>
               </div>
             </div>
-            <div style="display: flex; border:1px solid black">
+            <div style="display: flex; ">
               <img src="${currMarker.imageUrl}" alt="img" style="width: 94px; height: 94px;  object-fit: cover;">
               <div style="flex-direction: column;">
                 <div style="margin: 10px 0px 10px 10px;">
                   <div style="font-weight: bold; font-size: 12px;">주소</div>
                   <div style="font-size:10px">${currMarker.address}</div>
                 </div>
-                <div style="margin: 0px 10px; 0px 10">
+                <div style="margin: 0px 10px; 0px 10px">
                   <div style="font-weight: bold; font-size: 12px;">특이사항</div>
                   <div style="font-size:10px">${currMarker.content}</div>
                 </div>
