@@ -12,6 +12,7 @@ import Uptop from '../components/DaengFinder/Uptop';
  */
 const useScroll = (targetRef, isScroll, storageName,...dependOn) => {
   const [checkScrollTop, setCheckScrollTop] = useState(0)
+  const [isScrolling, setIsScrolling] = useState(false);
   useEffect(()=>{
     /**
      * @description data 의존성 배열값에 따라서 targetRef가 존재할 수도 있고 undefined일수도 있어서 useEffect 안에 있어야 함.
@@ -25,17 +26,25 @@ const useScroll = (targetRef, isScroll, storageName,...dependOn) => {
       JSON.parse(sessionStorage.getItem(storageName)),
     );
     if(currentScrollY) scroller?.scrollTo(0, currentScrollY);
-    
+
+ 
     const saveScrollTop = debounce(() => {
       const scrollYRecord = JSON.stringify(scroller?.scrollTop);
       setCheckScrollTop(Number(scroller?.scrollTop))
       sessionStorage.setItem(storageName, scrollYRecord);
+      setIsScrolling(false);
     }, 200);
+
+    const handleScroll = () => {
+      setIsScrolling(true);
+      saveScrollTop()
+    }
     
-    scroller?.addEventListener('scroll', saveScrollTop)
+    
+    scroller?.addEventListener('scroll', handleScroll)
     
     return () => {
-      scroller?.removeEventListener('scroll', saveScrollTop);
+      scroller?.removeEventListener('scroll', handleScroll);
     };
   }, dependOn);
 
@@ -44,7 +53,7 @@ const useScroll = (targetRef, isScroll, storageName,...dependOn) => {
    * @param {Boolean} useScrollTop 
    * @returns 
    */
-  const ScrollTopComponent = ({useScrollTop}) => <Uptop useScrollTop={useScrollTop} checkScrollTop={checkScrollTop} scroller={targetRef}/>;
+  const ScrollTopComponent = ({useScrollTop}) => <Uptop isScrolling={isScrolling} useScrollTop={useScrollTop} checkScrollTop={checkScrollTop} scroller={targetRef}/>;
 
   return [ScrollTopComponent]
 }

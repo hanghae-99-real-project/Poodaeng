@@ -264,7 +264,7 @@ function DaengFindercomponent() {
           className={`${
             isDetail
               ? 'flex flex-col gap-3  w-full'
-              : 'grid grid-cols-2 gap-3 auto-rows-min auto-cols-min'
+              : 'grid grid-cols-2 gap-3 auto-rows-min auto-cols-min pb-4'
             // } px-6 h-[38.0625rem] overflow-y-scroll transition duration-300 ease-in-out`}
           } px-6 min-h-[75%]  overflow-y-scroll transition duration-300 ease-in-out`}
           // } px-6 min-h-[75%]  overflow-y-scroll transition duration-300 ease-in-out`}
