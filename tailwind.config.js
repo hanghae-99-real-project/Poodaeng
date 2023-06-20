@@ -11,7 +11,6 @@ module.exports = {
     // },
     /** @테마설정 */
     extend: {
-     
       colors: {
         mainColor: '#8722ED',
         testColor: {

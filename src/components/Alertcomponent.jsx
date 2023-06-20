@@ -9,7 +9,7 @@ function Alertcomponent() {
   // };
 
   return (
-    <div className='h-[812px]'>
+    <div className='h-full'>
       <Headers text icon destination=''>
         알림
       </Headers>

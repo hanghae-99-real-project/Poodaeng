@@ -21,7 +21,7 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='sticky flex flex-row justify-between w-96 h-full mt-4 mb-2'>
+      <div className='relative top-0 flex flex-row justify-between w-96 h-10 mt-4 mb-2'>
         <img
           className='ml-5 mb-2 object-contain'
           src='./images/Logo.png'
