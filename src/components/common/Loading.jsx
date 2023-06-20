@@ -1,4 +1,5 @@
 import React from 'react';
+import Loading3 from './Loading3';
 // import Logo from './common/Logo';
 
 function Loading() {
@@ -13,6 +14,7 @@ function Loading() {
         src={`${process.env.PUBLIC_URL}/images/LoadingText.svg`}
         alt='photoThumb'
       />
+      <Loading3 />
       <div className='relative bottom-0 f-fc-ic w-full h-fit'>
         <img
           className='absolute pb-28 z-20 animate-bounce motion '

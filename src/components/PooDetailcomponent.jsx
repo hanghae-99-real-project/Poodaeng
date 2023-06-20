@@ -130,7 +130,7 @@ function PooDetailComponent() {
       </div>
 
       {isModalOpen && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+        <div className='fixed inset-0 flex z-10 items-center justify-center bg-black bg-opacity-50'>
           <div className='bg-white w-80 p-10 rounded-lg'>
             <div className='flex justify-between'>
               <div />
@@ -149,7 +149,7 @@ function PooDetailComponent() {
                   <input
                     type='radio'
                     checked={contents === '해당 위치에 푸박스가 없어졌어요.'}
-                    className='mr-2'
+                    className='mr-2 bg-mainColor'
                   />
                   해당 위치에 푸박스가 없어졌어요.
                 </li>
@@ -157,7 +157,7 @@ function PooDetailComponent() {
                   <input
                     type='radio'
                     checked={contents === '푸박스가 설명과 달라요.'}
-                    className='mr-2'
+                    className='mr-2 bg-mainColor'
                   />
                   푸박스가 설명과 달라요.
                 </li>

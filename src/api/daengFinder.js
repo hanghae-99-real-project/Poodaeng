@@ -13,6 +13,7 @@ const writePostLost = async(inputs) => {
 }
 
 const getPostLost = async() => {
+  // const response = await axiosToken.get('/api/lostposts')
   const response = await axiosToken.get('/api/lostposts')
   return response
 }
