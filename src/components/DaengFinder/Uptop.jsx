@@ -1,10 +1,6 @@
 import React from 'react';
 
 const Uptop = ({ useScrollTop, checkScrollTop, scroller }) => {
-  // console.log('hi');
-  // console.log('useOrNot >>>', useScrollTop);
-  // console.log('scrollTop >>>', checkScrollTop);
-  // console.log('scroller >>>', scroller);
   const scrollToTop = () => {
     scroller.current.scrollTo({
       top: 0,

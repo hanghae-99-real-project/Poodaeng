@@ -204,7 +204,7 @@ function ProfileEditcomponent() {
               </div>
             </div>
             <div
-              className='fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black bg-opacity-50'
+              className='fixed top-0 left-0 right-0 bottom-0 z-20 flex justify-center items-center bg-black bg-opacity-50'
               onClick={closeModal}
             >
               <form className='absolute w-[375px] bottom-2 rounded animate-slide-up'>
