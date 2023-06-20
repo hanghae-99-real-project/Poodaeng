@@ -76,7 +76,8 @@ export default function Slidecomponent() {
                 className='w-full h-44 object-cover rounded-xl'
               />
               <div className='flex items-center font-bold text-sm mt-1 ml-1'>
-                실종 위치 : <span className='font-normal'>{item.address}</span>
+                실종 위치 &nbsp;
+                <span className='font-normal'>{item.address}</span>
               </div>
             </SwiperSlide>
           );

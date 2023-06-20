@@ -122,7 +122,7 @@ function Kakaoserch() {
         'click',
         (function (currMarker) {
           return function () {
-            const iwContent = `<div style="padding:15px 24px 15px 24px; width: 300px; height: 218px; display: flex; flex-direction: column; gap: 10px; border-radius: 10px; ">
+            const iwContent = `<div style="padding:15px 24px 15px 24px; width: 300px; height: auto; display: flex; flex-direction: column; gap: 10px; border-radius: 10px; ">
             <div>
               <div style="display: flex; justify-content: center; justify-content: space-between;">
                 <div style="display: flex; gap: 5px; bord">
@@ -133,20 +133,20 @@ function Kakaoserch() {
                 </div>
               </div>
             </div>
-            <div style="display: flex;">
-              <img src="${currMarker.imageUrl}" alt="img" style="width: 94px; height: 94px; border: 1px solid gray; object-fit: cover;">
+            <div style="display: flex; ">
+              <img src="${currMarker.imageUrl}" alt="img" style="width: 94px; height: 94px;  object-fit: cover;">
               <div style="flex-direction: column;">
-                <div style="margin: 10px;">
+                <div style="margin: 10px 0px 10px 10px;">
                   <div style="font-weight: bold; font-size: 12px;">주소</div>
                   <div style="font-size:10px">${currMarker.address}</div>
                 </div>
-                <div style="margin: 10px;">
+                <div style="margin: 0px 10px; 0px 10px">
                   <div style="font-weight: bold; font-size: 12px;">특이사항</div>
                   <div style="font-size:10px">${currMarker.content}</div>
                 </div>
               </div>
             </div>
-            <div style="display:flex; gap:15px; margin-top: 4px; justify-content:center;">
+            <div style="display:flex; gap:15px; margin: 4px 0px 4px 0px; justify-content:center;">
               <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 41px; background-color: gray; color: white; font-weight: bold;" onclick="window.pooDetailHandler('${currMarker.pooId}', '${currMarker.UserId}', '${currMarker.address}', '${currMarker.content}', '${currMarker.imageUrl}', '${currMarker.createdAt}','${currMarker.pooLatitude}','${currMarker.pooLongitude}')">상세 보기</div>
               <div style="display:flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 8px; width: 120px; height: 41px; background-color: #8722ED; color: white; font-weight: bold;" onclick="window.loadFindHandler('${currMarker.pooId}', '${currMarker.pooLatitude}','${currMarker.pooLongitude}','${currMarker.address}')">길 찾기</div>
             </div>
