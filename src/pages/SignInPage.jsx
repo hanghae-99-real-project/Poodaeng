@@ -57,10 +57,13 @@ const persistTokenStore = persist(store, {
   partialize: state => ({ userId: state.tokenState.userId }),
 });
 
+// export const tokenStore = create(
+//   process.env.NODE_ENV !== 'production'
+//     ? devtools(persistTokenStore, { name: 'tokenStore' })
+//     : persistTokenStore,
+// );
 export const tokenStore = create(
-  process.env.NODE_ENV !== 'production'
-    ? devtools(persistTokenStore, { name: 'tokenStore' })
-    : persistTokenStore,
+  devtools(persistTokenStore, { name: 'tokenStore' }),
 );
 
 /* alt shift O = import 정렬 */
