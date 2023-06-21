@@ -58,10 +58,10 @@ function Mypagecomponent() {
 
   return (
     <div>
-      <div className='flex flex-col justify-between'>
+      <div className='flex flex-col justify-between h-full'>
         <Headers text>마이페이지</Headers>
-        <div className='flex flex-col ml-5 mt-5'>
-          <div className='flex'>
+        <div className='flex flex-col ml-5 mt-10 gap-5'>
+          <div className='flex '>
             <div>
               <img
                 className='w-24 h-24 rounded-full object-cover bg-cover'

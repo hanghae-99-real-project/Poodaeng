@@ -49,10 +49,10 @@ function Maincomponent() {
           </div>
         </div>
         <div className='relative'>
-          <div className='ml-2 mt-2 font-[700] text-xl '>
+          <div className='ml-2 mt-2 font-bold text-xl '>
             내 주변 푸박스 찾기
           </div>
-          <div className='ml-2 mt-1 font-[500] text-xs text-[#808080] mb-2'>
+          <div className='ml-2 mt-1 font-medium text-xs text-[#808080] mb-2'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
           <div className='relative w-[360px] h-40  ml-2 overflow-hidden rounded-xl'>
@@ -67,8 +67,8 @@ function Maincomponent() {
           </div>
           <div className=' mt-3 w-full border' />
         </div>
-        <div className='ml-2 font-[700] text-xl mt-2'>내 주변 실종신고</div>
-        <div className='ml-2 font-[500] text-xs text-[#808080] mt-1'>
+        <div className='ml-2 font-bold text-xl mt-2'>내 주변 실종신고</div>
+        <div className='ml-2 font-medium text-xs text-[#808080] mt-1'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
         <div className='flex justify-center items-center w-[360px] h-56 flex-wrap mt-2 ml-2  rounded-xl'>
