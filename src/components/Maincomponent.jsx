@@ -24,7 +24,7 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='sticky top-0 flex flex-row justify-between w-96 h-10 mt-4 mb-2 px-5'>
+      <div className='flex flex-row justify-between w-96 h-10 mt-4 mb-2 px-5 bg-white'>
         <Logo />
         <Alert className='cursor-pointer' onClick={AlertNavigateHander} />
       </div>
