@@ -58,6 +58,10 @@ function PooPostcomponent() {
       setErrormsg('이미지를 추가해주세요');
       return;
     }
+    if (!content) {
+      setErrormsg('특이사항을 입력해주세요');
+      return;
+    }
 
     // const data = {};
     const formData = new FormData();
@@ -73,23 +77,27 @@ function PooPostcomponent() {
   };
 
   return (
-    <form method='post' encType='multipart/form-data'>
+    <form
+      method='post'
+      encType='multipart/form-data'
+      className='flex flex-col h-full'
+    >
       <Headers text icon destination=''>
         푸박스 등록
       </Headers>
-      <div className='h-[812px]'>
+      <div className='h-full pl-6'>
         <div className='overflow-y-scroll'>
-          <div className='ml-6 mt-8'>
+          <div className='mt-8'>
             <div className='font-semibold text-[15px]'>푸박스 위치</div>
             <KakaoClickMap onMapClick={handleMapClick} />
           </div>
-          <div className='ml-6 mt-4'>
+          <div className='mt-4'>
             <div className='font-semibold text-base'>사진 등록</div>
-            <div className='flex justify-center'>
+            <div className='flex justify-center pr-3'>
               <FileUploader onFileUpload={handleFileUpload} />
             </div>
           </div>
-          <div className='ml-6 mt-4'>
+          <div className='mt-4'>
             <div className='font-semibold text-base'>푸박스 특이사항 설명</div>
             <input
               className='border-b font-normal text-base pb-2 my-3 w-80'
@@ -97,14 +105,13 @@ function PooPostcomponent() {
               onChange={handleContentChange}
               maxLength={20}
             />
-            <Buttons
-              type='button'
-              bgColor='#8722ED'
+            <div
               textColor='#FFFFFF'
               onClick={pooBoxSubmitHandler}
+              className='sticky bottom-0 large-button flexCenter bg-mainColor text-white my-10 '
             >
               등록하기
-            </Buttons>
+            </div>
             <div className='flex justify-center text-sm text-[#FF4444]'>
               {errormsg && (
                 <div className='fixed inset-0 flex z-30 items-center justify-center bg-black bg-opacity-50'>

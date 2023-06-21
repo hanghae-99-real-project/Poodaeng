@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-const-assign */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-undef */
@@ -79,6 +81,25 @@ function Kakaoserch() {
     const points = data?.data?.getPooAll?.map(
       item => new kakao.maps.LatLng(item.pooLatitude, item.pooLongitude),
     ) || [new kakao.maps.LatLng(37.5652352, 127.0284288)];
+
+    if (!data?.data?.getPooAll) {
+      data = {
+        data: {
+          getPooAll: [
+            {
+              address: '서버에서 데이터를 불러오지 못했습니다.',
+              content: '서버에서 데이터를 불러오지 못했습니다.',
+              pooId: '서버에서 데이터를 불러오지 못했습니다.',
+              UserId: '서버에서 데이터를 불러오지 못했습니다.',
+              imageUrl: '서버에서 데이터를 불러오지 못했습니다.',
+              createdAt: '서버에서 데이터를 불러오지 못했습니다.',
+              pooLatitude: 37.5652352,
+              pooLongitude: 127.0284288,
+            },
+          ],
+        },
+      };
+    }
 
     // 마커를 지도에 표시하고 경계 객체에 추가
     let i;

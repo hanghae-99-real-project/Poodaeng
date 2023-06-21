@@ -25,7 +25,7 @@ function PoopostLanding() {
         </div>
       </div>
       <div
-        className='large-button flexCenter bg-mainColor text-white mt-20 cursor-pointer'
+        className='sticky bottom-20 large-button flexCenter bg-mainColor text-white mt-20 cursor-pointer'
         onClick={() => navigate('/poopost')}
       >
         시작하기
