@@ -793,7 +793,7 @@ function DaengFinderCommentPage() {
             !isCommentMode.inputMode && 'bg-[#E2CAFB] opacity-60'
           }  ${
             isEditMode.editModal && 'hidden'
-          } border border-[#D7D7D7] rounded-lg shadow-md `}
+          } border border-[#D7D7D7] rounded-lg`}
           onFocus={event => onCommentMode(event)}
         >
           <QuillEditor

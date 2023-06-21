@@ -31,8 +31,8 @@ function LoginAgree() {
       ) : (
         <>
           <div className='f-fc-ic-jc gap-1 '>
-            <Poo className='w-7 h-6' />
-            <LogoText className='w-20 h-9' />
+            <Poo fill='#8722ED' className='w-7 h-6' />
+            <LogoText fill='#8722ED' className='w-20 h-9' />
           </div>
           <div className='f-fc-ic-jc gap-6'>
             <div className='flex flex-col items-center'>

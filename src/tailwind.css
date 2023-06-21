@@ -286,10 +286,21 @@ textarea {
   font-family: 'SUIT-Regular';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2')
     format('woff2');
-  font-weight: normal;
+  font-weight: 600 !important;
   font-style: normal;
+}
+
+.ql-editor {
+  font-family: 'SUIT-Regular';
+  font-style: normal !important;
+  font-weight: 500 !important;
+}
+
+.ql-editor.ql-blank::before {
+  font-style: normal !important;
 }
 
 body {
   font-family: 'SUIT-Regular', 'Nunito Sans';
+  font-weight: 600 !important;
 }

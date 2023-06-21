@@ -6,7 +6,7 @@ import { BiCategory } from 'react-icons/bi';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
 import { useInView } from 'react-intersection-observer';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery, useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { shallow } from 'zustand/shallow';
@@ -106,10 +106,31 @@ function DaengFindercomponent() {
   // const ListAll = totalData;
   // const ListMissing = totalData?.filter(card => card.status === false);
 
+  // const {
+  //   isLoading: testLoading,
+  //   isError: testIsError,
+  //   error: testError,
+  //   data: testData,
+  //   hasNextPage,
+  //   fetchNextPage,
+  //   isFetching,
+  //   isFetchingNextPage,
+  // } = useInfiniteQuery(
+  //   ['getPostLost'],
+  //   ({ pageParam = 1 }) => getPostLost(pageParam),
+  //   {
+  //     getNextPageParam: (lastPage, pages) => {
+  //       console.log('lastPage >>>', lastPage);
+  //       console.log('pages >>>', pages);
+  //     },
+  //     retry: 0,
+  //     refetchOnWindowFocus: false,
+  //   },
+  // );
+  // console.log('hasNextPage >>', hasNextPage);
+
   const { data, isLoading, error, isError } = useQuery(
-    // ['getPostLost', page],
-    // ['getPostLost', { page }],
-    'getPostLost',
+    ['getPostLost'],
     () => getPostLost(page),
     {
       enabled: nextPageElements && getNewPage,
@@ -271,23 +292,6 @@ function DaengFindercomponent() {
           // } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll transition duration-300 ease-in-out`}
           // } min-h-[35.5rem] overflow-y-scroll `}
         >
-          {/* {total
-            ? ListAll?.map((card, idx) => {
-                return (
-                  <>
-                    <Card key={card.postId} isDetail={isDetail} data={card} />
-                    {idx === ListAll.length - 1 && <div ref={ref} />}
-                  </>
-                );
-              })
-            : ListMissing?.map((card, idx) => {
-                return (
-                  <>
-                    <Card key={card.postId} isDetail={isDetail} data={card} />
-                    {idx === ListAll.length - 1 && <div ref={ref} />}
-                  </>
-                );
-              })} */}
           {total
             ? ListAll?.map((card, idx) => {
                 return (

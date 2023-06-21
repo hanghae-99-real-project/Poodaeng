@@ -30,7 +30,7 @@ function LoginSocial() {
         <div className='flex flex-col justify-center items-center gap-3'>
           <div className='flex flex-col items-center mb-24 gap-3'>
             <DaengPoo className='w-24 h-16 translate-x-2' />
-            <Logo className='w-28 h-14 mb-2' />
+            <Logo fill='#8722ED' className='w-28 h-14 mb-2' />
           </div>
           <div className='flex flex-col gap-4'>
             <KakaoLogin />
