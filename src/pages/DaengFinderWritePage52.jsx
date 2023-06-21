@@ -17,7 +17,6 @@ import LinkHeader from '../shared/LinkHeader';
 import QuillEditor from '../utils/QuillEditor';
 import { useLocationStore, useQuillStore } from '../zustand/example/zustandAPI';
 import Calender from '../utils/Calender';
-import { toastError } from '../utils/ToastFreeSetting';
 
 function DaengFinderWritePage() {
   const pageLocation = useLocation();
@@ -38,10 +37,7 @@ function DaengFinderWritePage() {
     dogname,
     title,
   });
-  const [image, setImage] = useState({
-    photo: ['Box'],
-    preview: ['Box'],
-  });
+  const [image, setImage] = useState({ photo: [], preview: [] });
   const [alertMsg, setAlertMsg] = useState(false);
   const [mapMode, setMapMode] = useState(false);
   const [latlng, setLatLng] = useState({
@@ -172,13 +168,11 @@ function DaengFinderWritePage() {
     formData.append('losttime', calender.$d || calender);
 
     formData.append('dogname', target.dogname);
-    if (image.photo.length > 1) {
-      image.photo
-        .filter((_, idx) => idx !== image.photo.indexOf('Box'))
-        .forEach(img => {
-          const blobImg = new Blob([img], { type: img.type || '' });
-          formData.append('image', blobImg, img.name || img);
-        });
+    if (image.photo.length > 0) {
+      image.photo.forEach(img => {
+        const blobImg = new Blob([img], { type: img.type || '' });
+        formData.append('image', blobImg, img.name || img);
+      });
     }
     // console.log('최종 위도 경도 >>>', latlng);
     formData.append('lostLatitude', parseFloat(latlng?.lostLatitude));
@@ -206,11 +200,6 @@ function DaengFinderWritePage() {
     // console.log(e);
     // console.log(e.target.files);
     // console.log(Array.from(e.target.files));
-    if (image.preview.length > 5 || image.preview.length > 5) {
-      setAlertMsg(true);
-      toastError('이미지는 최대 5개까지만 가능합니다.');
-      return;
-    }
 
     const maxSize = 1024 * 1024 * 25;
     const fileList = Array.from(e.target.files);
@@ -264,9 +253,15 @@ function DaengFinderWritePage() {
       uploadList.push(fileList[i]);
       previewList.push(url);
     }
+    /* 1. 이미지가 5개보다 적을 때는 하나씩 추가되도록 짜고 */
+    /* 2. 한꺼번에 많이 추가할 수 있는 것도 해줘야 함 */
+    /* 3. 5개보다 많아지면 다 지우고 제일 최근 거로 교체 */
     setImage(prev => ({
-      photo: [...uploadList, ...prev.photo],
-      preview: [...previewList, ...prev.preview],
+      // photo: [...prev.photo, ...photoList].reverse().slice(0, 5),
+      // preview: [...prev.photo, ...photoList].reverse().slice(0, 5),
+      //  0 0(x) 1
+      photo: [...uploadList, ...prev.photo].slice(0, 5),
+      preview: [...previewList, ...prev.preview].slice(0, 5),
     }));
   };
 
@@ -304,8 +299,8 @@ function DaengFinderWritePage() {
     }
     if (daengList.length > 0) {
       setImage(prev => ({
-        photo: [...daengList, ...prev.photo],
-        preview: [...daengList, ...prev.preview],
+        photo: [...prev.photo, ...daengList].slice(0, 5),
+        preview: [...prev.preview, ...daengList].slice(0, 5),
       }));
     }
     if (lostTime) {
@@ -395,15 +390,17 @@ function DaengFinderWritePage() {
                 사진 등록{' '}
                 <span className='font-bold leading-4 text-[#A54BFF]'>
                   {/* {daengList? daengList.length : image.preview.length} */}
-                  {image.preview.length - 1}
+                  {image.preview.length}
                 </span>
                 /5
               </div>
-              <DaengFinderPhotoBox
-                imageHandler={imageHandler}
-                preview={image.preview}
-                deleteImage={deleteImage}
-              />
+              <div className='f-fr-ic gap-1'>
+                <DaengFinderPhotoBox
+                  imageHandler={imageHandler}
+                  preview={image.preview}
+                  deleteImage={deleteImage}
+                />
+              </div>
             </div>
           </form>
           <div className='p-6 h-[35%]'>

@@ -7,7 +7,7 @@ import Uptop from '../components/DaengFinder/Uptop';
  * @param {RefObject} targetElementId  element id that can be storage name
  * @param {Boolean} isScroll  true or false
  * @param {String} storageName storage name
- * @param {String[]} dependOn  useEffect dependency array
+ * @param {any[]} dependOn  useEffect dependency array
  * 
  */
 const useScroll = (targetRef, isScroll, storageName,...dependOn) => {

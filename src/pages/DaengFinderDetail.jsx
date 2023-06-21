@@ -5,7 +5,7 @@
 import DOMPurify from 'dompurify';
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +13,7 @@ import { shallow } from 'zustand/shallow';
 import {
   deleteMyPost,
   editToFoundPost,
+  getCurrentBookmarkState,
   searchPostLostDetail,
 } from '../api/daengFinder';
 import { ReactComponent as Badge } from '../assets/images/Badge1.svg';
@@ -147,17 +148,40 @@ function DaengFinderDetail() {
     },
   });
 
-  const { isLoading, data, isError, error } = useQuery(
-    ['getPostLost', 'detail', postId],
-    () => searchPostLostDetail(postId),
+  const res = useQueries([
     {
+      queryKey: ['getPostLost', 'detail', 'bookmark', postId],
+      queryFn: () => getCurrentBookmarkState(postId),
+      onSuccess: dt => {
+        console.log('getCurrentBookmarkState >>>', dt);
+      },
+      onError: err => {
+        console.log('err >>>', err);
+      },
+      refetchOnWindowFocus: false,
+    },
+    {
+      queryKey: ['getPostLost', 'detail', postId],
+      queryFn: () => searchPostLostDetail(postId),
       enabled: !daeng,
       refetchOnWindowFocus: false,
       onSuccess: successData => {
-        // console.log('useQuery >>>', successData);
+        console.log('searchPostLostDetail >>>', successData);
       },
     },
-  );
+  ]);
+
+  // const { isLoading, data, isError, error } = useQuery(
+  //   ['getPostLost', 'detail', postId],
+  //   () => searchPostLostDetail(postId),
+  //   {
+  //     enabled: !daeng,
+  //     refetchOnWindowFocus: false,
+  //     onSuccess: successData => {
+  //       // console.log('useQuery >>>', successData);
+  //     },
+  //   },
+  // );
 
   const editToFound = () => {
     editToFoundMutation.mutateAsync(postId);
@@ -198,10 +222,33 @@ function DaengFinderDetail() {
     setClipAddress(location.pathname);
   }, [location, navigate]);
 
+  // useEffect(() => {
+  //   // console.log('useEffect processed');
+  //   const deepData = data?.data ? data?.data[0] : null;
+  //   getBookmarkState(deepData?.BookMarks);
+  //   setDaengList(deepData?.lostPhotoUrl || []);
+  //   setDaeng(
+  //     deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
+  //   );
+  //   setPassPostId(deepData?.postId);
+  //   getPostId(deepData?.postId);
+  //   getUserId(deepData?.UserId);
+  //   setMoreInfo({
+  //     createdAt: deepData?.createdAt,
+  //     address: deepData?.address,
+  //     title: deepData?.title,
+  //     content: deepData?.content,
+  //     dogname: deepData?.dogname,
+  //     lostTime: deepData?.losttime,
+  //   });
+  // }, [data]);
   useEffect(() => {
     // console.log('useEffect processed');
-    const deepData = data?.data ? data?.data[0] : null;
-    getBookmarkState(deepData?.BookMarks);
+    const deepData = res[1].data?.data ? res[1].data?.data[0] : null;
+    const bookMarkData = res[0].data?.data?.bookmarkData
+      ? res[0].data?.data?.bookmarkData.isBookmarked
+      : null;
+    getBookmarkState(bookMarkData);
     setDaengList(deepData?.lostPhotoUrl || []);
     setDaeng(
       deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
@@ -217,10 +264,10 @@ function DaengFinderDetail() {
       dogname: deepData?.dogname,
       lostTime: deepData?.losttime,
     });
-  }, [data]);
+  }, [res[0].data, res[1].data]);
 
   /** @checkPoint return문 없어도(순차적인 렌더링 없이) query 적용되는지 확인해보자. */
-  if (isLoading) {
+  if (res[0].isLoading || res[1].isLoading) {
     // console.log('isLoading >>> ');
     return (
       <div className='f-ic-jc w-full h-full'>
@@ -229,7 +276,7 @@ function DaengFinderDetail() {
     );
   }
 
-  if (isError) {
+  if (res[0].isError || res[0].isError) {
     setErrorMsg(true);
     toast.error('Error occured while Loading', {
       position: toast.POSITION.TOP_CENTER,
@@ -245,8 +292,10 @@ function DaengFinderDetail() {
 
   /** @camelCase 아닌 게 많다. 조심. */
   // console.log('data 깊다 >>>', data?.data);
-  const deepData = data?.data ? data?.data[0] : null;
-  const userPhotoData = data?.data[1]?.length ? data?.data[1][0] : null;
+  const deepData = res[1].data?.data ? res[1].data?.data[0] : null;
+  const userPhotoData = res[1].data?.data[1]?.length
+    ? res[1].data?.data[1][0]
+    : null;
   const imageList = deepData?.lostPhotoUrl;
   const lostLatitude = deepData?.lostLatitude;
   const lostLongitude = deepData?.lostLongitude;
@@ -258,7 +307,7 @@ function DaengFinderDetail() {
     <div className='h-[812px] w-full'>
       {errorMsg && <ToastContainer />}
       <IoIosArrowBack
-        className='absolute z-30 top-7 left-4 text-xl text-[#FFFFFF] drop-shadow cursor-pointer'
+        className='absolute z-30 top-7 left-4 text-2xl text-[#FFFFFF] drop-shadow cursor-pointer hover:scale-110 transition'
         onClick={() =>
           navigate(reDirection ? '/mypost' : '/daengfinder', {
             state: {

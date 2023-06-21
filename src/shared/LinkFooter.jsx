@@ -44,9 +44,14 @@ const store = (set, get) => ({
   //     isBookmark
   //   }));
   // },
-  getBookmarkState: isBookmarkArray => {
+  // getBookmarkState: isBookmarkArray => {
+  //   set(() => ({
+  //     isBookmark: isBookmarkArray?.length > 0,
+  //   }));
+  // },
+  getBookmarkState: isBookmark => {
     set(() => ({
-      isBookmark: isBookmarkArray?.length > 0,
+      isBookmark,
     }));
   },
   setClipAddress: clipAddress => {

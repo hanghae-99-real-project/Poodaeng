@@ -67,7 +67,7 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
             // whitespace-normal 이랑 whitespace-nowrap이랑 똑같다
             // <p className=' text-xs w-56   line-clamp-3'>{data.content}</p>
             <p
-              className='text-xs font-medium w-56 antialiased line-clamp-3'
+              className='text-xs font-medium w-56 antialiased line-clamp-2'
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(data.content, {
                   ALLOWED_TAGS: ['p'],
@@ -76,7 +76,7 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
             />
           ) : null}
           {justSearch && (
-            <p className=' text-xs w-56 antialiased line-clamp-3'>
+            <p className=' text-xs w-56 antialiased line-clamp-2'>
               {data.address}
             </p>
           )}
