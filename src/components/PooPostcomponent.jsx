@@ -79,19 +79,19 @@ function PooPostcomponent() {
       <div className='h-[812px]'>
         <div className='overflow-y-scroll'>
           <div className='ml-6 mt-8'>
-            <div className='font-[600] text-[15px]'>푸박스 위치</div>
+            <div className='font-semibold text-[15px]'>푸박스 위치</div>
             <KakaoClickMap onMapClick={handleMapClick} />
           </div>
           <div className='ml-6 mt-4'>
-            <div className='font-[600] text-base'>사진 등록</div>
+            <div className='font-semibold text-base'>사진 등록</div>
             <div className='flex justify-center'>
               <FileUploader onFileUpload={handleFileUpload} />
             </div>
           </div>
           <div className='ml-6 mt-4'>
-            <div className='font-[600] text-base'>푸박스 특이사항 설명</div>
+            <div className='font-semibold text-base'>푸박스 특이사항 설명</div>
             <input
-              className='border-none font-[400] text-base pb-2 my-3 w-80'
+              className='border-none font-normal text-base pb-2 my-3 w-80'
               placeholder='20자 이내로 입력해주세요'
               onChange={handleContentChange}
               maxLength={20}
