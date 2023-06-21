@@ -36,6 +36,7 @@ import RouteChangeTracker from '../google/RouteChangeTracker';
 import PasswordEdit from '../pages/PasswordEdit';
 import Successcomponent from '../components/Successcomponent';
 import LoadingTestPage from '../pages/LoadingTestPage';
+import PoopostLanding from '../components/PoopostLanding';
 
 
 
@@ -61,6 +62,7 @@ function Router() {
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/passwordedit' element={<PasswordEdit />}/>
           <Route path='/success' element={<Successcomponent />}/>
+          
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet
@@ -84,6 +86,7 @@ function Router() {
           <Route path='/daengfinder' element={<DaengFinder />}/>
           <Route path='/daengfinder/search' element={<DaengFinderSearchPage />} />
           <Route path='/mypoobox' element={<MyPooboxcomponent />}/>
+          <Route path='/poolanding' element={<PoopostLanding />}/>
         </Route>
       </Routes>
     </BrowserRouter>
