@@ -5,6 +5,7 @@ import $ from 'jquery';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../assets/images/Guidearrow.svg';
 import { ReactComponent as Clock } from '../assets/images/Clock.svg';
+import { useState } from 'react';
 
 function TmapPage() {
   useEffect(() => {
@@ -21,6 +22,7 @@ function TmapPage() {
   var totalMarkerArr = [];
   var drawInfoArr = [];
   var resultdrawArr = [];
+  const [isEnd, setIsEnd] = useState(false);
 
   //navigation주소로 get요청을 보냇을떄 (길찾기 버튼을 눌렀을때) 소켓이 연결되고 네비게이션 실행
   //
@@ -252,6 +254,15 @@ function TmapPage() {
     resultdrawArr.push(polyline_);
   }
 
+  function navigationEnd() {
+    setIsEnd(true);
+  }
+
+  function navigationOut() {
+    setIsEnd(false);
+    navigate('/map');
+  }
+
   return (
     <div className='absolute'>
       <div className='absolute  my-5 top-0 z-30 w-full h-36 flex flex-col justify-center items-center bg-white rounded-lg shadow-xl'>
@@ -269,7 +280,7 @@ function TmapPage() {
         <div className='flex justify-between'>
           <div
             className='border rounded-lg bg-[#8722ED] text-white px-7 py-2 mt-3'
-            onClick={() => navigate('/map')}
+            onClick={navigationEnd}
           >
             길찾기 종료
           </div>
@@ -278,6 +289,19 @@ function TmapPage() {
       <div id='map_div' className='w-full h-full'>
         <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'></div>
       </div>
+      {isEnd && (
+        <div className='fixed inset-0 flex z-30 items-center justify-center bg-black bg-opacity-50'>
+          <div className='flex flex-col items-center justify-center bg-white w-48 p-5 h-auto rounded-lg gap-5'>
+            <div className='font-bold text-sm'>길 찾기가 종료되었습니다.</div>
+            <button
+              className='bg-mainColor text-white font-bold py-1 px-1 rounded-lg w-20'
+              onClick={navigationOut}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

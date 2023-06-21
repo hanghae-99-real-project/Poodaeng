@@ -11,6 +11,7 @@ import { ReactComponent as Report } from '../assets/images/report.svg';
 import { dateConvert2 } from '../utils/DateConvert';
 import Headers from './Headers';
 import { ReactComponent as Exit } from '../assets/images/Exit.svg';
+import { ReactComponent as ReportCheck } from '../assets/images/reportcheck.svg';
 
 function PooDetailComponent() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function PooDetailComponent() {
   const refreshToken = Cookies.get('refreshToken');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contents, setContents] = useState('');
+  const [report, setReport] = useState(false);
   // const { accessToken } = useSelector(store => store.auth);
 
   // console.log('address', address);
@@ -52,7 +54,7 @@ function PooDetailComponent() {
   const mutation = useMutation(reportPooBox, {
     onSuccess: () => {
       queryClient.invalidateQueries('poobox');
-      // console.log('신고 완료');
+      setReport(true);
     },
     onError: error => {
       // console.log(error);
@@ -77,6 +79,11 @@ function PooDetailComponent() {
   const reportHandler = () => {
     mutation.mutate(reportData);
     closeModal();
+  };
+
+  const reportoutHandler = () => {
+    setReport(false);
+    navigate('/map');
   };
 
   function loadFindHandler(pooId, pooLatitude, pooLongitude, address) {
@@ -132,7 +139,7 @@ function PooDetailComponent() {
 
       {isModalOpen && (
         <div className='fixed inset-0 flex z-10 items-center justify-center bg-black bg-opacity-50'>
-          <div className='bg-white w-80 p-10 rounded-lg'>
+          <div className='flex flex-col bg-white w-80 h-96 p-10 rounded-lg'>
             <div className='flex justify-between'>
               <div />
               <div className='text-xl font-bold mb-5'>신고 사유</div>
@@ -175,12 +182,29 @@ function PooDetailComponent() {
               </ul>
 
               <button
-                className='bg-mainColor text-white font-bold py-3 px-4 rounded-lg'
+                className='bg-mainColor text-white font-bold py-3 px-4 rounded-lg mt-10'
                 onClick={reportHandler}
               >
                 신고하기
               </button>
             </div>
+          </div>
+        </div>
+      )}
+      {report && (
+        <div className='fixed inset-0 flex z-10 items-center justify-center bg-black bg-opacity-50'>
+          <div className='flex flex-col items-center justify-center bg-white w-80 h-96 p-10 rounded-lg gap-5'>
+            <ReportCheck />
+            <div className='flex flex-col items-center gap-2'>
+              <div className='font-bold text-xl'>신고가 접수되었습니다.</div>
+              <div className='text-xs'>최대한 빠르게 처리해 드릴게요!</div>
+            </div>
+            <button
+              className='bg-mainColor text-white font-bold py-3 px-4 rounded-lg w-full mt-10'
+              onClick={reportoutHandler}
+            >
+              확인
+            </button>
           </div>
         </div>
       )}
