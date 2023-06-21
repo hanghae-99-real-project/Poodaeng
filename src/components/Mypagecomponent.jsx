@@ -45,7 +45,7 @@ function Mypagecomponent() {
   };
 
   const mypageContent = data?.data?.mypageContent;
-  console.log('mypageContent', mypageContent);
+  // console.log('mypageContent', mypageContent);
   // [ 0:갯수,
   //   1:갯수,
   //   2:갯수 ]
