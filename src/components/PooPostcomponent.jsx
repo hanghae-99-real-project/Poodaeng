@@ -58,6 +58,10 @@ function PooPostcomponent() {
       setErrormsg('이미지를 추가해주세요');
       return;
     }
+    if (!content) {
+      setErrormsg('특이사항을 입력해주세요');
+      return;
+    }
 
     // const data = {};
     const formData = new FormData();
@@ -73,7 +77,11 @@ function PooPostcomponent() {
   };
 
   return (
-    <form method='post' encType='multipart/form-data'>
+    <form
+      method='post'
+      encType='multipart/form-data'
+      className='flex flex-col h-full'
+    >
       <Headers text icon destination=''>
         푸박스 등록
       </Headers>
@@ -97,14 +105,13 @@ function PooPostcomponent() {
               onChange={handleContentChange}
               maxLength={20}
             />
-            <Buttons
-              type='button'
-              bgColor='#8722ED'
+            <div
               textColor='#FFFFFF'
               onClick={pooBoxSubmitHandler}
+              className='sticky bottom-0 large-button flexCenter bg-mainColor text-white my-10 '
             >
               등록하기
-            </Buttons>
+            </div>
             <div className='flex justify-center text-sm text-[#FF4444]'>
               {errormsg && (
                 <div className='fixed inset-0 flex z-30 items-center justify-center bg-black bg-opacity-50'>
