@@ -9,6 +9,9 @@ import Kakaoserch from './Kakaoserch';
 // import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
 import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
+import { ReactComponent as Alert } from '../assets/images/Alert.svg';
+import { ReactComponent as Logo } from '../assets/images/푸댕.svg';
+import { ReactComponent as Event } from '../assets/images/event.svg';
 import Slidecomponent from './Slidecomponent/Slidecomponent';
 // import getDaengMain from '../api/main';
 
@@ -21,38 +24,25 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='relative top-0 flex flex-row justify-between w-96 h-10 mt-4 mb-2'>
-        <img
-          className='ml-5 mb-2 object-contain'
-          src='./images/Logo.png'
-          alt='PooDaeng.png'
-        />
-        <img
-          className='mr-5 mb-2 object-contain cursor-pointer'
-          src='./images/Group 120.png'
-          alt='Alert.png'
-          onClick={AlertNavigateHander}
-        />
+      <div className='sticky top-0 flex flex-row justify-between w-96 h-10 mt-4 mb-2 px-5'>
+        <Logo />
+        <Alert className='cursor-pointer' onClick={AlertNavigateHander} />
       </div>
       <div className='max-h-[586px]'>
         <div
-          className='flex justify-center items-center w-auto h-40 ml- border-t border-b cursor-pointer'
+          className='flex justify-center items-center w-auto h-40 cursor-pointer'
           role='none'
           onClick={() => navigate('/events')}
         >
           <div className=''>
-            <img
-              className='w-96 h-40 object-cover'
-              src='./images/Event.png'
-              alt='eventbanner'
-            />
+            <Event />
           </div>
         </div>
         <div className='relative'>
-          <div className='ml-2 mt-2 font-[700] text-xl '>
+          <div className='ml-2 mt-2 font-bold text-xl '>
             내 주변 푸박스 찾기
           </div>
-          <div className='ml-2 mt-1 font-[500] text-xs text-[#808080] mb-2'>
+          <div className='ml-2 mt-1 font-medium text-xs text-[#808080] mb-2'>
             지금 내 주변에 있는 푸박스의 위치를 확인하세요.
           </div>
           <div className='relative w-[360px] h-40  ml-2 overflow-hidden rounded-xl'>
@@ -67,8 +57,8 @@ function Maincomponent() {
           </div>
           <div className=' mt-3 w-full border' />
         </div>
-        <div className='ml-2 font-[700] text-xl mt-2'>내 주변 실종신고</div>
-        <div className='ml-2 font-[500] text-xs text-[#808080] mt-1'>
+        <div className='ml-2 font-bold text-xl mt-2'>내 주변 실종신고</div>
+        <div className='ml-2 font-medium text-xs text-[#808080] mt-1'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
         <div className='flex justify-center items-center w-[360px] h-56 flex-wrap mt-2 ml-2  rounded-xl'>

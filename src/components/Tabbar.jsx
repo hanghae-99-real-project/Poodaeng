@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import Cookies from 'js-cookie';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
 import { ReactComponent as DaengIcon } from '../assets/images/newDaengfinder.svg';
 import { ReactComponent as HomeIcon } from '../assets/images/newHome.svg';
@@ -9,8 +10,10 @@ import { ReactComponent as ProfileIcon } from '../assets/images/newMyprofile.svg
 import { ReactComponent as PooBox } from '../assets/images/newPoobox.svg';
 import { tokenStore } from '../pages/SignInPage';
 
-function Tabbar({ isActive, setIsActive }) {
+function Tabbar({ setIsActive }) {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const refreshToken = Cookies.get('refreshToken');
 
   // console.log('active', isActive);
@@ -55,38 +58,44 @@ function Tabbar({ isActive, setIsActive }) {
     setIsActive('mypage');
   };
 
+  const handleIconClick = (route, iconName) => {
+    navigate(route);
+  };
   return (
     <div className='sticky bottom-0 border bg-[#FFFFFF] z-20'>
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
         <HomeIcon
           className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
-            isActive === 'home' ? 'fill-mainColor' : ''
+            location.pathname === '/' ? 'fill-mainColor' : ''
           }`}
-          onClick={HomeIconHandler}
+          onClick={() => handleIconClick('/', 'home')}
         />
         <MapIcon
           className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
-            isActive === 'map' ? 'fill-mainColor' : ''
+            location.pathname === '/map' ? 'fill-mainColor' : ''
           }`}
-          onClick={MapIconHandler}
+          onClick={() => handleIconClick('/map', 'map')}
         />
         <PooBox
           className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
-            isActive === 'poopost' ? 'fill-mainColor' : ''
+            location.pathname.includes('/poopost') ||
+            location.pathname.includes('/poolanding')
+              ? 'fill-mainColor'
+              : ''
           }`}
-          onClick={PooPostIconHandler}
+          onClick={() => handleIconClick('/poolanding', 'poopost')}
         />
         <DaengIcon
           className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
-            isActive === 'daengfinder' ? 'fill-mainColor' : ''
+            location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
           }`}
-          onClick={DaengIconHandler}
+          onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
         />
         <ProfileIcon
           className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
-            isActive === 'mypage' ? 'fill-mainColor' : ''
+            location.pathname === '/mypage' ? 'fill-mainColor' : ''
           }`}
-          onClick={ProfileIconHandler}
+          onClick={() => handleIconClick('/mypage', 'mypage')}
         />
       </div>
     </div>

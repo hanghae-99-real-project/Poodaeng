@@ -8,12 +8,14 @@ import FileUploader from './FileUploader';
 import Headers from './Headers';
 import KakaoClickMap from './KakaoClickMap';
 import Buttons from './common/Buttons';
+import { ReactComponent as Exclamation } from '../assets/images/Exclamation.svg';
 
 function PooPostcomponent() {
   const [latlng, setLatlng] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [content, setContent] = useState('');
   const [errormsg, setErrormsg] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -21,7 +23,7 @@ function PooPostcomponent() {
     onSuccess: data => {
       // console.log('query success response >>> ', data);
       queryClient.invalidateQueries('poobox');
-      navigate('/map');
+      navigate('/success');
     },
     onError: error => {
       if (error.response?.status === 403) {
@@ -67,7 +69,6 @@ function PooPostcomponent() {
       pooLongitude: latlng.Ma,
       content,
     };
-
     mutation.mutate(postData);
   };
 
@@ -79,19 +80,19 @@ function PooPostcomponent() {
       <div className='h-[812px]'>
         <div className='overflow-y-scroll'>
           <div className='ml-6 mt-8'>
-            <div className='font-[600] text-[15px]'>푸박스 위치</div>
+            <div className='font-semibold text-[15px]'>푸박스 위치</div>
             <KakaoClickMap onMapClick={handleMapClick} />
           </div>
           <div className='ml-6 mt-4'>
-            <div className='font-[600] text-base'>사진 등록</div>
+            <div className='font-semibold text-base'>사진 등록</div>
             <div className='flex justify-center'>
               <FileUploader onFileUpload={handleFileUpload} />
             </div>
           </div>
           <div className='ml-6 mt-4'>
-            <div className='font-[600] text-base'>푸박스 특이사항 설명</div>
+            <div className='font-semibold text-base'>푸박스 특이사항 설명</div>
             <input
-              className='border-none font-[400] text-base pb-2 my-3 w-80'
+              className='border-b font-normal text-base pb-2 my-3 w-80'
               placeholder='20자 이내로 입력해주세요'
               onChange={handleContentChange}
               maxLength={20}
@@ -105,7 +106,26 @@ function PooPostcomponent() {
               등록하기
             </Buttons>
             <div className='flex justify-center text-sm text-[#FF4444]'>
-              {errormsg}
+              {errormsg && (
+                <div className='fixed inset-0 flex z-30 items-center justify-center bg-black bg-opacity-50'>
+                  <div className='flex flex-col items-center justify-center bg-white w-80 h-auto p-10 rounded-lg gap-5'>
+                    <div className='flex flex-col items-center gap-4'>
+                      <Exclamation className='mt-14' />
+                      <div className='flex flex-col items-center font-bold w-40'>
+                        {errormsg}
+                      </div>
+                    </div>
+                    <div className='flex flex-col w-full gap-3 mt-10 mb-12'>
+                      <button
+                        className='bg-[#C7C7C7] text-white font-bold py-3 px-4 rounded-lg w-full '
+                        onClick={() => setErrormsg('')}
+                      >
+                        돌아가기
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
