@@ -13,7 +13,7 @@ function Successcomponent() {
       </div>
       <div
         className='large-button flexCenter bg-mainColor text-white'
-        onClick={navigate('/map')}
+        onClick={() => navigate('/map')}
       >
         확인
       </div>
