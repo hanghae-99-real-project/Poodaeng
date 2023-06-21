@@ -85,19 +85,19 @@ function PooPostcomponent() {
       <Headers text icon destination=''>
         푸박스 등록
       </Headers>
-      <div className='h-[812px]'>
+      <div className='h-full pl-6'>
         <div className='overflow-y-scroll'>
-          <div className='ml-6 mt-8'>
+          <div className='mt-8'>
             <div className='font-semibold text-[15px]'>푸박스 위치</div>
             <KakaoClickMap onMapClick={handleMapClick} />
           </div>
-          <div className='ml-6 mt-4'>
+          <div className='mt-4'>
             <div className='font-semibold text-base'>사진 등록</div>
-            <div className='flex justify-center'>
+            <div className='flex justify-center pr-3'>
               <FileUploader onFileUpload={handleFileUpload} />
             </div>
           </div>
-          <div className='ml-6 mt-4'>
+          <div className='mt-4'>
             <div className='font-semibold text-base'>푸박스 특이사항 설명</div>
             <input
               className='border-b font-normal text-base pb-2 my-3 w-80'
