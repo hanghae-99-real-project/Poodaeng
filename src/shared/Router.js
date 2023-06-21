@@ -34,6 +34,7 @@ import Unknown from '../pages/Unknown';
 import PasswordFind from '../pages/PasswordFind';
 import RouteChangeTracker from '../google/RouteChangeTracker';
 import PasswordEdit from '../pages/PasswordEdit';
+import Successcomponent from '../components/Successcomponent';
 
 
 // import TokenCheck from '../utils/TokenCheck';
@@ -57,6 +58,7 @@ function Router() {
           <Route path='/unknown' element={<Unknown />} />
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/passwordedit' element={<PasswordEdit />}/>
+          <Route path='/success' element={<Successcomponent />}/>
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet

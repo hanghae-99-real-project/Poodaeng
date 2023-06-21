@@ -14,6 +14,7 @@ function PooPostcomponent() {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [content, setContent] = useState('');
   const [errormsg, setErrormsg] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -21,7 +22,7 @@ function PooPostcomponent() {
     onSuccess: data => {
       // console.log('query success response >>> ', data);
       queryClient.invalidateQueries('poobox');
-      navigate('/map');
+      navigate('/success');
     },
     onError: error => {
       if (error.response?.status === 403) {
@@ -67,7 +68,6 @@ function PooPostcomponent() {
       pooLongitude: latlng.Ma,
       content,
     };
-
     mutation.mutate(postData);
   };
 
