@@ -7,8 +7,8 @@ import React, { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
 import {
   deleteMyPost,
@@ -16,6 +16,7 @@ import {
   searchPostLostDetail,
 } from '../api/daengFinder';
 import { ReactComponent as Badge } from '../assets/images/Badge1.svg';
+import PhotoSlide from '../components/DaengFinder/DaengFinderDetail/PhotoSlide';
 // import Badge from '../assets/images/Badge1.svg';
 import { ReactComponent as CheckedPurple } from '../assets/images/CheckedPurple.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
@@ -25,8 +26,8 @@ import KakaoMap from '../kakao/KakaoMap';
 import { useClipStore } from '../shared/LinkFooter';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import { dateConvert2 } from '../utils/DateConvert';
-import { tokenStore } from './SignInPage';
 import { toastSuccess } from '../utils/ToastFreeSetting';
+import { tokenStore } from './SignInPage';
 
 // import useCurrentLocation from '../hooks/useCurrentLocation';
 
@@ -257,7 +258,7 @@ function DaengFinderDetail() {
     <div className='h-[812px] w-full'>
       {errorMsg && <ToastContainer />}
       <IoIosArrowBack
-        className='absolute z-30 top-7 left-4 text-xl cursor-pointer'
+        className='absolute z-30 top-7 left-4 text-xl text-[#FFFFFF] drop-shadow cursor-pointer'
         onClick={() =>
           navigate(reDirection ? '/mypost' : '/daengfinder', {
             state: {
@@ -287,7 +288,8 @@ function DaengFinderDetail() {
       </div>
       <div className='w-full h-[45rem] overflow-y-scroll'>
         <div className='flex items-center justify-center relative w-full h-80'>
-          <div className='absolute bottom-3 f-fr-jc gap-3'>
+          <PhotoSlide daengList={daengList} />
+          {/* <div className='absolute bottom-3 f-fr-jc gap-3'>
             {daengList.length &&
               daengList.map((_, idx) => {
                 return (
@@ -307,7 +309,7 @@ function DaengFinderDetail() {
             src={daeng}
             alt='photoThumb'
             className='object-cover w-full h-full'
-          />
+          /> */}
         </div>
         {/* <div className='bg-[#FFFFFF] px-5 h-[25rem] overflow-y-scroll'> */}
         <div className='bg-[#FFFFFF] px-5 '>

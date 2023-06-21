@@ -304,3 +304,11 @@ body {
   font-family: 'SUIT-Regular', 'Nunito Sans';
   font-weight: 600 !important;
 }
+
+.swiper-pagination-bullet {
+  background-color: #000000 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ffffff !important;
+}

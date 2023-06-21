@@ -394,11 +394,13 @@ function DaengFinderWritePage() {
                 </span>
                 /5
               </div>
-              <DaengFinderPhotoBox
-                imageHandler={imageHandler}
-                preview={image.preview}
-                deleteImage={deleteImage}
-              />
+              <div className='f-fr-ic gap-1'>
+                <DaengFinderPhotoBox
+                  imageHandler={imageHandler}
+                  preview={image.preview}
+                  deleteImage={deleteImage}
+                />
+              </div>
             </div>
           </form>
           <div className='p-6 h-[35%]'>
