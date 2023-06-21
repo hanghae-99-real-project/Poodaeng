@@ -44,7 +44,7 @@ export default function Slidecomponent() {
   const pagination = {
     clickable: true,
     renderBullet(index, className) {
-      return `<span class="${className}" style="background-color: #8722ED;"></span>`;
+      return `<span class="${className}" style="background-color: #b2b2b2;"></span>`;
     },
   };
 

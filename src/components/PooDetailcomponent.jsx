@@ -143,6 +143,7 @@ function PooDetailComponent() {
             <div className='flex flex-col gap-5'>
               <ul className='flex flex-col gap-3'>
                 <li
+                  className='flex items-center'
                   onClick={() =>
                     contentsClick('해당 위치에 푸박스가 없어졌어요.')
                   }
@@ -150,15 +151,18 @@ function PooDetailComponent() {
                   <input
                     type='radio'
                     checked={contents === '해당 위치에 푸박스가 없어졌어요.'}
-                    className='mr-2 bg-mainColor'
+                    className='mr-2 accent-mainColor w-4 h-4'
                   />
                   해당 위치에 푸박스가 없어졌어요.
                 </li>
-                <li onClick={() => contentsClick('푸박스가 설명과 달라요.')}>
+                <li
+                  className='flex items-center'
+                  onClick={() => contentsClick('푸박스가 설명과 달라요.')}
+                >
                   <input
                     type='radio'
                     checked={contents === '푸박스가 설명과 달라요.'}
-                    className='mr-2 bg-mainColor'
+                    className='mr-2 accent-mainColor w-4 h-4'
                   />
                   푸박스가 설명과 달라요.
                 </li>
