@@ -60,7 +60,7 @@ function MyPooboxcomponent() {
         {pooData.map(item => {
           return (
             <div
-              className=''
+              className='w-40 h-56 overflow-hidden'
               key={item.id}
               onClick={() =>
                 pooDetailHandler(
@@ -82,7 +82,7 @@ function MyPooboxcomponent() {
                   className='w-40 h-40 object-cover'
                 />
               </div>
-              <div className='mt-1  text-sm font-bold'>{item.address}</div>
+              <div className='mt-1 text-sm font-bold'>{item.address}</div>
               <div className=' text-xs text-[#969696]'>
                 {dateConvert2(item.createdAt)[0]}
               </div>
