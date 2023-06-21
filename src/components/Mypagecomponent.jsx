@@ -18,6 +18,7 @@ function Mypagecomponent() {
   const mutation = useMutation(signOut, {
     onSuccess: success => {
       resetUserInfoLog();
+      navigate('/login');
       // console.log('logout query success response >>> ', success);
     },
     onError: error => {
@@ -41,7 +42,6 @@ function Mypagecomponent() {
 
   const logoutHandler = () => {
     mutation.mutate();
-    navigate('/login');
   };
 
   const mypageContent = data?.data?.mypageContent;

@@ -1,5 +1,5 @@
 /* eslint-disable no-return-assign */
-import axiosToken from "./axiosToken"
+import axiosToken from "./axiosToken";
 
 const getMyPost = async() => {
   const response = await axiosToken.get('/api/auth/mypage/mypost');
