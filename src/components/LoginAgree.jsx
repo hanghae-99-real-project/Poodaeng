@@ -25,7 +25,9 @@ function LoginAgree() {
   return (
     <div className='flex flex-col items-center gap-5'>
       {isLoading ? (
-        <Loading />
+        <div className='w-full h-full'>
+          <Loading />
+        </div>
       ) : (
         <>
           <div className='f-fc-ic-jc gap-1 '>

@@ -32,7 +32,7 @@ module.exports = {
         emerge:'emerge 1s ease-in-out',
       },
       screens: {
-        'mobile': {'raw': '(max-height: 812px)'},
+        'mobile': {'raw': '(max-height: 813px)'},
         // 'mobile': '812px',
       // 'custombp': {'raw': '(max-height: 1234px),(min-width:920px)'}
       //   'tablet': '640px',
