@@ -9,6 +9,9 @@ import Kakaoserch from './Kakaoserch';
 // import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
 import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
+import { ReactComponent as Alert } from '../assets/images/Alert.svg';
+import { ReactComponent as Logo } from '../assets/images/푸댕.svg';
+import { ReactComponent as Event } from '../assets/images/event.svg';
 import Slidecomponent from './Slidecomponent/Slidecomponent';
 // import getDaengMain from '../api/main';
 
@@ -21,31 +24,18 @@ function Maincomponent() {
 
   return (
     <>
-      <div className='relative top-0 flex flex-row justify-between w-96 h-10 mt-4 mb-2'>
-        <img
-          className='ml-5 mb-2 object-contain'
-          src='./images/Logo.png'
-          alt='PooDaeng.png'
-        />
-        <img
-          className='mr-5 mb-2 object-contain cursor-pointer'
-          src='./images/Group 120.png'
-          alt='Alert.png'
-          onClick={AlertNavigateHander}
-        />
+      <div className='sticky top-0 flex flex-row justify-between w-96 h-10 mt-4 mb-2 px-5'>
+        <Logo />
+        <Alert className='cursor-pointer' onClick={AlertNavigateHander} />
       </div>
       <div className='max-h-[586px]'>
         <div
-          className='flex justify-center items-center w-auto h-40 ml- border-t border-b cursor-pointer'
+          className='flex justify-center items-center w-auto h-40 cursor-pointer'
           role='none'
           onClick={() => navigate('/events')}
         >
           <div className=''>
-            <img
-              className='w-96 h-40 object-cover'
-              src='./images/Event.png'
-              alt='eventbanner'
-            />
+            <Event />
           </div>
         </div>
         <div className='relative'>

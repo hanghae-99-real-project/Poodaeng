@@ -60,7 +60,6 @@ function Tabbar({ setIsActive }) {
 
   const handleIconClick = (route, iconName) => {
     navigate(route);
-    setIsActive(iconName);
   };
   return (
     <div className='sticky bottom-0 border bg-[#FFFFFF] z-20'>
@@ -79,9 +78,12 @@ function Tabbar({ setIsActive }) {
         />
         <PooBox
           className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
-            location.pathname === '/poopost' ? 'fill-mainColor' : ''
+            location.pathname.includes('/poopost') ||
+            location.pathname.includes('/poolanding')
+              ? 'fill-mainColor'
+              : ''
           }`}
-          onClick={() => handleIconClick('/poopost', 'poopost')}
+          onClick={() => handleIconClick('/poolanding', 'poopost')}
         />
         <DaengIcon
           className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
