@@ -5,6 +5,7 @@ import { getMyPooBox } from '../api/poobox';
 import Headers from './Headers';
 import Loading from './common/Loading';
 import { dateConvert2 } from '../utils/DateConvert';
+import { ReactComponent as PooNull } from '../assets/images/postnull.svg';
 
 function MyPooboxcomponent() {
   const { isLoading, isError, data } = useQuery('poobox', getMyPooBox);
@@ -21,9 +22,6 @@ function MyPooboxcomponent() {
     return <div>오류가 발생했습니다.</div>;
   }
   const pooData = data?.data?.getMyPooData;
-  if (!pooData) {
-    return <Loading />;
-  }
   // console.log('mypoobox', data.data.getMyPooData);
 
   const pooDetailHandler = (
@@ -52,44 +50,54 @@ function MyPooboxcomponent() {
   };
 
   return (
-    <div>
+    <div className='h-full'>
       <Headers text icon destination='mypage'>
         등록한 푸박스
       </Headers>
-      <div className='flex gap-3 overflow-y-scroll p-5 w-96 h-screen flex-wrap'>
-        {pooData.map(item => {
-          return (
-            <div
-              className='w-40 h-56 overflow-hidden'
-              key={item.id}
-              onClick={() =>
-                pooDetailHandler(
-                  item.pooId,
-                  item.UserId,
-                  item.address,
-                  item.content,
-                  item.pooPhotoUrl,
-                  item.createdAt,
-                  item.pooLatitude,
-                  item.pooLongitude,
-                )
-              }
-            >
-              <div className='w-40 h-40  rounded-lg overflow-auto'>
-                <img
-                  src={item.pooPhotoUrl}
-                  alt='img'
-                  className='w-40 h-40 object-cover'
-                />
-              </div>
-              <div className='mt-1 text-sm font-bold'>{item.address}</div>
-              <div className=' text-xs text-[#969696]'>
-                {dateConvert2(item.createdAt)[0]}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {pooData && pooData.length === 0 ? (
+        <div className='flex flex-col justify-center items-center w-96 h-full'>
+          <PooNull className='ml-5 ' />
+          <div className='mt-2 mb-20 text-[#A0A0A0]'>
+            등록한 푸박스가 없습니다.
+          </div>
+        </div>
+      ) : (
+        <div className='flex gap-3 overflow-y-scroll p-5 w-96 h-screen flex-wrap'>
+          {pooData &&
+            pooData.map(item => {
+              return (
+                <div
+                  className='w-40 h-56 overflow-hidden'
+                  key={item.id}
+                  onClick={() =>
+                    pooDetailHandler(
+                      item.pooId,
+                      item.UserId,
+                      item.address,
+                      item.content,
+                      item.pooPhotoUrl,
+                      item.createdAt,
+                      item.pooLatitude,
+                      item.pooLongitude,
+                    )
+                  }
+                >
+                  <div className='w-40 h-40  rounded-lg overflow-auto'>
+                    <img
+                      src={item.pooPhotoUrl}
+                      alt='img'
+                      className='w-40 h-40 object-cover'
+                    />
+                  </div>
+                  <div className='mt-1 text-sm font-bold'>{item.address}</div>
+                  <div className=' text-xs text-[#969696]'>
+                    {dateConvert2(item.createdAt)[0]}
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      )}
     </div>
   );
 }
