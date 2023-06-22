@@ -312,3 +312,97 @@ body {
 .swiper-pagination-bullet-active {
   background-color: #ffffff !important;
 }
+
+[data-homeicon-tooltip]:hover::after {
+  content: attr(data-homeicon-tooltip);
+  position: absolute;
+  top: 0%;
+  left: 5%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-mapicon-tooltip]:hover::after {
+  content: attr(data-mapicon-tooltip);
+  position: absolute;
+  top: 0%;
+  left: 12%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-poobox-tooltip]:hover::after {
+  content: attr(data-poobox-tooltip);
+  position: absolute;
+  top: 0%;
+  left: 32%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-daengicon-tooltip]:hover::after {
+  content: attr(data-daengicon-tooltip);
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-mypage-tooltip]:hover::after {
+  content: attr(data-mypage-tooltip);
+  position: absolute;
+  top: 0%;
+  right: 5%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -40%;
+  left: 10%;
+  font-size: xx-small;
+  border: 0.5px dotted #a54bff;
+  border-radius: 10px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+[data-comment]:hover::after {
+  content: attr(data-comment);
+  position: absolute;
+  top: -50%;
+  left: 6%;
+  font-size: xx-small;
+  border: 0.5px dashed #a54bff;
+  border-radius: 10px;
+  padding: 1px 5px;
+  width: 220px;
+  /* white-space: nowrap; */
+  color: #a54bff;
+}
+
+[data-camera-tooltip]:hover::after {
+  content: attr(data-camera-tooltip);
+  position: absolute;
+  top: -30%;
+  left: 6%;
+  font-size: xx-small;
+  border: 0.5px dashed #a54bff;
+  border-radius: 10px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
