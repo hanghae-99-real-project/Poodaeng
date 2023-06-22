@@ -112,7 +112,7 @@ function DaengFindercomponent() {
   const onPaginationSuccess = dt => {
     setGetNewPage(false);
     setPage(prevPage => prevPage + 1);
-    console.log('getPostLost success >>>', dt);
+    // console.log('getPostLost success >>>', dt);
     if (dt?.data?.lostPostsData?.length > 0) {
       totalData.push(...dt?.data?.lostPostsData);
       setTotalData([...totalData]);
@@ -134,7 +134,7 @@ function DaengFindercomponent() {
       },
       onError: err => {
         // setGetNewPage(false);
-        console.log('getNearbyLostPosts err >>>', err);
+        // console.log('getNearbyLostPosts err >>>', err);
       },
     },
     {
@@ -148,7 +148,7 @@ function DaengFindercomponent() {
       },
       onError: err => {
         // setGetNewPage(false);
-        console.log('getLatestLostPosts err >>>', err);
+        // console.log('getLatestLostPosts err >>>', err);
       },
     },
   ]);
@@ -164,9 +164,9 @@ function DaengFindercomponent() {
   );
 
   useEffect(() => {
-    console.log('inView start >>>', inview);
+    // console.log('inView start >>>', inview);
     if (inview) {
-      console.log('현재 불러올 page >>>', page);
+      // console.log('현재 불러올 page >>>', page);
       setGetNewPage(true);
     }
   }, [inview]);
@@ -200,20 +200,11 @@ function DaengFindercomponent() {
   }
 
   if (lostPostsResult[0].isError || lostPostsResult[1].isError) {
-    console.log(
-      'error >>>',
-      lostPostsResult[0].error || lostPostsResult[1].error,
-    );
-    // navigate('/', {
-    //   state: error,
-    // });
+    const error = lostPostsResult[0].error || lostPostsResult[1].error;
+    navigate('/', {
+      state: error,
+    });
   }
-  // console.log('daengFindercomponent >>> ', data);
-  // console.log('data.data>>> ', data?.data);
-  // const ListAll = data?.data?.lostPostsData;
-  // const ListMissing = data?.data?.lostPostsData?.filter(
-  //   card => card.status === false,
-  // );
 
   const ListAll = totalData;
   const ListMissing = totalData?.filter(card => card.status === false);

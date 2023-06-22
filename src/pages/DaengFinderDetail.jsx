@@ -153,10 +153,10 @@ function DaengFinderDetail() {
       queryKey: ['getPostLost', 'detail', 'bookmark', postId],
       queryFn: () => getCurrentBookmarkState(postId),
       onSuccess: dt => {
-        console.log('getCurrentBookmarkState >>>', dt);
+        // console.log('getCurrentBookmarkState >>>', dt);
       },
       onError: err => {
-        console.log('err >>>', err);
+        // console.log('err >>>', err);
       },
       refetchOnWindowFocus: false,
     },
@@ -166,7 +166,7 @@ function DaengFinderDetail() {
       enabled: !daeng,
       refetchOnWindowFocus: false,
       onSuccess: successData => {
-        console.log('searchPostLostDetail >>>', successData);
+        // console.log('searchPostLostDetail >>>', successData);
       },
     },
   ]);

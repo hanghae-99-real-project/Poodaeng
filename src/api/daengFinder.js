@@ -47,7 +47,6 @@ const searchPostLostDetail = async(id) => {
 }
 
 const getCurrentBookmarkState = async(postId) => {
-  console.log('postID type >>>', postId)
   const response = await axiosToken.get(`/api/lostposts/${postId}/bookmark`)
   return response
 }

@@ -544,13 +544,6 @@ function DaengFinderCommentPage() {
       }
     }
 
-    console.log(
-      'isCommentMode.absolutePrivate >>>',
-      isCommentMode.absolutePrivate,
-    );
-    console.log('privateComment >>>', privateComment);
-
-    console.log('isEditMode.absolutePrivate >>>', isEditMode.absolutePrivate);
     if (isCommentMode.targetComment) {
       inputs = {
         formData: {

@@ -151,7 +151,7 @@ function DaengFinderWritePage() {
      * 그냥 !checkPostId 빼면 될 듯.
      *  */
     // if (!checkPostId && image.photo.length < 1) {
-    if (image.photo.length < 1) {
+    if (image.photo.length < 2) {
       setAlertMsg(true);
       toast.error('이미지 1개이상 5개이하 필요', {
         position: toast.POSITION.TOP_CENTER,
