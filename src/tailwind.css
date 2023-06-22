@@ -350,7 +350,7 @@ body {
   content: attr(data-daengicon-tooltip);
   position: absolute;
   top: 0%;
-  left: 50%;
+  left: 46%;
   font-size: xx-small;
   padding: 1px 5px;
   white-space: nowrap;
@@ -399,6 +399,19 @@ body {
   position: absolute;
   top: -30%;
   left: 6%;
+  font-size: xx-small;
+  border: 0.5px dashed #a54bff;
+  border-radius: 10px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-grapebutton-tooltip]:hover::after {
+  content: attr(data-grapebutton-tooltip);
+  position: absolute;
+  bottom: 19%;
+  right: 2%;
   font-size: xx-small;
   border: 0.5px dashed #a54bff;
   border-radius: 10px;

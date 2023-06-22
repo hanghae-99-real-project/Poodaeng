@@ -91,7 +91,7 @@ function Tabbar({ setIsActive }) {
             onClick={() => handleIconClick('/poolanding', 'poopost')}
           />
         </div>
-        <div data-daengicon-tooltip='실종 반려견 리스트를 볼 수 있어요.'>
+        <div data-daengicon-tooltip='실종 반려견 리스트와 검색 기능이 있어요.'>
           <DaengIcon
             className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''

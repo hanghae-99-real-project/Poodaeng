@@ -329,10 +329,12 @@ function DaengFindercomponent() {
         </div>
       )}
       <ScrollUpTop useScrollTop />
-      <DaengFinderButton
-        className='absolute bottom-20 right-4 cursor-pointer'
-        onClick={moveToDaengFinderWrite}
-      />
+      <div data-grapebutton-tooltip='실종 반려견 게시글을 등록할 수 있어요.'>
+        <DaengFinderButton
+          className='absolute bottom-20 right-4 cursor-pointer'
+          onClick={moveToDaengFinderWrite}
+        />
+      </div>
     </>
   );
 }
