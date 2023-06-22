@@ -39,7 +39,7 @@ function FileUploader({ onFileUpload }) {
           {image && (
             <img
               role='none'
-              className='w-32 h-32 object-cover rounded-full'
+              className='w-32 h-32 object-cover rounded-xl'
               src={image}
               alt='Thumbnail'
               onClick={deleteImage}
