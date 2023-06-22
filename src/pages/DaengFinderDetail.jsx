@@ -437,15 +437,17 @@ function DaengFinderDetail() {
           <div className='absolute f-fc justify-end bottom-0 left-0 right-0 rounded-t-xl bg-[#FFFFFF]'>
             <button
               className={`f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 overflow-hidden cursor-pointer ${
-                isFound && 'text-[#D9D9D9]'
+                !isFound && 'text-[#D9D9D9]'
               } `}
               onClick={editToFound}
               disabled={isFound}
             >
               <CheckedPurple
                 className={`${
-                  isFound ? 'bg-[#D9D9D9]' : 'bg-mainColor'
-                } hover:scale-110 transition duration-300 rounded-sm`}
+                  isFound
+                    ? 'bg-mainColor'
+                    : 'bg-[#D9D9D9] hover:scale-110 transition duration-300'
+                }  rounded-sm`}
               />
               &nbsp;찾았어요
             </button>
