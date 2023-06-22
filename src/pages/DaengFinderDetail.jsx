@@ -249,7 +249,7 @@ function DaengFinderDetail() {
       ? res[0].data?.data?.bookmarkData.isBookmarked
       : null;
     getBookmarkState(bookMarkData);
-    setIsFound(deepData.status);
+    setIsFound(deepData?.status);
     setDaengList(deepData?.lostPhotoUrl || []);
     setDaeng(
       deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
