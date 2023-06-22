@@ -5,9 +5,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
 import { getMyBookMark, getMyPost } from '../api/myPage';
-import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
+// import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
 import { tokenStore } from '../pages/SignInPage';
 import { toastError, toastSuccess } from '../utils/ToastFreeSetting';
+import { ReactComponent as MyPageNoResult } from '../assets/images/MyPageNoResult.svg';
 import Card from './DaengFinder/Card';
 import Headers from './Headers';
 import Loading from './common/Loading';
@@ -113,8 +114,12 @@ function MyPostcomponent({ BookmarkMode, deleteComplete }) {
           })}
         </div>
       ) : (
-        <div className='h-full w-full f-ic-jc relative top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-          <NoResult />
+        <div className='h-full w-full f-fc-ic-jc gap-3 relative top-1/3 left-1/2 -translate-x-40 -translate-y-72'>
+          {/* <NoResult /> */}
+          <MyPageNoResult />
+          <p className='text-[#A0A0A0] font-medium antialiased whitespace-nowrap -translate-x-4'>
+            {BookmarkMode ? '북마크한 글이 없습니다.' : '작성한 글이 없습니다.'}
+          </p>
         </div>
       )}
     </>
