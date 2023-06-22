@@ -13,8 +13,8 @@ const writePostLost = async(inputs) => {
 }
 
 const getLatestLostPosts = async(page) => {
-  // const response = await axios.get('api/lostposts',{
-  const response = await axiosToken.get('api/lostposts',{
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/lostposts`,{
+  // const response = await axiosToken.get('api/lostposts',{
     params: {
       page
     }

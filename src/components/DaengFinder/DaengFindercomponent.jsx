@@ -46,6 +46,7 @@ function DaengFindercomponent() {
   const latitude = location?.latitude;
   const longitude = location?.longitude;
   const checkRefreshToken = Cookies.get('refreshToken');
+  const getPositionAgreement = localStorage.getItem('agreed') === 'true';
 
   useEffect(() => {
     setLocation(latitude, longitude);
@@ -223,7 +224,7 @@ function DaengFindercomponent() {
       <div className='relative top-0'>
         <div className='sticky top-0 flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md z-50'>
           <div className='w-[30px]' />
-          <div className='font-bold text-xl '>댕 finder</div>
+          <div className='font-bold text-xl '>댕파인더</div>
           <RxMagnifyingGlass
             className='text-3xl cursor-pointer transition duration-300 ease-in-out hover:scale-110'
             onClick={() => navigate('/daengfinder/search')}
@@ -258,7 +259,9 @@ function DaengFindercomponent() {
             </button>
             |
             <button
-              className={`${!checkRefreshToken && 'hidden'} ${
+              className={`${
+                (!getPositionAgreement || !checkRefreshToken) && 'hidden'
+              } ${
                 !latest && 'text-[#000000]'
               } hover:scale-105 transition cursor-pointer`}
               onClick={getNearbyPostsHandler}
