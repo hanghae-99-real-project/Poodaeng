@@ -73,9 +73,10 @@ function DaengFinderWritePage() {
 
   const queryClient = useQueryClient();
   const mutation = useMutation(writePostLost, {
-    onSuccess: data => {
+    onSuccess: async data => {
       // console.log('daengFinderWrite data>>> ', data);
-      queryClient.invalidateQueries(['getPostLost']);
+      await queryClient.invalidateQueries(['getPostLost']);
+      await queryClient.invalidateQueries('getDaengMain');
       onClearHandler();
       clearQuillValue();
       clearRoadAddresss();
@@ -385,7 +386,7 @@ function DaengFinderWritePage() {
                   (!afterfirstSearch || !roadAddress) &&
                   !address &&
                   'text-[#C7C7C7]'
-                }`}
+                } text-ellipsis whitespace-nowrap`}
               >
                 {(afterfirstSearch && roadAddress) || address || '실종 위치'}
               </div>

@@ -168,7 +168,7 @@ const PasswordFind = () => {
             >
               발급받기
             </button>
-            {!onValidator('phoneNumber') && (
+            {!onValidator('phoneNumber') && inputs.phoneNumber.length > 0 && (
               <span className='error-msg'>{errorMsg[0]}</span>
             )}
           </div>

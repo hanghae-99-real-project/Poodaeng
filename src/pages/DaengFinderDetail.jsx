@@ -140,6 +140,8 @@ function DaengFinderDetail() {
     onSuccess: data => {
       setIsFound(true);
       setEditModal(prev => !prev);
+      setErrorMsg(true);
+      toastSuccess(`'찾았어요'로 변경 완료!`);
       // console.log('editToFoundMutation success >>>', data);
       queryClient.invalidateQueries(['getPostLost', 'detail', postId]);
     },
