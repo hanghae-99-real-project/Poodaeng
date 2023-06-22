@@ -249,6 +249,7 @@ function DaengFinderDetail() {
       ? res[0].data?.data?.bookmarkData.isBookmarked
       : null;
     getBookmarkState(bookMarkData);
+    setIsFound(deepData.status);
     setDaengList(deepData?.lostPhotoUrl || []);
     setDaeng(
       deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
@@ -302,6 +303,7 @@ function DaengFinderDetail() {
   const nickname = deepData?.nickname;
   const createdAt = deepData?.createdAt;
   const lostTime = deepData?.losttime;
+  const status = deepData?.status;
 
   return (
     <div className='h-[812px] w-full'>
@@ -438,7 +440,7 @@ function DaengFinderDetail() {
                 isFound && 'text-[#D9D9D9]'
               } `}
               onClick={editToFound}
-              disabled={deepData?.status}
+              disabled={isFound}
             >
               <CheckedPurple
                 className={`${
