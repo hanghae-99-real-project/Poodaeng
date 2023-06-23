@@ -25,7 +25,6 @@ function ProfileEditcomponent() {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [nickEdit, setNickEdit] = useState(false);
   const [imgEdit, setImgEdit] = useState(false);
-  const [passEdit, setPassEdit] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState(null);
   // const [inputValue, setInputValue] = useState('');
   const [newNickname, setNewNickname] = useState('');
@@ -60,7 +59,6 @@ function ProfileEditcomponent() {
   const closeModal = () => {
     setNickEdit(false);
     setImgEdit(false);
-    setPassEdit(false);
     // console.log('Modal closed');
   };
 
@@ -162,7 +160,8 @@ function ProfileEditcomponent() {
 
   const newNicknameSubmit = () => {
     if (!newNickname) {
-      setErrorMsg('닉네임을 입력해주세요');
+      // setErrorMsg('변경 할 닉네임을 입력해주세요');
+      nickNameMutation.mutate(getMyInfoData.nickname);
     } else {
       nickNameMutation.mutate(newNickname);
     }
@@ -200,7 +199,11 @@ function ProfileEditcomponent() {
                 className='flex items-center justify-center border w-28 h-28 bg-[#D9D9D9] rounded-full'
                 onClick={imgEditHandler}
               >
-                <사진기 />
+                <img
+                  src={getMyInfoData.userPhoto[0]}
+                  alt={<사진기 />}
+                  className='flex items-center justify-center border w-28 h-28 rounded-full object-cover'
+                />
               </div>
             </div>
             <div
@@ -261,7 +264,11 @@ function ProfileEditcomponent() {
               className='flex items-center justify-center border w-28 h-28 bg-[#D9D9D9] rounded-full'
               onClick={imgEditHandler}
             >
-              <사진기 />
+              <img
+                src={getMyInfoData.userPhoto[0]}
+                alt={<사진기 />}
+                className='flex items-center justify-center border w-28 h-28 rounded-full object-cover'
+              />
             </div>
           </div>
         )}
@@ -274,7 +281,8 @@ function ProfileEditcomponent() {
                 value={newNickname}
                 onChange={nicknameChangeHandler}
                 className='flex justify-center items-center w-full py-1 pb-2 px-2 border-b mb-1'
-                placeholder=' 닉네임 입력 '
+                placeholder={getMyInfoData.nickname}
+                maxLength={15}
               />
               <button
                 onClick={newNicknameSubmit}
