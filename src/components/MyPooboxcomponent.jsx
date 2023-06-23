@@ -62,7 +62,7 @@ function MyPooboxcomponent() {
           </div>
         </div>
       ) : (
-        <div className='flex gap-3 overflow-y-scroll p-5 w-96 h-screen flex-wrap'>
+        <div className='grid grid-cols-2 gap-3 auto-rows-min auto-cols-min p-4 ml-1'>
           {pooData &&
             pooData.map(item => {
               return (
