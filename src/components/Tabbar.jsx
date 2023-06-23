@@ -66,7 +66,7 @@ function Tabbar({ setIsActive }) {
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-3'>
         <div className='flex flex-col items-center'>
           <HomeIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/', 'home')}
@@ -75,7 +75,7 @@ function Tabbar({ setIsActive }) {
         </div>
         <div className='flex flex-col items-center'>
           <MapIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/map', 'map')}
@@ -84,7 +84,7 @@ function Tabbar({ setIsActive }) {
         </div>
         <div className='flex flex-col items-center'>
           <PooBox
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname.includes('/poopost') ||
               location.pathname.includes('/poolanding')
                 ? 'fill-mainColor'
@@ -92,11 +92,11 @@ function Tabbar({ setIsActive }) {
             }`}
             onClick={() => handleIconClick('/poolanding', 'poopost')}
           />
-          <div className='absolute bottom-1 text-xs mt-1'>추가</div>
+          <div className='absolute bottom-1 text-xs mt-1'>푸박스</div>
         </div>
         <div className='flex flex-col items-center'>
           <DaengIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
@@ -105,7 +105,7 @@ function Tabbar({ setIsActive }) {
         </div>
         <div className='flex flex-col items-center'>
           <ProfileIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/mypage', 'mypage')}
