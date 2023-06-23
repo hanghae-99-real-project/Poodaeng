@@ -3,6 +3,7 @@ import React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 import { getMypageCount } from '../api/myPage';
 import { signOut } from '../api/sendCode';
 import { resetUserInfoLog } from '../zustand/example/zustandAPI';
@@ -10,7 +11,7 @@ import Headers from './Headers';
 import Loading from './common/Loading';
 
 function Mypagecomponent() {
-  // const refreshToken = Cookies.get('refreshToken');
+  const refreshToken = Cookies.get('refreshToken');
 
   const navigate = useNavigate();
 
@@ -25,7 +26,9 @@ function Mypagecomponent() {
       // console.log(error);
     },
   });
-
+  if (!refreshToken) {
+    return navigate('/unknown');
+  }
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
