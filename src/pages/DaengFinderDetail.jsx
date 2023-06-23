@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/no-danger */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-named-as-default */
@@ -29,6 +30,8 @@ import { useFooterLayout } from '../shared/LinkFooterLayout';
 import { dateConvert2 } from '../utils/DateConvert';
 import { toastSuccess } from '../utils/ToastFreeSetting';
 import { tokenStore } from './SignInPage';
+import { ReactComponent as BookmarkEmpty } from '../assets/images/BookmarkEmpty.svg';
+import { ReactComponent as BookmarkFilled } from '../assets/images/BookMarkFill.svg';
 
 // import useCurrentLocation from '../hooks/useCurrentLocation';
 
@@ -55,6 +58,7 @@ function DaengFinderDetail() {
   const {
     onModal,
     modalComment,
+    isBookmark,
     setClipAddress,
     getPostId,
     getUserId,
@@ -62,6 +66,7 @@ function DaengFinderDetail() {
   } = useClipStore(
     state => ({
       onModal: state.onModal,
+      isBookmark: state.isBookmark,
       modalComment: state.modalComment,
       setClipAddress: state.setClipAddress,
       getPostId: state.getPostId,
@@ -328,11 +333,18 @@ function DaengFinderDetail() {
           onClick={editModeHandler}
         />
       ) : null}
-      <div className={`fixed inset-0 z-30 ${onModal ? '' : 'hidden'}`}>
+      <div className={`fixed inset-0 z-30 ${onModal.on ? '' : 'hidden'}`}>
         <div role='none' className='absolute inset-0 bg-black opacity-30' />
         <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 f-fc-ic-jc  bg-[#FFFFFF] rounded-md  shadow-lg px-14 py-8'>
           <div className='f-fc-ic gap-2 '>
-            <Clip className='blur-none' />
+            {onModal.sort === 'clipboard' ? (
+              <Clip className='antialiased blur-none' />
+            ) : onModal.sort === 'bookmark' && isBookmark ? (
+              <BookmarkFilled className='antialiased' />
+            ) : (
+              <BookmarkEmpty className='antialiased' />
+            )}
+
             <div className='w-36 text-center text-sm whitespace-nowrap font-bold leading-4 blur-none'>
               {modalComment}
             </div>

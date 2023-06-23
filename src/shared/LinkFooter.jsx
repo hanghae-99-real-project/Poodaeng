@@ -7,7 +7,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { bookMarkLostPost } from '../api/daengFinder';
-import { ReactComponent as BookmarkEmpty } from '../assets/images/BookmarkFilled.svg';
+import { ReactComponent as BookmarkEmpty } from '../assets/images/BookmarkEmpty.svg';
 import { ReactComponent as BookmarkFilled } from '../assets/images/BookMarkFill.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import { ReactComponent as Comment } from '../assets/images/Magnifier.svg';
@@ -17,7 +17,8 @@ const store = (set, get) => ({
    * @description 서버에서 먼저 axios 요청 때 bookmark 된 상태인지 확인 받은 후에 색깔 변경해주는 식으로 ㄱ
    *  */
   isBookmark: false,
-  onModal: false,
+  // onModal: false,
+  onModal: { on: false, sort: '' },
   modalComment: '',
   postId: null,
   userId: null,
@@ -63,10 +64,16 @@ const store = (set, get) => ({
   onClipBoard: () => {
     // set(preState => ({ isClipped: !preState.isClipped }));
     set(() => ({
-      onModal: true,
+      onModal: { on: true, sort: 'clipboard' },
       modalComment: '공유 URL을 복사했어요!',
     }));
-    setTimeout(() => set(prevState => ({ onModal: !prevState.onModal })), 1000);
+    setTimeout(
+      () =>
+        set(prevState => ({
+          onModal: { ...prevState.onModal, on: false, sort: 'clipboard' },
+        })),
+      1000,
+    );
   },
   // onCancelBookmark: () =>
   //   set(() => ({
@@ -85,7 +92,7 @@ const store = (set, get) => ({
           ? '북마크를 취소했어요!'
           : '북마크에 등록했어요!',
         isBookmark: !get().isBookmark,
-        onModal: true,
+        onModal: { on: true, sort: 'bookmark' },
         // modalComment: '북마크에 등록했어요!',
       }));
       // set((prev) => ({
@@ -97,22 +104,25 @@ const store = (set, get) => ({
       //   // modalComment: '북마크에 등록했어요!',
       // }));
       setTimeout(
-        () => set(prevState => ({ onModal: !prevState.onModal })),
+        () =>
+          set(prevState => ({
+            onModal: { on: !prevState.onModal.on, sort: 'bookmark' },
+          })),
         1000,
       );
     } catch (error) {
       // console.log(error);
-
       set(() => ({
         isBookmark: false,
-        onModal: true,
+        onModal: { on: true, sort: 'bookmark' },
         modalComment:
           error.code === 'ECONNABORTED'
             ? '로그인 후 이용할 수 있습니다.'
             : '북마크 등록 실패!',
       }));
       setTimeout(
-        () => set(prevState => ({ onModal: !prevState.onModal })),
+        () =>
+          set(prevState => ({ on: !prevState.onModal.on, sort: 'bookmark' })),
         1000,
       );
     }
