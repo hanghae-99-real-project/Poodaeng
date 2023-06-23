@@ -24,55 +24,55 @@ function Tabbar({ setIsActive }) {
     shallow,
   );
 
-  const HomeIconHandler = () => {
-    navigate('/');
-    setIsActive('home');
-  };
+  // const HomeIconHandler = () => {
+  //   navigate('/');
+  //   setIsActive('home');
+  // };
 
-  const MapIconHandler = () => {
-    navigate('/map');
-    setIsActive('map');
-  };
+  // const MapIconHandler = () => {
+  //   navigate('/map');
+  //   setIsActive('map');
+  // };
 
-  const PooPostIconHandler = () => {
-    if (!refreshToken) {
-      deleteToken();
-      navigate('/login');
-    } else {
-      navigate('/poopost');
-    }
-    setIsActive('poopost');
-  };
+  // const PooPostIconHandler = () => {
+  //   if (!refreshToken) {
+  //     deleteToken();
+  //     navigate('/login');
+  //   } else {
+  //     navigate('/poopost');
+  //   }
+  //   setIsActive('poopost');
+  // };
 
-  const DaengIconHandler = () => {
-    navigate('/daengfinder');
-    setIsActive('daengfinder');
-  };
+  // const DaengIconHandler = () => {
+  //   navigate('/daengfinder');
+  //   setIsActive('daengfinder');
+  // };
 
-  const ProfileIconHandler = () => {
-    if (!refreshToken) {
-      navigate('/unknown');
-    } else {
-      navigate('/mypage');
-    }
-    setIsActive('mypage');
-  };
+  // const ProfileIconHandler = () => {
+  //   if (!refreshToken) {
+  //     navigate('/unknown');
+  //   } else {
+  //     navigate('/mypage');
+  //   }
+  //   setIsActive('mypage');
+  // };
 
-  const handleIconClick = (route, iconName) => {
+  const handleIconClick = route => {
     navigate(route);
   };
   return (
-    <div className='sticky bottom-0 bg-[#FFFFFF] z-20 border'>
-      <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-3'>
-        <div className='flex flex-col items-center'>
+    <div className='sticky bottom-0 bg-[#FFFFFF] z-20'>
+      <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-5'>
+        <div className='flex flex-col items-center '>
           <HomeIcon
             className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 text-[#AEAEAE] ${
               location.pathname === '/' ? 'fill-mainColor' : ''
             }`}
-            onClick={() => handleIconClick('/', 'home')}
+            onClick={() => handleIconClick('/')}
           />
           <div
-            className={`absolute bottom-1 text-xs mt-1 ${
+            className={`absolute bottom-1 text-xs mb-1 ${
               location.pathname === '/' ? 'text-mainColor' : ''
             }`}
           >
@@ -84,14 +84,14 @@ function Tabbar({ setIsActive }) {
             className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7  ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
             }`}
-            onClick={() => handleIconClick('/map', 'map')}
+            onClick={() => handleIconClick('/map')}
           />
           <div
-            className={`absolute bottom-1 text-xs mt-1 ${
+            className={`absolute bottom-1 text-xs mb-1 ${
               location.pathname === '/map' ? 'text-mainColor' : ''
             }`}
           >
-            지도
+            내 주변
           </div>
         </div>
         <div className='flex flex-col items-center'>
@@ -102,10 +102,10 @@ function Tabbar({ setIsActive }) {
                 ? 'fill-mainColor'
                 : ''
             }`}
-            onClick={() => handleIconClick('/poolanding', 'poopost')}
+            onClick={() => handleIconClick('/poolanding')}
           />
           <div
-            className={`absolute bottom-1 text-xs mt-1 ${
+            className={`absolute bottom-1 text-xs mb-1 ${
               location.pathname.includes('/poopost') ||
               location.pathname.includes('/poolanding')
                 ? 'text-mainColor'
@@ -120,10 +120,10 @@ function Tabbar({ setIsActive }) {
             className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
             }`}
-            onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
+            onClick={() => handleIconClick('/daengfinder')}
           />
           <div
-            className={`absolute bottom-1 text-xs mt-1 ${
+            className={`absolute bottom-1 text-xs mb-1 ${
               location.pathname === '/daengfinder' ? 'text-mainColor' : ''
             }`}
           >
@@ -135,10 +135,10 @@ function Tabbar({ setIsActive }) {
             className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
             }`}
-            onClick={() => handleIconClick('/mypage', 'mypage')}
+            onClick={() => handleIconClick('/mypage')}
           />
           <div
-            className={`absolute bottom-1 text-xs mt-1 ${
+            className={`absolute bottom-1 text-xs mb-1 ${
               location.pathname === '/mypage' ? 'text-mainColor' : ''
             }`}
           >
