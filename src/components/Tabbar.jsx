@@ -64,48 +64,63 @@ function Tabbar({ setIsActive }) {
   return (
     <div className='sticky bottom-0 bg-[#FFFFFF] z-20'>
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
-        <div data-homeicon-tooltip='푸댕 메인페이지'>
+        <div className='f-fc-ic relative'>
           <HomeIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/' ? 'fill-mainColor' : ''
-            } cursor-pointer`}
+            } -translate-y-[0.6rem] cursor-pointer`}
             onClick={() => handleIconClick('/', 'home')}
           />
+          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
+            홈
+          </text>
         </div>
-        <div data-mapicon-tooltip='푸박스 네비게이션을 이용할 수 있어요.'>
+        <div className='f-fc-ic relative'>
           <MapIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
-            } cursor-pointer`}
+            } -translate-y-[0.6rem] cursor-pointer`}
             onClick={() => handleIconClick('/map', 'map')}
           />
+          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
+            지도
+          </text>
         </div>
-        <div data-poobox-tooltip='푸박스 위치를 등록할 수 있어요.'>
+        <div className='f-fc-ic relative'>
           <PooBox
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname.includes('/poopost') ||
               location.pathname.includes('/poolanding')
                 ? 'fill-mainColor'
                 : ''
-            } cursor-pointer`}
+            } -translate-y-[0.6rem] cursor-pointer`}
             onClick={() => handleIconClick('/poolanding', 'poopost')}
           />
+          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
+            푸박스
+          </text>
         </div>
-        <div data-daengicon-tooltip='실종 반려견 리스트와 검색 기능이 있어요.'>
+        <div className='f-fc-ic relative'>
           <DaengIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
-            } cursor-pointer`}
+            } -translate-y-[0.6rem] cursor-pointer`}
             onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
           />
+          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
+            댕파인더
+          </text>
         </div>
-        <div data-mypage-tooltip='푸댕 마이페이지'>
+        <div className='f-fc-ic relative'>
           <ProfileIcon
-            className={` fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={` fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
-            } cursor-pointer`}
+            } -translate-y-[0.6rem] cursor-pointer`}
             onClick={() => handleIconClick('/mypage', 'mypage')}
           />
+          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
+            마이페이지
+          </text>
         </div>
       </div>
     </div>
