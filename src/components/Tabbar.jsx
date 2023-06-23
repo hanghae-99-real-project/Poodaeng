@@ -108,18 +108,18 @@ function Tabbar({ setIsActive }) {
             onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
           />
           <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
-            게시글
+            댕파인더
           </text>
         </div>
         <div className='f-fc-ic relative'>
           <ProfileIcon
-            className={` fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
             } -translate-y-[0.6rem] cursor-pointer`}
             onClick={() => handleIconClick('/mypage', 'mypage')}
           />
           <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
-            내정보
+            내 정보
           </text>
         </div>
       </div>
