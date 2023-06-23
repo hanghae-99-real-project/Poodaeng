@@ -66,21 +66,33 @@ function Tabbar({ setIsActive }) {
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-3'>
         <div className='flex flex-col items-center'>
           <HomeIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 text-[#AEAEAE] ${
               location.pathname === '/' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/', 'home')}
           />
-          <div className='absolute bottom-1 text-xs mt-1'>홈</div>
+          <div
+            className={`absolute bottom-1 text-xs mt-1 ${
+              location.pathname === '/' ? 'text-mainColor' : ''
+            }`}
+          >
+            홈
+          </div>
         </div>
         <div className='flex flex-col items-center'>
           <MapIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7  ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/map', 'map')}
           />
-          <div className='absolute bottom-1 text-xs mt-1'>지도</div>
+          <div
+            className={`absolute bottom-1 text-xs mt-1 ${
+              location.pathname === '/map' ? 'text-mainColor' : ''
+            }`}
+          >
+            지도
+          </div>
         </div>
         <div className='flex flex-col items-center'>
           <PooBox
@@ -92,7 +104,16 @@ function Tabbar({ setIsActive }) {
             }`}
             onClick={() => handleIconClick('/poolanding', 'poopost')}
           />
-          <div className='absolute bottom-1 text-xs mt-1'>푸박스</div>
+          <div
+            className={`absolute bottom-1 text-xs mt-1 ${
+              location.pathname.includes('/poopost') ||
+              location.pathname.includes('/poolanding')
+                ? 'text-mainColor'
+                : ''
+            }`}
+          >
+            푸박스
+          </div>
         </div>
         <div className='flex flex-col items-center'>
           <DaengIcon
@@ -101,7 +122,13 @@ function Tabbar({ setIsActive }) {
             }`}
             onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
           />
-          <div className='absolute bottom-1 text-xs mt-1'>댕파인더</div>
+          <div
+            className={`absolute bottom-1 text-xs mt-1 ${
+              location.pathname === '/daengfinder' ? 'text-mainColor' : ''
+            }`}
+          >
+            댕파인더
+          </div>
         </div>
         <div className='flex flex-col items-center'>
           <ProfileIcon
@@ -110,7 +137,13 @@ function Tabbar({ setIsActive }) {
             }`}
             onClick={() => handleIconClick('/mypage', 'mypage')}
           />
-          <div className='absolute bottom-1 text-xs mt-1'>내 정보</div>
+          <div
+            className={`absolute bottom-1 text-xs mt-1 ${
+              location.pathname === '/mypage' ? 'text-mainColor' : ''
+            }`}
+          >
+            내 정보
+          </div>
         </div>
       </div>
     </div>
