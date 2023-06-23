@@ -108,7 +108,7 @@ function Tabbar({ setIsActive }) {
             onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
           />
           <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
-            댕파인더
+            게시글
           </text>
         </div>
         <div className='f-fc-ic relative'>
@@ -119,7 +119,7 @@ function Tabbar({ setIsActive }) {
             onClick={() => handleIconClick('/mypage', 'mypage')}
           />
           <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
-            마이페이지
+            내정보
           </text>
         </div>
       </div>
