@@ -11,6 +11,7 @@ import { ReactComponent as CommentLocker } from '../../../assets/images/CommentL
 import { ReactComponent as Ddaeng } from '../../../assets/images/Ddaeng.svg';
 import { tokenStore } from '../../../pages/SignInPage';
 import { dateConvert2 } from '../../../utils/DateConvert';
+import LoadingSmall from '../../common/LoadingSmall';
 
 function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
   // const [editMode, setEditMode] = useState(false);
@@ -39,14 +40,14 @@ function Reply({ commentId, onReplyMode, setEditMode, parentCommentUserId }) {
     },
   );
 
-  // useEffect(() => {}, [data]);
-
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSmall />;
   }
   if (isError) {
     // console.log('isError >>>', error);
-    return <div>{error.message}</div>;
+    return (
+      <div className='px-6 py-6 text-sm font-normal'>댓글 불러오기 실패</div>
+    );
   }
 
   // console.log('reply data >>>>', data);

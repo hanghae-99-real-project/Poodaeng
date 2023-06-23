@@ -69,13 +69,13 @@ function Tabbar({ setIsActive }) {
           <HomeIcon
             className={`fill-[#AEAEAE] w-7 h-7 text-[#AEAEAE] ${
               location.pathname === '/' ? 'fill-mainColor' : ''
-            } group-hover:fill-mainColor`}
+            } group-hover:fill-mainColor transition duration-200`}
             onClick={() => handleIconClick('/')}
           />
           <div
             className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] font-nomal ${
               location.pathname === '/' ? 'text-mainColor' : ''
-            } group-hover:text-mainColor`}
+            } group-hover:text-mainColor transition duration-200`}
           >
             홈
           </div>
@@ -84,13 +84,13 @@ function Tabbar({ setIsActive }) {
           <MapIcon
             className={`fill-[#AEAEAE] w-7 h-7  ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
-            } group-hover:fill-mainColor`}
+            } group-hover:fill-mainColor transition duration-200`}
             onClick={() => handleIconClick('/map')}
           />
           <div
             className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/map' ? 'text-mainColor' : ''
-            } group-hover:text-mainColor`}
+            } group-hover:text-mainColor transition duration-200`}
           >
             지도
           </div>
@@ -102,7 +102,7 @@ function Tabbar({ setIsActive }) {
               location.pathname.includes('/poolanding')
                 ? 'fill-mainColor'
                 : ''
-            } group-hover:fill-mainColor`}
+            } group-hover:fill-mainColor transition duration-200`}
             onClick={() => handleIconClick('/poolanding')}
           />
           <div
@@ -111,7 +111,7 @@ function Tabbar({ setIsActive }) {
               location.pathname.includes('/poolanding')
                 ? 'text-mainColor'
                 : ''
-            } group-hover:text-mainColor`}
+            } group-hover:text-mainColor transition duration-200`}
           >
             등록
           </div>
@@ -120,13 +120,13 @@ function Tabbar({ setIsActive }) {
           <DaengIcon
             className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
-            } group-hover:fill-mainColor`}
+            } group-hover:fill-mainColor transition duration-200`}
             onClick={() => handleIconClick('/daengfinder')}
           />
           <div
             className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/daengfinder' ? 'text-mainColor' : ''
-            } group-hover:text-mainColor`}
+            } group-hover:text-mainColor transition duration-200`}
           >
             댕파인더
           </div>
@@ -135,13 +135,13 @@ function Tabbar({ setIsActive }) {
           <ProfileIcon
             className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
-            } group-hover:fill-mainColor`}
+            } group-hover:fill-mainColor transition duration-200`}
             onClick={() => handleIconClick('/mypage')}
           />
           <div
             className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/mypage' ? 'text-mainColor' : ''
-            } group-hover:text-mainColor`}
+            } group-hover:text-mainColor transition duration-200`}
           >
             MY
           </div>
