@@ -19,7 +19,7 @@ function Kakaoserch() {
   const location = useLocation();
   const isMapPage = location.pathname === '/map';
 
-  const { isLoading, isError, data } = useQuery('poobox', getPooBox, {
+  let { isLoading, isError, data } = useQuery('poobox', getPooBox, {
     refetchOnWindowFocus: false,
   });
   if (isLoading) {

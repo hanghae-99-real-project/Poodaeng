@@ -62,50 +62,55 @@ function Tabbar({ setIsActive }) {
     navigate(route);
   };
   return (
-    <div className='sticky bottom-0 bg-[#FFFFFF] z-20'>
-      <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
-        <div data-homeicon-tooltip='푸댕 메인페이지'>
+    <div className='sticky bottom-0 bg-[#FFFFFF] z-20 border'>
+      <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-3'>
+        <div className='flex flex-col items-center'>
           <HomeIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/' ? 'fill-mainColor' : ''
-            } cursor-pointer`}
+            }`}
             onClick={() => handleIconClick('/', 'home')}
           />
+          <div className='absolute bottom-1 text-xs mt-1'>홈</div>
         </div>
-        <div data-mapicon-tooltip='푸박스 네비게이션을 이용할 수 있어요.'>
+        <div className='flex flex-col items-center'>
           <MapIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
-            } cursor-pointer`}
+            }`}
             onClick={() => handleIconClick('/map', 'map')}
           />
+          <div className='absolute bottom-1 text-xs mt-1'>지도</div>
         </div>
-        <div data-poobox-tooltip='푸박스 위치를 등록할 수 있어요.'>
+        <div className='flex flex-col items-center'>
           <PooBox
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname.includes('/poopost') ||
               location.pathname.includes('/poolanding')
                 ? 'fill-mainColor'
                 : ''
-            } cursor-pointer`}
+            }`}
             onClick={() => handleIconClick('/poolanding', 'poopost')}
           />
+          <div className='absolute bottom-1 text-xs mt-1'>푸박스</div>
         </div>
-        <div data-daengicon-tooltip='실종 반려견 리스트와 검색 기능이 있어요.'>
+        <div className='flex flex-col items-center'>
           <DaengIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
-            } cursor-pointer`}
+            }`}
             onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
           />
+          <div className='absolute bottom-1 text-xs mt-1'>댕파인더</div>
         </div>
-        <div data-mypage-tooltip='푸댕 마이페이지'>
+        <div className='flex flex-col items-center'>
           <ProfileIcon
-            className={` fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 mt-1 ${
+            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
-            } cursor-pointer`}
+            }`}
             onClick={() => handleIconClick('/mypage', 'mypage')}
           />
+          <div className='absolute bottom-1 text-xs mt-1'>내 정보</div>
         </div>
       </div>
     </div>
