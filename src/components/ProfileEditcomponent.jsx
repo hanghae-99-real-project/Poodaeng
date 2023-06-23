@@ -88,6 +88,7 @@ function ProfileEditcomponent() {
       // console.log(errors);
     },
   });
+
   const handleProfileClick = index => {
     // console.log('클릭된 인덱스', index);
     if (selectedIcon === index) {

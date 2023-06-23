@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { Autoplay, Pagination } from 'swiper'; // Navigation 모듈은 제거합니다.
-import getDaengMain from '../../api/main';
+import { getDaengMain } from '../../api/main';
 import { resetUserInfoLog } from '../../zustand/example/zustandAPI';
 // import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 

@@ -4,39 +4,39 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginSocial from '../components/LoginSocial';
+import MyPooboxcomponent from '../components/MyPooboxcomponent';
+import PoopostLanding from '../components/PoopostLanding';
+import Successcomponent from '../components/Successcomponent';
+import RouteChangeTracker from '../google/RouteChangeTracker';
 import Alert from '../pages/Alert';
-import KakaoAuthCheck from '../pages/KakaoAuthCheck';
-import SignInCompletePage from '../pages/SignInCompletePage';
 import DaengFinder from '../pages/DaengFinder';
+import DaengFinderCommentPage from '../pages/DaengFinderCommentPage';
 import DaengFinderDetail from '../pages/DaengFinderDetail';
+import DaengFinderSearchPage from '../pages/DaengFinderSearchPage';
+import DaengFinderWritePage from '../pages/DaengFinderWritePage';
 import Events from '../pages/Events';
 import Home from '../pages/Home';
+import KakaoAuthCheck from '../pages/KakaoAuthCheck';
+import LoadingTestPage from '../pages/LoadingTestPage';
 import LoginPage from '../pages/LoginPage';
 import Map from '../pages/Map';
 import MyBookMark from '../pages/MyBookMark';
 import MyPost from '../pages/MyPost';
 import Mypage from '../pages/Mypage';
+import PasswordEdit from '../pages/PasswordEdit';
+import PasswordFind from '../pages/PasswordFind';
+import PooDetail from '../pages/PooDetail';
 import PooPost from '../pages/PooPost';
 import ProfileEdit from '../pages/ProfileEdit';
+import SignInCompletePage from '../pages/SignInCompletePage';
 import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignupPage';
+import TmapPage from '../pages/Tmappage';
+import Unknown from '../pages/Unknown';
 import Layout from './Layout';
 import LinkFooterLayout from './LinkFooterLayout';
 import ScrollLayout from './ScrollLayout';
-import DaengFinderSearchPage from '../pages/DaengFinderSearchPage';
-import DaengFinderCommentPage from '../pages/DaengFinderCommentPage';
-import DaengFinderWritePage from '../pages/DaengFinderWritePage';
-import PooDetail from '../pages/PooDetail';
-import TmapPage from '../pages/Tmappage';
 import TabbarsOutlet from './TabbarsOutlet';
-import MyPooboxcomponent from '../components/MyPooboxcomponent';
-import Unknown from '../pages/Unknown';
-import PasswordFind from '../pages/PasswordFind';
-import RouteChangeTracker from '../google/RouteChangeTracker';
-import PasswordEdit from '../pages/PasswordEdit';
-import Successcomponent from '../components/Successcomponent';
-import LoadingTestPage from '../pages/LoadingTestPage';
-import PoopostLanding from '../components/PoopostLanding';
 
 
 
@@ -62,7 +62,7 @@ function Router() {
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/passwordedit' element={<PasswordEdit />}/>
           <Route path='/success' element={<Successcomponent />}/>
-          
+          <Route path="/alert" element={<Alert />} /> 
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet
@@ -77,7 +77,6 @@ function Router() {
         <Route element={<TabbarsOutlet />}>
           <Route path='/loadingtest' element={<LoadingTestPage />} />
           <Route path="/" element={<Home />} />
-          <Route path="/alert" element={<Alert />} /> 
           <Route path="/events" element={<Events />} />
           <Route path="/map" element={<Map />} />
           <Route path='/mypage' element={<Mypage />}/>

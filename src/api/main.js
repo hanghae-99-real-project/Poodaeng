@@ -9,9 +9,21 @@ import axiosToken from "./axiosToken";
 //     return Promise.reject(error.data)
 //   }
 // };
+
 const getDaengMain = async () => {
-    const response = await axiosToken.get(`/api/main/lostposts`)
+    const response = await axiosToken.get('/api/main/lostposts')
     return response
 };
 
-export default getDaengMain
+const getAlert = async () => {
+    const response = await axiosToken.get('/api/notifications')
+    return response
+};
+
+const putAlert = async (id) => {
+    const response = await axiosToken.put(`/api/notifications/${id}`)
+    return response
+};
+
+
+export { getDaengMain, getAlert, putAlert }
