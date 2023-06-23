@@ -61,50 +61,48 @@ function Tabbar({ setIsActive }) {
   const handleIconClick = route => {
     navigate(route);
   };
+
   return (
     <div className='sticky bottom-0 bg-[#FFFFFF] z-20'>
-
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-5'>
-        <div className='flex flex-col items-center '>
+        <div className='flex flex-col items-center group cursor-pointer'>
           <HomeIcon
             className={`fill-[#AEAEAE] w-7 h-7 text-[#AEAEAE] ${
               location.pathname === '/' ? 'fill-mainColor' : ''
-
-            }`}
+            } group-hover:fill-mainColor`}
             onClick={() => handleIconClick('/')}
           />
           <div
             className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] font-nomal ${
               location.pathname === '/' ? 'text-mainColor' : ''
-            }`}
+            } group-hover:text-mainColor`}
           >
             홈
           </div>
         </div>
-        <div className='f-fc-ic relative'>
+        <div className='flex flex-col items-center group cursor-pointer'>
           <MapIcon
             className={`fill-[#AEAEAE] w-7 h-7  ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
-
-            }`}
+            } group-hover:fill-mainColor`}
             onClick={() => handleIconClick('/map')}
           />
           <div
             className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/map' ? 'text-mainColor' : ''
-            }`}
+            } group-hover:text-mainColor`}
           >
             지도
           </div>
         </div>
-        <div className='f-fc-ic relative'>
+        <div className='flex flex-col items-center group cursor-pointer'>
           <PooBox
             className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname.includes('/poopost') ||
               location.pathname.includes('/poolanding')
                 ? 'fill-mainColor'
                 : ''
-            }`}
+            } group-hover:fill-mainColor`}
             onClick={() => handleIconClick('/poolanding')}
           />
           <div
@@ -113,37 +111,37 @@ function Tabbar({ setIsActive }) {
               location.pathname.includes('/poolanding')
                 ? 'text-mainColor'
                 : ''
-            }`}
+            } group-hover:text-mainColor`}
           >
             등록
           </div>
         </div>
-        <div className='f-fc-ic relative'>
+        <div className='flex flex-col items-center group cursor-pointer'>
           <DaengIcon
             className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
-            }`}
+            } group-hover:fill-mainColor`}
             onClick={() => handleIconClick('/daengfinder')}
           />
           <div
             className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/daengfinder' ? 'text-mainColor' : ''
-            }`}
+            } group-hover:text-mainColor`}
           >
             댕파인더
           </div>
         </div>
-        <div className='f-fc-ic relative'>
+        <div className='flex flex-col items-center group cursor-pointer'>
           <ProfileIcon
             className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
-            }`}
+            } group-hover:fill-mainColor`}
             onClick={() => handleIconClick('/mypage')}
           />
           <div
             className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/mypage' ? 'text-mainColor' : ''
-            }`}
+            } group-hover:text-mainColor`}
           >
             MY
           </div>
