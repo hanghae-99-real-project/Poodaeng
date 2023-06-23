@@ -24,103 +24,129 @@ function Tabbar({ setIsActive }) {
     shallow,
   );
 
-  const HomeIconHandler = () => {
-    navigate('/');
-    setIsActive('home');
-  };
+  // const HomeIconHandler = () => {
+  //   navigate('/');
+  //   setIsActive('home');
+  // };
 
-  const MapIconHandler = () => {
-    navigate('/map');
-    setIsActive('map');
-  };
+  // const MapIconHandler = () => {
+  //   navigate('/map');
+  //   setIsActive('map');
+  // };
 
-  const PooPostIconHandler = () => {
-    if (!refreshToken) {
-      deleteToken();
-      navigate('/login');
-    } else {
-      navigate('/poopost');
-    }
-    setIsActive('poopost');
-  };
+  // const PooPostIconHandler = () => {
+  //   if (!refreshToken) {
+  //     deleteToken();
+  //     navigate('/login');
+  //   } else {
+  //     navigate('/poopost');
+  //   }
+  //   setIsActive('poopost');
+  // };
 
-  const DaengIconHandler = () => {
-    navigate('/daengfinder');
-    setIsActive('daengfinder');
-  };
+  // const DaengIconHandler = () => {
+  //   navigate('/daengfinder');
+  //   setIsActive('daengfinder');
+  // };
 
-  const ProfileIconHandler = () => {
-    if (!refreshToken) {
-      navigate('/unknown');
-    } else {
-      navigate('/mypage');
-    }
-    setIsActive('mypage');
-  };
+  // const ProfileIconHandler = () => {
+  //   if (!refreshToken) {
+  //     navigate('/unknown');
+  //   } else {
+  //     navigate('/mypage');
+  //   }
+  //   setIsActive('mypage');
+  // };
 
-  const handleIconClick = (route, iconName) => {
+  const handleIconClick = route => {
     navigate(route);
   };
   return (
     <div className='sticky bottom-0 bg-[#FFFFFF] z-20'>
-      <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm'>
-        <div className='f-fc-ic relative'>
+
+      <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-5'>
+        <div className='flex flex-col items-center '>
           <HomeIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] w-7 h-7 text-[#AEAEAE] ${
               location.pathname === '/' ? 'fill-mainColor' : ''
-            } -translate-y-[0.6rem] cursor-pointer`}
-            onClick={() => handleIconClick('/', 'home')}
+
+            }`}
+            onClick={() => handleIconClick('/')}
           />
-          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
+          <div
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] font-nomal ${
+              location.pathname === '/' ? 'text-mainColor' : ''
+            }`}
+          >
             홈
-          </text>
+          </div>
         </div>
         <div className='f-fc-ic relative'>
           <MapIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] w-7 h-7  ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
-            } -translate-y-[0.6rem] cursor-pointer`}
-            onClick={() => handleIconClick('/map', 'map')}
+
+            }`}
+            onClick={() => handleIconClick('/map')}
           />
-          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
+          <div
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
+              location.pathname === '/map' ? 'text-mainColor' : ''
+            }`}
+          >
             지도
-          </text>
+          </div>
         </div>
         <div className='f-fc-ic relative'>
           <PooBox
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname.includes('/poopost') ||
               location.pathname.includes('/poolanding')
                 ? 'fill-mainColor'
                 : ''
-            } -translate-y-[0.6rem] cursor-pointer`}
-            onClick={() => handleIconClick('/poolanding', 'poopost')}
+            }`}
+            onClick={() => handleIconClick('/poolanding')}
           />
-          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
-            푸박스
-          </text>
+          <div
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
+              location.pathname.includes('/poopost') ||
+              location.pathname.includes('/poolanding')
+                ? 'text-mainColor'
+                : ''
+            }`}
+          >
+            등록
+          </div>
         </div>
         <div className='f-fc-ic relative'>
           <DaengIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
-            } -translate-y-[0.6rem] cursor-pointer`}
-            onClick={() => handleIconClick('/daengfinder', 'daengfinder')}
+            }`}
+            onClick={() => handleIconClick('/daengfinder')}
           />
-          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
+          <div
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
+              location.pathname === '/daengfinder' ? 'text-mainColor' : ''
+            }`}
+          >
             댕파인더
-          </text>
+          </div>
         </div>
         <div className='f-fc-ic relative'>
           <ProfileIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
-            } -translate-y-[0.6rem] cursor-pointer`}
-            onClick={() => handleIconClick('/mypage', 'mypage')}
+            }`}
+            onClick={() => handleIconClick('/mypage')}
           />
-          <text className='absolute left-1/2 -translate-x-1/2 top-[1.375rem] antialiased text-sm whitespace-nowrap'>
-            내 정보
-          </text>
+          <div
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
+              location.pathname === '/mypage' ? 'text-mainColor' : ''
+            }`}
+          >
+            MY
+          </div>
         </div>
       </div>
     </div>
