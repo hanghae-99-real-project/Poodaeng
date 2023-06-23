@@ -780,18 +780,18 @@ function DaengFinderCommentPage() {
             )}
         </div>
         {!checkAuth ? (
-          <div className='f-fr-ic-jb h-[3.125rem] bg-[#E2CAFB] border border-[#D7D7D7] rounded-lg'>
+          <div className='f-fr-ic-jb h-[3.125rem]  border border-[#D7D7D7] rounded-lg'>
             <div
               className='text-[#A54BFF] f-fr-ic-jc w-full max-h-36 overflow-y-scroll outline-none cursor-pointer'
               // title='로그인으로 이동'
               data-tooltip='클릭 시 로그인으로 이동돼요'
               onClick={() => navigate('/login')}
             >
-              <CommentAlert />
+              <CommentAlert width='20' height='20' />
               &nbsp;댓글 작성을 위해 로그인 해주세요.
             </div>
             <div className='f-ic-jc w-16 px-3 h-full font-bold text-3xl text-white bg-[#A54BFF] rounded-r-lg'>
-              <MdLockOutline fill='#FFFFFF' stroke='#A54BFF' />
+              <MdLockOutline className='text-2xl' />
             </div>
           </div>
         ) : (
