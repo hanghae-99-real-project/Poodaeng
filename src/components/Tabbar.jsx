@@ -63,13 +63,11 @@ function Tabbar({ setIsActive }) {
   };
   return (
     <div className='sticky bottom-0 bg-[#FFFFFF] z-20'>
-
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-5'>
-        <div className='flex flex-col items-center '>
+        <div className='flex flex-col items-center'>
           <HomeIcon
             className={`fill-[#AEAEAE] w-7 h-7 text-[#AEAEAE] ${
               location.pathname === '/' ? 'fill-mainColor' : ''
-
             }`}
             onClick={() => handleIconClick('/')}
           />
@@ -81,11 +79,10 @@ function Tabbar({ setIsActive }) {
             홈
           </div>
         </div>
-        <div className='f-fc-ic relative'>
+        <div className='flex flex-col items-center'>
           <MapIcon
             className={`fill-[#AEAEAE] w-7 h-7  ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
-
             }`}
             onClick={() => handleIconClick('/map')}
           />
@@ -97,7 +94,7 @@ function Tabbar({ setIsActive }) {
             지도
           </div>
         </div>
-        <div className='f-fc-ic relative'>
+        <div className='flex flex-col items-center'>
           <PooBox
             className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname.includes('/poopost') ||
@@ -118,7 +115,7 @@ function Tabbar({ setIsActive }) {
             등록
           </div>
         </div>
-        <div className='f-fc-ic relative'>
+        <div className='flex flex-col items-center'>
           <DaengIcon
             className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
@@ -133,7 +130,7 @@ function Tabbar({ setIsActive }) {
             댕파인더
           </div>
         </div>
-        <div className='f-fc-ic relative'>
+        <div className='flex flex-col items-center '>
           <ProfileIcon
             className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
