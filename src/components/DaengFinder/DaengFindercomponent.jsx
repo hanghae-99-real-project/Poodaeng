@@ -1,16 +1,15 @@
 /* eslint-disable no-unused-vars */
 import Cookies from 'js-cookie';
-import { debounce, throttle } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
 import { useInView } from 'react-intersection-observer';
-import { useQuery } from 'react-query';
+import { useQueries, useQuery } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { shallow } from 'zustand/shallow';
-import { getPostLost } from '../../api/daengFinder';
+import { getLatestLostPosts, getNearbyLostPosts } from '../../api/daengFinder';
 import { ReactComponent as DaengFinderButton } from '../../assets/images/DaengFinderMenu.svg';
 import { ReactComponent as NoResult } from '../../assets/images/NoResult.svg';
 import useCurrentLocation from '../../hooks/useCurrentLocation';
@@ -26,12 +25,14 @@ import { FadeInWhenVisible1 } from './FadeInWhenVisible';
 function DaengFindercomponent() {
   const [getNewPage, setGetNewPage] = useState(true);
   const [totalData, setTotalData] = useState([]);
-
+  const [latest, setLatest] = useState(true);
   const [page, setPage] = useState(1);
+  const [nearbyPage, setNearbyPage] = useState(1);
   const [isDetail, setIsDetail] = useState(true);
   const [alertMsg, setAlertMsg] = useState(false);
   const [total, setTotal] = useState(true);
   const [nextPageElements, setNextPageElements] = useState(true);
+  const [firstVisit, setFirstVisit] = useState(true);
   const { setLocation } = useLocationStore(
     prev => ({
       setLocation: prev.setLocation,
@@ -45,6 +46,7 @@ function DaengFindercomponent() {
   const latitude = location?.latitude;
   const longitude = location?.longitude;
   const checkRefreshToken = Cookies.get('refreshToken');
+  const getPositionAgreement = localStorage.getItem('agreed') === 'true';
 
   useEffect(() => {
     setLocation(latitude, longitude);
@@ -68,73 +70,88 @@ function DaengFindercomponent() {
     navigate('/daengfinder/write');
   };
 
-  // const getPostLostList = async () => {
-  //   try {
-  //     const res = await getPostLost(page);
-  //     console.log('response >>>', res);
-  //     totalData.push(...res?.data?.lostPostsData);
-  //     setTotalData([...totalData]);
-  //     setPage(prevPage => prevPage + 1);
-  //     // setGetNewPage(false)
-  //   } catch (err) {
-  //     console.log('err >>>', err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getPostLostList();
-  // }, []);
-
-  // const [ref, inview] = useInView();
-  // const scrollRef = useRef();
-  // const [ScrollUpTop] = useScroll(
-  //   scrollRef,
-  //   loc.state?.isScroll,
-  //   'scroller',
-  //   totalData,
+  // const {
+  //   isLoading: testLoading,
+  //   isError: testIsError,
+  //   error: testError,
+  //   data: testData,
+  //   hasNextPage,
+  //   fetchNextPage,
+  //   isFetching,
+  //   isFetchingNextPage,
+  // } = useInfiniteQuery(
+  //   ['getPostLost'],
+  //   ({ pageParam = 1 }) => getPostLost(pageParam),
+  //   {
+  //     getNextPageParam: (lastPage, pages) => {
+  //       console.log('lastPage >>>', lastPage);
+  //       console.log('pages >>>', pages);
+  //     },
+  //     retry: 0,
+  //     refetchOnWindowFocus: false,
+  //   },
   // );
+  // console.log('hasNextPage >>', hasNextPage);
 
-  // useEffect(() => {
-  //   console.log('inView start >>>', inview);
-  //   if (inview) {
-  //     console.log('page >>>', page);
-  //     // setGetNewPage(true);
-  //     getPostLostList();
-  //   }
-  // }, [inview]);
+  const getLatestPostsHandler = () => {
+    setLatest(true);
+    setPage(1);
+    setNextPageElements(true);
+    setGetNewPage(true);
+    setTotalData([]);
+  };
 
-  // const ListAll = totalData;
-  // const ListMissing = totalData?.filter(card => card.status === false);
+  const getNearbyPostsHandler = () => {
+    setLatest(false);
+    setPage(1);
+    setNextPageElements(true);
+    setGetNewPage(true);
+    setTotalData([]);
+  };
 
-  const { data, isLoading, error, isError } = useQuery(
-    // ['getPostLost', page],
-    // ['getPostLost', { page }],
-    'getPostLost',
-    () => getPostLost(page),
+  const onPaginationSuccess = dt => {
+    setGetNewPage(false);
+    setPage(prevPage => prevPage + 1);
+    // console.log('getPostLost success >>>', dt);
+    if (dt?.data?.lostPostsData?.length > 0) {
+      totalData.push(...dt?.data?.lostPostsData);
+      setTotalData([...totalData]);
+    }
+    if (dt?.data?.lostPostsData?.length < 10) {
+      setNextPageElements(false);
+    }
+  };
+
+  const lostPostsResult = useQueries([
     {
-      enabled: nextPageElements && getNewPage,
+      queryKey: ['getPostLost', 'nearby'],
+      queryFn: () => getNearbyLostPosts(page),
+      enabled: nextPageElements && getNewPage && !latest,
       retry: false,
       refetchOnWindowFocus: false,
       onSuccess: dt => {
-        setGetNewPage(false);
-        setPage(prevPage => prevPage + 1);
-        console.log('getPostLost success >>>', dt);
-        if (dt?.data?.lostPostsData?.length > 0) {
-          totalData.push(...dt?.data?.lostPostsData);
-          // const sumData = [...totalData, ...data?.data?.lostPostsData];
-          // const sumData = totalData.push(...data?.data?.lostPostsData);
-          setTotalData([...totalData]);
-        }
-        if (dt?.data?.lostPostsData?.length < 10) {
-          setNextPageElements(false);
-        }
+        onPaginationSuccess(dt);
       },
       onError: err => {
         // setGetNewPage(false);
-        console.log('getPostLost err >>>', err);
+        // console.log('getNearbyLostPosts err >>>', err);
       },
     },
-  );
+    {
+      queryKey: ['getPostLost'],
+      queryFn: () => getLatestLostPosts(page),
+      enabled: nextPageElements && getNewPage && latest,
+      retry: false,
+      refetchOnWindowFocus: false,
+      onSuccess: dt => {
+        onPaginationSuccess(dt);
+      },
+      onError: err => {
+        // setGetNewPage(false);
+        // console.log('getLatestLostPosts err >>>', err);
+      },
+    },
+  ]);
 
   const [ref, inview] = useInView();
   const scrollRef = useRef();
@@ -142,26 +159,21 @@ function DaengFindercomponent() {
     scrollRef,
     loc.state?.isScroll,
     'scroller',
-    data,
+    lostPostsResult[0].data,
+    lostPostsResult[1].data,
   );
 
   useEffect(() => {
-    console.log('inView start >>>', inview);
+    // console.log('inView start >>>', inview);
     if (inview) {
-      console.log('이전 page >>>', page);
+      // console.log('현재 불러올 page >>>', page);
       setGetNewPage(true);
     }
   }, [inview]);
 
-  // useEffect(() => {
-  //   console.log('data >>>', data);
-  //   if (data?.data?.lostPostsData?.length > 0) {
-  //     totalData.push(...data?.data?.lostPostsData);
-  //     // const sumData = [...totalData, ...data?.data?.lostPostsData];
-  //     // const sumData = totalData.push(...data?.data?.lostPostsData);
-  //     setTotalData([...totalData]);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    setFirstVisit(false);
+  }, [lostPostsResult[1].data]);
 
   useEffect(() => {
     if (loc.state?.deleteComplete) {
@@ -174,7 +186,11 @@ function DaengFindercomponent() {
     }
   }, []);
 
-  if (isLoading && !totalData.length) {
+  if (
+    (lostPostsResult[0].isLoading || lostPostsResult[1].isLoading) &&
+    !totalData.length &&
+    firstVisit
+  ) {
     return (
       // <div className='w-full h-full flex flex-col justify-center  items-center'>
       //   <Loading />
@@ -183,17 +199,12 @@ function DaengFindercomponent() {
     );
   }
 
-  if (isError) {
+  if (lostPostsResult[0].isError || lostPostsResult[1].isError) {
+    const error = lostPostsResult[0].error || lostPostsResult[1].error;
     navigate('/', {
       state: error,
     });
   }
-  // console.log('daengFindercomponent >>> ', data);
-  // console.log('data.data>>> ', data?.data);
-  // const ListAll = data?.data?.lostPostsData;
-  // const ListMissing = data?.data?.lostPostsData?.filter(
-  //   card => card.status === false,
-  // );
 
   const ListAll = totalData;
   const ListMissing = totalData?.filter(card => card.status === false);
@@ -204,16 +215,16 @@ function DaengFindercomponent() {
       <div className='relative top-0'>
         <div className='sticky top-0 flex flex-row items-center justify-between h-7 w-[375px]  px-[34px] py-7 mb-7 border-b shadow-md z-50'>
           <div className='w-[30px]' />
-          <div className='font-bold text-xl '>댕 finder</div>
+          <div className='font-bold text-xl '>댕파인더</div>
           <RxMagnifyingGlass
             className='text-3xl cursor-pointer transition duration-300 ease-in-out hover:scale-110'
             onClick={() => navigate('/daengfinder/search')}
           />
         </div>
       </div>
-      <div className='w-full flex flex-row justify-between px-5 mb-3'>
+      <div className='w-full flex flex-row justify-between px-5 mb-3 antialiased'>
         <div
-          className={`z-10 f-fr-ic-jc pl-2 leading-[0.93625rem] font-semibold ${
+          className={`z-10 f-fr-ic-jc pl-2 leading-[0.93625rem]  text-sm whitespace-nowrap ${
             total && 'text-[#A3A3A3]'
           } transition duration-300 cursor-pointer`}
           onClick={() => setTotal(!total)}
@@ -227,30 +238,53 @@ function DaengFindercomponent() {
           </div>
           &nbsp;찾은 강아지 빼고 보기
         </div>
-        <div className='z-10 flex flex-row bg-[#F2F2F2] gap-1 p-1'>
-          <div
-            className={`p-1  ${
-              !isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
-            } cursor-pointer transition duration-150`}
-            onClick={() => setIsDetail(false)}
-          >
-            <BiCategory
-              className={`text-xl  ${
-                !isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
-              } cursor-pointer transition duration-150`}
-            />
+        <div className='f-fr-ic gap-[0.875rem]'>
+          <div className='f-fr-ic gap-[0.4375rem] text-xs text-[#B8B8B8] font-bold leading-[0.78rem]'>
+            <button
+              className={`${
+                latest && 'text-[#000000]'
+              } hover:scale-105 transition cursor-pointer`}
+              onClick={getLatestPostsHandler}
+            >
+              최신순
+            </button>
+            |
+            <button
+              className={`${
+                (!getPositionAgreement || !checkRefreshToken) && 'hidden'
+              } ${
+                !latest && 'text-[#000000]'
+              } hover:scale-105 transition cursor-pointer`}
+              onClick={getNearbyPostsHandler}
+            >
+              위치순
+            </button>
           </div>
-          <div
-            className={`p-1  ${
-              isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
-            } cursor-pointer transition duration-150`}
-            onClick={() => setIsDetail(true)}
-          >
-            <SlMenu
-              className={`text-xl  ${
-                isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
+          <div className='z-10 flex flex-row bg-[#F2F2F2] gap-1 p-1'>
+            <div
+              className={`p-1  ${
+                !isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
               } cursor-pointer transition duration-150`}
-            />
+              onClick={() => setIsDetail(false)}
+            >
+              <BiCategory
+                className={`text-xl  ${
+                  !isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
+                } cursor-pointer transition duration-150`}
+              />
+            </div>
+            <div
+              className={`p-1  ${
+                isDetail ? 'shadow-md rounded-sm bg-[#FFFFFF]' : ''
+              } cursor-pointer transition duration-150`}
+              onClick={() => setIsDetail(true)}
+            >
+              <SlMenu
+                className={`text-xl  ${
+                  isDetail ? 'text-mainColor' : 'text-[#CDCDCD]'
+                } cursor-pointer transition duration-150`}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -271,23 +305,6 @@ function DaengFindercomponent() {
           // } px-6 min-h-[75%] pb-[5rem] overflow-y-scroll transition duration-300 ease-in-out`}
           // } min-h-[35.5rem] overflow-y-scroll `}
         >
-          {/* {total
-            ? ListAll?.map((card, idx) => {
-                return (
-                  <>
-                    <Card key={card.postId} isDetail={isDetail} data={card} />
-                    {idx === ListAll.length - 1 && <div ref={ref} />}
-                  </>
-                );
-              })
-            : ListMissing?.map((card, idx) => {
-                return (
-                  <>
-                    <Card key={card.postId} isDetail={isDetail} data={card} />
-                    {idx === ListAll.length - 1 && <div ref={ref} />}
-                  </>
-                );
-              })} */}
           {total
             ? ListAll?.map((card, idx) => {
                 return (
@@ -312,10 +329,12 @@ function DaengFindercomponent() {
         </div>
       )}
       <ScrollUpTop useScrollTop />
-      <DaengFinderButton
-        className='absolute bottom-20 right-4 cursor-pointer'
-        onClick={moveToDaengFinderWrite}
-      />
+      <div data-grapebutton-tooltip='실종 반려견 게시글을 등록할 수 있어요.'>
+        <DaengFinderButton
+          className='absolute bottom-20 right-4 cursor-pointer'
+          onClick={moveToDaengFinderWrite}
+        />
+      </div>
     </>
   );
 }

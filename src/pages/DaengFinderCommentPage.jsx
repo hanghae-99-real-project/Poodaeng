@@ -1,5 +1,8 @@
 /* eslint-disable no-unused-vars */
+import Cookies from 'js-cookie';
 import React, { useEffect, useRef, useState } from 'react';
+import { FiAlertCircle } from 'react-icons/fi';
+import { MdLockOutline } from 'react-icons/md';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -23,9 +26,10 @@ import Loading from '../components/common/Loading2';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import LinkHeader from '../shared/LinkHeader';
 import QuillEditor from '../utils/QuillEditor';
-import { toastSuccess } from '../utils/ToastFreeSetting';
+import { toastError, toastSuccess } from '../utils/ToastFreeSetting';
 import { useQuillStore } from '../zustand/example/zustandAPI';
 import { tokenStore } from './SignInPage';
+import { ReactComponent as CommentAlert } from '../assets/images/CommentAlert.svg';
 
 function DaengFinderCommentPage() {
   const [alertMsg, setAlertMsg] = useState(false);
@@ -62,7 +66,7 @@ function DaengFinderCommentPage() {
   /* 댓글/대댓글 작성도 따로 객체로 만들어야겠음. */
   /* private랑 이미지, 커멘트만 따로 관리 */
   // const [inputMode, setInputMode] = useState(false);
-  const [resetInput, setResetInput] = useState('');
+  const checkAuth = Cookies.get('refreshToken') ?? null;
   const [isCommentMode, setIsCommentMode] = useState({
     inputMode: false,
     commentId: null,
@@ -544,13 +548,6 @@ function DaengFinderCommentPage() {
       }
     }
 
-    console.log(
-      'isCommentMode.absolutePrivate >>>',
-      isCommentMode.absolutePrivate,
-    );
-    console.log('privateComment >>>', privateComment);
-
-    console.log('isEditMode.absolutePrivate >>>', isEditMode.absolutePrivate);
     if (isCommentMode.targetComment) {
       inputs = {
         formData: {
@@ -736,6 +733,7 @@ function DaengFinderCommentPage() {
                   isEditMode.absolutePrivate) &&
                 'bg-[#F1E2FF]'
               } shadow-md cursor-pointer`}
+              data-comment='자물쇠가 활성화되면 비밀 댓글을 작성할 수 있어요. 비밀 댓글은 공개 댓글로 수정이 불가능해요.'
               onClick={controllLockButton}
             >
               {/* 내 화면상에서 구분해주려고 설정하는 거. 댓글 작성 때 절대 비밀, 수정 때 댓글 절대 비밀 */}
@@ -759,9 +757,9 @@ function DaengFinderCommentPage() {
               <div
                 className='w-7 h-7 f-ic-jc overflow-hidden rounded-full bg-white shadow-md cursor-pointer'
                 onClick={() => imageRef.current.click()}
+                data-camera-tooltip='댓글은 최대 1개의 사진만 가능해요. 대댓글은 사진등록이 불가능해요.'
               >
                 <Camera
-                  title='upload image'
                   className='object-contain w-4 h-auto'
                   // onClick={() => imageRef.current.click()}
                 />
@@ -781,37 +779,54 @@ function DaengFinderCommentPage() {
               </div>
             )}
         </div>
-        <div
-          // inputMode가 true여야지 투명이 아님. editMode가 true면 수정하기 버튼이 보여질테고
-          // 그 수정하기 버튼을 누르면  수정하려고 input 연 것인지 아니면 댓글을 달려고 input을 연 것인지 판단 해야 함.
-          // 어떻게 해줘야 하지?
-          // input 모드가 아니거나 edit 모드가 아니면 불투명
-          // 만약 input 모드가 true면
-          // editMode는 상태 전달만 하고 사실상 input 을 띄울지 말지는 inputMode가 정한다. 세부적인 조건은 Editmode 이용.
-          //  h-fit overflow-hidden
-          className={`f-fr-ic-jb ${isCommentMode.inputMode && 'bg-mainColor'} ${
-            !isCommentMode.inputMode && 'bg-[#E2CAFB] opacity-60'
-          }  ${
-            isEditMode.editModal && 'hidden'
-          } border border-[#D7D7D7] rounded-lg shadow-md `}
-          onFocus={event => onCommentMode(event)}
-        >
-          <QuillEditor
-            placeholder='댓글을 입력해주세요'
-            className={`w-full max-h-36 overflow-y-scroll outline-none border-y border-l rounded-tl-lg rounded-bl-lg   placeholder:text-sm ${
-              isCommentMode.inputMode && 'bg-white'
-            } ${!isCommentMode.inputMode && 'bg-white'} !important`}
-          />
-          <button
-            className={`w-16 px-3 h-full font-bold text-base  text-white ${
-              !isCommentMode.inputMode && 'bg-[#E2CAFB]'
-            }`}
-            disabled={!isCommentMode.inputMode}
-            onClick={saveInputHandler}
+        {!checkAuth ? (
+          <div className='f-fr-ic-jb h-[3.125rem] bg-[#E2CAFB] border border-[#D7D7D7] rounded-lg'>
+            <div
+              className='text-[#A54BFF] f-fr-ic-jc w-full max-h-36 overflow-y-scroll outline-none cursor-pointer'
+              // title='로그인으로 이동'
+              data-tooltip='클릭 시 로그인으로 이동돼요'
+              onClick={() => navigate('/login')}
+            >
+              <CommentAlert />
+              &nbsp;댓글 작성을 위해 로그인 해주세요.
+            </div>
+            <div className='f-ic-jc w-16 px-3 h-full font-bold text-3xl text-white bg-[#A54BFF] rounded-r-lg'>
+              <MdLockOutline fill='#FFFFFF' stroke='#A54BFF' />
+            </div>
+          </div>
+        ) : (
+          <div
+            // inputMode가 true여야지 투명이 아님. editMode가 true면 수정하기 버튼이 보여질테고
+            // 그 수정하기 버튼을 누르면  수정하려고 input 연 것인지 아니면 댓글을 달려고 input을 연 것인지 판단 해야 함.
+            // 어떻게 해줘야 하지?
+            // input 모드가 아니거나 edit 모드가 아니면 불투명
+            // 만약 input 모드가 true면
+            // editMode는 상태 전달만 하고 사실상 input 을 띄울지 말지는 inputMode가 정한다. 세부적인 조건은 Editmode 이용.
+            //  h-fit overflow-hidden
+            className={`f-fr-ic-jb ${
+              isCommentMode.inputMode && 'bg-mainColor'
+            } ${!isCommentMode.inputMode && 'bg-[#E2CAFB] opacity-60'}  ${
+              isEditMode.editModal && 'hidden'
+            } border border-[#D7D7D7] rounded-lg`}
+            onFocus={event => onCommentMode(event)}
           >
-            등록
-          </button>
-        </div>
+            <QuillEditor
+              placeholder='댓글을 입력해주세요'
+              className={`w-full max-h-36 overflow-y-scroll outline-none border-y border-l rounded-tl-lg rounded-bl-lg   placeholder:text-sm ${
+                isCommentMode.inputMode && 'bg-white'
+              } ${!isCommentMode.inputMode && 'bg-white'} !important`}
+            />
+            <button
+              className={`w-16 px-3 h-full font-bold text-base  text-white ${
+                !isCommentMode.inputMode && 'bg-[#E2CAFB]'
+              }`}
+              disabled={!isCommentMode.inputMode}
+              onClick={saveInputHandler}
+            >
+              등록
+            </button>
+          </div>
+        )}
       </div>
       {/* 두 가지 종류 중 absolutePrivate이 하나라도 true라면 privateComment를 true로 바꿔야 함. */}
       {isEditMode.editModal && (

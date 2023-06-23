@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 const areaList = [
   '마포구 연남동',
   '마포구 일남동',

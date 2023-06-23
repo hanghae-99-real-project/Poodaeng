@@ -7,7 +7,7 @@ import axios from "axios";
 
 const convertCoordinates = async (longitude, latitude) => {
   try {
-    console.log(longitude, latitude);
+    // console.log(longitude, latitude);
     const apiUrl = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}`;
     /**
      * @param {Object} Rest_API_KEY 사용
@@ -18,12 +18,9 @@ const convertCoordinates = async (longitude, latitude) => {
         // "Content-Type": "application/json;charset=UTF-8",
       },
     });
-    // const adrs = response.data.documents[0]?.address?.address_name;
-    // setAddress(adrs);
-    // console.log('KakaoApi.js 주소 >>>', adrs);
     return response;
   } catch (err) {
-    console.error('주소 변환 에러:', err);
+    // console.error('주소 변환 에러:', err);
     // throw err;
     throw new Error(err);
   }

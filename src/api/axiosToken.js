@@ -13,7 +13,7 @@ let accesstoken;
 
 const axiosToken = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
-    timeout: 1500,
+    timeout: 1800,
     timeoutErrorMessage: "Request Timeout over 2 seconds. check your refreshToken.",
 });
 // instance.defaults.headers.common.Authorization = rfToken
@@ -22,7 +22,7 @@ const axiosToken = axios.create({
 
 axiosToken.interceptors.request.use(
   (config) => {
-    console.log('보낼 때 config headers >>> ', config.headers)
+    // console.log('보낼 때 config headers >>> ', config.headers)
     /**
      * @description refresh token 이 null 이니까 아예 액세스 토큰을 못 받아오네.
      * 서버 쪽에 refreshToken하고 accessToken 둘 다 null인 상태로 보냈을 때 어떤 로직인지 봐야함.
@@ -58,9 +58,9 @@ axiosToken.interceptors.request.use(
  */
 axiosToken.interceptors.response.use(
   async(response) => {
-    console.log('axios interceptor response data depth check >>> ', response);
+    // console.log('axios interceptor response data depth check >>> ', response);
     if(response.status === 203){
-      console.log('axios interceptor 203 data depth check >>> ', response);
+      // console.log('axios interceptor 203 data depth check >>> ', response);
       const {setToken} = tokenStore.getState()
       const newGeneratedToken = await response.data.newAccessToken;
       const acToken = await newGeneratedToken.split(' ')[1]
@@ -68,8 +68,8 @@ axiosToken.interceptors.response.use(
       // const acToken = await response.data;
       const decodedAcToken = await jwtDecode(acToken);
       const { userId, exp } = decodedAcToken;
-      console.log('userId >>>', userId)
-      console.log('exp >>>', exp)
+      // console.log('userId >>>', userId)
+      // console.log('exp >>>', exp)
       const AC_EXP = await exp*1000
       setToken(userId, acToken, AC_EXP)
       accesstoken = await acToken;
@@ -83,14 +83,14 @@ axiosToken.interceptors.response.use(
         const retryResponse = await axios.request(response.config);
         return retryResponse;
       } catch(error){
-        console.log('axios interceptor retry error >>>', error);
+        // console.log('axios interceptor retry error >>>', error);
         return Promise.reject(error);
       }
     }
     return response;
   },
   (error) => {
-    console.log('axios interceptor response error >>>', error);
+    // console.log('axios interceptor response error >>>', error);
     /**
      * @description 리프래쉬 토큰도 만료되고 [액세스 토큰도] 만료되는 경우의 로직을 짜야 함.
      */

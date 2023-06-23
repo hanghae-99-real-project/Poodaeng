@@ -5,17 +5,19 @@
 import DOMPurify from 'dompurify';
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
 import {
   deleteMyPost,
   editToFoundPost,
+  getCurrentBookmarkState,
   searchPostLostDetail,
 } from '../api/daengFinder';
 import { ReactComponent as Badge } from '../assets/images/Badge1.svg';
+import PhotoSlide from '../components/DaengFinder/DaengFinderDetail/PhotoSlide';
 // import Badge from '../assets/images/Badge1.svg';
 import { ReactComponent as CheckedPurple } from '../assets/images/CheckedPurple.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
@@ -25,8 +27,8 @@ import KakaoMap from '../kakao/KakaoMap';
 import { useClipStore } from '../shared/LinkFooter';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import { dateConvert2 } from '../utils/DateConvert';
-import { tokenStore } from './SignInPage';
 import { toastSuccess } from '../utils/ToastFreeSetting';
+import { tokenStore } from './SignInPage';
 
 // import useCurrentLocation from '../hooks/useCurrentLocation';
 
@@ -138,6 +140,8 @@ function DaengFinderDetail() {
     onSuccess: data => {
       setIsFound(true);
       setEditModal(prev => !prev);
+      setErrorMsg(true);
+      toastSuccess(`'찾았어요'로 변경 완료!`);
       // console.log('editToFoundMutation success >>>', data);
       queryClient.invalidateQueries(['getPostLost', 'detail', postId]);
     },
@@ -146,17 +150,40 @@ function DaengFinderDetail() {
     },
   });
 
-  const { isLoading, data, isError, error } = useQuery(
-    ['getPostLost', 'detail', postId],
-    () => searchPostLostDetail(postId),
+  const res = useQueries([
     {
+      queryKey: ['getPostLost', 'detail', 'bookmark', postId],
+      queryFn: () => getCurrentBookmarkState(postId),
+      onSuccess: dt => {
+        // console.log('getCurrentBookmarkState >>>', dt);
+      },
+      onError: err => {
+        // console.log('err >>>', err);
+      },
+      refetchOnWindowFocus: false,
+    },
+    {
+      queryKey: ['getPostLost', 'detail', postId],
+      queryFn: () => searchPostLostDetail(postId),
       enabled: !daeng,
       refetchOnWindowFocus: false,
       onSuccess: successData => {
-        // console.log('useQuery >>>', successData);
+        // console.log('searchPostLostDetail >>>', successData);
       },
     },
-  );
+  ]);
+
+  // const { isLoading, data, isError, error } = useQuery(
+  //   ['getPostLost', 'detail', postId],
+  //   () => searchPostLostDetail(postId),
+  //   {
+  //     enabled: !daeng,
+  //     refetchOnWindowFocus: false,
+  //     onSuccess: successData => {
+  //       // console.log('useQuery >>>', successData);
+  //     },
+  //   },
+  // );
 
   const editToFound = () => {
     editToFoundMutation.mutateAsync(postId);
@@ -197,10 +224,34 @@ function DaengFinderDetail() {
     setClipAddress(location.pathname);
   }, [location, navigate]);
 
+  // useEffect(() => {
+  //   // console.log('useEffect processed');
+  //   const deepData = data?.data ? data?.data[0] : null;
+  //   getBookmarkState(deepData?.BookMarks);
+  //   setDaengList(deepData?.lostPhotoUrl || []);
+  //   setDaeng(
+  //     deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
+  //   );
+  //   setPassPostId(deepData?.postId);
+  //   getPostId(deepData?.postId);
+  //   getUserId(deepData?.UserId);
+  //   setMoreInfo({
+  //     createdAt: deepData?.createdAt,
+  //     address: deepData?.address,
+  //     title: deepData?.title,
+  //     content: deepData?.content,
+  //     dogname: deepData?.dogname,
+  //     lostTime: deepData?.losttime,
+  //   });
+  // }, [data]);
   useEffect(() => {
     // console.log('useEffect processed');
-    const deepData = data?.data ? data?.data[0] : null;
-    getBookmarkState(deepData?.BookMarks);
+    const deepData = res[1].data?.data ? res[1].data?.data[0] : null;
+    const bookMarkData = res[0].data?.data?.bookmarkData
+      ? res[0].data?.data?.bookmarkData.isBookmarked
+      : null;
+    getBookmarkState(bookMarkData);
+    setIsFound(deepData?.status);
     setDaengList(deepData?.lostPhotoUrl || []);
     setDaeng(
       deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
@@ -216,10 +267,10 @@ function DaengFinderDetail() {
       dogname: deepData?.dogname,
       lostTime: deepData?.losttime,
     });
-  }, [data]);
+  }, [res[0].data, res[1].data]);
 
   /** @checkPoint return문 없어도(순차적인 렌더링 없이) query 적용되는지 확인해보자. */
-  if (isLoading) {
+  if (res[0].isLoading || res[1].isLoading) {
     // console.log('isLoading >>> ');
     return (
       <div className='f-ic-jc w-full h-full'>
@@ -228,7 +279,7 @@ function DaengFinderDetail() {
     );
   }
 
-  if (isError) {
+  if (res[0].isError || res[0].isError) {
     setErrorMsg(true);
     toast.error('Error occured while Loading', {
       position: toast.POSITION.TOP_CENTER,
@@ -244,20 +295,23 @@ function DaengFinderDetail() {
 
   /** @camelCase 아닌 게 많다. 조심. */
   // console.log('data 깊다 >>>', data?.data);
-  const deepData = data?.data ? data?.data[0] : null;
-  const userPhotoData = data?.data[1]?.length ? data?.data[1][0] : null;
+  const deepData = res[1].data?.data ? res[1].data?.data[0] : null;
+  const userPhotoData = res[1].data?.data[1]?.length
+    ? res[1].data?.data[1][0]
+    : null;
   const imageList = deepData?.lostPhotoUrl;
   const lostLatitude = deepData?.lostLatitude;
   const lostLongitude = deepData?.lostLongitude;
   const nickname = deepData?.nickname;
   const createdAt = deepData?.createdAt;
   const lostTime = deepData?.losttime;
+  const status = deepData?.status;
 
   return (
     <div className='h-[812px] w-full'>
       {errorMsg && <ToastContainer />}
       <IoIosArrowBack
-        className='absolute z-30 top-7 left-4 text-xl cursor-pointer'
+        className='absolute z-30 top-7 left-4 text-2xl text-[#FFFFFF] drop-shadow cursor-pointer hover:scale-110 transition'
         onClick={() =>
           navigate(reDirection ? '/mypost' : '/daengfinder', {
             state: {
@@ -287,7 +341,8 @@ function DaengFinderDetail() {
       </div>
       <div className='w-full h-[45rem] overflow-y-scroll'>
         <div className='flex items-center justify-center relative w-full h-80'>
-          <div className='absolute bottom-3 f-fr-jc gap-3'>
+          <PhotoSlide daengList={daengList} />
+          {/* <div className='absolute bottom-3 f-fr-jc gap-3'>
             {daengList.length &&
               daengList.map((_, idx) => {
                 return (
@@ -307,7 +362,7 @@ function DaengFinderDetail() {
             src={daeng}
             alt='photoThumb'
             className='object-cover w-full h-full'
-          />
+          /> */}
         </div>
         {/* <div className='bg-[#FFFFFF] px-5 h-[25rem] overflow-y-scroll'> */}
         <div className='bg-[#FFFFFF] px-5 '>
@@ -384,15 +439,17 @@ function DaengFinderDetail() {
           <div className='absolute f-fc justify-end bottom-0 left-0 right-0 rounded-t-xl bg-[#FFFFFF]'>
             <button
               className={`f-ic-jc py-6 border-b border-solid border-[#E1E1E1] text-base font-bold leading-5 overflow-hidden cursor-pointer ${
-                isFound && 'text-[#D9D9D9]'
+                !isFound && 'text-[#D9D9D9]'
               } `}
               onClick={editToFound}
-              disabled={deepData?.status}
+              disabled={isFound}
             >
               <CheckedPurple
                 className={`${
-                  isFound ? 'bg-[#D9D9D9]' : 'bg-mainColor'
-                } hover:scale-110 transition duration-300 rounded-sm`}
+                  isFound
+                    ? 'bg-mainColor'
+                    : 'bg-[#D9D9D9] hover:scale-110 transition duration-300'
+                }  rounded-sm`}
               />
               &nbsp;찾았어요
             </button>

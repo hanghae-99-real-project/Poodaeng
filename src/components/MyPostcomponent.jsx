@@ -5,9 +5,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { shallow } from 'zustand/shallow';
 import { getMyBookMark, getMyPost } from '../api/myPage';
-import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
+// import { ReactComponent as NoResult } from '../assets/images/NoResult.svg';
 import { tokenStore } from '../pages/SignInPage';
 import { toastError, toastSuccess } from '../utils/ToastFreeSetting';
+import { ReactComponent as MyPageNoResult } from '../assets/images/MyPageNoResult.svg';
 import Card from './DaengFinder/Card';
 import Headers from './Headers';
 import Loading from './common/Loading';
@@ -113,8 +114,12 @@ function MyPostcomponent({ BookmarkMode, deleteComplete }) {
           })}
         </div>
       ) : (
-        <div className='h-full w-full f-ic-jc relative top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-          <NoResult />
+        <div className='h-full w-full f-fc-ic-jc gap-3 relative top-1/3 left-1/2 -translate-x-40 -translate-y-72'>
+          {/* <NoResult /> */}
+          <MyPageNoResult />
+          <p className='text-[#A0A0A0] font-medium antialiased whitespace-nowrap -translate-x-4'>
+            {BookmarkMode ? '북마크한 글이 없습니다.' : '작성한 글이 없습니다.'}
+          </p>
         </div>
       )}
     </>
@@ -122,68 +127,3 @@ function MyPostcomponent({ BookmarkMode, deleteComplete }) {
 }
 
 export default MyPostcomponent;
-
-// const {
-//   isLoading,
-//   data: postData,
-//   isError,
-//   error,
-// } = useQuery(['getPostLost', Number(userId), 'getMyPost'], getMyPost, {
-//   onSuccess: successData => {
-//     if (deleteComplete) {
-//       setErrorMsg(true);
-//       toastSuccess(deleteComplete);
-//     }
-//   },
-//   onError: errorData => {
-//     // console.log('errorData >>>', errorData);
-//     setErrorMsg(true);
-//     toastError('데이터를 불러오는 데 실패 했습니다.');
-//   },
-//   refetchOnWindowFocus: false,
-//   enabled: BookmarkMode === false,
-// });
-
-// const {
-//   isLoading: bookMarkIsLoading,
-//   data: bookmarkData,
-//   isError: bookmarkIsError,
-//   error: bookmarkError,
-// } = useQuery(
-//   ['getPostLost', Number(userId), 'getMyBookMark'],
-//   getMyBookMark,
-//   {
-//     onSuccess: successData => {
-//       if (deleteComplete) {
-//         setErrorMsg(true);
-//         toastSuccess(deleteComplete);
-//       }
-//     },
-//     onError: errorData => {
-//       // console.log('errorData >>>', errorData);
-//       setErrorMsg(true);
-//       toastError('데이터를 불러오는 데 실패 했습니다.');
-//     },
-//     refetchOnWindowFocus: false,
-//     enabled: BookmarkMode === true,
-//   },
-// );
-
-// if (isLoading || bookMarkIsLoading) {
-//   return (
-//     <div className='f-ic-jc w-full h-full'>
-//       <Loading />
-//     </div>
-//   );
-// }
-// if (isError || bookmarkIsError) {
-//   navigate('/mypage', {
-//     state: error || bookmarkError,
-//   });
-// }
-// console.log('data depth myPostData check >>>', postData);
-// console.log('data depth myBookmarkData check >>>', bookmarkData);
-// const data = BookmarkMode ? bookmarkData : postData;
-// const dataDeep = BookmarkMode
-//   ? data?.data?.getMyBookmarkData
-//   : data?.data?.mypagePosts;

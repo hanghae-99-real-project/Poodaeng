@@ -29,7 +29,7 @@ const dateConvert2 = (date) => {
     ampm = "오후"
   }
   const formattedDateV2 = `${year}년 ${month}월 ${day}일 ${ampm} ${hour}:${minute.toString().padStart(2, '0')}`;
-  const formattedDateV3 = `${year}.${month.toString().padStart(2,0)}.${day.toString().padStart(2,0)}`
+  const formattedDateV3 = `${year}.${month.toString().padStart(2,'0')}.${day.toString().padStart(2,'0')}`
 
   return [formattedDateV1, formattedDateV2, formattedDateV3];
 };

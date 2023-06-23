@@ -2,6 +2,7 @@ import React from 'react';
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
+import useShallow from '../hooks/useShallow';
 
 const input = (set, get) => ({
   searchList: [],
@@ -49,9 +50,6 @@ const input = (set, get) => ({
     set(() => ({ searchList: [], word: '', searchWordSnapshot: '' })),
 });
 
-/**
- * @description searchWordSnapshot 얘도 persist 해야 할 수도
- */
 export const searchListStore = create(
   subscribeWithSelector(
     persist(input, {
@@ -64,6 +62,17 @@ export const searchListStore = create(
     }),
   ),
 );
+
+/**
+ *
+ * @param {[]} keys
+ * @returns
+ */
+export const useSearchListStore = keys => {
+  return useShallow(searchListStore, keys);
+};
+/** @description 컴포넌트에서 사용 방법 */
+// const { word, onWordChanger }  = useSearchListStore(['word', 'onWordChanger'])
 
 // function Input({ setShowRecent }) {
 function Input({ searchDaengFinderPost, searchBarRef }) {

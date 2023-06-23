@@ -5,7 +5,7 @@ import { getMyPooBox } from '../api/poobox';
 import Headers from './Headers';
 import Loading from './common/Loading';
 import { dateConvert2 } from '../utils/DateConvert';
-import { ReactComponent as PooNull } from '../assets/images/postnull.svg';
+import { ReactComponent as MyPageNoResult } from '../assets/images/MyPageNoResult.svg';
 
 function MyPooboxcomponent() {
   const { isLoading, isError, data } = useQuery('poobox', getMyPooBox);
@@ -55,9 +55,9 @@ function MyPooboxcomponent() {
         등록한 푸박스
       </Headers>
       {pooData && pooData.length === 0 ? (
-        <div className='flex flex-col justify-center items-center w-96 h-full'>
-          <PooNull className='ml-5 ' />
-          <div className='mt-2 mb-20 text-[#A0A0A0]'>
+        <div className='h-full w-full f-fc-ic-jc gap-3 relative top-1/3 left-1/2 -translate-x-40 -translate-y-72'>
+          <MyPageNoResult />
+          <div className='text-[#A0A0A0] font-medium antialiased whitespace-nowrap -translate-x-4'>
             등록한 푸박스가 없습니다.
           </div>
         </div>

@@ -89,7 +89,7 @@ function SignInPage() {
 
   const mutation = useMutation(signIn, {
     onSuccess: async data => {
-      // console.log('login 성공 시 data >>>', data);
+      console.log('login 성공 시 data >>>', data);
       const { accessToken, refreshToken } = data.data;
       const decodedAcToken = await jwtDecode(accessToken);
       const decodedRfToken = await jwtDecode(refreshToken);
@@ -194,7 +194,7 @@ function SignInPage() {
         <div className='flex flex-col items-center mb-[78px] '>
           <div className='f-fc-ic gap-3'>
             <DaengPoo className='w-24 h-16 translate-x-2' />
-            <Logo className='w-28 h-14 mb-2' />
+            <Logo fill='#8722ED' className='w-28 h-14 mb-2' />
           </div>
         </div>
         <form

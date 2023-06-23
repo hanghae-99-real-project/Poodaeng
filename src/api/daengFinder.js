@@ -12,9 +12,18 @@ const writePostLost = async(inputs) => {
   return response
 }
 
-const getPostLost = async(page) => {
-  // const response = await axiosToken.get('/api/lostposts')
-  const response = await axiosToken.get('/api/lostposts',{
+const getLatestLostPosts = async(page) => {
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/lostposts`,{
+  // const response = await axiosToken.get('api/lostposts',{
+    params: {
+      page
+    }
+  })
+  return response
+}
+
+const getNearbyLostPosts = async(page) => {
+  const response = await axiosToken.get('/api/lostposts/nearby', {
     params: {
       page
     }
@@ -35,7 +44,12 @@ const searchPostLostDetail = async(id) => {
   const postId = parseInt(id, 10);
   const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/lostposts/${postId}`)
   return response
-} 
+}
+
+const getCurrentBookmarkState = async(postId) => {
+  const response = await axiosToken.get(`/api/lostposts/${postId}/bookmark`)
+  return response
+}
 
 const bookMarkLostPost = async(inputs) => {
   const { postId } = inputs;
@@ -113,5 +127,5 @@ const editToFoundPost = async(postId) => {
   return response
 }
 
-export { writePostLost, getPostLost, searchPostLost, searchPostLostDetail, bookMarkLostPost, getPostComment, getPostReply, writePostComment, writePostReply, editPostComment, deletePostComment, deletePostReply, editMyPost, deleteMyPost, editToFoundPost };
+export { writePostLost, getLatestLostPosts, getNearbyLostPosts, searchPostLost, searchPostLostDetail, bookMarkLostPost, getCurrentBookmarkState, getPostComment, getPostReply, writePostComment, writePostReply, editPostComment, deletePostComment, deletePostReply, editMyPost, deleteMyPost, editToFoundPost };
 

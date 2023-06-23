@@ -19,7 +19,9 @@ function Kakaoserch() {
   const location = useLocation();
   const isMapPage = location.pathname === '/map';
 
-  let { isLoading, isError, data } = useQuery('poobox', getPooBox);
+  const { isLoading, isError, data } = useQuery('poobox', getPooBox, {
+    refetchOnWindowFocus: false,
+  });
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>

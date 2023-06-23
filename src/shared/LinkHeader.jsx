@@ -7,7 +7,7 @@ function LinkHeader({ children, icon, destination, setMapMode, feature }) {
   const navigate = useNavigate();
   return (
     // py-5
-    <div className='static top-0 f-fr-ic justify-between w-full h-7 px-4 shadow-md  py-7'>
+    <div className='f-fr-ic justify-between w-full h-7 px-4 shadow-md  py-7'>
       {icon && (
         <IoIosArrowBack
           className='text-2xl box-border -translate-x-2 cursor-pointer'

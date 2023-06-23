@@ -7,7 +7,8 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { bookMarkLostPost } from '../api/daengFinder';
-import { ReactComponent as Bookmark } from '../assets/images/BookmarkFilled.svg';
+import { ReactComponent as BookmarkEmpty } from '../assets/images/BookmarkFilled.svg';
+import { ReactComponent as BookmarkFilled } from '../assets/images/BookMarkFill.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import { ReactComponent as Comment } from '../assets/images/Magnifier.svg';
 
@@ -44,9 +45,14 @@ const store = (set, get) => ({
   //     isBookmark
   //   }));
   // },
-  getBookmarkState: isBookmarkArray => {
+  // getBookmarkState: isBookmarkArray => {
+  //   set(() => ({
+  //     isBookmark: isBookmarkArray?.length > 0,
+  //   }));
+  // },
+  getBookmarkState: isBookmark => {
     set(() => ({
-      isBookmark: isBookmarkArray?.length > 0,
+      isBookmark,
     }));
   },
   setClipAddress: clipAddress => {
@@ -177,10 +183,17 @@ function LinkFooter() {
           />
         </div>
         <div />
-        <Bookmark
-          className={`${isBookmark && 'fill-[#C699F4]'} cursor-pointer`}
-          onClick={bookmarkHandler}
-        />
+        {isBookmark ? (
+          <BookmarkFilled
+            onClick={bookmarkHandler}
+            className='cursor-pointer'
+          />
+        ) : (
+          <BookmarkEmpty
+            className={`${isBookmark && 'fill-[#FFFFFF]'} cursor-pointer`}
+            onClick={bookmarkHandler}
+          />
+        )}
       </div>
     </div>
   );
