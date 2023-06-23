@@ -1,31 +1,65 @@
+/* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React from 'react';
+import { React } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { useQuery } from 'react-query';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
+import { useQuery } from 'react-query';
 import Kakaoserch from './Kakaoserch';
 // import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
-import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
 import { ReactComponent as Alert } from '../assets/images/Alert.svg';
-import { ReactComponent as Logo } from '../assets/images/푸댕.svg';
+// import { ReactComponent as Alerton } from '../assets/images/Alerton.svg';
+import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
 import { ReactComponent as Event } from '../assets/images/event.svg';
+import { ReactComponent as Logo } from '../assets/images/푸댕.svg';
 import Slidecomponent from './Slidecomponent/Slidecomponent';
+import { getAlert } from '../api/main';
 // import getDaengMain from '../api/main';
 
 function Maincomponent() {
   const navigate = useNavigate();
+  const { isLoading, isError, data } = useQuery('main', getAlert);
+  if (isLoading) {
+    return (
+      <div className='flex flex-col h-[812px] justify-center items-center'>
+        {/* <Loading /> */}
+      </div>
+    );
+  }
+  if (isError) {
+    // console.log('geterror', isError);
+  }
+
+  const alertdata = data.data.notificationsData;
+  console.log(alertdata);
+
+  const handleAlertClick = () => {
+    navigate('/alert', { state: { alertdata } });
+  };
 
   return (
     <>
       <div className='flex flex-row justify-between w-96 h-10 mt-5 mb-2 px-5 bg-white'>
         <Logo />
-        <Alert
+        {data.data.notificationsData.some(item => item.isRead === false) ? (
+          <div>
+            <span class='animate-ping absolute right-3 top-5 h-2 w-2 rounded-full bg-mainColor' />
+            <span class='absolute right-3 top-5 h-2 w-2 rounded-full bg-mainColor' />
+            <Alert
+              className='cursor-pointer mt-0.5'
+              onClick={handleAlertClick}
+            />
+          </div>
+        ) : (
+          <Alert className='cursor-pointer mt-0.5' onClick={handleAlertClick} />
+        )}
+        {/* <Alert
           className='cursor-pointer mt-0.5'
           onClick={() => navigate('/alert')}
-        />
+        /> */}
       </div>
       <div className='max-h-[586px]'>
         <div
