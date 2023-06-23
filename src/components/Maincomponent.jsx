@@ -18,21 +18,20 @@ import Slidecomponent from './Slidecomponent/Slidecomponent';
 function Maincomponent() {
   const navigate = useNavigate();
 
-  const AlertNavigateHander = () => {
-    navigate('/alert');
-  };
-
   return (
     <>
-      <div className='flex flex-row justify-between w-96 h-10 mt-4 mb-2 px-5 bg-white'>
+      <div className='flex flex-row justify-between w-96 h-10 mt-5 mb-2 px-5 bg-white'>
         <Logo />
-        <Alert className='cursor-pointer' onClick={AlertNavigateHander} />
+        <Alert
+          className='cursor-pointer mt-0.5'
+          onClick={() => navigate('/alert')}
+        />
       </div>
       <div className='max-h-[586px]'>
         <div
           className='flex justify-center items-center w-auto h-40 cursor-pointer'
           role='none'
-          onClick={() => navigate('/events')}
+          // onClick={() => navigate('/events')}
         >
           <div className=''>
             <Event />
