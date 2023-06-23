@@ -286,10 +286,136 @@ textarea {
   font-family: 'SUIT-Regular';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2')
     format('woff2');
-  font-weight: normal;
+  font-weight: 600 !important;
   font-style: normal;
+}
+
+.ql-editor {
+  font-family: 'SUIT-Regular';
+  font-style: normal !important;
+  font-weight: 500 !important;
+}
+
+.ql-editor.ql-blank::before {
+  font-style: normal !important;
 }
 
 body {
   font-family: 'SUIT-Regular', 'Nunito Sans';
+  font-weight: 600 !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: #000000 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ffffff !important;
+}
+
+[data-homeicon-tooltip]:hover::after {
+  content: attr(data-homeicon-tooltip);
+  position: absolute;
+  top: 0%;
+  left: 5%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-mapicon-tooltip]:hover::after {
+  content: attr(data-mapicon-tooltip);
+  position: absolute;
+  top: 0%;
+  left: 12%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-poobox-tooltip]:hover::after {
+  content: attr(data-poobox-tooltip);
+  position: absolute;
+  top: 0%;
+  left: 32%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-daengicon-tooltip]:hover::after {
+  content: attr(data-daengicon-tooltip);
+  position: absolute;
+  top: 0%;
+  left: 46%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-mypage-tooltip]:hover::after {
+  content: attr(data-mypage-tooltip);
+  position: absolute;
+  top: 0%;
+  right: 5%;
+  font-size: xx-small;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -40%;
+  left: 10%;
+  font-size: xx-small;
+  border: 0.5px dotted #a54bff;
+  border-radius: 10px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+
+[data-comment]:hover::after {
+  content: attr(data-comment);
+  position: absolute;
+  top: -50%;
+  left: 6%;
+  font-size: xx-small;
+  border: 0.5px dashed #a54bff;
+  border-radius: 10px;
+  padding: 1px 5px;
+  width: 220px;
+  /* white-space: nowrap; */
+  color: #a54bff;
+}
+
+[data-camera-tooltip]:hover::after {
+  content: attr(data-camera-tooltip);
+  position: absolute;
+  top: -30%;
+  left: 6%;
+  font-size: xx-small;
+  border: 0.5px dashed #a54bff;
+  border-radius: 10px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
+}
+
+[data-grapebutton-tooltip]:hover::after {
+  content: attr(data-grapebutton-tooltip);
+  position: absolute;
+  bottom: 19%;
+  right: 2%;
+  font-size: xx-small;
+  border: 0.5px dashed #a54bff;
+  border-radius: 10px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  color: #a54bff;
 }
