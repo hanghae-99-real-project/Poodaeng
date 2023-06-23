@@ -36,7 +36,7 @@ function Alertcomponent() {
         <Tabbar />
       </div> */}
       <div className='flex w-full h-full items-center justify-center'>
-        준비중 입니다.
+        준비중 입니다
       </div>
     </div>
   );
