@@ -266,6 +266,7 @@ function DaengFindercomponent() {
               className={`${
                 latest && 'text-[#000000]'
               } hover:scale-105 transition cursor-pointer`}
+              disabled={latest}
               onClick={getLatestPostsHandler}
             >
               최신순
@@ -277,6 +278,7 @@ function DaengFindercomponent() {
               } ${
                 !latest && 'text-[#000000]'
               } hover:scale-105 transition cursor-pointer`}
+              disabled={!latest}
               onClick={getNearbyPostsHandler}
             >
               위치순
