@@ -199,10 +199,7 @@ function LinkFooter() {
             className='cursor-pointer'
           />
         ) : (
-          <BookmarkEmpty
-            className={`${isBookmark && 'fill-[#FFFFFF]'} cursor-pointer`}
-            onClick={bookmarkHandler}
-          />
+          <BookmarkEmpty className='cursor-pointer' onClick={bookmarkHandler} />
         )}
       </div>
     </div>

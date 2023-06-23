@@ -284,19 +284,23 @@ function DaengFinderDetail() {
     );
   }
 
-  if (res[0].isError || res[0].isError) {
-    setErrorMsg(true);
-    toast.error('Error occured while Loading', {
-      position: toast.POSITION.TOP_CENTER,
-      toastId: 'empty-comment-toast',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  }
+  /**
+   * @description 로딩만 계속 뜨는데 로딩 계쏙 뜨게 하지 말고 뒤로 돌아가게 해야 함.
+   */
+
+  // if (res[0].isError || res[0].isError) {
+  //   setErrorMsg(true);
+  //   toast.error('Error occured while Loading', {
+  //     position: toast.POSITION.TOP_CENTER,
+  //     toastId: 'empty-comment-toast',
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //   });
+  // }
 
   /** @camelCase 아닌 게 많다. 조심. */
   // console.log('data 깊다 >>>', data?.data);
