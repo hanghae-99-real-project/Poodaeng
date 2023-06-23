@@ -66,13 +66,13 @@ function Tabbar({ setIsActive }) {
       <div className='flex justify-evenly items-center w-[375px] h-[65px] shadow-sm pb-5'>
         <div className='flex flex-col items-center '>
           <HomeIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 text-[#AEAEAE] ${
+            className={`fill-[#AEAEAE] w-7 h-7 text-[#AEAEAE] ${
               location.pathname === '/' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/')}
           />
           <div
-            className={`absolute bottom-1 text-xs mb-1 ${
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] font-nomal ${
               location.pathname === '/' ? 'text-mainColor' : ''
             }`}
           >
@@ -81,22 +81,22 @@ function Tabbar({ setIsActive }) {
         </div>
         <div className='flex flex-col items-center'>
           <MapIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7  ${
+            className={`fill-[#AEAEAE] w-7 h-7  ${
               location.pathname === '/map' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/map')}
           />
           <div
-            className={`absolute bottom-1 text-xs mb-1 ${
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/map' ? 'text-mainColor' : ''
             }`}
           >
-            내 주변
+            지도
           </div>
         </div>
         <div className='flex flex-col items-center'>
           <PooBox
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname.includes('/poopost') ||
               location.pathname.includes('/poolanding')
                 ? 'fill-mainColor'
@@ -105,25 +105,25 @@ function Tabbar({ setIsActive }) {
             onClick={() => handleIconClick('/poolanding')}
           />
           <div
-            className={`absolute bottom-1 text-xs mb-1 ${
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname.includes('/poopost') ||
               location.pathname.includes('/poolanding')
                 ? 'text-mainColor'
                 : ''
             }`}
           >
-            푸박스
+            등록
           </div>
         </div>
         <div className='flex flex-col items-center'>
           <DaengIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/daengfinder' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/daengfinder')}
           />
           <div
-            className={`absolute bottom-1 text-xs mb-1 ${
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/daengfinder' ? 'text-mainColor' : ''
             }`}
           >
@@ -132,17 +132,17 @@ function Tabbar({ setIsActive }) {
         </div>
         <div className='flex flex-col items-center'>
           <ProfileIcon
-            className={`fill-[#AEAEAE] hover:fill-mainColor w-7 h-7 ${
+            className={`fill-[#AEAEAE] w-7 h-7 ${
               location.pathname === '/mypage' ? 'fill-mainColor' : ''
             }`}
             onClick={() => handleIconClick('/mypage')}
           />
           <div
-            className={`absolute bottom-1 text-xs mb-1 ${
+            className={`absolute bottom-1 text-xs mb-1 text-[#AEAEAE] ${
               location.pathname === '/mypage' ? 'text-mainColor' : ''
             }`}
           >
-            내 정보
+            MY
           </div>
         </div>
       </div>
