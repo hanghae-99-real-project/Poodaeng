@@ -50,7 +50,7 @@ function App() {
         <Something />
       </BrowserView> */}
       <QueryClientProvider client={queryClient}>
-        <Background className='fixed h-auto w-screen bg-cover' />
+        <Background className='absolute h-screen w-auto' />
         <Router />
       </QueryClientProvider>
     </>
