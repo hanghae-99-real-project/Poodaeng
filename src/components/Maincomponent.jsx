@@ -6,33 +6,33 @@ import { useNavigate } from 'react-router-dom';
 // import { useQuery } from 'react-query';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
-import { useQuery } from 'react-query';
 import Cookies from 'js-cookie';
+import { useQuery } from 'react-query';
 import Kakaoserch from './Kakaoserch';
 // import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
 import { ReactComponent as Alert } from '../assets/images/Alert.svg';
 // import { ReactComponent as Alerton } from '../assets/images/Alerton.svg';
+import { getAlert } from '../api/main';
 import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
 import { ReactComponent as Event } from '../assets/images/event.svg';
 import { ReactComponent as Logo } from '../assets/images/푸댕.svg';
 import Slidecomponent from './Slidecomponent/Slidecomponent';
-import { getAlert } from '../api/main';
 // import getDaengMain from '../api/main';
 
 function Maincomponent() {
   const navigate = useNavigate();
-  const { isLoading, isError, data } = useQuery('main', getAlert);
-  if (isLoading) {
-    return (
-      <div className='flex flex-col h-[812px] justify-center items-center'>
-        {/* <Loading /> */}
-      </div>
-    );
-  }
-  if (isError) {
-    // console.log('geterror', isError);
-  }
+  const { data } = useQuery('main', getAlert);
+  // if (isLoading) {
+  //   return (
+  //     <div className='flex flex-col h-[812px] justify-center items-center'>
+  //       <Loading />
+  //     </div>
+  //   );
+  // }
+  // if (isError) {
+  //   console.log(isError);
+  // }
 
   const alertdata = data?.data?.notificationsData;
   // console.log(data.data.notificationsData);
