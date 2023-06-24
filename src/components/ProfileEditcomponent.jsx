@@ -136,11 +136,11 @@ function ProfileEditcomponent() {
   // const passwordMutation = useMutation(newPutPassword, {
   //   onSuccess: putData => {
   //     queryClient.invalidateQueries('profile');
-  //     // console.log('query success response >>> ', putData);
+  // console.log('query success response >>> ', putData);
   //     closeModal();
   //   },
   //   onError: errors => {
-  //     // console.log(errors);
+  // console.log(errors);
   //   },
   // });
 
