@@ -129,7 +129,7 @@ function SignUpPage() {
     },
     onError: error => {
       console.log('회원가입 제출 error >> ', error);
-      if (error.response?.data?.errorMessage) {
+      if (error?.response?.data?.errorMessage) {
         setMessage(true);
         toastError(error.response?.data?.errorMessage);
       }
@@ -184,8 +184,8 @@ function SignUpPage() {
 
   return (
     <div>
+      {message && <ToastContainer />}
       <div className={`fixed z-50 inset-0 ${getAuthMode ? '' : 'hidden'}`}>
-        {message && <ToastContainer />}
         <div
           role='none'
           className='absolute inset-0 bg-black opacity-30 '
