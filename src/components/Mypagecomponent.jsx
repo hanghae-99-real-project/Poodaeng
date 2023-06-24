@@ -15,7 +15,7 @@ function Mypagecomponent() {
 
   const navigate = useNavigate();
 
-  const { isLoading, isError, data } = useQuery('profile', getMypageCount);
+  const { data } = useQuery('profile', getMypageCount);
   const mutation = useMutation(signOut, {
     onSuccess: success => {
       resetUserInfoLog();
@@ -29,19 +29,19 @@ function Mypagecomponent() {
   if (!refreshToken) {
     return navigate('/unknown');
   }
-  if (isLoading) {
-    return (
-      <div className='flex flex-col h-[812px] justify-center  items-center'>
-        <Loading />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className='flex flex-col h-[812px] justify-center  items-center'>
+  //       <Loading />
+  //     </div>
+  //   );
+  // }
 
-  if (isError) {
-    // console.log('Mypagecom>>>>>>', error);
-    // mutation.mutate();
-    return navigate('/unknown');
-  }
+  // if (isError) {
+  //   // console.log('Mypagecom>>>>>>', error);
+  //   // mutation.mutate();
+  //   return navigate('/unknown');
+  // }
 
   const logoutHandler = () => {
     mutation.mutate();
