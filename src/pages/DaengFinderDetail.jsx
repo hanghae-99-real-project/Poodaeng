@@ -341,7 +341,7 @@ function DaengFinderDetail() {
       ) : null}
       <div className={`fixed inset-0 z-30 ${onModal.on ? '' : 'hidden'}`}>
         <div role='none' className='absolute inset-0 bg-black opacity-30' />
-        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 f-fc-ic-jc  bg-[#FFFFFF] rounded-md  shadow-lg px-14 py-8'>
+        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 f-fc-ic-jc  bg-[#FFFFFF]  bg-opacity-80 shadow backdrop-blur-[10px] rounded-md  px-14 py-8'>
           <div className='f-fc-ic gap-2 '>
             {onModal.sort === 'clipboard' ? (
               <Clip className='antialiased blur-none' />

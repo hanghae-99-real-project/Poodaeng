@@ -49,7 +49,7 @@ function KakaoAuthCheck() {
       // console.log('rfExpireDate >>>', rfExpireDate);
       Cookies.set('refreshToken', refreshToken, {
         expires: rfExpireDate,
-        secure: true,
+        secure: false,
         sameSite: 'Lax',
       });
       const { exp: AC_EXP, userId } = decodedAcToken;
