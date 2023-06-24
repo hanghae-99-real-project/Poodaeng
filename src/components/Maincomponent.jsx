@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
 import { useQuery } from 'react-query';
+import Cookies from 'js-cookie';
 import Kakaoserch from './Kakaoserch';
 // import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
@@ -35,9 +36,14 @@ function Maincomponent() {
 
   const alertdata = data.data.notificationsData;
   // console.log(data.data.notificationsData);
+  const refreshToken = Cookies.get('refreshToken');
 
   const handleAlertClick = () => {
-    navigate('/alert', { state: { alertdata } });
+    if (!refreshToken) {
+      navigate('/unknown');
+    } else {
+      navigate('/alert', { state: { alertdata } });
+    }
   };
 
   return (

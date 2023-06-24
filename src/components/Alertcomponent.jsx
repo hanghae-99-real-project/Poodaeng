@@ -6,6 +6,7 @@ import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
+import Cookies from 'js-cookie';
 import { putAlert } from '../api/main';
 import { ReactComponent as MyPageNoResult } from '../assets/images/MyPageNoResult.svg';
 import { ReactComponent as 프로필5 } from '../assets/images/프로필5.svg';
@@ -29,7 +30,7 @@ function Alertcomponent() {
   // console.log('geterror', isError);
   // }
 
-  const { alertdata } = location.state;
+  // const { alertdata } = location.state;
   // console.log('alert', alertdata);
   const queryClient = useQueryClient();
   const mutation = useMutation(putAlert, {
