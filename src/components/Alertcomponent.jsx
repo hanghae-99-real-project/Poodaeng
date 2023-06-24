@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 /* eslint-disable react/jsx-pascal-case */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
