@@ -34,7 +34,7 @@ function Maincomponent() {
   }
 
   const alertdata = data.data.notificationsData;
-  console.log(alertdata);
+  // console.log(data.data.notificationsData);
 
   const handleAlertClick = () => {
     navigate('/alert', { state: { alertdata } });
