@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 import React from 'react';
@@ -6,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import { putAlert } from '../api/main';
 import { ReactComponent as MyPageNoResult } from '../assets/images/MyPageNoResult.svg';
+import { ReactComponent as 프로필5 } from '../assets/images/프로필5.svg';
 import { dateConvert2 } from '../utils/DateConvert';
 import Headers from './Headers';
 
@@ -31,11 +33,11 @@ function Alertcomponent() {
   const queryClient = useQueryClient();
   const mutation = useMutation(putAlert, {
     onSuccess: postData => {
-      console.log('수정요청', postData);
+      // console.log('수정요청', postData);
       queryClient.invalidateQueries('alert');
     },
     onError: errors => {
-      console.log('수정요청', errors);
+      // console.log('수정요청', errors);
     },
   });
 
@@ -67,11 +69,15 @@ function Alertcomponent() {
                   }
                   role='none'
                 >
-                  <img
-                    className='flex bg-cover w-11 h-11 border rounded-full mr-3'
-                    src={item.User.userPhoto[0]}
-                    alt='pt'
-                  />
+                  {item.User.userPhoto[0] ? (
+                    <img
+                      className='flex bg-cover w-11 h-11 border rounded-full mr-3'
+                      src={item.User.userPhoto[0]}
+                      alt='pt'
+                    />
+                  ) : (
+                    <프로필5 />
+                  )}
                   <div className='flex flex-col items-start justify-center'>
                     <div className='font-bold text-xs'>
                       {item.User.nickname}
