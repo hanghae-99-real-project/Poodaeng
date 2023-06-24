@@ -34,7 +34,7 @@ function Maincomponent() {
     // console.log('geterror', isError);
   }
 
-  const alertdata = data.data.notificationsData;
+  const alertdata = data?.data?.notificationsData;
   // console.log(data.data.notificationsData);
   const refreshToken = Cookies.get('refreshToken');
 
@@ -50,7 +50,7 @@ function Maincomponent() {
     <>
       <div className='flex flex-row justify-between w-96 h-10 mt-5 mb-2 px-5 bg-white'>
         <Logo />
-        {data.data.notificationsData.some(item => item.isRead === false) ? (
+        {data?.data?.notificationsData?.some(item => item.isRead === false) ? (
           <div>
             <span class='animate-ping absolute right-3 top-5 h-2 w-2 rounded-full bg-mainColor' />
             <span class='absolute right-3 top-5 h-2 w-2 rounded-full bg-mainColor' />
