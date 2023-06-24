@@ -23,6 +23,7 @@ const store = (set, get) => ({
   postId: null,
   userId: null,
   url: '',
+  commentsCount: 0,
   // refreshToken: Cookies.get('refreshToken'),
   // accessToken: null,
   // setAccessToken: (accessToken) => {
@@ -111,7 +112,7 @@ const store = (set, get) => ({
         1000,
       );
     } catch (error) {
-      // console.log(error);
+      console.log('error >>>', error);
       set(() => ({
         isBookmark: false,
         onModal: { on: true, sort: 'bookmark' },
@@ -122,10 +123,15 @@ const store = (set, get) => ({
       }));
       setTimeout(
         () =>
-          set(prevState => ({ on: !prevState.onModal.on, sort: 'bookmark' })),
+          set(prevState => ({
+            onModal: { on: !prevState.onModal.on, sort: 'bookmark' },
+          })),
         1000,
       );
     }
+  },
+  getCommentsCount: commentsCount => {
+    set({ commentsCount });
   },
 });
 
@@ -142,6 +148,7 @@ function LinkFooter() {
     userId,
     isBookmark,
     url,
+    commentsCount,
     onClipBoard,
     // onCancelBookmark,
     onBookmark,
@@ -154,6 +161,7 @@ function LinkFooter() {
       onClipBoard: state.onClipBoard,
       // onCancelBookmark: state.onCancelBookmark,
       onBookmark: state.onBookmark,
+      commentsCount: state.commentsCount,
     }),
     shallow,
   );
@@ -182,15 +190,19 @@ function LinkFooter() {
             <Clip className='cursor-pointer' />
             {/* <Clip onClick={clipHandler} className='cursor-pointer' /> */}
           </CopyToClipboard>
-          <Comment
-            className='cursor-pointer'
-            onClick={
-              () => navigate(`/daengfinder/detail/${userId}/comment/${postId}`)
-              // navigate(`/daengfinder/detail/${userId}/comment/${postId}`, {
-              //   state: { postOwnerId: userId },
-              // })
-            }
-          />
+          <div className='f-fr-ic gap-[0.3575rem] text-[#939393]'>
+            <Comment
+              className='cursor-pointer'
+              onClick={
+                () =>
+                  navigate(`/daengfinder/detail/${userId}/comment/${postId}`)
+                // navigate(`/daengfinder/detail/${userId}/comment/${postId}`, {
+                //   state: { postOwnerId: userId },
+                // })
+              }
+            />
+            {commentsCount > 99 ? '99+' : commentsCount}
+          </div>
         </div>
         <div />
         {isBookmark ? (

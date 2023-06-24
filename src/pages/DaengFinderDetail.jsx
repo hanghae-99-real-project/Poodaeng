@@ -61,6 +61,7 @@ function DaengFinderDetail() {
     getPostId,
     getUserId,
     getBookmarkState,
+    getCommentsCount,
   } = useClipStore(
     state => ({
       onModal: state.onModal,
@@ -70,6 +71,7 @@ function DaengFinderDetail() {
       getPostId: state.getPostId,
       getUserId: state.getUserId,
       getBookmarkState: state.getBookmarkState,
+      getCommentsCount: state.getCommentsCount,
     }),
     shallow,
   );
@@ -159,7 +161,7 @@ function DaengFinderDetail() {
       queryKey: ['getPostLost', 'detail', 'bookmark', postId],
       queryFn: () => getCurrentBookmarkState(postId),
       onSuccess: dt => {
-        // console.log('getCurrentBookmarkState >>>', dt);
+        console.log('getCurrentBookmarkState >>>', dt);
       },
       onError: err => {
         // console.log('err >>>', err);
@@ -172,7 +174,7 @@ function DaengFinderDetail() {
       enabled: !daeng,
       refetchOnWindowFocus: false,
       onSuccess: successData => {
-        // console.log('searchPostLostDetail >>>', successData);
+        console.log('searchPostLostDetail >>>', successData);
       },
     },
   ]);
@@ -222,7 +224,29 @@ function DaengFinderDetail() {
 
   useEffect(() => {
     // console.log('useEffect processed');
-    const deepData = res[1].data?.data ? res[1].data?.data[0] : null;
+    // const deepData = res[1].data?.data ? res[1].data?.data[0] : null;
+    // const bookMarkData = res[0].data?.data?.bookmarkData
+    //   ? res[0].data?.data?.bookmarkData.isBookmarked
+    //   : null;
+    // getBookmarkState(bookMarkData);
+    // setIsFound(deepData?.status);
+    // setDaengList(deepData?.lostPhotoUrl || []);
+    // setDaeng(
+    //   deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
+    // );
+    // setPassPostId(deepData?.postId);
+    // getPostId(deepData?.postId);
+    // getUserId(deepData?.UserId);
+    // setMoreInfo({
+    //   createdAt: deepData?.createdAt,
+    //   address: deepData?.address,
+    //   title: deepData?.title,
+    //   content: deepData?.content,
+    //   dogname: deepData?.dogname,
+    //   lostTime: deepData?.losttime,
+    // });
+
+    const deepData = res[1].data?.data ? res[1].data?.data : null;
     const bookMarkData = res[0].data?.data?.bookmarkData
       ? res[0].data?.data?.bookmarkData.isBookmarked
       : null;
@@ -232,6 +256,7 @@ function DaengFinderDetail() {
     setDaeng(
       deepData?.lostPhotoUrl?.length > 0 ? deepData?.lostPhotoUrl[0] : null,
     );
+    getCommentsCount(deepData?.commentsCount);
     setPassPostId(deepData?.postId);
     getPostId(deepData?.postId);
     getUserId(deepData?.UserId);
@@ -269,14 +294,26 @@ function DaengFinderDetail() {
 
   /** @camelCase 아닌 게 많다. 조심. */
   // console.log('data 깊다 >>>', data?.data);
-  const deepData = res[1].data?.data ? res[1].data?.data[0] : null;
-  const userPhotoData = res[1].data?.data[1]?.length
-    ? res[1].data?.data[1][0]
+  // const deepData = res[1].data?.data ? res[1].data?.data[0] : null;
+  // const userPhotoData = res[1].data?.data[1]?.length
+  //   ? res[1].data?.data[1][0]
+  //   : null;
+  // const imageList = deepData?.lostPhotoUrl;
+  // const lostLatitude = deepData?.lostLatitude;
+  // const lostLongitude = deepData?.lostLongitude;
+  // const nickname = deepData?.nickname;
+  // const createdAt = deepData?.createdAt;
+  // const lostTime = deepData?.losttime;
+  // const status = deepData?.status;
+
+  const deepData = res[1].data?.data ? res[1].data?.data : null;
+  const userPhotoData = deepData?.User?.userPhoto[0]
+    ? deepData?.User?.userPhoto[0]
     : null;
   const imageList = deepData?.lostPhotoUrl;
   const lostLatitude = deepData?.lostLatitude;
   const lostLongitude = deepData?.lostLongitude;
-  const nickname = deepData?.nickname;
+  const nickname = deepData?.User.nickname;
   const createdAt = deepData?.createdAt;
   const lostTime = deepData?.losttime;
   const status = deepData?.status;
