@@ -7,7 +7,7 @@ function MypageUnknown() {
   return (
     <div className='flex flex-col justify-between'>
       <Headers text icon destination=''>
-        마이페이지
+        푸댕
       </Headers>
       <div className='my-64 flex flex-col items-center justify-center'>
         <div className='flex flex-col items-center justify-center font-bold text-lg'>

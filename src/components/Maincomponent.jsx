@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
 import { useQuery } from 'react-query';
+import Cookies from 'js-cookie';
 import Kakaoserch from './Kakaoserch';
 // import Loading from './common/Loading';
 // import TmapApi from './TmapApi';
@@ -33,18 +34,23 @@ function Maincomponent() {
     // console.log('geterror', isError);
   }
 
-  const alertdata = data.data.notificationsData;
+  const alertdata = data?.data?.notificationsData;
   // console.log(data.data.notificationsData);
+  const refreshToken = Cookies.get('refreshToken');
 
   const handleAlertClick = () => {
-    navigate('/alert', { state: { alertdata } });
+    if (!refreshToken) {
+      navigate('/unknown');
+    } else {
+      navigate('/alert', { state: { alertdata } });
+    }
   };
 
   return (
     <>
       <div className='flex flex-row justify-between w-96 h-10 mt-5 mb-2 px-5 bg-white'>
         <Logo />
-        {data.data.notificationsData.some(item => item.isRead === false) ? (
+        {data?.data?.notificationsData?.some(item => item.isRead === false) ? (
           <div>
             <span class='animate-ping absolute right-3 top-5 h-2 w-2 rounded-full bg-mainColor' />
             <span class='absolute right-3 top-5 h-2 w-2 rounded-full bg-mainColor' />
