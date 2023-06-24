@@ -25,11 +25,11 @@ function Alertcomponent() {
   //   );
   // }
   // if (isError) {
-  //   // console.log('geterror', isError);
+  // console.log('geterror', isError);
   // }
 
   const { alertdata } = location.state;
-  console.log('alert', alertdata);
+  // console.log('alert', alertdata);
   const queryClient = useQueryClient();
   const mutation = useMutation(putAlert, {
     onSuccess: postData => {
