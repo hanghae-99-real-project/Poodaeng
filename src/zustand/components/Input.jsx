@@ -13,7 +13,7 @@ const input = (set, get) => ({
     const search = get().word;
     const searchWordLength = get().word.length;
     if (searchWordLength === 0) {
-      console.log('empty search');
+      // console.log('empty search');
       return;
     }
     set(() => ({
