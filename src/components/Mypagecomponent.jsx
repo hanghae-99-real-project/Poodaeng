@@ -29,6 +29,7 @@ function Mypagecomponent() {
   if (!refreshToken) {
     return navigate('/unknown');
   }
+  console.log(data);
   // if (isLoading) {
   //   return (
   //     <div className='flex flex-col h-[812px] justify-center  items-center'>
@@ -39,7 +40,7 @@ function Mypagecomponent() {
 
   // if (isError) {
   //   // console.log('Mypagecom>>>>>>', error);
-  //   // mutation.mutate();
+  //   mutation.mutate();
   //   return navigate('/unknown');
   // }
 
@@ -47,7 +48,8 @@ function Mypagecomponent() {
     mutation.mutate();
   };
 
-  const mypageContent = data?.data?.mypageContent;
+  const mypageContent = data && data.data && data.data.mypageContent;
+  // const mypageContent = data?.data?.mypageContent;
   // console.log('mypageContent', mypageContent);
   // [ 0:갯수,
   //   1:갯수,
