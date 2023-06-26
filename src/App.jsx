@@ -7,7 +7,6 @@
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Router from './shared/Router';
-import { ReactComponent as Background } from './assets/images/background.svg';
 // import Something from './Something';
 
 const queryClient = new QueryClient();
@@ -50,7 +49,7 @@ function App() {
         <Something />
       </BrowserView> */}
       <QueryClientProvider client={queryClient}>
-        <Background className='absolute h-screen w-auto' />
+        <div className='absolute bg-background bg-cover w-full h-screen bg-center' />
         <Router />
       </QueryClientProvider>
     </>

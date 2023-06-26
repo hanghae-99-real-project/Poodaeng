@@ -11,6 +11,9 @@ module.exports = {
     // },
     /** @테마설정 */
     extend: {
+      backgroundImage:{
+        'background': 'url(/src/assets/images/background.svg)'
+      },
       colors: {
         mainColor: '#8722ED',
         testColor: {
