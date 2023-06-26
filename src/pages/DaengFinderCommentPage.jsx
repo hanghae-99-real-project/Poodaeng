@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Cookies from 'js-cookie';
 import React, { useEffect, useRef, useState } from 'react';
-import { FiAlertCircle } from 'react-icons/fi';
 import { MdLockOutline } from 'react-icons/md';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -18,18 +17,18 @@ import {
 } from '../api/daengFinder';
 import { ReactComponent as Camera } from '../assets/images/Camera.svg';
 import { ReactComponent as Cancel } from '../assets/images/Cancel.svg';
+import { ReactComponent as CommentAlert } from '../assets/images/CommentAlert.svg';
 import { ReactComponent as Lock } from '../assets/images/Lock.svg';
 import { ReactComponent as XsmallBtn } from '../assets/images/XSmallButton.svg';
 import Comment from '../components/DaengFinder/DaengFinderComment/Comment';
 import Reply from '../components/DaengFinder/DaengFinderComment/Reply';
-import Loading from '../components/common/Loading2';
+import Loading from '../components/common/Loading';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import LinkHeader from '../shared/LinkHeader';
 import QuillEditor from '../utils/QuillEditor';
-import { toastError, toastSuccess } from '../utils/ToastFreeSetting';
+import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useQuillStore } from '../zustand/example/zustandAPI';
 import { tokenStore } from './SignInPage';
-import { ReactComponent as CommentAlert } from '../assets/images/CommentAlert.svg';
 
 function DaengFinderCommentPage() {
   const [alertMsg, setAlertMsg] = useState(false);
@@ -601,28 +600,19 @@ function DaengFinderCommentPage() {
 
   if (isLoading) {
     return (
-      <div className='f-ic-jc w-full h-full'>
-        <Loading />
-      </div>
+      // <div className='f-ic-jc w-full h-full'>
+      //   <Loading />
+      // </div>
+      <Loading />
     );
   }
 
   if (isError) {
-    // console.log('comment page error >>>', error);
-    setAlertMsg(true);
-    toast.error('Error occured while Loading', {
-      position: toast.POSITION.TOP_CENTER,
-      toastId: 'empty-comment-toast',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+    navigate(-1, {
+      state: {
+        error: '댓글 조회에 실패하였습니다.',
+      },
     });
-    setTimeout(() => {
-      navigate(-1);
-    }, 1000);
   }
   // console.log('getComment data >>>', data);
   // console.log('dataList >>>', data.data?.commentsData);

@@ -10,7 +10,7 @@ import Uptop from '../components/DaengFinder/Uptop';
  * @param {any[]} dependOn  useEffect dependency array
  * 
  */
-const useScroll = (targetRef, isScroll, storageName,...dependOn) => {
+const useScroll = (targetRef, isScroll, storageName, ...dependOn) => {
   const [checkScrollTop, setCheckScrollTop] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false);
   useEffect(()=>{

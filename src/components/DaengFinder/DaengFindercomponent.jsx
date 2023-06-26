@@ -5,9 +5,11 @@ import { BiCategory } from 'react-icons/bi';
 import { RxMagnifyingGlass } from 'react-icons/rx';
 import { SlMenu } from 'react-icons/sl';
 import { useInView } from 'react-intersection-observer';
-import { useQueries, useQuery } from 'react-query';
+import { useQueries } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { create } from 'zustand';
+import { devtools, subscribeWithSelector } from 'zustand/middleware';
 import { shallow } from 'zustand/shallow';
 import { getLatestLostPosts, getNearbyLostPosts } from '../../api/daengFinder';
 import { ReactComponent as DaengFinderButton } from '../../assets/images/DaengFinderMenu.svg';
@@ -16,16 +18,32 @@ import useCurrentLocation from '../../hooks/useCurrentLocation';
 // eslint-disable-next-line import/no-useless-path-segments, import/no-cycle
 import { ReactComponent as CheckBoxDaengFinder } from '../../assets/images/CheckedPurple.svg';
 import useScroll from '../../hooks/useScroll';
-import { toastSuccess } from '../../utils/ToastFreeSetting';
+import { toastError, toastSuccess } from '../../utils/ToastFreeSetting';
 import { useLocationStore } from '../../zustand/example/zustandAPI';
+import useShallow from '../../zustand/hooks/useShallow';
 import Loading from '../common/Loading';
 import Card from './Card';
 import { FadeInWhenVisible1 } from './FadeInWhenVisible';
 
+const store = set => ({
+  latest: true,
+  setLatest: () => set(prev => ({ latest: !prev.latest })),
+  resestLatest: () => set({ latest: true }),
+});
+
+const storeSetting = create(
+  process.env.NODE_ENV !== 'production'
+    ? devtools(subscribeWithSelector(store), { name: 'daengfinderCategory' })
+    : store,
+);
+
+export const useDaengfinderCategory = keys => useShallow(storeSetting, keys);
+
 function DaengFindercomponent() {
   const [getNewPage, setGetNewPage] = useState(true);
   const [totalData, setTotalData] = useState([]);
-  const [latest, setLatest] = useState(true);
+  const { latest, setLatest } = useDaengfinderCategory(['latest', 'setLatest']);
+  // const [latest, setLatest] = useState(true);
   const [page, setPage] = useState(1);
   const [nearbyPage, setNearbyPage] = useState(1);
   const [isDetail, setIsDetail] = useState(true);
@@ -184,6 +202,10 @@ function DaengFindercomponent() {
       setAlertMsg(true);
       toastSuccess(loc.state?.writeComplete);
     }
+    if (loc.state?.error) {
+      setAlertMsg(true);
+      toastError(loc.state?.error);
+    }
   }, []);
 
   if (
@@ -244,6 +266,7 @@ function DaengFindercomponent() {
               className={`${
                 latest && 'text-[#000000]'
               } hover:scale-105 transition cursor-pointer`}
+              disabled={latest}
               onClick={getLatestPostsHandler}
             >
               최신순
@@ -255,6 +278,7 @@ function DaengFindercomponent() {
               } ${
                 !latest && 'text-[#000000]'
               } hover:scale-105 transition cursor-pointer`}
+              disabled={!latest}
               onClick={getNearbyPostsHandler}
             >
               위치순

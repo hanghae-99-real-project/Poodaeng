@@ -87,6 +87,9 @@ function SignInPage() {
     setIsError(false);
   };
 
+  // let observer = new IntersectionObserver(() => {});
+  // observer.observe();
+
   const mutation = useMutation(signIn, {
     onSuccess: async data => {
       console.log('login 성공 시 data >>>', data);
@@ -99,8 +102,8 @@ function SignInPage() {
       // console.log('rfExpireDate >>>', rfExpireDate);
       Cookies.set('refreshToken', refreshToken, {
         expires: rfExpireDate,
-        secure: true,
-        sameSite: 'Lax',
+        // secure: true,
+        // sameSite: 'Lax',
       });
       const { exp: AC_EXP, userId } = decodedAcToken;
       // console.log('이거 초 단위인가?  >>> ', AC_EXP);
