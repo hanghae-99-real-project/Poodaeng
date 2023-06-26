@@ -72,7 +72,7 @@ function Alertcomponent() {
                   role='none'
                 >
                   {!item.User.userPhoto || item.User.userPhoto.length === 0 ? (
-                    <프로필5 />
+                    <프로필5 className='flex bg-cover w-11 h-11 border rounded-full mr-3' />
                   ) : (
                     <img
                       className='flex bg-cover w-11 h-11 border rounded-full mr-3'
