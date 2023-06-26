@@ -55,7 +55,7 @@ function Alertcomponent() {
       </Headers>
       <div className='h-full border'>
         {location?.state?.alertdata ? (
-          location?.state?.alertdata.map(item => {
+          location?.state?.alertdata?.map(item => {
             return (
               <div key={item.notificationId}>
                 <div
@@ -71,7 +71,7 @@ function Alertcomponent() {
                   }
                   role='none'
                 >
-                  {item.User.userPhoto[0] ? (
+                  {item?.User?.userPhoto[0] ? (
                     <img
                       className='flex bg-cover w-11 h-11 border rounded-full mr-3'
                       src={item.User.userPhoto[0]}
