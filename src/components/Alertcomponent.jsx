@@ -54,7 +54,7 @@ function Alertcomponent() {
         알림
       </Headers>
       <div className='h-full border'>
-        {location.state.alertdata ? (
+        {location?.state?.alertdata ? (
           location?.state?.alertdata.map(item => {
             return (
               <div key={item.notificationId}>

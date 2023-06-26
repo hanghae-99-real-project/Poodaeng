@@ -62,7 +62,7 @@ function Router() {
           <Route path='/profileedit' element={<ProfileEdit />}/>
           <Route path='/passwordedit' element={<PasswordEdit />}/>
           <Route path='/success' element={<Successcomponent />}/>
-          <Route path="/alert" element={<Alert />} /> 
+          <Route path='/alert' element={<Alert />} /> 
         </Route>
         <Route element={<ScrollLayout />}>
           nothing yet
