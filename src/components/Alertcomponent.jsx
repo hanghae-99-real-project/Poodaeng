@@ -71,14 +71,14 @@ function Alertcomponent() {
                   }
                   role='none'
                 >
-                  {item?.User?.userPhoto[0] ? (
+                  {!item.User.userPhoto || item.User.userPhoto.length === 0 ? (
+                    <프로필5 />
+                  ) : (
                     <img
                       className='flex bg-cover w-11 h-11 border rounded-full mr-3'
                       src={item.User.userPhoto[0]}
                       alt='pt'
                     />
-                  ) : (
-                    <프로필5 />
                   )}
                   <div className='flex flex-col items-start justify-center'>
                     <div className='font-bold text-xs'>
