@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -90,6 +90,7 @@ function SignInPage() {
   // let observer = new IntersectionObserver(() => {});
   // observer.observe();
 
+  const queryClient = useQueryClient();
   const mutation = useMutation(signIn, {
     onSuccess: async data => {
       console.log('login 성공 시 data >>>', data);
@@ -111,6 +112,7 @@ function SignInPage() {
       const acExpireDate = AC_EXP * 1000; // ms 단위로 변환(?)해서 넣기
       // console.log('expireDate type 확인', typeof acExpireDate);
       setToken(userId, accessToken, acExpireDate);
+      await queryClient.invalidateQueries('profile');
 
       onClearInputs();
       navigate('/');
