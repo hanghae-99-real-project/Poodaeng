@@ -54,8 +54,8 @@ function Alertcomponent() {
         알림
       </Headers>
       <div className='h-full border'>
-        {location.state.alertdata ? (
-          location?.state?.alertdata.map(item => {
+        {location?.state?.alertdata ? (
+          location?.state?.alertdata?.map(item => {
             return (
               <div key={item.notificationId}>
                 <div
@@ -71,14 +71,14 @@ function Alertcomponent() {
                   }
                   role='none'
                 >
-                  {item.User.userPhoto[0] ? (
+                  {!item.User.userPhoto || item.User.userPhoto.length === 0 ? (
+                    <프로필5 className='flex bg-cover w-11 h-11 border rounded-full mr-3' />
+                  ) : (
                     <img
                       className='flex bg-cover w-11 h-11 border rounded-full mr-3'
                       src={item.User.userPhoto[0]}
                       alt='pt'
                     />
-                  ) : (
-                    <프로필5 />
                   )}
                   <div className='flex flex-col items-start justify-center'>
                     <div className='font-bold text-xs'>
