@@ -29,7 +29,7 @@ function Mypagecomponent() {
   if (!refreshToken) {
     return navigate('/unknown');
   }
-  console.log(data);
+  // console.log(data);
   if (isLoading) {
     return (
       <div className='flex flex-col h-[812px] justify-center  items-center'>
