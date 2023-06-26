@@ -27,7 +27,7 @@ function SignUpPage() {
     passwordConfirm: '',
     code: '',
   });
-  // console.log('render occured');
+  // const { setTimer } = useAuthTimer(['setTimer'])
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -52,14 +52,10 @@ function SignUpPage() {
         const expireDate = new Date(currentTime.getTime() + 1000 * 60 * 3);
         // signUp expireDate check >>> Sun May 28 2023 20:26:05 GMT+0900 (한국 표준시)
         dispatch(SET_TIMER({ expireAt: expireDate }));
+        // setTimer(expireDate)
         setGetAuthMode(true);
         setCheckTimeMode(true);
       } else {
-        // console.log('error response opening number form >>> ', response);
-        // console.log(
-        //   'error Message opening number form >>>',
-        //   response.errorMessage,
-        // );
         setMessage(true);
         toast.error(`휴대폰 인증번호 발송 에러 발생`, {
           position: toast.POSITION.TOP_CENTER,

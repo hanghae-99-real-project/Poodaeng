@@ -68,8 +68,8 @@ axiosToken.interceptors.response.use(
       // const acToken = await response.data;
       const decodedAcToken = await jwtDecode(acToken);
       const { userId, exp } = decodedAcToken;
-      console.log('userId >>>', userId)
-      console.log('exp >>>', exp)
+      // console.log('userId >>>', userId)
+      // console.log('exp >>>', exp)
       const AC_EXP = await exp*1000
       setToken(userId, acToken, AC_EXP)
       accesstoken = await acToken;

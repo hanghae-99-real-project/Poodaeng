@@ -87,6 +87,9 @@ function SignInPage() {
     setIsError(false);
   };
 
+  // let observer = new IntersectionObserver(() => {});
+  // observer.observe();
+
   const mutation = useMutation(signIn, {
     onSuccess: async data => {
       console.log('login 성공 시 data >>>', data);

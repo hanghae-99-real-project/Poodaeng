@@ -15,8 +15,12 @@ const RouteChangeTracker = () => {
 
   // useEffect(() => {
   //   if (initialized) {
-  //     ReactGA.set({ page: location.pathname });
-  //     ReactGA.send('pageview');
+  //     // ReactGA.set({ page: location.pathname });
+  //     ReactGA.send({
+  //       hitType: 'pageview',
+  //       page: location.pathname,
+  //       title: 'Poodaeng',
+  //     });
   //   }
   // }, [initialized, location]);
 

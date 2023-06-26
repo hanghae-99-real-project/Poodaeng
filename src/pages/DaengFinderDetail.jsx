@@ -341,7 +341,7 @@ function DaengFinderDetail() {
       ) : null}
       <div className={`fixed inset-0 z-30 ${onModal.on ? '' : 'hidden'}`}>
         <div role='none' className='absolute inset-0 bg-black opacity-30' />
-        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 f-fc-ic-jc  bg-[#FFFFFF]  bg-opacity-80 shadow backdrop-blur-[10px] rounded-md  px-14 py-8'>
+        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 f-fc-ic-jc  bg-white  bg-opacity-80 shadow backdrop-blur-[10px] rounded-md  px-14 py-8'>
           <div className='f-fc-ic gap-2 '>
             {onModal.sort === 'clipboard' ? (
               <Clip className='antialiased blur-none' />
@@ -350,8 +350,7 @@ function DaengFinderDetail() {
             ) : (
               <BookmarkEmpty className='antialiased' />
             )}
-
-            <div className='w-36 text-center text-sm whitespace-nowrap font-bold leading-4 blur-none'>
+            <div className='w-36 text-center text-sm antialiased whitespace-nowrap font-bold leading-4'>
               {modalComment}
             </div>
           </div>
