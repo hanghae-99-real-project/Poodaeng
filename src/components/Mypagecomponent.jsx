@@ -29,7 +29,7 @@ function Mypagecomponent() {
   if (!refreshToken) {
     return navigate('/unknown');
   }
-  // console.log(data);
+  console.log(data);
   // if (isLoading) {
   //   return (
   //     <div className='flex flex-col h-[812px] justify-center  items-center'>
@@ -103,7 +103,7 @@ function Mypagecomponent() {
             >
               <div> 작성한글</div>
               <div className='font-bold text-mainColor'>
-                {!mypageContent ? 0 : mypageContent[1]}
+                {!mypageContent[1] ? 0 : mypageContent[1]}
                 <span className='text-black'>개</span>
               </div>
             </div>
@@ -114,7 +114,7 @@ function Mypagecomponent() {
             >
               <div> 등록한 푸박스</div>
               <div className='font-bold text-mainColor'>
-                {!mypageContent ? 0 : mypageContent[0]}
+                {!mypageContent[0] ? 0 : mypageContent[0]}
                 <span className='text-black'>개</span>
               </div>
             </div>
@@ -131,7 +131,7 @@ function Mypagecomponent() {
             >
               <div> 북마크</div>
               <div className='font-bold text-mainColor'>
-                {mypageContent === null ? 0 : mypageContent[2]}
+                {!mypageContent[2] ? 0 : mypageContent[2]}
                 <span className='text-black'>개</span>
               </div>
             </div>
