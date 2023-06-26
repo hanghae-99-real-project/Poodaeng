@@ -48,7 +48,9 @@ function Mypagecomponent() {
     mutation.mutate();
   };
 
+  console.log('data >>>', data);
   const mypageContent = data && data.data && data.data.mypageContent;
+  console.log('mypageContent >>>', mypageContent);
   // const mypageContent = data?.data?.mypageContent;
   // console.log('mypageContent', mypageContent);
   // [ 0:갯수,
