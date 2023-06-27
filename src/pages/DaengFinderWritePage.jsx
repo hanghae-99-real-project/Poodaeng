@@ -107,10 +107,14 @@ function DaengFinderWritePage() {
   });
 
   const editMutation = useMutation(editMyPost, {
-    onSuccess: data => {
-      // console.log('daengFinderWrite data>>> ', data);
+    onMutate: variables => {
+      return { test: 'before mutation' };
+    },
+    onSuccess: (data, variables, context) => {
+      // console.log('실어 보낸 값 variables >>>', variables);
+      // console.log('mutate 전 context >>>', context); // {test: "before mutation"}
+
       const postId = parseInt(checkPostId, 10);
-      // queryClient.invalidateQueries(['daengFinderDetail', postId]);
       queryClient.invalidateQueries(['getPostLost', 'detail', postId]);
       onClearHandler();
       clearQuillValue();
@@ -181,10 +185,8 @@ function DaengFinderWritePage() {
           formData.append('image', blobImg, img.name || img);
         });
     }
-    // console.log('최종 위도 경도 >>>', latlng);
     formData.append('lostLatitude', parseFloat(latlng?.lostLatitude));
     formData.append('lostLongitude', parseFloat(latlng?.lostLongitude));
-    // console.log('daengFinderWrite formData before transfer >>> ', ...formData);
     if (checkPostId) {
       inputs = {
         postId: checkPostId,
@@ -314,9 +316,9 @@ function DaengFinderWritePage() {
     }
     return () => {
       clearQuillValue();
-      for (let i = 0; i < image.preview.length; i++) {
-        URL.revokeObjectURL(image.preview[i]);
-      }
+      image.preview.forEach(ele => {
+        URL.revokeObjectURL(ele);
+      });
     };
   }, []);
 

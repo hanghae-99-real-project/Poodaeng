@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
 import { debounce } from 'lodash';
 import React, { useState } from 'react';
 import { BsCheckLg } from 'react-icons/bs';
 import { useMutation } from 'react-query';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,8 +9,7 @@ import { sendCodeNumber, signUp, validateCodeNumber } from '../api/sendCode';
 import Headers from '../components/Headers';
 import { errorMsg, inputContents } from '../data/inputs';
 import useInput from '../hooks/useInput';
-import { SET_TIMER } from '../redux/modules/timerSlice';
-import AuthTimer from '../utils/AuthTimer';
+import AuthTimer, { useAuthTimer } from '../utils/AuthTimer';
 import { toastError } from '../utils/ToastFreeSetting';
 
 function SignUpPage() {
@@ -27,9 +24,8 @@ function SignUpPage() {
     passwordConfirm: '',
     code: '',
   });
-  // const { setTimer } = useAuthTimer(['setTimer'])
+  const { setTimer } = useAuthTimer(['setTimer']);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   /* get 인증하기 동시에 모달 진입하면서 */
   const getAuthHandler = async () => {
@@ -51,8 +47,7 @@ function SignUpPage() {
         const currentTime = new Date();
         const expireDate = new Date(currentTime.getTime() + 1000 * 60 * 3);
         // signUp expireDate check >>> Sun May 28 2023 20:26:05 GMT+0900 (한국 표준시)
-        dispatch(SET_TIMER({ expireAt: expireDate }));
-        // setTimer(expireDate)
+        setTimer(expireDate);
         setGetAuthMode(true);
         setCheckTimeMode(true);
       } else {
@@ -81,7 +76,7 @@ function SignUpPage() {
       setCheckTimeMode(prev => !prev);
       const currentTime = new Date();
       const expireDate = new Date(currentTime.getTime() + 1000 * 60 * 3);
-      dispatch(SET_TIMER({ expireAt: expireDate }));
+      setTimer(expireDate);
       // console.log('send code response >>> ', response);
       /* 다시 카운트 */
     } else {
@@ -94,7 +89,7 @@ function SignUpPage() {
   }, 200);
   /* CodeNumber Validation */
   const codeMutation = useMutation(validateCodeNumber, {
-    onSuccess: data => {
+    onSuccess: () => {
       // console.log('code number validate success');
       // console.log('인증 번호 확인 성공 결과 message>>>', data);
       // console.log('인증 번호 확인 성공 결과 >>>', data);
@@ -102,7 +97,7 @@ function SignUpPage() {
       setIsAuthNumber(true);
       setGetAuthMode(false);
     },
-    onError: error => {
+    onError: () => {
       // console.log('code number validate error');
       // console.log('인증 번호 확인 실패 결과 >>>', error);
       setMessage(true);
@@ -118,7 +113,7 @@ function SignUpPage() {
 
   /* register form */
   const mutation = useMutation(signUp, {
-    onSuccess: data => {
+    onSuccess: () => {
       // console.log('회원가입 제출 res >> ', data);
       onClearInputs();
       navigate('/signincomplete');
@@ -126,7 +121,6 @@ function SignUpPage() {
     onError: error => {
       // console.log('회원가입 제출 error >> ', error);
       if (error.response?.data?.errorMessage) {
-
         setMessage(true);
         toastError(error.response?.data?.errorMessage);
       }
@@ -167,14 +161,11 @@ function SignUpPage() {
       toastError('비밀번호가 일치하지 않습니다.');
       return;
     }
-    const agreeCheck = localStorage.getItem('agreed') === 'true';
-    // console.log('position Boolean인지 확인 >>>', typeof agreeCheck);
     const result = {
       phoneNumber: inputs.phoneNumber,
       password: inputs.password,
       nickname: inputs.nickname,
       userPhoto: null,
-      // position: agreeCheck,
     };
     mutation.mutate(result);
   };
