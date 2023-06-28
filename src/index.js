@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './tailwind.css';
-import { Provider } from 'react-redux';
 import App from './App';
-import store from './redux/config/configStore';
+import './tailwind.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
+  // <Provider store={store}>
     <App />
-  </Provider>
+  // </Provider>
 );
