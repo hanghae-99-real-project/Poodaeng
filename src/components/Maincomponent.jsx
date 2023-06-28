@@ -100,7 +100,7 @@ function Maincomponent() {
         <div className='ml-2 font-medium text-xs text-[#808080] mt-1'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
-        <div className='flex justify-center items-center w-[360px] h-56 flex-wrap mt-2 ml-2  rounded-xl'>
+        <div className='flex justify-center items-center w-[360px] h-56 flex-wrap ml-2  rounded-xl'>
           <Slidecomponent />
         </div>
       </div>

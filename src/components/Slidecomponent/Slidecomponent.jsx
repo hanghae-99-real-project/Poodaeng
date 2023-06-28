@@ -60,7 +60,7 @@ export default function Slidecomponent() {
         disableOnInteraction: false,
       }}
       modules={[Autoplay, Pagination]}
-      className='w-96 h-56 rounded-xl '
+      className='w-96 h-full rounded-xl'
     >
       {daengData?.length > 0 ? (
         daengData?.map(item => {
@@ -68,14 +68,14 @@ export default function Slidecomponent() {
             <SwiperSlide
               key={item.postId}
               onClick={() => pooDetailHandler(item.postId)}
-              className='cursor-pointer flex items-center justify-center'
+              className='cursor-pointer flex flex-col justify-center'
             >
               <img
                 src={item.lostPhotoUrl[0]}
                 alt='사진'
                 className='w-full h-44 object-cover rounded-xl'
               />
-              <div className='flex items-center font-bold text-sm mt-1 ml-1'>
+              <div className='flex items-center font-bold text-sm mt-1 mb-6'>
                 실종 위치 &nbsp;
                 <span className='font-normal'>{item.address}</span>
               </div>
