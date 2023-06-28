@@ -635,7 +635,7 @@ function DaengFinderCommentPage() {
 
   // });
   return (
-    <div className='w-full max-h-[812px]'>
+    <div className='relative w-full max-h-[812px]'>
       {alertMsg && <ToastContainer />}
       <LinkHeader icon destination={`/daengfinder/detail/${postId}`}>
         <div className='f-fr'>
