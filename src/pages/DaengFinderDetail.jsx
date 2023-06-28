@@ -319,7 +319,8 @@ function DaengFinderDetail() {
   const status = deepData?.status;
 
   return (
-    <div className='h-[812px] w-full'>
+    // <div className='h-[812px] w-full'>
+    <>
       {errorMsg && <ToastContainer />}
       <IoIosArrowBack
         className='absolute z-30 top-7 left-4 text-2xl text-[#FFFFFF] drop-shadow cursor-pointer hover:scale-110 transition'
@@ -471,7 +472,7 @@ function DaengFinderDetail() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
