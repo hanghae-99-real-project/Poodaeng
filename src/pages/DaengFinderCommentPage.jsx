@@ -635,7 +635,8 @@ function DaengFinderCommentPage() {
 
   // });
   return (
-    <div className='relative w-full h-[812px]'>
+    // <div className='relative w-full h-[812px]'>
+    <>
       {alertMsg && <ToastContainer />}
       <LinkHeader icon destination={`/daengfinder/detail/${postId}`}>
         <div className='f-fr'>
@@ -698,6 +699,7 @@ function DaengFinderCommentPage() {
         }`}
         onClick={onCloseHandler}
       />
+      {/* <div className='absolute z-20 bottom-4 left-0 right-0 bg-transparent px-6'> */}
       <div className='absolute z-20 bottom-4 left-0 right-0 bg-transparent px-6'>
         {isCommentMode.inputMode && image.preview ? (
           <div className='relative f-ic-jc w-40 h-40 mb-2 bg-white shadow-md rounded-md'>
@@ -854,7 +856,7 @@ function DaengFinderCommentPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
