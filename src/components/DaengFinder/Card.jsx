@@ -93,4 +93,4 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
   );
 }
 
-export default Card;
+export default React.memo(Card);
