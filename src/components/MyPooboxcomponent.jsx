@@ -50,7 +50,7 @@ function MyPooboxcomponent() {
   };
 
   return (
-    <div className='h-full'>
+    <div className='h-full flex-grow overflow-y-auto'>
       <Headers text icon destination='mypage'>
         등록한 푸박스
       </Headers>
@@ -82,7 +82,7 @@ function MyPooboxcomponent() {
                     )
                   }
                 >
-                  <div className='w-40 h-40  rounded-lg overflow-auto'>
+                  <div className='w-40 h-40 rounded-lg overflow-auto'>
                     <img
                       src={item.pooPhotoUrl}
                       alt='img'
@@ -90,7 +90,7 @@ function MyPooboxcomponent() {
                     />
                   </div>
                   <div className='mt-1 text-sm font-bold'>{item.address}</div>
-                  <div className=' text-xs text-[#969696]'>
+                  <div className='text-xs text-[#969696]'>
                     {dateConvert2(item.createdAt)[0]}
                   </div>
                 </div>
