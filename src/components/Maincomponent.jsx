@@ -97,7 +97,7 @@ function Maincomponent() {
           <div className=' mt-3 w-full border' />
         </div>
         <div className='ml-2 font-bold text-xl mt-2'>내 주변 실종신고</div>
-        <div className='ml-2 font-medium text-xs text-[#808080] mt-1'>
+        <div className='ml-2 font-medium text-xs text-[#808080] mt-1 mb-2'>
           주변의 실종 반려동물들을 찾아주세요.
         </div>
         <div className='flex justify-center items-center w-[360px] h-56 flex-wrap ml-2  rounded-xl'>
