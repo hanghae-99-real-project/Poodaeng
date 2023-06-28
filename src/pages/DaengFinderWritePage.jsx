@@ -112,6 +112,7 @@ function DaengFinderWritePage() {
     },
     onSuccess: (data, variables, context) => {
       // console.log('실어 보낸 값 variables >>>', variables);
+      // console.log('실어 보낸 값 variables formData >>>', ...variables.formData);
       // console.log('mutate 전 context >>>', context); // {test: "before mutation"}
 
       const postId = parseInt(checkPostId, 10);

@@ -93,7 +93,6 @@ function SignInPage() {
   const queryClient = useQueryClient();
   const mutation = useMutation(signIn, {
     onSuccess: async data => {
-      console.log('login 성공 시 data >>>', data);
       const { accessToken, refreshToken } = data.data;
       const decodedAcToken = await jwtDecode(accessToken);
       const decodedRfToken = await jwtDecode(refreshToken);

@@ -6,6 +6,7 @@
 // } from 'react-device-detect';
 import React, { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import Router from './shared/Router';
 // import Something from './Something';
 
@@ -51,6 +52,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <div className='absolute bg-background bg-cover w-full h-screen bg-center' />
         <Router />
+        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
       </QueryClientProvider>
     </>
   );
