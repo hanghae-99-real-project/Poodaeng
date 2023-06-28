@@ -6,7 +6,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 // import jwtDecode from 'jwt-decode';
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { shallow } from 'zustand/shallow';
 import { kakaoSignIn } from '../api/sendCode';
 import Loading from '../components/common/Loading';
@@ -35,9 +35,11 @@ function KakaoAuthCheck() {
   );
   const { location } = useCurrentLocation();
 
+  const queryClient = useQueryClient();
   const mutation = useMutation(kakaoSignIn, {
     onSuccess: async data => {
       // console.log('서버 response >>>', data);
+      await queryClient.invalidateQueries('profile');
       const accessToken = data?.data?.accessToken;
       const refreshToken = data?.data?.refreshToken;
       const decodedAcToken = await jwtDecode(accessToken);

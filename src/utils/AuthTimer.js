@@ -1,24 +1,20 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { create } from 'zustand';
 import useShallow from '../zustand/hooks/useShallow';
 
 
-// const store = (set) => ({
-//   expireAt: 0,
-//   setTimer: (expireAt) => set({expireAt})
-// })
+const store = (set) => ({
+  expireAt: 0,
+  setTimer: (expireAt) => set({expireAt})
+})
 
-// const timerStore = create(store)
+const timerStore = create(store)
 
-// export const useAuthTimer = (keys) => {return useShallow(timerStore, keys)}
+export const useAuthTimer = (keys) => {return useShallow(timerStore, keys)}
 
 function AuthTimer() {
   const [time, setTime] = useState(179);
-  // const { expireAt } = useAuthTimer(['expireAt']) 
-  const {verification} = useSelector((store)=> store.timer)
-  const {expireAt} = verification;
+  const { expireAt } = useAuthTimer(['expireAt']) 
   useEffect(()=> {
     let Counter;
     if(time > 0){
