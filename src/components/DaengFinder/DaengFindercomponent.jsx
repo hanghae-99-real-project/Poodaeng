@@ -194,7 +194,6 @@ function DaengFindercomponent() {
   }, [lostPostsResult[1].data]);
 
   useEffect(() => {
-    console.log('loc.state?.deleteComplete >>> ', loc.state?.deleteComplete);
     if (loc.state?.deleteComplete) {
       setAlertMsg(true);
       toastSuccess(loc.state?.deleteComplete);

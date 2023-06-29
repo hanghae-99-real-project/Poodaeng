@@ -36,6 +36,7 @@ function DaengFinderCommentPage() {
   /* 댓글에 있는 사진 모달(확대) */
   const [modalVisible, setModalVisible] = useState(false);
   const [modalImg, setModalImg] = useState('');
+  const [commentData, setCommentData] = useState();
 
   /**
    * @description 커멘트 모드 true면 댓글 모드, false면 대댓글 모드.
@@ -180,6 +181,12 @@ function DaengFinderCommentPage() {
       },
     },
   );
+
+  useEffect(() => {
+    if (postId && data) {
+      setCommentData(data.data);
+    }
+  }, [data]);
 
   const queryClient = useQueryClient();
   const mutation = useMutation(writePostComment, {
@@ -608,12 +615,21 @@ function DaengFinderCommentPage() {
   }
 
   if (isError) {
-    navigate(-1, {
-      state: {
-        error: '댓글 조회에 실패하였습니다.',
-      },
-    });
+    if (error.response.status === 401) {
+      navigate('/daengfinder', {
+        state: {
+          error: '게시물이 존재하지 않습니다.',
+        },
+      });
+    } else {
+      navigate(-1, {
+        state: {
+          error: '댓글 조회에 실패하였습니다.',
+        },
+      });
+    }
   }
+
   // console.log('getComment data >>>', data);
   // console.log('dataList >>>', data.data?.commentsData);
 
@@ -642,8 +658,8 @@ function DaengFinderCommentPage() {
         <div className='f-fr'>
           댓글&nbsp;
           <p className='text-[#DB00FF]'>
-            {data.data?.commentsData?.length}
-            {/* {data.data?.commentsData?.length + replyList.length} */}
+            {commentData?.commentsData?.length}
+            {/* {data.data?.commentsData?.length} */}
           </p>
         </div>
       </LinkHeader>
@@ -664,8 +680,10 @@ function DaengFinderCommentPage() {
       </div>
       {/* 문제점 반만 잘려서 보인다. pb주는 건 임시방편 방법인가... => 바로 고침 */}
       <div className='h-[90.0246%] w-full pb-8 box-border overflow-y-scroll'>
-        {data.data?.commentsData?.length > 0
-          ? data.data?.commentsData.map(comment => {
+        {/* {data.data?.commentsData?.length > 0
+          ? data.data?.commentsData.map(comment => { */}
+        {commentData?.commentsData?.length > 0
+          ? commentData?.commentsData.map(comment => {
               return (
                 <>
                   <Comment
