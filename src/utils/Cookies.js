@@ -18,4 +18,4 @@ const getCookie = (name) => {
   return cookies.get(name);
 }
 
-export { setCookie, getCookie };
+export { cookies, setCookie, getCookie };
