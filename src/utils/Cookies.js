@@ -8,7 +8,7 @@ const cookies = new Cookies()
  * @param {Date} expires
  */
 const setCookie = (name, refreshToken, expires) => {
-  return cookies.set(name, refreshToken, {secure: true, expires, httpOnly: true, path: '/', sameSite: 'lax'});
+  return cookies.set(name, refreshToken, {secure: true, expires, httpOnly: true, path: '/', sameSite: 'none'});
 }
 
 /**
