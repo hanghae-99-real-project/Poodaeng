@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import Cookies from 'js-cookie';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { shallow } from 'zustand/shallow';
@@ -9,12 +8,14 @@ import { ReactComponent as MapIcon } from '../assets/images/newMap.svg';
 import { ReactComponent as ProfileIcon } from '../assets/images/newMyprofile.svg';
 import { ReactComponent as PooBox } from '../assets/images/newPoobox.svg';
 import { tokenStore } from '../pages/SignInPage';
+import { getCookie } from '../utils/Cookies';
 
 function Tabbar({ setIsActive }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const refreshToken = Cookies.get('refreshToken');
+  // const refreshToken = Cookies.get('refreshToken');
+  const refreshToken = getCookie('refreshToken');
 
   // console.log('active', isActive);
   const { deleteToken } = tokenStore(
