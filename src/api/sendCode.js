@@ -1,7 +1,8 @@
 /* eslint-disable import/no-cycle */
 import axios from "axios"
-import { resetUserInfoLog } from "../zustand/example/zustandAPI"
+import Cookies from "js-cookie"
 import axiosToken from "./axiosToken"
+import { tokenStore } from "../pages/SignInPage"
 
 const sendCodeNumber = async (inputs) => {
   try {
@@ -52,11 +53,10 @@ const kakaoSignIn = async(inputs) => {
 }
 
 const signOut = async () => {
-  // const { deleteToken } = tokenStore.getState()
+  const { deleteToken } = tokenStore.getState()
   const response = await axiosToken.delete(`${process.env.REACT_APP_SERVER_URL}/api/auth/logout`)
-  // Cookies.remove('refreshToken');
-  // deleteToken()
-  resetUserInfoLog()
+  Cookies.remove('refreshToken');
+  deleteToken()
   return response
 }
 
@@ -65,5 +65,4 @@ const findPassword = async(phoneNumber) => {
   return response;
 }
 
-export { findPassword, kakaoSignIn, sendCodeNumber, signIn, signOut, signUp, validateCodeNumber }
-
+export {sendCodeNumber , validateCodeNumber, signUp, signIn, signOut, kakaoSignIn, findPassword}

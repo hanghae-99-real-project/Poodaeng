@@ -1,10 +1,10 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable no-unused-vars */
+import Cookies from "js-cookie"
 import { create } from "zustand"
 import { devtools, persist, subscribeWithSelector } from "zustand/middleware"
+import { shallow } from "zustand/shallow"
 import convertCoordinates from "../../kakao/KakaoApi"
 import { tokenStore } from "../../pages/SignInPage"
-import { cookies } from "../../utils/Cookies"
 import { searchListStore } from "../components/Input"
 
 
@@ -105,8 +105,7 @@ export const resetUserInfoLog = () => {
   const { clearSearchWordAll } = searchListStore.getState()
   sessionStorage.setItem('scroller', JSON.stringify(0))
   localStorage.removeItem('agreed') 
-  // Cookies.remove('refreshToken')
-  cookies.remove('refreshToken')
+  Cookies.remove('refreshToken')
   deleteToken()
   clearSearchWordAll()
 }
