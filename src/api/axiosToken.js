@@ -23,7 +23,7 @@ const axiosToken = axios.create({
 
 
 axiosToken.interceptors.request.use(
-  async(config) => {
+  (config) => {
     // console.log('보낼 때 config headers >>> ', config.headers)
     /**
      * @description refresh token 이 null 이니까 아예 액세스 토큰을 못 받아오네.
@@ -33,7 +33,7 @@ axiosToken.interceptors.request.use(
      * 에러 띄우면 안 됨.
      */
     // refreshtoken = Cookies.get("refreshToken") ?? null;
-    refreshtoken = await getCookie('refreshToken') ?? null;
+    refreshtoken = getCookie('refreshToken') ?? null;
 
     // accesstoken = await JSON.parse(localStorage.getItem("accessToken"))
     accesstoken = tokenStore.getState().tokenState.accessToken;
@@ -77,7 +77,7 @@ axiosToken.interceptors.response.use(
        * @description should approach[attach] 'config' manually if you're retrying.
        */
       // refreshtoken = Cookies.get("refreshToken") ?? null;
-      refreshtoken = await getCookie('refreshToken') ?? null;
+      refreshtoken = getCookie('refreshToken') ?? null;
       response.config.headers.accesstoken = `Bearer ${acToken}`;
       response.config.headers.refreshtoken = refreshtoken;
       try{
