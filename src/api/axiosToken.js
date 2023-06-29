@@ -15,6 +15,7 @@ const axiosToken = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
     timeout: 1500,
     timeoutErrorMessage: "Request Timeout over 1.5 seconds. check your refreshToken.",
+    withCredentials: true,
 });
 // instance.defaults.headers.common.Authorization = rfToken
 // instance.defaults.headers = rfToken

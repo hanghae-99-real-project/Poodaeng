@@ -600,7 +600,7 @@ function DaengFinderCommentPage() {
     SwitchFooter(false);
 
     return () => {
-      // onClearInitialVal();
+      if (image.preview) URL.revokeObjectURL(image.preview);
       clearQuillValue();
     };
   }, []);
