@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import Cookies from 'js-cookie';
 import React, { useEffect, useRef, useState } from 'react';
 import { BiCategory } from 'react-icons/bi';
 import { RxMagnifyingGlass } from 'react-icons/rx';
@@ -18,6 +17,7 @@ import useCurrentLocation from '../../hooks/useCurrentLocation';
 // eslint-disable-next-line import/no-useless-path-segments, import/no-cycle
 import { ReactComponent as CheckBoxDaengFinder } from '../../assets/images/CheckedPurple.svg';
 import useScroll from '../../hooks/useScroll';
+import { getCookie } from '../../utils/Cookies';
 import { toastError, toastSuccess } from '../../utils/ToastFreeSetting';
 import { useLocationStore } from '../../zustand/example/zustandAPI';
 import useShallow from '../../zustand/hooks/useShallow';
@@ -63,7 +63,8 @@ function DaengFindercomponent() {
   const location = response?.location;
   const latitude = location?.latitude;
   const longitude = location?.longitude;
-  const checkRefreshToken = Cookies.get('refreshToken');
+  // const checkRefreshToken = Cookies.get('refreshToken');
+  const checkRefreshToken = getCookie('refreshToken');
   const getPositionAgreement = localStorage.getItem('agreed') === 'true';
 
   useEffect(() => {

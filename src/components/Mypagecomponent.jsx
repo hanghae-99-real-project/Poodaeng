@@ -3,15 +3,16 @@ import React from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import Cookies from 'js-cookie';
 import { getMypageCount } from '../api/myPage';
 import { signOut } from '../api/sendCode';
+import { getCookie } from '../utils/Cookies';
 import { resetUserInfoLog } from '../zustand/example/zustandAPI';
 import Headers from './Headers';
 import Loading from './common/Loading';
 
 function Mypagecomponent() {
-  const refreshToken = Cookies.get('refreshToken');
+  // const refreshToken = Cookies.get('refreshToken');
+  const refreshToken = getCookie('refreshToken');
 
   const navigate = useNavigate();
 
