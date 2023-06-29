@@ -1,9 +1,8 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 import axios from "axios";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import { getCookie } from '../utils/Cookies';
 // eslint-disable-next-line import/no-cycle
 import { tokenStore } from "../pages/SignInPage";
 
@@ -32,8 +31,10 @@ axiosToken.interceptors.request.use(
      * 그리고 로그인 필요없는 페이지에서는 서버 쪽에서 null로 보내도록 명세서 적어놔서 보내긴 해야 함.
      * 에러 띄우면 안 됨.
      */
-    // refreshtoken = Cookies.get("refreshToken") ?? null;
-    refreshtoken = getCookie('refreshToken') ?? null;
+    refreshtoken = Cookies.get("refreshToken") ?? null;
+    // if(!refreshtoken){
+    //   throw new Error("No refresh token. Please login again to get refresh token.")
+    // }
 
     // accesstoken = await JSON.parse(localStorage.getItem("accessToken"))
     accesstoken = tokenStore.getState().tokenState.accessToken;
@@ -76,8 +77,7 @@ axiosToken.interceptors.response.use(
       /**
        * @description should approach[attach] 'config' manually if you're retrying.
        */
-      // refreshtoken = Cookies.get("refreshToken") ?? null;
-      refreshtoken = getCookie('refreshToken') ?? null;
+      refreshtoken = Cookies.get("refreshToken") ?? null;
       response.config.headers.accesstoken = `Bearer ${acToken}`;
       response.config.headers.refreshtoken = refreshtoken;
       try{

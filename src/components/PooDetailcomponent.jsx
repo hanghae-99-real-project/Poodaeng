@@ -2,16 +2,16 @@
 /* eslint-disable no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { reportPooBox } from '../api/poobox';
-import { ReactComponent as Exit } from '../assets/images/Exit.svg';
 import { ReactComponent as Report } from '../assets/images/report.svg';
-import { ReactComponent as ReportCheck } from '../assets/images/reportcheck.svg';
-import { getCookie } from '../utils/Cookies';
 import { dateConvert2 } from '../utils/DateConvert';
 import Headers from './Headers';
+import { ReactComponent as Exit } from '../assets/images/Exit.svg';
+import { ReactComponent as ReportCheck } from '../assets/images/reportcheck.svg';
 
 function PooDetailComponent() {
   const location = useLocation();
@@ -25,8 +25,7 @@ function PooDetailComponent() {
   const pooLatitude = params.get('pooLatitude');
   const pooLongitude = params.get('pooLongitude');
   const navigate = useNavigate();
-  // const refreshToken = Cookies.get('refreshToken');
-  const refreshToken = getCookie('refreshToken');
+  const refreshToken = Cookies.get('refreshToken');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contents, setContents] = useState('');
   const [report, setReport] = useState(false);

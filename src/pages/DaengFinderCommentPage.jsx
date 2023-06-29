@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import Cookies from 'js-cookie';
 import React, { useEffect, useRef, useState } from 'react';
 import { MdLockOutline } from 'react-icons/md';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -24,7 +25,6 @@ import Reply from '../components/DaengFinder/DaengFinderComment/Reply';
 import Loading from '../components/common/Loading';
 import { useFooterLayout } from '../shared/LinkFooterLayout';
 import LinkHeader from '../shared/LinkHeader';
-import { getCookie } from '../utils/Cookies';
 import QuillEditor from '../utils/QuillEditor';
 import { toastSuccess } from '../utils/ToastFreeSetting';
 import { useQuillStore } from '../zustand/example/zustandAPI';
@@ -66,8 +66,7 @@ function DaengFinderCommentPage() {
   /* 댓글/대댓글 작성도 따로 객체로 만들어야겠음. */
   /* private랑 이미지, 커멘트만 따로 관리 */
   // const [inputMode, setInputMode] = useState(false);
-  // const checkAuth = Cookies.get('refreshToken') ?? null;
-  const checkAuth = getCookie('refreshToken') ?? null;
+  const checkAuth = Cookies.get('refreshToken') ?? null;
   const [isCommentMode, setIsCommentMode] = useState({
     inputMode: false,
     commentId: null,

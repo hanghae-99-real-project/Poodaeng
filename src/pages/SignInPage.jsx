@@ -17,7 +17,6 @@ import { ReactComponent as DaengPoo } from '../assets/images/DaengPoo.svg';
 import { ReactComponent as Logo } from '../assets/images/Poodaeng.svg';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 import useInput from '../hooks/useInput';
-import { setCookie } from '../utils/Cookies';
 
 const initialState = {
   authenticated: false,
@@ -101,12 +100,11 @@ function SignInPage() {
       const { exp: RF_EXP } = decodedRfToken;
       const rfExpireDate = new Date(RF_EXP * 1000);
       // console.log('rfExpireDate >>>', rfExpireDate);
-      // Cookies.set('refreshToken', refreshToken, {
-      //   expires: rfExpireDate,
-      //   secure: true,
-      //   sameSite: 'Lax',
-      // });
-      setCookie('refreshToken', refreshToken, rfExpireDate);
+      Cookies.set('refreshToken', refreshToken, {
+        expires: rfExpireDate,
+        secure: true,
+        sameSite: 'Lax',
+      });
       const { exp: AC_EXP, userId } = decodedAcToken;
       // console.log('이거 초 단위인가?  >>> ', AC_EXP);
       // const expireDate = new Date(AC_EXP * 1000); // 날짜단위로 변환해서 넣기.(ms 단위로 변환해서 넣기)

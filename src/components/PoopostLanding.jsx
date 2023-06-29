@@ -1,13 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Exclamation } from '../assets/images/Exclamation.svg';
+import Cookies from 'js-cookie';
 import { ReactComponent as Landing } from '../assets/images/Landing.svg';
-import { getCookie } from '../utils/Cookies';
+import { ReactComponent as Exclamation } from '../assets/images/Exclamation.svg';
 
 function PoopostLanding() {
   const navigate = useNavigate(false);
-  // const refreshToken = Cookies.get('refreshToken');
-  const refreshToken = getCookie('refreshToken');
+  const refreshToken = Cookies.get('refreshToken');
 
   return (
     <div className='flex flex-col items-center h-full w-96 px-1 '>

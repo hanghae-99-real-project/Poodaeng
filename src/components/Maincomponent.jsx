@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // import { useQuery } from 'react-query';
 // import TmapAPI from './Tmap/TmapAPI';
 // import Infowindow from './Tmap/Infowindow';
+import Cookies from 'js-cookie';
 import { useQuery } from 'react-query';
 import Kakaoserch from './Kakaoserch';
 // import Loading from './common/Loading';
@@ -16,7 +17,6 @@ import { getAlert } from '../api/main';
 import { ReactComponent as NextBt } from '../assets/images/NextBt.svg';
 import { ReactComponent as Event } from '../assets/images/event.svg';
 import { ReactComponent as Logo } from '../assets/images/푸댕.svg';
-import { getCookie } from '../utils/Cookies';
 import Slidecomponent from './Slidecomponent/Slidecomponent';
 // import getDaengMain from '../api/main';
 
@@ -36,8 +36,7 @@ function Maincomponent() {
 
   const alertdata = data?.data?.notificationsData;
   // console.log(data.data.notificationsData);
-  // const refreshToken = Cookies.get('refreshToken');
-  const refreshToken = getCookie('refreshToken');
+  const refreshToken = Cookies.get('refreshToken');
 
   const handleAlertClick = () => {
     if (!refreshToken) {
