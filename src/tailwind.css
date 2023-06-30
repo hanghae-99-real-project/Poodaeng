@@ -80,6 +80,10 @@
     @apply object-cover w-full h-full;
   }
 
+  .image-fallback {
+    @apply w-full h-full bg-slate-200 animate-pulse cursor-pointer;
+  }
+
   .canvas {
     /* @apply overflow-hidden flex flex-col items-center relative w-[375px] h-[812px]  bg-[#FFFFFF]; */
     /* @apply overflow-hidden flex flex-col items-center relative w-[377px] h-[850px] bg-[#FFFFFF]; */

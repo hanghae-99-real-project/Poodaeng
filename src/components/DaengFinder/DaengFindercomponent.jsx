@@ -333,7 +333,11 @@ function DaengFindercomponent() {
             ? ListAll?.map((card, idx) => {
                 return (
                   <FadeInWhenVisible1 key={card.postId}>
-                    <Card isDetail={isDetail} data={card} />
+                    <Card
+                      isDetail={isDetail}
+                      data={card}
+                      scrollRef={scrollRef}
+                    />
                     {idx === ListAll.length - 1 && <div ref={ref} />}
                   </FadeInWhenVisible1>
                 );
