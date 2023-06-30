@@ -37,7 +37,6 @@ function DaengFinderDetail() {
   const [errorMsg, setErrorMsg] = useState(false);
   const [daengList, setDaengList] = useState([]);
   const [daeng, setDaeng] = useState();
-  const [activeBtn, setActiveBtn] = useState(0);
   const [editModal, setEditModal] = useState(false);
   const [passPostId, setPassPostId] = useState('');
   const [isFound, setIsFound] = useState(false);
@@ -101,11 +100,6 @@ function DaengFinderDetail() {
   postId = parseInt(postId, 10);
   // console.log('success 살아있는지 확인 >>>', editSuccess);
   // console.log('postId 살아있는지 확인 >>>', postId);
-
-  const imageHandler = idx => {
-    setDaeng(daengList[idx]);
-    setActiveBtn(idx);
-  };
 
   const editModeHandler = () => {
     setEditModal(prev => !prev);

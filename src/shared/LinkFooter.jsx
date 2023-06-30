@@ -11,6 +11,7 @@ import { ReactComponent as BookmarkEmpty } from '../assets/images/BookmarkEmpty.
 import { ReactComponent as BookmarkFilled } from '../assets/images/BookMarkFill.svg';
 import { ReactComponent as Clip } from '../assets/images/Clip.svg';
 import { ReactComponent as Comment } from '../assets/images/Magnifier.svg';
+import { tokenStore } from '../pages/SignInPage';
 
 const store = (set, get) => ({
   /**
@@ -85,6 +86,22 @@ const store = (set, get) => ({
     const inputs = {
       postId: get().postId,
     };
+    const userId = tokenStore.getState().tokenState.userId ?? null;
+    if (!userId) {
+      set(() => ({
+        isBookmark: false,
+        onModal: { on: true, sort: 'bookmark' },
+        modalComment: '로그인 후 이용할 수 있습니다.',
+      }));
+      setTimeout(
+        () =>
+          set(prevState => ({
+            onModal: { on: !prevState.onModal.on, sort: 'bookmark' },
+          })),
+        1000,
+      );
+      return;
+    }
     try {
       const response = await bookMarkLostPost(inputs);
       // console.log('onBookMark response >>>', response);
