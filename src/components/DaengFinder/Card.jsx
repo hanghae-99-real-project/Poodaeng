@@ -5,7 +5,7 @@ import { dateConvert2, getDateDiff } from '../../utils/DateConvert';
 import CardPhoto from './CardPhoto';
 // import ImageFallback from './ImageFallback';
 
-function Card({ isDetail, data, linkAddress, justSearch }) {
+function Card({ isDetail, data, linkAddress, justSearch, scrollRef }) {
   const navigate = useNavigate();
 
   const moveToDetail = () => {
@@ -35,7 +35,11 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
             찾았어요
           </div>
         )}
-        <CardPhoto lostPhotoUrl={data.lostPhotoUrl[0]} isDetail={isDetail} />
+        <CardPhoto
+          lostPhotoUrl={data.lostPhotoUrl[0]}
+          isDetail={isDetail}
+          scrollRef={scrollRef}
+        />
         {/* <Suspense fallback={<ImageFallback />}>
           {data.lostPhotoUrl[0] && (
             <CardPhoto

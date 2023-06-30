@@ -13,9 +13,10 @@ const onIntersection = (entries, io) => {
   });
 };
 
-const CardPhoto = ({ lostPhotoUrl, isDetail }) => {
+const CardPhoto = ({ lostPhotoUrl, isDetail, scrollRef }) => {
   const imgRef = useRef(null);
-  const [isLoad, setIsLoad] = useState(true);
+  // const [isLoad, setIsLoad] = useState(true);
+  const [isLoad, setIsLoad] = useState(Boolean(lostPhotoUrl));
   // const observer = useRef(null);
   /**
    * @description CustomEvent : event를 직접 정의해서 사용할 수 있도록 해준다. 해당 이벤트를 발생시킴.
@@ -30,9 +31,9 @@ const CardPhoto = ({ lostPhotoUrl, isDetail }) => {
     const loadImage = () => {
       setIsLoad(true);
     };
-    // const newLoadImage = () => {
-    //   setIsLoad(false);
-    // };
+    const newLoadImage = () => {
+      setIsLoad(false);
+    };
     // if (!observer.current) {
     //   observer.current = new IntersectionObserver(onIntersection, {
     //     rootMargin: '0px 0px 50px 0px',
@@ -45,7 +46,7 @@ const CardPhoto = ({ lostPhotoUrl, isDetail }) => {
     }
     return () => {
       if (ImgEL) {
-        ImgEL.removeEventListener(LOAD_IMG_EVENT_TYPE, loadImage);
+        ImgEL.removeEventListener(LOAD_IMG_EVENT_TYPE, newLoadImage);
       }
     };
     // if (ImgEL) {
@@ -61,17 +62,23 @@ const CardPhoto = ({ lostPhotoUrl, isDetail }) => {
 
   useEffect(() => {
     if (!observer) {
-      observer = new IntersectionObserver(onIntersection);
+      observer = new IntersectionObserver(onIntersection, {
+        root: scrollRef.current || null,
+        rootMargin: '200px',
+      });
     }
     if (imgRef.current) {
       observer.observe(imgRef.current);
     }
+
+    // return () => {
+    //   observer.disconnect();
+    // };
   }, [lostPhotoUrl]);
-  console.log('isLoad >>>', isLoad);
 
   return (
     <div className='w-full h-full'>
-      {isLoad && lostPhotoUrl ? (
+      {isLoad ? (
         <img
           ref={imgRef}
           src={lostPhotoUrl}
