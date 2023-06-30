@@ -1,10 +1,9 @@
 import DOMPurify from 'dompurify';
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { dateConvert2, getDateDiff } from '../../utils/DateConvert';
-import ImageFallback from './ImageFallback';
-
-const CardPhoto = lazy(() => import('./CardPhoto'));
+import CardPhoto from './CardPhoto';
+// import ImageFallback from './ImageFallback';
 
 function Card({ isDetail, data, linkAddress, justSearch }) {
   const navigate = useNavigate();
@@ -36,14 +35,15 @@ function Card({ isDetail, data, linkAddress, justSearch }) {
             찾았어요
           </div>
         )}
-        <Suspense fallback={<ImageFallback />}>
+        <CardPhoto lostPhotoUrl={data.lostPhotoUrl[0]} isDetail={isDetail} />
+        {/* <Suspense fallback={<ImageFallback />}>
           {data.lostPhotoUrl[0] && (
             <CardPhoto
               lostPhotoUrl={data.lostPhotoUrl[0]}
               isDetail={isDetail}
             />
           )}
-        </Suspense>
+        </Suspense> */}
         {/* <img
           // src={`${process.env.PUBLIC_URL}/images/DoggyExample.png`}
           src={data.lostPhotoUrl[0]}
