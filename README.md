@@ -12,6 +12,8 @@
 이 섹션에서는 프로젝트를 시작하는 방법에 대해 설명합니다.
 
 ## 사용한 기술 스택
+![Zustand](https://img.shields.io/badge/-Zustand-FFBA00?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACsElEQVRYR+2Wz2vTQBSGv5oDQUQtBzQOqBt4ACB8oNBUAbRJWtDHEMW8oNcL+AMJcBjXUCJmBa6VKSJSvEM3SSJWYbZlTZjm63r6bmD1nnXrZ3r7h9Zr6XvjMX+9HuCqAHlSLZHb2yN/Ffd4bDyfqVjjdQKwEa6cCK0lIFkDTiOeILK/MDCzYklJQGJ8/M4NZmmzmEzpaeM6O+9wOYONdGOnbtsAIAN+YjqOatgMBF+4BQXfijXJxJPUFfs/h7PHX9PZcsfFKixQsAQD9+K5PW4bT0Wg3VjHSv2lN1AmAhDN6nt/MQUJG6C7msOG73ib0K6G73me2AySM8RJnxSgpIt6k/xoc6B9wuk/y8I1SCr5CViARF5kDxYj0Fk2BAe4+wPqMQCFuGBNVwqAFMqyW6JujA0D3oRbXaCuocRZ6kInH6xKXaMS8G1SQ8sA4A+h3rYwdgM0epxh/cwi/KIt6oPyLYF4geYA4A+h4riPpPGCshKXqQCkHIveQHtgI9eoEgInHqxJXaGRduDwHYvIFVcBQbAHYQzQDfI1FYDHkCtpoNLIAxCN6ksSS2gJKQG/AiX6lAZA3D6txHdokikDqARZY3gPSAZmgmCYAeMAUYdYHWC3AFaALicJsgngI/wK4FToCMdF9NcAe4BngPoD6FOiKSBngHoA8ZQmqK4FngLoG5BmngDmAfgJoD0G5HmFF6m1QAA6lVQwrlcJ+jWUVtAXK1PpgT0Bf9+PR+AAAAAElFTkSuQmCC&logoColor=white)
+
 ![Zustand](https://img.shields.io/badge/-Zustand-000000?logo=zustand&logoColor=white)
 ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
 ![TanStack Query](https://img.shields.io/badge/-TanStack%20Query-FF4154?logo=tanstack&logoColor=white)
