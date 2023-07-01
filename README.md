@@ -21,6 +21,12 @@
 ![Lodash](https://img.shields.io/badge/-Lodash-0769AD?logo=lodash&logoColor=white)
 ![Material-UI](https://img.shields.io/badge/-Material--UI-0081CB?logo=material-ui&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?logo=tailwind-css&logoColor=white)
+![Axios](https://img.shields.io/badge/-Axios-FF0000?logo=axios&logoColor=white)
+![React Router](https://img.shields.io/badge/-React%20Router-CA4245?logo=react-router&logoColor=white)
+![React Quill](https://img.shields.io/badge/-React%20Quill-0081CB?logo=react&logoColor=white)
+![Swiper.js](https://img.shields.io/badge/-Swiper.js-6332F6?logo=swiper&logoColor=white)
+![Kakao Map](https://img.shields.io/badge/-Kakao%20Map-FFCD00?logo=kakaomap&logoColor=white)
+![Tmap](https://img.shields.io/badge/-Tmap-EE3D34?logo=tmap&logoColor=white)
 
 
 ### 구성 요소
