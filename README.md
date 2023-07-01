@@ -12,7 +12,6 @@
 이 섹션에서는 프로젝트를 시작하는 방법에 대해 설명합니다.
 
 ## 사용한 기술 스택
-![Zustand](https://img.shields.io/badge/-Zustand-000000?logo=zustand&logoColor=white)
 ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
 ![TanStack Query](https://img.shields.io/badge/-TanStack%20Query-FF4154?logo=tanstack&logoColor=white)
 ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white)
@@ -25,6 +24,7 @@
 ![React Router](https://img.shields.io/badge/-React%20Router-CA4245?logo=react-router&logoColor=white)
 ![React Quill](https://img.shields.io/badge/-React%20Quill-0081CB?logo=react&logoColor=white)
 ![Swiper.js](https://img.shields.io/badge/-Swiper.js-6332F6?logo=swiper&logoColor=white)
+![Zustand](https://img.shields.io/badge/-Zustand-000000?logo=zustand&logoColor=white)
 ![Kakao Map](https://img.shields.io/badge/-Kakao%20Map-FFCD00?logo=kakaomap&logoColor=white)
 ![Tmap](https://img.shields.io/badge/-Tmap-EE3D34?logo=tmap&logoColor=white)
 
