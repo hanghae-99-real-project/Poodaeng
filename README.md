@@ -11,6 +11,18 @@
 
 이 섹션에서는 프로젝트를 시작하는 방법에 대해 설명합니다.
 
+## 사용한 기술 스택
+![Zustand](https://img.shields.io/badge/-Zustand-000000?logo=zustand&logoColor=white)
+![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
+![TanStack Query](https://img.shields.io/badge/-TanStack%20Query-FF4154?logo=tanstack&logoColor=white)
+![HTML5](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white)
+![Geolocation](https://img.shields.io/badge/-Geolocation-007BFF?logo=geolocation&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/-Framer%20Motion-0055FF?logo=framer&logoColor=white)
+![Lodash](https://img.shields.io/badge/-Lodash-0769AD?logo=lodash&logoColor=white)
+![Material-UI](https://img.shields.io/badge/-Material--UI-0081CB?logo=material-ui&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?logo=tailwind-css&logoColor=white)
+
+
 ### 구성 요소
 
 * React.js
